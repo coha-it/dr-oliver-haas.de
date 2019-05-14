@@ -1,0 +1,372 @@
+0000.001 (0) Opened log file at time: Mon, 13 May 2019 00:38:48 +0000 on https://dr-oliver-haas.de
+0000.003 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.16.11 WP: 4.9.10 PHP: 7.1.26 (fpm-fcgi, Linux server205.configcenter.info 3.10.0-962.3.2.lve1.5.24.8.el7.x86_64 #1 SMP Fri Jan 4 06:55:54 EST 2019 x86_64) MySQL: 5.7.23 WPLANG: en_US Server: Apache safe_mode: 0 max_execution_time: 900 memory_limit: 1280M (used: 11.8M | 14M) multisite: N openssl: OpenSSL 1.0.1e 11 Feb 2013 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0000.006 (0) Free space on disk containing Updraft's temporary directory: 538583.5 MB
+0000.008 (0) Deleting old log file: log.01590d38430d.txt
+0000.011 (0) Tasks: Backup files: 1 (schedule: monthly) Backup DB:  (schedule: monthly)
+0000.012 (0) Processed schedules. Combining jobs from identical schedules. Tasks now: Backup files: 1 Backup DB: 1
+0000.022 (0) Requesting semaphore lock (fd) (apparently via scheduler: last_scheduled_action_called_at=1555118928, seconds_ago=2589000)
+0000.027 (0) Set semaphore last lock (fd) time to 2019-05-13 00:38:48
+0000.028 (0) Semaphore lock (fd) complete
+0000.032 (0) Backup run: resumption=0, nonce=0962a5a66267, file_nonce=0962a5a66267 begun at=1557707928 (0s ago), job type=backup
+0000.035 (0) Scheduling a resumption (1) after 300 seconds (1557708228) in case this run gets aborted
+0000.061 (0) Checking if we have a zip executable available
+0000.063 (0) Testing: /usr/bin/zip
+0000.075 (0) Output: zip warning: binziptest/test.zip not found or empty
+0000.077 (0) Output: adding: binziptest/subdir1/	(in=0) (out=0) (stored 0%)
+0000.078 (0) Output: adding: binziptest/subdir1/subdir2/	(in=0) (out=0) (stored 0%)
+0000.080 (0) Output: adding: binziptest/subdir1/subdir2/test.html	(in=131) (out=107) (deflated 18%)
+0000.081 (0) Output: total bytes=131, compressed=107 -> 18% savings
+0000.093 (0) Output: adding: binziptest/subdir1/subdir2/test2.html	(in=138) (out=113) (deflated 18%)
+0000.095 (0) Output: total bytes=269, compressed=220 -> 18% savings
+0000.097 (0) Working binary zip found: /usr/bin/zip
+0000.100 (0) Zip engine: found/will use a binary zip: /usr/bin/zip
+0000.101 (0) Creation of backups of directories: beginning
+0000.106 (0) Beginning creation of dump of plugins (split every: 400 MB)
+0000.271 (0) Total entities for the zip file: 892 directories, 4808 files (0 skipped as non-modified), 72.8 MB
+0000.276 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 100 files added (on-disk size: 0 KB)
+0000.281 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 200 files added (on-disk size: 0 KB)
+0000.285 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 300 files added (on-disk size: 0 KB)
+0000.290 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 400 files added (on-disk size: 0 KB)
+0000.294 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 500 files added (on-disk size: 0 KB)
+0000.296 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7 MB, 4808 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0000.963 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: size is now: 1.70 MB
+0000.970 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 600 files added (on-disk size: 1760.7 KB)
+0000.975 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 700 files added (on-disk size: 1760.7 KB)
+0000.979 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 800 files added (on-disk size: 1760.7 KB)
+0000.984 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 900 files added (on-disk size: 1760.7 KB)
+0000.988 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1000 files added (on-disk size: 1760.7 KB)
+0000.990 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (2.2 MB, 4808 files batched, 501 (1002) added so far); re-opening (prior size: 1760.7 KB)
+0001.607 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: size is now: 2.90 MB
+0001.615 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1100 files added (on-disk size: 2985.2 KB)
+0001.619 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1200 files added (on-disk size: 2985.2 KB)
+0001.624 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1300 files added (on-disk size: 2985.2 KB)
+0001.628 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1400 files added (on-disk size: 2985.2 KB)
+0001.632 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1500 files added (on-disk size: 2985.2 KB)
+0001.634 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (3.8 MB, 4808 files batched, 501 (1503) added so far); re-opening (prior size: 2985.2 KB)
+0002.272 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: size is now: 4.40 MB
+0002.279 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1600 files added (on-disk size: 4458.8 KB)
+0002.283 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1700 files added (on-disk size: 4458.8 KB)
+0002.287 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1800 files added (on-disk size: 4458.8 KB)
+0002.292 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 1900 files added (on-disk size: 4458.8 KB)
+0002.296 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2000 files added (on-disk size: 4458.8 KB)
+0002.298 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (11.4 MB, 4808 files batched, 501 (2004) added so far); re-opening (prior size: 4458.8 KB)
+0003.443 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: size is now: 9.30 MB
+0003.450 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2100 files added (on-disk size: 9488.5 KB)
+0003.455 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2200 files added (on-disk size: 9488.5 KB)
+0003.459 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2300 files added (on-disk size: 9488.5 KB)
+0003.463 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2400 files added (on-disk size: 9488.5 KB)
+0003.468 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2500 files added (on-disk size: 9488.5 KB)
+0003.469 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.8 MB, 4808 files batched, 501 (2505) added so far); re-opening (prior size: 9488.5 KB)
+0004.598 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: size is now: 14.80 MB
+0004.605 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2600 files added (on-disk size: 15176.8 KB)
+0004.610 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2700 files added (on-disk size: 15176.8 KB)
+0004.615 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2800 files added (on-disk size: 15176.8 KB)
+0004.620 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 2900 files added (on-disk size: 15176.8 KB)
+0004.624 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3000 files added (on-disk size: 15176.8 KB)
+0004.626 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (10.8 MB, 4808 files batched, 501 (3006) added so far); re-opening (prior size: 15176.8 KB)
+0006.066 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: size is now: 18.90 MB
+0006.075 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3100 files added (on-disk size: 19389.7 KB)
+0006.081 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3200 files added (on-disk size: 19389.7 KB)
+0006.087 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3300 files added (on-disk size: 19389.7 KB)
+0006.092 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3400 files added (on-disk size: 19389.7 KB)
+0006.097 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3500 files added (on-disk size: 19389.7 KB)
+0006.099 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7.4 MB, 4808 files batched, 501 (3507) added so far); re-opening (prior size: 19389.7 KB)
+0007.146 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3600 files added (on-disk size: 22650.2 KB)
+0007.151 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3700 files added (on-disk size: 22650.2 KB)
+0007.155 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3800 files added (on-disk size: 22650.2 KB)
+0007.160 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 3900 files added (on-disk size: 22650.2 KB)
+0007.165 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4000 files added (on-disk size: 22650.2 KB)
+0007.167 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (1.5 MB, 4808 files batched, 501 (4008) added so far); re-opening (prior size: 22650.2 KB)
+0007.945 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4100 files added (on-disk size: 23242.3 KB)
+0007.952 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4200 files added (on-disk size: 23242.3 KB)
+0007.959 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4300 files added (on-disk size: 23242.3 KB)
+0007.964 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4400 files added (on-disk size: 23242.3 KB)
+0007.969 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4500 files added (on-disk size: 23242.3 KB)
+0007.970 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (4.7 MB, 4808 files batched, 501 (4509) added so far); re-opening (prior size: 23242.3 KB)
+0008.856 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4600 files added (on-disk size: 24740.3 KB)
+0008.861 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4700 files added (on-disk size: 24740.3 KB)
+0008.865 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip.tmp: 4800 files added (on-disk size: 24740.3 KB)
+0010.773 (0) Created plugins zip (0) - 29144.3 KB in 10.7 s (2732.9 KB/s) (sha1: 872e2725df42e60db1123fd71191435be4d014a4, sha256: 4ace89a0854086d239f5f7a20a131087ea31eb5ca2be4a7c6b2ee01921858bf7)
+0010.776 (0) Beginning creation of dump of themes (split every: 400 MB)
+0010.820 (0) Total entities for the zip file: 152 directories, 791 files (0 skipped as non-modified), 25.5 MB
+0010.825 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 100 files added (on-disk size: 0 KB)
+0010.910 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 200 files added (on-disk size: 0 KB)
+0010.914 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 300 files added (on-disk size: 0 KB)
+0010.919 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 400 files added (on-disk size: 0 KB)
+0010.924 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 500 files added (on-disk size: 0 KB)
+0010.925 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (16.7 MB, 791 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0011.921 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: size is now: 4.90 MB
+0011.929 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 600 files added (on-disk size: 5016 KB)
+0011.933 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: 700 files added (on-disk size: 5016 KB)
+0012.945 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip.tmp: size is now: 7.80 MB
+0013.071 (0) Created themes zip (0) - 8027 KB in 2.3 s (3501.5 KB/s) (sha1: 3ff4db73b96d1b7112ff876b65a9d1956ddeb7f3, sha256: e8fa44f34ede8820ba10ba98edd9bd45e4bf0bc3ac5adee09bee5d0652bf5141)
+0013.074 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots
+0013.076 (0) Looking for candidates to backup in: /var/www/vhosts/th4729w10.vorschauseite.eu/one.dr-oliver-haas.de/wp-content/uploads
+0013.077 (0) finding files: 2018: adding to list (1)
+0013.078 (0) finding files: et_temp: adding to list (2)
+0013.079 (0) finding files: pb_backupbuddy: adding to list (3)
+0013.080 (0) finding files: 2019: adding to list (4)
+0013.081 (0) finding files: useanyfont: adding to list (5)
+0013.083 (0) finding files: js_composer: adding to list (6)
+0013.084 (0) finding files: wtfdivi: adding to list (7)
+0013.085 (0) finding files: sgf-css: adding to list (8)
+0013.086 (0) finding files: 2015: adding to list (9)
+0013.087 (0) finding files: custom_styles: adding to list (10)
+0013.089 (0) finding files: backupbuddy_backups: skipping: excluded by options (glob)
+0013.090 (0) finding files: backupbuddy_backups: skipping: excluded by options (glob)
+0013.090 (0) finding files: custom-css-js: adding to list (11)
+0013.091 (0) finding files: elementor: adding to list (12)
+0013.092 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0013.120 (0) Total entities for the zip file: 25 directories, 934 files (0 skipped as non-modified), 88.5 MB
+0013.125 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 100 files added (on-disk size: 0 KB)
+0013.130 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 200 files added (on-disk size: 0 KB)
+0013.134 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 300 files added (on-disk size: 0 KB)
+0013.139 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 400 files added (on-disk size: 0 KB)
+0013.144 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 500 files added (on-disk size: 0 KB)
+0013.145 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (22.2 MB, 934 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0014.825 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: size is now: 22.30 MB
+0014.833 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 25 MB added on this batch (28.4 MB, 934 files batched, 90 (591) added so far); re-opening (prior size: 22806.7 KB)
+0016.808 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: size is now: 50.60 MB
+0016.812 (0) A useful amount of data was added after this amount of zip processing: 2.6 s (normalised: 2.3 s, rate: 11123.4 KB/s)
+0016.815 (0) Performance is good - will increase the amount of data we attempt to batch (time=2.6140179634094, normalised_time=2.3014477762293, max_time=16.813495874405, data points known=1, old_max_bytes=26214400, new_max_bytes=114907418)
+0016.818 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 600 files added (on-disk size: 51792.8 KB)
+0016.822 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 700 files added (on-disk size: 51792.8 KB)
+0016.827 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 800 files added (on-disk size: 51792.8 KB)
+0016.832 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: 900 files added (on-disk size: 51792.8 KB)
+0019.740 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip.tmp: size is now: 88.30 MB
+0020.877 (0) Created uploads zip (0) - 90421.4 KB in 7.8 s (11617.8 KB/s) (sha1: 0091a0ec0a8e86a93717578815397cf8da31d1da, sha256: 758f3a8df161741bcde5ad6088aeab1c40cf5ca2ae7e1df2f0e103f8d33a1dfa)
+0020.881 (0) Beginning backup of other directories found in the content directory (index: 0)
+0020.882 (0) Exclusion option setting (others): upgrade,cache,updraft,backup*,*backups,mysql.sql,debug.log
+0020.883 (0) Looking for candidates to backup in: /var/www/vhosts/th4729w10.vorschauseite.eu/one.dr-oliver-haas.de/wp-content
+0020.885 (0) finding files: index.php: adding to list (1)
+0020.886 (0) finding files: uploads: skipping: this is the uploads directory
+0020.887 (0) finding files: fonts: adding to list (2)
+0020.888 (0) finding files: themes: skipping: this is the themes directory
+0020.890 (0) finding files: wflogs: adding to list (3)
+0020.891 (0) finding files: cache: skipping: excluded by options
+0020.892 (0) finding files: updraft: skipping: this is the updraft directory
+0020.893 (0) finding files: maintenance: adding to list (4)
+0020.895 (0) finding files: languages: adding to list (5)
+0020.896 (0) finding files: upgrade: skipping: excluded by options
+0020.897 (0) finding files: advanced-cache.php: adding to list (6)
+0020.898 (0) finding files: plugins: skipping: this is the plugins directory
+0020.900 (0) finding files: maintenance.php: adding to list (7)
+0020.901 (0) finding files: mu-plugins: adding to list (8)
+0020.908 (0) Total entities for the zip file: 15 directories, 109 files (0 skipped as non-modified), 14.2 MB
+0020.913 (0) Zip: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-others.zip.tmp: 100 files added (on-disk size: 0 KB)
+0021.839 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-others.zip.tmp: size is now: 7.00 MB
+0021.943 (0) Created others zip (0) - 7203 KB in 1 s (6929.7 KB/s) (sha1: eb1f2187d29e0722cba210f63c225ea5b0b7cea1, sha256: 69a31bd2998105f7aac3af2db02b5d45ca3d8f281d69e76e02d9885274891037)
+0021.949 (0) Saving backup status to database (elements: 8)
+0021.953 (0) Beginning creation of database dump (WordPress DB)
+0021.955 (0) Testing potential mysqldump binary: /usr/bin/mysqldump
+0022.031 (0) Binary mysqldump: error (code: 2)
+0022.034 (0) Testing potential mysqldump binary: /bin/mysqldump
+0022.095 (0) Binary mysqldump: error (code: 2)
+0022.112 (0) Table j4B403_options: Total expected rows (approximate): 411
+0022.139 (0) Table j4B403_options: Total rows added: 416 in 0.03 seconds
+0022.142 (0) Table j4B403_options: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_options.table.gz - 74.5 KB)
+0022.147 (0) Table j4B403_users: Total expected rows (approximate): 1
+0022.150 (0) Table j4B403_users: Total rows added: 2 in 0.00 seconds
+0022.151 (0) Table j4B403_users: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_users.table.gz - 0.6 KB)
+0022.157 (0) Table j4B403_usermeta: Total expected rows (approximate): 54
+0022.161 (0) Table j4B403_usermeta: Total rows added: 63 in 0.00 seconds
+0022.162 (0) Table j4B403_usermeta: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_usermeta.table.gz - 4.1 KB)
+0022.168 (0) Table j4B403_commentmeta: Total expected rows (approximate): 0
+0022.170 (0) Table j4B403_commentmeta: Total rows added: 0 in 0.00 seconds
+0022.172 (0) Table j4B403_commentmeta: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_commentmeta.table.gz - 0.4 KB)
+0022.178 (0) Table j4B403_comments: Total expected rows (approximate): 0
+0022.180 (0) Table j4B403_comments: Total rows added: 0 in 0.00 seconds
+0022.182 (0) Table j4B403_comments: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_comments.table.gz - 0.5 KB)
+0022.187 (0) Table j4B403_links: Total expected rows (approximate): 0
+0022.189 (0) Table j4B403_links: Total rows added: 0 in 0.00 seconds
+0022.191 (0) Table j4B403_links: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_links.table.gz - 0.4 KB)
+0022.196 (0) Table j4B403_postmeta: Total expected rows (approximate): 744
+0022.215 (0) Table j4B403_postmeta: Total rows added: 811 in 0.02 seconds
+0022.218 (0) Table j4B403_postmeta: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_postmeta.table.gz - 46.9 KB)
+0022.223 (0) Table j4B403_posts: Total expected rows (approximate): 381
+0022.329 (0) Table j4B403_posts: Total rows added: 414 in 0.11 seconds
+0022.332 (0) Table j4B403_posts: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_posts.table.gz - 396.9 KB)
+0022.338 (0) Table j4B403_term_relationships: Total expected rows (approximate): 48
+0022.341 (0) Table j4B403_term_relationships: Total rows added: 57 in 0.00 seconds
+0022.343 (0) Table j4B403_term_relationships: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_term_relationships.table.gz - 0.5 KB)
+0022.348 (0) Table j4B403_term_taxonomy: Total expected rows (approximate): 12
+0022.351 (0) Table j4B403_term_taxonomy: Total rows added: 11 in 0.00 seconds
+0022.353 (0) Table j4B403_term_taxonomy: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_term_taxonomy.table.gz - 0.5 KB)
+0022.359 (0) Table j4B403_termmeta: Total expected rows (approximate): 0
+0022.361 (0) Table j4B403_termmeta: Total rows added: 0 in 0.00 seconds
+0022.363 (0) Table j4B403_termmeta: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_termmeta.table.gz - 0.4 KB)
+0022.368 (0) Table j4B403_terms: Total expected rows (approximate): 12
+0022.371 (0) Table j4B403_terms: Total rows added: 11 in 0.00 seconds
+0022.373 (0) Table j4B403_terms: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_terms.table.gz - 0.5 KB)
+0022.378 (0) Table j4B403_post_views: Total expected rows (approximate): 316
+0022.381 (0) Table j4B403_post_views: Total rows added: 328 in 0.00 seconds
+0022.383 (0) Table j4B403_post_views: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_post_views.table.gz - 1.7 KB)
+0022.388 (0) Table j4B403_redirection_404: Total expected rows (approximate): 369
+0022.395 (0) Table j4B403_redirection_404: Total rows added: 369 in 0.01 seconds
+0022.397 (0) Table j4B403_redirection_404: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_404.table.gz - 7.3 KB)
+0022.403 (0) Table j4B403_redirection_groups: Total expected rows (approximate): 2
+0022.405 (0) Table j4B403_redirection_groups: Total rows added: 2 in 0.00 seconds
+0022.407 (0) Table j4B403_redirection_groups: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_groups.table.gz - 0.5 KB)
+0022.412 (0) Table j4B403_redirection_items: Total expected rows (approximate): 3
+0022.414 (0) Table j4B403_redirection_items: Total rows added: 3 in 0.00 seconds
+0022.416 (0) Table j4B403_redirection_items: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_items.table.gz - 0.7 KB)
+0022.422 (0) Table j4B403_redirection_logs: Total expected rows (approximate): 15
+0022.425 (0) Table j4B403_redirection_logs: Total rows added: 15 in 0.00 seconds
+0022.427 (0) Table j4B403_redirection_logs: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_logs.table.gz - 1.1 KB)
+0022.433 (0) Table j4B403_wfblockediplog: Total expected rows (approximate): 36
+0022.436 (0) Table j4B403_wfblockediplog: Total rows added: 36 in 0.00 seconds
+0022.438 (0) Table j4B403_wfblockediplog: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfblockediplog.table.gz - 0.7 KB)
+0022.443 (0) Table j4B403_wfblocks7: Total expected rows (approximate): 2
+0022.445 (0) Table j4B403_wfblocks7: Total rows added: 2 in 0.00 seconds
+0022.447 (0) Table j4B403_wfblocks7: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfblocks7.table.gz - 0.5 KB)
+0022.452 (0) Table j4B403_wfconfig: Total expected rows (approximate): 259
+0022.476 (0) Table j4B403_wfconfig: Total rows added: 261 in 0.02 seconds
+0022.478 (0) Table j4B403_wfconfig: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfconfig.table.gz - 356.4 KB)
+0022.483 (0) Table j4B403_wfcrawlers: Total expected rows (approximate): 17
+0022.486 (0) Table j4B403_wfcrawlers: Total rows added: 16 in 0.00 seconds
+0022.487 (0) Table j4B403_wfcrawlers: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfcrawlers.table.gz - 0.6 KB)
+0022.493 (0) Table j4B403_wffilechanges: Total expected rows (approximate): 0
+0022.495 (0) Table j4B403_wffilechanges: Total rows added: 0 in 0.00 seconds
+0022.497 (0) Table j4B403_wffilechanges: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wffilechanges.table.gz - 0.3 KB)
+0022.503 (0) Table j4B403_wffilemods: Total expected rows (approximate): 7276
+0022.663 (0) Table j4B403_wffilemods: Total rows added: 8026 in 0.16 seconds
+0022.665 (0) Table j4B403_wffilemods: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wffilemods.table.gz - 699.7 KB)
+0022.670 (0) Table j4B403_wfhits: Total expected rows (approximate): 286
+0022.677 (0) Table j4B403_wfhits: Total rows added: 293 in 0.01 seconds
+0022.678 (0) Table j4B403_wfhits: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfhits.table.gz - 6.6 KB)
+0022.683 (0) Table j4B403_wfhoover: Total expected rows (approximate): 0
+0022.685 (0) Table j4B403_wfhoover: Total rows added: 0 in 0.00 seconds
+0022.687 (0) Table j4B403_wfhoover: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfhoover.table.gz - 0.3 KB)
+0022.691 (0) Table j4B403_wfissues: Total expected rows (approximate): 15
+0022.694 (0) Table j4B403_wfissues: Total rows added: 15 in 0.00 seconds
+0022.696 (0) Table j4B403_wfissues: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfissues.table.gz - 4.5 KB)
+0022.701 (0) Table j4B403_wfknownfilelist: Total expected rows (approximate): 8097
+0022.771 (0) Table j4B403_wfknownfilelist: Total rows added: 8031 in 0.07 seconds
+0022.774 (0) Table j4B403_wfknownfilelist: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfknownfilelist.table.gz - 79.7 KB)
+0022.779 (0) Table j4B403_wflivetraffichuman: Total expected rows (approximate): 0
+0022.781 (0) Table j4B403_wflivetraffichuman: Total rows added: 0 in 0.00 seconds
+0022.782 (0) Table j4B403_wflivetraffichuman: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wflivetraffichuman.table.gz - 0.3 KB)
+0022.787 (0) Table j4B403_wflocs: Total expected rows (approximate): 0
+0022.788 (0) Table j4B403_wflocs: Total rows added: 0 in 0.00 seconds
+0022.790 (0) Table j4B403_wflocs: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wflocs.table.gz - 0.4 KB)
+0022.795 (0) Table j4B403_wflogins: Total expected rows (approximate): 615
+0022.808 (0) Table j4B403_wflogins: Total rows added: 704 in 0.01 seconds
+0022.810 (0) Table j4B403_wflogins: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wflogins.table.gz - 20.3 KB)
+0022.815 (0) Table j4B403_wfnotifications: Total expected rows (approximate): 0
+0022.818 (0) Table j4B403_wfnotifications: Total rows added: 5 in 0.00 seconds
+0022.819 (0) Table j4B403_wfnotifications: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfnotifications.table.gz - 0.6 KB)
+0022.824 (0) Table j4B403_wfpendingissues: Total expected rows (approximate): 0
+0022.826 (0) Table j4B403_wfpendingissues: Total rows added: 0 in 0.00 seconds
+0022.828 (0) Table j4B403_wfpendingissues: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfpendingissues.table.gz - 0.4 KB)
+0022.833 (0) Table j4B403_wfreversecache: Total expected rows (approximate): 2
+0022.835 (0) Table j4B403_wfreversecache: Total rows added: 2 in 0.00 seconds
+0022.837 (0) Table j4B403_wfreversecache: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfreversecache.table.gz - 0.4 KB)
+0022.842 (0) Table j4B403_wfsnipcache: Total expected rows (approximate): 2
+0022.844 (0) Table j4B403_wfsnipcache: Total rows added: 2 in 0.00 seconds
+0022.845 (0) Table j4B403_wfsnipcache: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfsnipcache.table.gz - 0.5 KB)
+0022.850 (0) Table j4B403_wfstatus: Total expected rows (approximate): 953
+0022.860 (0) Table j4B403_wfstatus: Total rows added: 963 in 0.01 seconds
+0022.862 (0) Table j4B403_wfstatus: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfstatus.table.gz - 17.2 KB)
+0022.867 (0) Table j4B403_wftrafficrates: Total expected rows (approximate): 0
+0022.869 (0) Table j4B403_wftrafficrates: Total rows added: 0 in 0.00 seconds
+0022.870 (0) Table j4B403_wftrafficrates: finishing file (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wftrafficrates.table.gz - 0.3 KB)
+0022.874 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_options.table.gz (1/36): adding to final database dump
+0022.893 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_users.table.gz (2/36): adding to final database dump
+0022.895 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_usermeta.table.gz (3/36): adding to final database dump
+0022.897 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_commentmeta.table.gz (4/36): adding to final database dump
+0022.899 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_comments.table.gz (5/36): adding to final database dump
+0022.900 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_links.table.gz (6/36): adding to final database dump
+0022.902 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_postmeta.table.gz (7/36): adding to final database dump
+0022.916 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_posts.table.gz (8/36): adding to final database dump
+0023.010 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_term_relationships.table.gz (9/36): adding to final database dump
+0023.012 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_term_taxonomy.table.gz (10/36): adding to final database dump
+0023.014 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_termmeta.table.gz (11/36): adding to final database dump
+0023.015 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_terms.table.gz (12/36): adding to final database dump
+0023.017 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_post_views.table.gz (13/36): adding to final database dump
+0023.019 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_404.table.gz (14/36): adding to final database dump
+0023.023 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_groups.table.gz (15/36): adding to final database dump
+0023.025 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_items.table.gz (16/36): adding to final database dump
+0023.027 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_redirection_logs.table.gz (17/36): adding to final database dump
+0023.028 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfblockediplog.table.gz (18/36): adding to final database dump
+0023.030 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfblocks7.table.gz (19/36): adding to final database dump
+0023.031 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfconfig.table.gz (20/36): adding to final database dump
+0023.053 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfcrawlers.table.gz (21/36): adding to final database dump
+0023.055 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wffilechanges.table.gz (22/36): adding to final database dump
+0023.056 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wffilemods.table.gz (23/36): adding to final database dump
+0023.133 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfhits.table.gz (24/36): adding to final database dump
+0023.139 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfhoover.table.gz (25/36): adding to final database dump
+0023.140 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfissues.table.gz (26/36): adding to final database dump
+0023.143 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfknownfilelist.table.gz (27/36): adding to final database dump
+0023.165 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wflivetraffichuman.table.gz (28/36): adding to final database dump
+0023.167 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wflocs.table.gz (29/36): adding to final database dump
+0023.168 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wflogins.table.gz (30/36): adding to final database dump
+0023.175 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfnotifications.table.gz (31/36): adding to final database dump
+0023.177 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfpendingissues.table.gz (32/36): adding to final database dump
+0023.178 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfreversecache.table.gz (33/36): adding to final database dump
+0023.180 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfsnipcache.table.gz (34/36): adding to final database dump
+0023.181 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wfstatus.table.gz (35/36): adding to final database dump
+0023.186 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db-table-j4B403_wftrafficrates.table.gz (36/36): adding to final database dump
+0023.188 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db.gz: finished writing out complete database file (1696 KB)
+0023.220 (0) Total database tables backed up: 36 (backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db.gz, size: 1763786, sha256)
+0023.228 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0023.229 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0023.230 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0023.231 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-others.zip: others: This file has not yet been successfully uploaded: will queue
+0023.233 (0) backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db.gz: db: This file has not yet been successfully uploaded: will queue
+0023.234 (0) Saving backup history. Total backup size: 133.3 MB
+0023.238 (0) Requesting upload of the files that have not yet been successfully uploaded (5)
+0023.241 (0) Cloud backup selection (1/1): none with instance (1/1) (last)
+0023.243 (0) No remote despatch: user chose no remote backup service
+0023.244 (0) Recording as successfully uploaded: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-plugins.zip
+0023.247 (0) Recording as successfully uploaded: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-themes.zip
+0023.250 (0) Recording as successfully uploaded: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-uploads.zip
+0023.252 (0) Recording as successfully uploaded: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-others.zip
+0023.255 (0) Recording as successfully uploaded: backup_2019-05-13-0038_Dr_Oliver_Haas_0962a5a66267-db.gz
+0023.259 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=3, retain_db=3
+0023.261 (0) Number of backup sets in history: 4; groups (db): 1
+0023.262 (0) Examining (for databases) backup set with group_id=0, nonce=0962a5a66267, datestamp=1557707928 (May 13 2019 00:38:48)
+0023.263 (0) This backup set is the backup set just made, so will not be deleted.
+0023.263 (0) Examining (for databases) backup set with group_id=0, nonce=78a10d9e7012, datestamp=1555118927 (Apr 13 2019 01:28:47)
+0023.263 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.265 (0) Examining (for databases) backup set with group_id=0, nonce=01590d38430d, datestamp=1552526165 (Mar 14 2019 01:16:05)
+0023.265 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.265 (0) Examining (for databases) backup set with group_id=0, nonce=fd32f53258f5, datestamp=1549935099 (Feb 12 2019 01:31:39)
+0023.265 (0) 1549935099: db: this set includes a database (backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-db.gz); db count is now 3
+0023.265 (0) 1549935099: db: over retain limit (3); will delete this database
+0023.265 (0) Delete file: backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-db.gz, service=none
+0023.266 (0) Deleting local copy (backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-db.gz)
+0023.269 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0023.270 (0) Number of backup sets in history: 4; groups (files): 1
+0023.271 (0) Examining (for files) backup set with nonce=0962a5a66267, datestamp=1557707928 (May 13 2019 00:38:48)
+0023.271 (0) This backup set is the backup set just made, so will not be deleted.
+0023.273 (0) This backup set is the backup set just made, so will not be deleted.
+0023.273 (0) This backup set is the backup set just made, so will not be deleted.
+0023.273 (0) This backup set is the backup set just made, so will not be deleted.
+0023.273 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.274 (0) Examining (for files) backup set with nonce=78a10d9e7012, datestamp=1555118927 (Apr 13 2019 01:28:47)
+0023.274 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.274 (0) Examining (for files) backup set with nonce=01590d38430d, datestamp=1552526165 (Mar 14 2019 01:16:05)
+0023.274 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0023.274 (0) Examining (for files) backup set with nonce=fd32f53258f5, datestamp=1549935099 (Feb 12 2019 01:31:39)
+0023.274 (0) plugins: over retain limit (3); will delete this file entity
+0023.274 (0) themes: over retain limit (3); will delete this file entity
+0023.274 (0) uploads: over retain limit (3); will delete this file entity
+0023.274 (0) others: over retain limit (3); will delete this file entity
+0023.274 (0) Delete file: backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-plugins.zip, service=none
+0023.276 (0) Deleting local copy (backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-plugins.zip)
+0023.278 (0) Delete file: backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-themes.zip, service=none
+0023.279 (0) Deleting local copy (backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-themes.zip)
+0023.280 (0) Delete file: backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-uploads.zip, service=none
+0023.282 (0) Deleting local copy (backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-uploads.zip)
+0023.284 (0) Delete file: backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-others.zip, service=none
+0023.286 (0) Deleting local copy (backup_2019-02-12-0131_Dr_Oliver_Haas_fd32f53258f5-others.zip)
+0023.289 (0) This backup set is now empty; will remove from history
+0023.290 (0) Corresponding log file (log.fd32f53258f5.txt) not found - must have already been deleted
+0023.292 (0) Retain: saving new backup history (sets now: 3) and finishing retain operation
+0023.297 (0) Resume backup (0962a5a66267, 0): finish run
+0023.303 (0) Decremented the semaphore (fd) by 1
+0023.305 (0) Semaphore (fd) unlocked
+0023.307 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0023.312 (0) The backup apparently succeeded and is now complete
+0023.313 (0) No email will/can be sent - the user has not configured an email address.
+0023.314 (0) Die Sicherung war anscheinend erfolgreich und ist nun vollständig
