@@ -4,7 +4,7 @@ require_once 'module/helpers/Overflow.php';
 
 if ( ! defined( 'ET_BUILDER_PRODUCT_VERSION' ) ) {
 	// Note, this will be updated automatically during grunt release task.
-	define( 'ET_BUILDER_PRODUCT_VERSION', '3.22.1' );
+	define( 'ET_BUILDER_PRODUCT_VERSION', '3.22.7' );
 }
 
 if ( ! defined( 'ET_BUILDER_VERSION' ) ) {
@@ -3123,6 +3123,8 @@ function et_pb_admin_scripts_styles( $hook ) {
 			wp_enqueue_script( 'wp-color-picker-alpha' );
 			wp_enqueue_style( 'wp-color-picker' );
 
+			wp_enqueue_style( 'et-core-portability', ET_CORE_URL . 'admin/css/portability.css', array(), ET_CORE_VERSION );
+
 			$ver    = ET_BUILDER_VERSION;
 			$root   = ET_BUILDER_URI;
 			$assets = ET_BUILDER_URI . '/frontend-builder/assets';
@@ -4165,11 +4167,17 @@ if ( ! function_exists( 'et_builder_ajax_toggle_bfb' ) ) {
 		et_core_security_check( 'manage_options', 'et_builder_toggle_bfb', 'nonce', '_GET' );
 
 		$enable = isset( $_GET['enable'] ) && $_GET['enable'] === '1';
+		$skip_bfb_optin = isset( $_GET['skip_bfb_optin'] ) && $_GET['skip_bfb_optin'] === '1';
 		$welcome = isset( $_GET['welcome'] );
 		$redirect = isset( $_GET['redirect'] ) ? esc_url_raw( $_GET['redirect'] ) : '';
 
 		if ( empty( $redirect ) && isset( $_SERVER['HTTP_REFERER'] ) ) {
 			$redirect = esc_url_raw( $_SERVER['HTTP_REFERER'] );
+		}
+
+		// skip BFB Optin modal if BB activated using link below the Editor.
+		if ( $skip_bfb_optin ) {
+			et_builder_action_bfb_optin_modal_shown();
 		}
 
 		if ( empty( $redirect ) ) {
@@ -4558,9 +4566,10 @@ function et_pb_pagebuilder_meta_box() {
 
 	if ( et_builder_bfb_enabled() ) {
 		$classic_builder_url = add_query_arg( array(
-			'action' => 'et_builder_toggle_bfb',
-			'enable' => '0',
-			'nonce' => wp_create_nonce( 'et_builder_toggle_bfb' ),
+			'action'         => 'et_builder_toggle_bfb',
+			'enable'         => '0',
+			'skip_bfb_optin' => '1',
+			'nonce'          => wp_create_nonce( 'et_builder_toggle_bfb' ),
 		), admin_url( 'admin-ajax.php' ) );
 
 		$new_page_url = false;

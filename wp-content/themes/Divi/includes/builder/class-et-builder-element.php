@@ -2276,10 +2276,7 @@ class ET_Builder_Element {
 				// Ensuring that all possible attributes exist to avoid remaining child attributes being used by global parents' attributes
 				// Do that only in case the module is fully global
 				if ( $is_module_fully_global ) {
-					$global_atts = wp_parse_args(
-						shortcode_parse_atts( et_pb_remove_shortcode_content( $global_content_processed, $this->slug ) ),
-						array_map( '__return_empty_string', $this->whitelisted_fields )
-					);
+					$global_atts = shortcode_parse_atts( et_pb_remove_shortcode_content( $global_content_processed, $this->slug ) );
 				} else {
 					$global_atts = shortcode_parse_atts( $global_content_processed );
 				}
@@ -9813,7 +9810,7 @@ class ET_Builder_Element {
 
 				$slug     = et_builder_add_prefix( $prefix, $key );
 				$css_prop = $this->field_to_css_prop( $key );
-				$option   = self::$_->array_get( $this->fields_unprocessed, $key, array() );
+				$option   = self::$_->array_get( $this->fields_unprocessed, $slug, array() );
 
 				$width_options_css = self::$_->array_get($field, 'css', array());
 				$default_selector  = self::$_->array_get( $width_options_css, 'main', '%%order_class%%' );
@@ -9878,6 +9875,8 @@ class ET_Builder_Element {
 						$function_name,
 						$additional_css
 					);
+				} else if ( '' !== $default && '100%' !== $default && ! in_array( $default, array( 'auto', 'none' ) ) ) {
+					$is_customized = true;
 				}
 
 				// Hover styles
@@ -9920,8 +9919,8 @@ class ET_Builder_Element {
 				$module_alignment = $this->prop( $slug, '' );
 
 				if ( $is_customized && isset( $module_alignment_styles[ $module_alignment ] ) ) {
-					$default_selector  = self::$_->array_get( $field, 'css.main', '%%order_class%%' );
-					$selector          = self::$_->array_get( $field, 'module_alignment', $default_selector );
+					$default_selector  = self::$_->array_get( $field, 'css.main', '%%order_class%%.et_pb_module' );
+					$selector          = self::$_->array_get( $field, 'css.module_alignment', $default_selector );
 
 					self::set_style( $function_name, array(
 						'selector'    => $selector,
@@ -9940,7 +9939,6 @@ class ET_Builder_Element {
 
 		$hover      = et_pb_hover_options();
 		$responsive = et_pb_responsive_options();
-		$all_fields = ET_Builder_Module_Fields_Factory::get( 'Height' )->get_fields();
 		$settings   = self::$_->array_get( $this->advanced_fields, "height", array() );
 		$fields     = array_merge( array( '' => $settings ), self::$_->array_get( $settings, 'extra', array() ) );
 
@@ -9959,7 +9957,7 @@ class ET_Builder_Element {
 				}
 
 				$slug      = $helper->get_field( $prefix );
-				$field     = self::$_->array_get( $all_fields, $key, array() );
+				$field     = self::$_->array_get( $this->fields_unprocessed, $slug, array() );
 				$css_props = $this->field_to_css_prop( $key );
 				$selector  = self::$_->array_get( $settings, "css.{$key}", $default_selector );
 
@@ -9973,7 +9971,7 @@ class ET_Builder_Element {
 
 					et_pb_generate_responsive_css( $values, $selector, $css_props, $function_name );
 				} else {
-					$default = self::$_->array_get( $all_fields, "{$key}.default" );
+					$default = self::$_->array_get( $field, 'default' );
 					$value   = $helper->get_value( $this->props, $default );
 
 					if ( $value !== '' && $value !== $default ) {

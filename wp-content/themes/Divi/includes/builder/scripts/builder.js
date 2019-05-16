@@ -5,7 +5,7 @@ window.wp = window.wp || {};
 /**
  * The builder version and product name will be updated by grunt release task. Do not edit!
  */
-window.et_builder_version = '3.22.1';
+window.et_builder_version = '3.22.7';
 window.et_builder_product_name = 'Divi';
 
 ( function($) {
@@ -9532,8 +9532,11 @@ window.et_builder_product_name = 'Divi';
 				}
 
 				var content                 = et_pb_get_content( 'content', true );
-				var _loadingSpinnerHTML     = '<svg class="yoast-svg-icon et-pb-yoast-loading yoast-svg-icon-loading-spinner SvgIcon__StyledSvg-jBzRth mPAyu" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" fill="#64a60a" style="position: absolute; background: #fff; border-radius: 5px;"><circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg>';
+				var _loadingSpinnerHTML     = '<svg class="yoast-svg-icon et-pb-yoast-loading yoast-svg-icon-loading-spinner SvgIcon__StyledSvg-jBzRth mPAyu" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" fill="#64a60a" style="position: absolute; background: #fff; border-radius: 5px; max-width: 18px;"><circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg>';
 				var $yoastAnalysisContainer = $('#yoast-readability-analysis-collapsible-metabox');
+
+				// Remove our loader if exists
+				$('.et-pb-yoast-loading').remove();
 
 				// Add loader icon on top of the Yoast icon to show the progress
 				$yoastAnalysisContainer.find('svg').first().after(_loadingSpinnerHTML);

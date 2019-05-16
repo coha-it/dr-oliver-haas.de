@@ -51,33 +51,33 @@ class ET_Builder_Module_Settings_Migration_RowCustomWidthToSizing extends ET_Bui
 	) {
 		$raw_field = str_replace( 'inner_', '', $field_name );
 
-		if ( et_()->array_get( $attrs, 'use_custom_width' ) === 'on' ) {
-			$percent = et_()->array_get( $attrs, 'width_unit' ) === 'off';
+		if ( et_builder_module_prop( 'use_custom_width', $attrs, '' ) === 'on' ) {
+			$percent = et_builder_module_prop( 'width_unit', $attrs, '' ) === 'off';
 			$field   = $percent ? 'custom_width_percent' : 'custom_width_px';
 
 			switch ( $raw_field ) {
 				// If the field is set to % only the max-width is defined
 				case 'width':
-					return ! $percent ? $saved_value : et_()->array_get( $attrs, $field );
+					return ! $percent ? $saved_value : et_builder_module_prop( $field, $attrs, '' );
 				case 'width__hover':
-					return ! $percent ? $saved_value : et_()->array_get( $attrs, "{$field}__hover" );
+					return ! $percent ? $saved_value : et_builder_module_prop( "{$field}__hover", $attrs, '' );
 				case 'width__hover_enabled':
-					return ! $percent ? $saved_value : et_()->array_get( $attrs, "{$field}__hover_enabled" );
+					return ! $percent ? $saved_value : et_builder_module_prop( "{$field}__hover_enabled", $attrs, '' );
 
 				case 'max_width':
-					return et_()->array_get( $attrs, $field );
+					return et_builder_module_prop( $field, $attrs, $percent ? '80%' : '' );
 				case 'max_width__hover':
-					return et_()->array_get( $attrs, "{$field}__hover" );
+					return et_builder_module_prop( "{$field}__hover", $attrs, '' );
 				case 'max_width__hover_enabled':
-					return et_()->array_get( $attrs, "{$field}__hover_enabled" );
+					return et_builder_module_prop( "{$field}__hover_enabled", $attrs, '' );
 				default:
 					return $saved_value;
 			}
 
 		}
 
-		if ( et_()->array_get( $attrs, 'make_fullwidth' ) === 'on' ) {
-			$gutter = (int) et_()->array_get( $attrs, 'gutter_width' );
+		if ( et_builder_module_prop( 'make_fullwidth', $attrs, '' ) === 'on' ) {
+			$gutter = (int) et_builder_module_prop( 'gutter_width', $attrs, '' );
 
 			switch ( $raw_field ) {
 				case 'module_class':
@@ -93,8 +93,8 @@ class ET_Builder_Module_Settings_Migration_RowCustomWidthToSizing extends ET_Bui
 					return $this->get_width( $gutter );
 			}
 
-			if ( et_()->array_get( $attrs, 'gutter_width__hover_enabled' ) === 'on' ) {
-				$gutter = (int) et_()->array_get( $attrs, 'gutter_width__hover' );
+			if ( et_builder_module_prop( 'gutter_width__hover_enabled', $attrs, '' ) === 'on' ) {
+				$gutter = (int) et_builder_module_prop( 'gutter_width__hover', $attrs, '' );
 
 				switch ( $raw_field ) {
 					case 'width__hover_enabled':

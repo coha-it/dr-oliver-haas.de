@@ -6066,6 +6066,11 @@ function et_divi_add_customizer_css() {
 			return;
 		}
 
+		/** @see ET_Support_Center::toggle_safe_mode */
+		if ( et_core_is_safe_mode_active() ) {
+			return;
+		}
+
 		$post_id     = et_core_page_resource_get_the_ID();
 		$is_preview  = is_preview() || isset( $_GET['et_pb_preview_nonce'] ) || is_customize_preview();
 		$is_singular = et_core_page_resource_is_singular();

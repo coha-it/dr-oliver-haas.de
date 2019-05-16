@@ -1,3 +1,94 @@
+version 3.22.7 ( updated 05-03-2019 )
+- Fixed being able to add Gutenberg blocks in some cases while the Divi placeholder was active.
+	* includes/builder/frontend-builder/bundle.js
+
+version 3.22.6 ( updated 04-30-2019 )
+- Prevent rendering Draggable Sizing during Split Testing Configuration.
+- Fixed casual draggable spacing control rendering when module is not hovered.
+- Fixed cases when module popover not appear even if user hover module.
+- Fixed draggable margin controls when module has overflow hidden and margin in %.
+- Improved Divi / Gutenberg integration in WordPress 5.2.
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/functions.php
+	* includes/builder/scripts/builder.js
+
+version 3.22.5 ( updated 04-26-2019 )
+- Prevented module alignment option from overriding custom margin values.
+- Fixed unexpected confirmation alert when exiting from The New Divi Builder in some cases.
+- Fixed the issue when The New Divi Experience Optin Modal was wrongly displayed in some cases.
+- Fixed modules settings popover delay on hover.
+- Fixed Gallery and Filtered Portfolio Modules Breakdown.
+- Fixed Gallery and Filtered Portfolio Modules Spacing if they are on the last module of the column.
+- Fixed the issue when a box shadow of an image of the Portfolio Module was not applied within the builder.
+- Prevent showing draggable sizing controls when doing a quick action.
+- Fixed the issue when Right Click menu wasn't opened if clicked on the Settings Modal header.
+- Fixed Right Click Menu position when Settings Modal is on top of the screen.
+- Fixed a bug that would sometimes prevent text from being selectable in the Visual Builder.
+- Fixed a bug where the ET Support user was unable to access Divi Library features.
+- Fixed custom post types row width.
+	* core/components/SupportCenter.php
+	* core/ui/components/icon/icon.jsx
+	* et-pagebuilder/et-pagebuilder.php
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/core.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/module/AccordionItem.php
+	* includes/builder/module/BarCountersItem.php
+	* includes/builder/module/FilterablePortfolio.php
+	* includes/builder/module/Portfolio.php
+	* includes/builder/scripts/frontend-builder-global-functions.js
+	* includes/builder/scripts/frontend-builder-scripts.js
+	* includes/builder/styles/frontend-builder-grid.less
+	* includes/builder/styles/frontend-builder-shared-conditional-style.less
+	* includes/builder/styles/frontend-builder-style.less
+
+version 3.22.4 ( updated 04-18-2019 )
+- Improved The New Divi Builder Optin Modal logic, so it won't appear if Backend Builder activated intentionally.
+- Fixed deprecated variable call when rendering Global Modules.
+- Fixed big loading icon over the Yoast section during Divi Builder content analysis.
+- Fixed missing styles in Portability Modal when using the New Divi Experience.
+- Prevent Draggable Sizing controls render on Product Tour.
+- Fixed issue when module Add button is under draggable margin control when margin is negative.
+- Fixed specialty section inner width settings not working on blog posts.
+	* core/components/Portability.php
+	* et-pagebuilder/et-pagebuilder.php
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/core.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/functions.php
+	* includes/builder/scripts/builder.js
+
+version 3.22.3 ( updated 04-17-2019 )
+- Fixed rows and speciality sections with gutter width 0 Width and Max Width.
+- Fixed errors that would prevent the Visual Builder from working correctly when the page structure got corrupted.
+- Fixed Row Custom Width migration.
+- Fixed a compatiblity issue with some Divi Plugins that was recently introduced.
+- Fixed background video issue when video get margins.
+- Fixed an error in the Support Center when there is a mismatch between the contents of the WordPress plugins directory and Active Plugin records in the WP database.
+- Fixed images not being embedded in export files in certain cases.
+	* core/admin/js/portability.js
+	* core/components/Portability.php
+	* core/components/SupportCenter.php
+	* includes/builder/core.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/module/settings/Migration.php
+	* includes/builder/module/settings/migration/RowCustomWidthToSizing.php
+	* includes/builder/module/settings/migration/RowZeroGutter.php
+	* includes/builder/scripts/frontend-builder-scripts.js
+
+version 3.22.2 ( updated 04-15-2019 )
+- Fixed row width options not working correctly on blog post types.
+- Fixed fullwidth rows not extending full width when Boxed Layout was enabled in the Divi Theme Customizer.
+- Fixed a bug that caused settings modals to close when hovering over the content area of a module sub item, such as tabs or accordion items. 
+- Fixed row alignment settings not working when no customer width was applied. 
+- Fixed draggable width tooltip styles being overwritten by custom module styles.
+	* et-pagebuilder/et-pagebuilder.php
+	* includes/builder/core.php
+	* includes/builder/feature/ErrorReport.php
+	* includes/builder/main-structure-elements.php
+	* includes/builder/frontend-builder/app/stores/et-builder-store.js
+	* includes/builder/class-et-builder-element.php
+
 version 3.22.1 ( updated 04-12-2019 )
 - Fix incorrect default value for border controls in the Classic Divi Builder.
 - Fixed modules width and max_width support on front end.
