@@ -20,3 +20,4 @@ wp-content/plugins/hello.php
 
 # Custom
 .user.ini
+/w-content/updraft/backup*.zip
