@@ -22,3 +22,4 @@ wp-content/plugins/hello.php
 /.user.ini
 /w-content/updraft/backup*.zip
 wp-content/wflogs/
+wp-content/wflogs/config-livewaf.php
