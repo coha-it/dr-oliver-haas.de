@@ -19,6 +19,6 @@ wp-content/plugins/hello.php
 /sitemap.xml.gz
 
 # Custom
-.user.ini
+/.user.ini
 /w-content/updraft/backup*.zip
 wp-content/wflogs/
