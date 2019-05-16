@@ -20,6 +20,7 @@ function add_theme_codes() {
     // **** CSS **** //
     // Owl CSS
     wp_enqueue_style( 'style', get_stylesheet_directory_uri().'/src/css/owl.carousel.min.css', 'all');
+    wp_enqueue_style( 'style', get_stylesheet_directory_uri().'/src/css/custom.css', 'all');
 
     // **** JavaScript **** //
     // Owl JS
