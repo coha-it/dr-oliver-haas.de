@@ -3,7 +3,7 @@
  * Plugin Name: Simple Custom CSS and JS 
  * Plugin URI: https://wordpress.org/plugins/custom-css-js/
  * Description: Easily add Custom CSS or JS to your website with an awesome editor.
- * Version: 3.24
+ * Version: 3.26
  * Author: SilkyPress.com 
  * Author URI: https://www.silkypress.com
  * License: GPL2
@@ -12,7 +12,7 @@
  * Domain Path: /languages/
  *
  * WC requires at least: 2.3.0
- * WC tested up to: 3.5
+ * WC tested up to: 3.6
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -169,17 +169,19 @@ final class CustomCSSandJS {
             if ( strpos( $function, 'footer' ) !== false ) {
                 $in_footer = true;
             }
+
+            $upload_url = str_replace(array('https://', 'http://'), '//', CCJ_UPLOAD_URL) . '/';
             
             if ( strpos( $function, 'js' ) !== false ) {
                 foreach( $args as $_filename ) {
-                    echo PHP_EOL . "<script type='text/javascript' src='".CCJ_UPLOAD_URL. '/' . $_filename."'></script>" . PHP_EOL;
+                    echo PHP_EOL . "<script type='text/javascript' src='".$upload_url . $_filename."'></script>" . PHP_EOL;
                 }
             }
 
             if ( strpos( $function, 'css' ) !== false ) {
                 foreach( $args as $_filename ) {
                     $shortfilename = preg_replace( '@\.css\?v=.*$@', '', $_filename );
-                    echo PHP_EOL . "<link rel='stylesheet' id='".$shortfilename ."-css'  href='".CCJ_UPLOAD_URL. '/' . $_filename ."' type='text/css' media='all' />" . PHP_EOL;
+                    echo PHP_EOL . "<link rel='stylesheet' id='".$shortfilename ."-css'  href='".$upload_url . $_filename."' type='text/css' media='all' />" . PHP_EOL;
                 }
             }
         }
@@ -202,7 +204,7 @@ final class CustomCSSandJS {
     function set_constants() {
         $dir = wp_upload_dir();
         $constants = array(
-            'CCJ_VERSION'         => '3.24',
+            'CCJ_VERSION'         => '3.26',
             'CCJ_UPLOAD_DIR'      => $dir['basedir'] . '/custom-css-js', 
             'CCJ_UPLOAD_URL'      => $dir['baseurl'] . '/custom-css-js', 
             'CCJ_PLUGIN_FILE'     => __FILE__,

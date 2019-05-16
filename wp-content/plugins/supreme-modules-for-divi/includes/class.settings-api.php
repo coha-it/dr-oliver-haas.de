@@ -518,27 +518,83 @@ class DSM_Settings_API {
      */
     function show_forms() {
         ?>
-        <div class="metabox-holder">
-            <?php foreach ( $this->settings_sections as $form ) { ?>
-                <div id="<?php echo $form['id']; ?>" class="group" style="display: none;">
-                    <form method="post" action="options.php">
-                        <?php
-                        do_action( 'wsa_form_top_' . $form['id'], $form );
-                        settings_fields( $form['id'] );
-                        do_settings_sections( $form['id'] );
-                        do_action( 'wsa_form_bottom_' . $form['id'], $form );
-                        if ( isset( $this->settings_fields[ $form['id'] ] ) ):
-                        ?>
-                        <div style="padding-left: 10px">
-                            <?php submit_button(); ?>
+        <div id="poststuff">
+            <div id="post-body" class="metabox-holder columns-2">
+                <div id="post-body-content">
+                    <div class="meta-box-sortables ui-sortable">
+                    <?php foreach ( $this->settings_sections as $form ) { ?>
+                        <div id="<?php echo $form['id']; ?>" class="group" style="display: none;">
+                            <form method="post" action="options.php">
+                                <?php
+                                do_action( 'wsa_form_top_' . $form['id'], $form );
+                                settings_fields( $form['id'] );
+                                do_settings_sections( $form['id'] );
+                                do_action( 'wsa_form_bottom_' . $form['id'], $form );
+                                if ( isset( $this->settings_fields[ $form['id'] ] ) ):
+                                ?>
+                                <div style="padding-left: 10px">
+                                    <?php submit_button(); ?>
+                                </div>
+                                <?php endif; ?>
+                            </form>
                         </div>
-                        <?php endif; ?>
-                    </form>
+                    <?php } ?>
+                    </div>
                 </div>
-            <?php } ?>
+                <?php $this->divi_supreme_settings(); ?>
+            </div>
         </div>
         <?php
         $this->script();
+    }
+
+    function divi_supreme_settings() {
+    ?>
+    <div id="postbox-container-1" class="postbox-container">
+        <div class="meta-box-sortables">
+            <div class="postbox">
+                <h3 class="activity-block"><span class="dashicons dashicons-star-filled"></span> <?php _e( "Go Pro", 'dsm-supreme-modules-for-divi' ) ?></h3>
+                <div class="inside">
+                    <p><?php _e( "Get more Divi Modules and Divi Extensions by upgrading to Pro.", 'dsm-supreme-modules-for-divi' ); ?></p>
+                    <a href="https://divisupreme.com/features/" class="button button-primary" target="_blank"><?php _e( "Learn More", 'dsm-supreme-modules-for-divi' ) ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="meta-box-sortables">
+            <div class="postbox">
+                <h3 class="activity-block"><span class="dashicons dashicons-media-document"></span> <?php _e( "Documentation", 'dsm-supreme-modules-for-divi' ) ?></h3>
+                <div class="inside">
+                    <p><?php _e( "Get started by spending some time with the documentation to get familiar with Divi Supreme Pro. The Documentation will cover all the information needed when using our Divi Supreme to build an amazing website, as well as some helpful tips and tricks that will make your experience working with our Divi modules and extensions easier and more enjoyable.", 'dsm-supreme-modules-for-divi' ); ?></p>
+                    <a href="https://docs.divisupreme.com/" class="button button-primary" target="_blank"><?php _e( "Documentation", 'dsm-supreme-modules-for-divi' ) ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="meta-box-sortables">
+            <div class="postbox">
+                <h3 class="activity-block"><span class="dashicons dashicons-sos"></span> <?php _e( "Need Help?", 'dsm-supreme-modules-for-divi' ) ?></h3>
+                <div class="inside">
+                    <p><?php _e( "Having issues or difficulties? Get help from the community on our Facebook Divi Supreme Community or contact us through our website contact form.", 'dsm-supreme-modules-for-divi' ); ?></p>
+                    <p>
+                    <a href="https://www.facebook.com/groups/261974664518981/" class="button button-primary" target="_blank"><?php _e( "Join Divi Supreme Community", 'dsm-supreme-modules-for-divi' ) ?></a>
+                </p>
+                    <a href="https://divisupreme.com/contact/" class="button button-primary" target="_blank"><?php _e( "Contact Support", 'dsm-supreme-modules-for-divi' ) ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="meta-box-sortables">
+            <div class="postbox">
+                <h3 class="activity-block"><span class="dashicons dashicons-heart"></span> <?php _e( "Motivate us!", 'dsm-supreme-modules-for-divi' ) ?></h3>
+                <div class="inside">
+                    <p><?php _e( "Could you please do us a BIG favor and give it a 5-star rating on WordPress? This would boost our motivation and help other users make a comfortable decision while choosing the Divi Supreme. ", 'dsm-supreme-modules-for-divi' ); ?></p>
+                    <p>
+                    <a href="https://wordpress.org/support/plugin/supreme-modules-for-divi/reviews/?rate=5#new-post" target="_blank" style="color:#ffb900; text-decoration: none;" class="dsm-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'dsm-supreme-modules-for-divi' ) . '"><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span></a>
+                    </p>
+                    <a href="https://wordpress.org/support/plugin/supreme-modules-for-divi/reviews/?rate=5#new-post" data-rated="' . esc_attr__( 'Thanks :)', 'dsm-supreme-modules-for-divi' ) . '" class="button button-primary" target="_blank"><?php _e( "Write a review", 'dsm-supreme-modules-for-divi' ) ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php  
     }
 
     /**

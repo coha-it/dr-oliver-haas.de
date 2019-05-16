@@ -173,7 +173,7 @@ if ( ! class_exists( 'AM_Notification', false ) ) {
 				}
 
 				// Set the option now so we can't run this again until after 24 hours.
-				update_option( '_amn_' . $this->plugin . '_to_check', time() + 3 * DAYS_IN_SECONDS );
+				update_option( '_amn_' . $this->plugin . '_to_check', time() + 3 * DAY_IN_SECONDS );
 			}
 		}
 

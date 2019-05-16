@@ -169,6 +169,28 @@ if ( dsm_setting_get_option( 'dsm_use_scheduled_content', 'dsm_general' ) == 'on
     }
 
 }
+// Load custom CF
+if( ! function_exists( 'dsm_et_builder_load_actions' )) {
+    function dsm_et_builder_load_actions( $actions ) {
+        $actions[] = 'dsm_load_caldera_forms';
+
+        return $actions;
+    }
+}
+
+add_filter( 'et_builder_load_actions', 'dsm_et_builder_load_actions' );
+
+if( ! function_exists( 'dsm_load_caldera_forms' )) {
+function dsm_load_caldera_forms() {
+    if ( ! wp_verify_nonce( $_POST['et_admin_load_nonce'], 'et_admin_load_nonce' ) ) {
+            wp_die();
+        }  
+        echo do_shortcode( '[caldera_form id="' . $_POST['cf_library'] . '"]' );
+        wp_die();
+    }
+}
+add_action( 'wp_ajax_nopriv_dsm_load_caldera_forms', 'dsm_load_caldera_forms' );
+add_action( 'wp_ajax_dsm_load_caldera_forms', 'dsm_load_caldera_forms' );
 
 // Load custom CF7
 if( ! function_exists( 'dsm_et_builder_load_actions' )) {
@@ -193,7 +215,9 @@ function dsm_load_cf7_library() {
 add_action( 'wp_ajax_nopriv_dsm_load_cf7_library', 'dsm_load_cf7_library' );
 add_action( 'wp_ajax_dsm_load_cf7_library', 'dsm_load_cf7_library' );
 
-remove_action( 'wpcf7_init', 'wpcf7_add_shortcode_submit', 20 );
+/* Removing default submit tag */
+remove_action( 'wpcf7_init', 'wpcf7_add_form_tag_submit' );
+//remove_action( 'wpcf7_init', 'wpcf7_add_shortcode_submit', 20 );
 add_action( 'wpcf7_init', 'dsm_wpcf7_add_form_tag_submit' );
 if ( !function_exists('dsm_wpcf7_add_form_tag_submit') ) {
     function dsm_wpcf7_add_form_tag_submit() {

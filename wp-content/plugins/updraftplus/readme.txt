@@ -2,8 +2,8 @@
 Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snightingale, bcrodua
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
-Tested up to: 5.1
-Stable tag: 1.16.11
+Tested up to: 5.2
+Stable tag: 1.16.14
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -166,12 +166,29 @@ Unfortunately not; since this is free software, there’s no warranty and no gua
 
 The <a href="https://updraftplus.com/news/">UpdraftPlus backup blog</a> is the best place to learn in more detail about any important changes.
 
-N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which is 1 higher in the first digit, and has an extra component on the end, but the changelog below still applies. i.e. changes listed for 1.16.11.x of the free version correspond to changes made in 2.16.11.x of the paid version.
+N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which is 1 higher in the first digit, and has an extra component on the end, but the changelog below still applies. i.e. changes listed for 1.16.14.x of the free version correspond to changes made in 2.16.14.x of the paid version.
 
-= 1.6.11 - 08/Apr/2019 =
+= 1.16.14 - 30/Apr/2019 =
 
-* FIX: issue which prevented the downloader UI being removed during a manual entity download (regression)
-* FIX: regression in 1.16.10 whereby restore resumptions did not correctly resume because the jobdata had not been loaded
+* TWEAK: Make UpdraftVault trial more discoverable
+* TWEAK: Fix stray JavaScript in the short-lived version 1.16.13
+* TWEAK: Add support to translation updates
+* TWEAK: Add WP 5.2 support in UpdraftClone
+* TWEAK: Prevent PHP notice in remotesend method
+* TWEAK: Restorations are now started over AJAX instead of in-page. This is preparing the way for future UX improvements.
+* TWEAK: Upgraded the 'site-to-site' remote sending code to use the more recent UDRPC message format
+* TWEAK: Make the UpdraftClone suggestion sentences dismissible
+* TWEAK: Improve JSON-reparser to cope with even more exotic junk from some setups with problems elsewhere in their stack
+
+= 1.16.12 - 16/Apr/2019 =
+
+* FIX: Regression which caused PclZip unzips to be very slow
+* TWEAK: Add stream_meta to the list of log tables and tables not requiring search/replace
+
+= 1.16.11 - 08/Apr/2019 =
+
+* FIX: Issue which prevented the downloader UI being removed during a manual entity download (regression)
+* FIX: Regression in 1.16.10 whereby restore resumptions did not correctly resume because the jobdata had not been loaded
 * TWEAK: Update UpdraftCentral description and internationalize strings
 * TWEAK: Handle HTTP/2 responses from Dropbox on some operations
 * TWEAK: Add a timeout on Dropbox quota look-up operations during backup, in response to cases of faulty outgoing HTTP proxies
@@ -830,6 +847,5 @@ Furthermore, reliance upon any non-English translation is at your own risk. Updr
 
 We recognise and thank the following for code and/or libraries used and/or modified under the terms of their open source licences; see: https://updraftplus.com/acknowledgements/
 
-
 == Upgrade Notice ==
-* 1.16.11: Small tweaks and fixes. A recommended update for all.
+* 1.16.14: Various small tweaks and improvements. A recommended update for all.

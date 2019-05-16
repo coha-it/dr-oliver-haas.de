@@ -52,7 +52,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy206_Configurate {
 	}
 	
 	public function notificationsPanel( &$wp_admin_bar ) {
-		if ( ! $this->getPopulateOption( 'show_notices_in_adminbar', false ) && current_user_can( 'manage_network' ) ) {
+		if ( ! $this->getPopulateOption( 'show_notices_in_adminbar', false ) ) {
 			return;
 		}
 		
@@ -202,7 +202,13 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy206_Configurate {
 		global $wbcr_dan_plugin_all_notices;
 		
 		try {
-			$wp_filter_admin_notices = &$this->getWPFilter( 'admin_notices' );
+			if ( is_multisite() && is_network_admin() ) {
+				$wp_filter_admin_notices = &$this->getWPFilter( 'network_admin_notices' );
+			} else {
+				$wp_filter_admin_notices = &$this->getWPFilter( 'admin_notices' );
+			}
+			//todo: Доработать all admin notices
+			
 		} catch( Exception $e ) {
 			$wp_filter_admin_notices = null;
 		}

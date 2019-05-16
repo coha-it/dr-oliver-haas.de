@@ -11,7 +11,8 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu,
-.et-db #et-boc .et-fb-modules-list li.dsm_pricelist {
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms {
     background: #6b09eb;
     color: #fff;
     font-size: 10px;
@@ -38,6 +39,7 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_flipbox:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_divider:active,
@@ -52,6 +54,7 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_flipbox:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_divider:focus,
@@ -65,7 +68,8 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:focus,
-.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:focus {
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms:focus {
     background: rgba(107, 9, 235, 0.78);
     color: #fff;
 }

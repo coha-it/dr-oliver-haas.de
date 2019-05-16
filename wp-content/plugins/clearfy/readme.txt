@@ -3,8 +3,8 @@ Contributors: webcraftic
 Donate link: https://clearfy.pro/pricing/?utm_source=wordpress.org&utm_campaign=wbcr_clearfy&utm_content=repo
 Tags: wp disable, disable comments, disable updates, disable emoji, disable embeds, remove querystrings, disable rest api, bicycles by falbar, remove rss feeds, remove meta generator, yoast seo remove comments, yoast seo, yoast seo breadcrumbs, disable embeds,remove embeds, remove rsd link, dns-prefetch, remove dns-prefetch, meta generator, rsd link, wlw manifest link, remove wlw manifest link, canonical link, remove canonical link, shortlink link, remove shortlink link, emoji, attachment pages, remove attachment pages, rss feeds, disable rss feeds, rest api, disable rest api, remove rest api, clearfy, archives date, post pagination, archives author, hide login errors, recent comments, tag, rpc, xml, xml rpc, xmlrpc, admin bar, remove querystrings, reduce HTTP requests, disable heartbeat, disable revision, heartbeat, revision, clean, optimize, remove rest-api, remove rest-api, remove jquery migrate, html minify, robots.txt editor, plugin updates, disable plugin updates, disable core updates, core updates, enable automatic updates, disable widgets, disable default widgets, remove html comments
 Requires at least: 4.2
-Tested up to: 5.0
-Requires PHP: 5.3
+Tested up to: 5.2
+Requires PHP: 5.4
 Stable tag: trunk
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -14,16 +14,6 @@ Optimize and tweak WordPress by disable unused features. Improve performance, SE
 == Description ==
 
 Thousands of users already optimized their WordPress sites with **Clearfy plugin**. It’s multipurpose and free tool with tons of settings. Combine it with other plugins and you’ll get better optimized and secure WordPress website.
-
-#### NEED SUPPORT, WE GOT YOU COVERED ####
-We provide free support for this plugin. If you are pushed with a problem, just create a new ticket. We will definitely help you!
-
-1. **[Get starting free support](https://clearfy.pro/support/?utm_source=wordpress.org&utm_campaign=wbcr_clearfy&utm_content=repo_description)**
-4. **[Hot support](https://clearfy.pro/hot-support/?utm_source=wordpress.org&utm_campaign=wbcr_clearfy&utm_content=repo_description)** - Any user can contact us. You can use it only if you find a php error in plugin, get a white screen, or want to report a vulnerability.
-
-#### ADDITIONAL RESOURCES ####
-1. **[Youtube channel](https://www.youtube.com/channel/UCxOg4XzLe5kX1bP2YP4TTfQ)**
-2. **[Telegram](https://t.me/webcraftic)**
 
 ### Optimize SEO and SPEED of your website in 5 minutes ###
 1. **Clear website code from trash;**
@@ -248,6 +238,19 @@ Of course! To do this, email us your wishes with address, which you will find in
 
 
 == Changelog ==
+= 1.5.3 =
+* Fixed: Bug with Elementor plugin. If you enable options "remove query strings for static resources", elementor plugin stopped its work
+* Fixed: [Update manager component]: When you disable WordPress core updates, you still see an update notification for version 5.x.x
+* Fixed: [Update manager component]: Clearfy compatibility error. Namely, when the component was activated, the cron tasks for checking for updates were not runned.
+* Fixed: [Update manager component]: PHP Notice "Undefined property: stdClass::$plugin"
+* Fixed: [Assets manager component]: Php error "Cannot use string offset as an array"
+* Fixed: [Assets manager component]: Broken interface and some javascript errors
+* Fixed: [Assets manager component]: PHP Notice "Trying to get property 'taxonomy' of non-object"
+* Fixed: When you enable the remove meta generator option, meta tag viewport can also be removed.
+* Fixed: After enabling the Google Fonts asynchronous option, you could see php notice "Notice: Trying to get property of non-object"
+* Fixed: Disabling revisions in Wordpress 5.0 does not work (Gutenberg).
+* Fixed: Compatible with Robin Image Optimizer 1.3.6
+
 = 1.5.0 =
 * Fixed: Bug when disabling embeds, in Wordpress 5.0 did not work editor gutenberg
 = 1.4.9 =

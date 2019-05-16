@@ -130,6 +130,8 @@ class CustomCSSandJS_Admin {
 
         // Only for the new/edit Code's page
         if ( $hook == 'post-new.php' || $hook == 'post.php' ) {
+            wp_deregister_script('wp-codemirror');
+
             wp_enqueue_style( 'jquery-ui', 'https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css', array(), $v );
             wp_enqueue_script( 'ccj-codemirror', $cm . '/lib/codemirror.js', array( 'jquery' ), $v, false);
             wp_enqueue_style( 'ccj-codemirror', $cm . '/lib/codemirror.css', array(), $v );
@@ -620,10 +622,10 @@ End of comment */ ', 'custom-css-js') . PHP_EOL . PHP_EOL;
                     $post->post_content = __('<!-- Add HTML code to the header or the footer.
 
 For example, you can use the following code for loading the jQuery library from Google CDN:
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 or the following one for loading the Bootstrap library from MaxCDN:
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
 -- End of the comment --> ', 'custom-css-js') . PHP_EOL . PHP_EOL;
                 }

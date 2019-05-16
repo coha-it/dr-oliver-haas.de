@@ -3,7 +3,7 @@
 Plugin Name: Divi Supreme Modules
 Plugin URI:  https://suprememodules.com
 Description: Supreme Modules enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
-Version:     1.4.9
+Version:     1.5.3
 Author:      Supreme Modules
 Author URI:  https://suprememodules.com/about-us/
 License:     GPL2
@@ -36,7 +36,7 @@ if ( version_compare(PHP_VERSION, '5.6', '<') ) {
 	add_action( 'admin_notices', 'dsm_admin_notice__php_version_error' );
 	return;
 } else {
-	define( 'DSM_VERSION', '1.4.9' );
+	define( 'DSM_VERSION', '1.5.3' );
 	define( 'DSM_SHORTCODE', 'divi_shortcode' );
 
 	if ( ! function_exists( 'dsm_initialize_extension' ) ):
@@ -51,7 +51,12 @@ if ( version_compare(PHP_VERSION, '5.6', '<') ) {
 	add_action( 'divi_extensions_init', 'dsm_initialize_extension' );
 	endif;
 
-	require_once plugin_dir_path( __FILE__ ) . 'includes/SupremeModulesLoader.php';
+	if ( ! function_exists( 'dsm_supreme_module_loader' ) ):
+	function dsm_supreme_module_loader() {
+		require_once plugin_dir_path( __FILE__ ) . 'includes/SupremeModulesLoader.php';
+	}
+	add_action( 'after_setup_theme', 'dsm_supreme_module_loader', 11 );
+	endif;
 
 	function dsm_scripts(){
 	    wp_register_script('dsm-typed', plugin_dir_url( __FILE__ ) . 'assets/js/typed.min.js', array(), DSM_VERSION, true );

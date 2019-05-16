@@ -1,11 +1,11 @@
 === Divi Supreme Modules ===
 Contributors: divisupreme, kenng87
-Tags: Divi, Divi Module, Divi Custom Module, divi theme, divi builder, Divi Gradient Text, Divi Typing Effect, Divi 3D Image, Divi Image, Divi Text Divider, facebook feed, facebook comments
+Tags: Divi, Divi Module, Divi Contact Form, divi theme, divi builder, Divi Gradient Text, Divi Typing Effect, Divi 3D Image, Divi Image, Divi Text Divider, facebook feed, facebook comments
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.1.1
+Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.4.9
+Stable tag: 1.5.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Divi Supreme Modules plugin enhances the experience and features found on Divi a
 
 Divi Supreme Modules plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
 
-Divi Supreme contains 14 Divi custom modules and more to come soon.
+Divi Supreme contains 15 Divi custom modules and more to come soon.
 
 - Supreme Divi Gradient Text - By using Divi's built-in background gradient tool, this module allow you to have gradient text without coding.
 - Supreme Divi Flipbox - With 4 types of Flipbox effect to choose from (Flip Left, Flip Right, Flip Up and Flip Down), you can create stunning interactive content that converts. 
@@ -26,7 +26,8 @@ Divi Supreme contains 14 Divi custom modules and more to come soon.
 - Supreme Divi Facebook Feed - Create Facebook Page Feed easily without having to embed them again.
 - Supreme Divi Facebook Comments - Create Facebook Page Comments easily without having to embed them again.
 - Supreme Divi Embed Twitter Timeline - Create Twitter Timeline Feed easily without any coding.
-- Supreme Divi Contact Form 7 - Big fan of Contact Form 7 plugin? Now with Supreme Contact Form 7, you can select your contact Form from the dropdown list without having to go back and forth switching between Visual Builder and Contact Form 7 setting page copying the shortcode and adding to the Divi Code Module. Style your Input Fields, Button, Labels, Validation, Error Messages and more!
+- Supreme Divi Contact Form 7 - Big fan of Contact Form 7 plugin? Now with Supreme Contact Form 7, you can select your contact form from the dropdown list without having to go back and forth switching between Visual Builder and Contact Form 7 setting page copying the shortcode and adding it to the Divi Code Module. Style your Input Fields, Button, Labels, Validation, Error Messages and more!
+- Supreme Divi Caldera Forms - Now with Divi Supreme Caldera Forms module, you can select your contact form from the dropdown list without having to go back and forth switching between Visual Builder and Caldera Forms setting page copying the shortcode and adding it to the Divi Code Module. Style your Input Fields, Button, Labels, Error, Success Messages, Upload file and more!
 - Supreme Divi Embed Google Map - Embed Google Map right into your Divi's site easily without having to worry about anything else.
 - Supreme Divi Text Badges - This will show a badge before or after the text. A great way to show highlighted/important text badge.
 - Supreme Divi Menu - Display your WordPress menu and design it in whatever way you want. Use it for Footer or Sidebar.
@@ -36,7 +37,7 @@ Divi Supreme Extentions
 
 - Scheduled Content Visibility - This will extend the Visibility option in the the Section/Row's custom setting to allow you to show or hide the section or row with a specify date/time.  
 - Divi Templates - Designing Divi's footer or 404 page is one of the most challenging thing ever. Without programming background knowledgde, you have to deal with time and the learning process. But with Divi Templates, now you can design your footer or 404 page using Visual Builder and assign them. As easy as that, No coding required. Don't spend time finding those layout global module ID because you don't have to. Just 2 easy steps: Create a Template using Visual Builder, then assign them to footer/404. That's it! Save time = Smarter.
-- Divi Library Shortcodes - This will add a shortcode column in the Divi Library. Use that Divi shortcode to display your layout in any Divi module or even your PHP file by using [divi_shortcode id=""].
+- Divi Shortcodes - This will add a shortcode column in the Divi Library. Use that Divi shortcode to display your layout in any Divi module or even your PHP file by using [divi_shortcode id=""].
 
 Many more Divi Modules and Extensions coming soon...
 
@@ -88,6 +89,22 @@ Divi Builder >= version 2.1
 PHP version >= 5.6
 
 == Changelog ==
+= 1.5.3 - 15.05.2019 =
+* Added: Custom Radio and Checkbox style to Divi Supreme Caldera Forms Module.
+* Improved: Automatically disable Alert Style, Form Styles and Grid Structure on the frontend when using Divi Supreme Caldera Forms Module.
+
+= 1.5.2 - 08.05.2019 =
+* Fixed: Contact Form 7 Button not having et_pb_button css class.
+
+= 1.5.1 - 08.05.2019 =
+* Added: Label Asterisk color to Divi Supreme Caldera Forms Module.
+* Improved: Inline Checkbox and Radio for Divi Supreme Caldera Forms Module.
+* Improved: 4 columns layout for Divi Supreme Caldera Forms Module.
+* Enhanced: Divi Supreme plugin page UI and hook.
+
+= 1.5 - 07.05.2019 =
+* Added: Divi Supreme Caldera Forms Module - Select your Caldera forms and style your Caldera Form using Visual Builder.
+
 = 1.4.9 - 31.03.2019 =
 * Renamed: Divi Shortcodes to Divi Library Shortcodes.
 * Added: Width option to the Facebook Feed module.
