@@ -1,13 +1,21 @@
 /* Owl Fixes */
-.owl-centered .owl-wrapper {
-  display: table !important;
-}
-.owl-centered .owl-item {
-  display: table-cell;
-  float: none;
-  vertical-align: middle;
-}
-.owl-centered .owl-item > div {
-  text-align: center;
-}
+.owl-centered .owl-wrapper {display: table !important;}
+.owl-centered .owl-item {display: table-cell;float: none;vertical-align: middle;}
+.owl-centered .owl-item > div {text-align: center;}
 
+
+/* Owl Styling */
+.referenzen-1 .owl-item { padding: 10px 30px;}
+.referenzen-1 .et_pb_module { width: 150px;  }
+.referenzen-1 .et_pb_module img { max-height: 120px; width: auto;  display: inline-block;}
+
+.referenzen-1 .owl-item {filter: grayscale(1)  contrast(.75) brightness(1.25); transition: 200ms;}
+.referenzen-1 .owl-item:hover {filter: grayscale(0);background-color: #fff;}
+
+
+/* Mobile */
+@media screen and (max-width: 720px) {
+  .referenzen-1 .owl-item { padding: 0px 15px;}
+  .referenzen-1 .et_pb_module { width: 100px; }
+  .referenzen-1 .et_pb_module img { max-height: 155px;}
+}
