@@ -19,8 +19,8 @@ function theme_enqueue_styles() {
 function add_theme_codes() {
     // **** CSS **** //
     // Owl CSS
-    wp_enqueue_style( 'style', get_stylesheet_directory_uri().'/src/css/owl.carousel.min.css', 'all');
-    wp_enqueue_style( 'style', get_stylesheet_directory_uri().'/src/css/custom.css', 'all');
+    wp_enqueue_style( 'style-1', get_stylesheet_directory_uri().'/src/css/owl.carousel.min.css', 'all');
+    wp_enqueue_style( 'style-2', get_stylesheet_directory_uri().'/src/css/custom.css', 'all');
 
     // **** JavaScript **** //
     // Owl JS
