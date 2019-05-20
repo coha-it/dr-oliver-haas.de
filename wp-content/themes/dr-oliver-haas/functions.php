@@ -34,7 +34,7 @@ function add_theme_codes() {
     wp_enqueue_script( 'script-animation-gsap',     get_stylesheet_directory_uri().'/src/js/scrollmagic/plugins/animation.gsap.min.js', ['jquery']);
 
     // Custom CSS
-    wp_enqueue_script( 'custom-script-2', get_stylesheet_directory_uri().'/src/js/custom.js', 'all');
+    wp_enqueue_script( 'custom-script-2', get_stylesheet_directory_uri().'/src/js/custom/custom.js', 'all');
 
 }
 
