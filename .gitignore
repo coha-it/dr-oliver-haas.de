@@ -23,3 +23,4 @@ wp-content/plugins/hello.php
 /w-content/updraft/backup*.zip
 wp-content/wflogs/
 wp-content/wflogs/config-livewaf.php
+.vscode/
