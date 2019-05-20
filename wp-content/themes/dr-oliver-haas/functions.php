@@ -26,6 +26,14 @@ function add_theme_codes() {
     // **** JavaScript **** //
     // Owl JS
     wp_enqueue_script( 'custom-script-1', get_stylesheet_directory_uri().'/src/js/owl.carousel.min.js', ['jquery']);
+
+    // Scrollmagic & Dependencies
+    wp_enqueue_script( 'script-scrollto-plugin',    get_stylesheet_directory_uri().'/src/js/greensock/plugins/ScrollToPlugin.min.js', ['jquery']);
+    wp_enqueue_script( 'script-scrollto-plugin',    get_stylesheet_directory_uri().'/src/js/greensock/TweenMax.min.js', ['jquery']);
+    wp_enqueue_script( 'script-scrollmagic',        get_stylesheet_directory_uri().'/src/js/scrollmagic/ScrollMagic.min.js', ['jquery']);
+    wp_enqueue_script( 'script-animation-gsap',     get_stylesheet_directory_uri().'/src/js/scrollmagic/plugins/animation.gsap.min.js', ['jquery']);
+
+    // Custom CSS
     wp_enqueue_script( 'custom-script-2', get_stylesheet_directory_uri().'/src/js/custom.js', 'all');
 
 }
