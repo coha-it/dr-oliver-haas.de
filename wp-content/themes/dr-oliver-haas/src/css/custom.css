@@ -20,6 +20,7 @@ body #et-boc .et_pb_column b {font-family: 'Geomanistbold', 'geomanistbold', 'ge
 /* Owl Navigation */
 .owl-carousel.owl-theme .owl-nav {top: 0;width: 100%;height: 100%;margin: 0;}
 .owl-carousel.owl-theme .owl-nav [class*=owl-] {position: absolute;top: 0;font-size: 50px;line-height: 0;height: 100%;min-width: 30px;width: 3vw;max-width: 60px;margin: 0;padding: 0;border-radius: 0;background: #d0d0d0;}
+.owl-carousel.owl-theme .owl-nav [class*=owl-]:hover {background-color: #ececec; color: #7b7b7b;}
 .owl-carousel.owl-theme .owl-nav [class*=owl-] span {line-height: 0;}
 .owl-carousel.owl-theme .owl-nav .owl-next {right: 0;}
 .owl-carousel.owl-theme .owl-nav .owl-prev {left: 0;}
@@ -32,7 +33,28 @@ body #et-boc .et_pb_column b {font-family: 'Geomanistbold', 'geomanistbold', 'ge
 }
 
 
-/* ================== HOVER */
+/* ================== ONLY HOVER */
 .onlyHover .et_pb_text_inner p {font-size: 0; overflow: hidden; transition: 200ms; }
 .onlyHover:hover .et_pb_text_inner p {font-size: inherit;}
 
+/* ================== TEXT OVERFLOW */
+.textOverflow         .et_pb_text_inner p {transition: 350ms;}
+.textOverflow         .et_pb_text_inner p .overflowTrigger {left: 100%;font-size: .85em;cursor: pointer;white-space: nowrap;display: none;transition: color 200ms;}
+.textOverflow         .et_pb_text_inner p .overflowTrigger:hover {text-decoration: underline;}
+
+.textOverflow.cutted  .et_pb_text_inner p {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.textOverflow.cutted  .et_pb_text_inner p .overflowTrigger {position: absolute;}
+.textOverflow.cutted:hover  .et_pb_text_inner p .overflowTrigger {color: #ffd860;}
+
+.textOverflow.cutted  .et_pb_text_inner p .overflowTrigger.opener {display: inline-block;padding: 7px 10px;margin: -7px -10px;}
+
+.textOverflow:not(.cutted) .et_pb_text_inner p .overflowTrigger.closer {display: inline-block;color: #ffd860;}
+.textOverflow:not(.cutted) .et_pb_text_inner p {font-size: 1.25em;}
+
+
+/* ================== CSS: TEXT OVERFLOW */
+.cssTextOverflow .et_pb_text_inner p {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width: 72%;position: relative;padding-right: 5.5em;transition: 200ms, padding 0ms;}
+.cssTextOverflow .et_pb_text_inner p:after {content: "[Mehr erfahren]";color:#f2c027;color: #fff;display: inline-block;text-align: left;position: absolute;right: 0;top: 0;font-size: .8em;}
+
+.cssTextOverflow .et_pb_text_inner p:hover {text-overflow: unset;overflow: visible;white-space: inherit;padding-right: 0;}
+.cssTextOverflow .et_pb_text_inner p:hover:after {content:"";}
