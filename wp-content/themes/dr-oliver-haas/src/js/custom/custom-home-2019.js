@@ -29,8 +29,6 @@ jQuery(document).ready(function($) {
         var elem = $(this);
         var tof = elem.closest('.textOverflow');
 
-        console.log('open the box');
-
         // is opener
         if(tof.hasClass('cutted')) {
             tof.removeClass('cutted');
@@ -41,12 +39,6 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.overflowTrigger.closer', function() {
         var elem = $(this);
         var tof = elem.closest('.textOverflow');
-
-        console.log('close the box');
-
-        console.log('test');
-        console.log(elem);
-        console.log(elem.hasClass('closer'));
 
         tof.addClass('cutted');
     });
