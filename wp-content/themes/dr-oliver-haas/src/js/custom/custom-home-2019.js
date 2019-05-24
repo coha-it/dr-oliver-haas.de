@@ -1,7 +1,13 @@
+/*globals jQuery document TweenMax ScrollMagic new  */
+
+'use strict';
+
+var customHome2019 = true;
+
 jQuery(document).ready(function($) {
 
-    // SCROLLMAGIC 
-    jQuery(".scrollMagicFadeInLeft > div").each(function() {
+    // Scrollmagic  
+    jQuery(".scrollMagicFadeInLeft > div").each(function () {
         var curr = this;
 
         var tween0 = TweenMax.from(curr, 0.5, {transform: "translateX(-5%)", opacity: 0});
@@ -10,7 +16,7 @@ jQuery(document).ready(function($) {
                         .addTo(controller);
     });
 
-    jQuery(".scrollMagicFadeInRight > div").each(function() {
+    jQuery(".scrollMagicFadeInRight > div").each(function () {
         var curr = this;
 
         var tween0 = TweenMax.from(curr, 0.5, {transform: "translateX(5%)", opacity: 0});
@@ -25,7 +31,7 @@ jQuery(document).ready(function($) {
     jQuery('.textOverflow .et_pb_text_inner').append('<span class="overflowTrigger closer">[Weniger anzeigen]</span>');
 
     // Open the Box
-    $(document).on('click', '.textOverflow.cutted', function() {
+    $(document).on('click', '.textOverflow.cutted', function () {
         var elem = $(this);
         var tof = elem.closest('.textOverflow');
 
@@ -36,7 +42,7 @@ jQuery(document).ready(function($) {
     });
 
     // ON Overflow Trigger Click on Closer
-    $(document).on('click', '.overflowTrigger.closer', function() {
+    $(document).on('click', '.overflowTrigger.closer', function () {
         var elem = $(this);
         var tof = elem.closest('.textOverflow');
 
