@@ -12,6 +12,7 @@
     03. "1 Start-Old" Page
     04. "1 Start" Page
     05. "1 Start-SEO-Opt" Page
+    06. "1 Start" Page
 
 */
 
@@ -1638,6 +1639,218 @@ body.page-id-7317 .et_pb_section_0 .et_pb_button_1_wrapper a{
 }
 
 body.page-id-7317 .et_pb_section_2 .et_pb_column{
+	margin-right:23px;
+	}
+
+}
+
+
+
+/*-----------------------------------------------*/
+/*  "1 Start" Page                               */
+/*-----------------------------------------------*/
+body.page-id-7681 .et_pb_section_0 p .wp-image-6445.yp_onscreen{
+	-webkit-animation-name:pulse;	animation-name:pulse;
+	-webkit-animation-delay:0.17s;	animation-delay:0.17s;
+	-webkit-animation-duration:1.83s;	animation-duration:1.83s;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_column p{
+	display:block;
+}
+
+body.page-id-7681 .et_pb_section_0 p .wp-image-6445{
+	-webkit-animation-fill-mode:both;	animation-fill-mode:both;
+}
+
+body.page-id-7681 .et_pb_section_0 p strong{
+	font-weight:500 !important;
+	top:50px;
+	margin-right:4px;
+}
+
+body.page-id-7681 .et_pb_section_0 h1 strong{
+	font-family:'Geomanistbold';
+}
+
+body.page-id-7681 .et_pb_section_0 p spec{
+	font-family:'Geomanistbold';
+	font-weight:700;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_column:nth-child(1) .et_pb_module:nth-child(2) p{
+	position:relative;
+}
+
+body.page-id-7681 .et_pb_section_0 span strong{
+	font-weight:600;
+	font-family:'Geomanist' !important;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_column h1{
+	position:relative;
+	left:24px;
+}
+
+body.page-id-7681 .et_pb_section_0 p img{
+	-webkit-animation-fill-mode:forwards !important;	animation-fill-mode:forwards !important;
+	position:relative;
+	left:117px;
+	top:-80px;
+}
+
+body.page-id-7681 #stick{
+	position:relative;
+	top:240px;
+	left:140px;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_row:nth-child(3) .et_pb_column:nth-child(2){
+
+	position:relative;
+	padding-top:90px;
+}
+
+body.page-id-7681 .et_pb_section_0 h6 em{
+	font-family:'Geomanistbold';
+	color:#f2c029;
+	font-style:normal;
+}
+
+body.page-id-7681 #et-boc .et_pb_column p strong{
+	font-family:'Geomanistbold' !important;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_column h6{
+	font-weight:300;
+	padding-bottom:1px;
+	height:5px;
+	-webkit-box-sizing:border-box;	box-sizing:border-box;
+	max-width:90%;
+	position:relative;
+	display:block;
+	border-width:0px;
+	background-color:#f2c029;
+	left:260px;
+	top:-35px;
+	opacity:1;
+	visibility:visible;
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+
+body.page-id-7681 .et_pb_section_2 .et_pb_column{
+	padding-right:56px;
+}
+
+body.page-id-7681 .et_pb_section_5 .et_pb_column h1{
+	position:relative;
+	left:24px;
+}
+
+body.page-id-7681 .et_pb_section_4 .et_pb_column h1{
+	position:relative;
+	left:24px;
+}
+
+body.page-id-7681 .et_pb_section_3 .et_pb_column h1{
+	position:relative;
+	left:24px;
+}
+
+body.page-id-7681 .et_pb_section_0 p:nth-child(2) strong{
+	position:relative;
+	left:117px;
+	top:-55px;
+}
+
+body.page-id-7681 .et_pb_specialty_column .et_pb_module h1{
+	position:relative;
+	left:24px;
+}
+
+body.page-id-7681 .et_pb_section_7 .et_pb_column h1{
+	position:relative;
+	left:24px;
+}
+
+body.page-id-7681 .et_pb_specialty_column .et_pb_module h6{
+	font-weight:300;
+	padding-bottom:1px;
+	height:5px;
+	-webkit-box-sizing:border-box;	box-sizing:border-box;
+	position:relative;
+	display:block;
+	border-width:0px;
+	background-color:#3c504c;
+	top:-35px;
+	opacity:1;
+	visibility:visible;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	left:379px;
+	max-width:40%;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_column .et_pb_button_1{
+	bottom:109px;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_button_1_wrapper a{
+	position:fixed;
+	right:90px;
+}
+
+body.page-id-7681 #page-container #et-main-area #main-content .hentry .entry-content #et-boc .et_builder_inner_content .et_pb_section_0 .et_pb_row .et_pb_column .et_pb_button_1_wrapper a{
+	left:auto !important;
+}
+
+body.page-id-7681 #et-main-area #main-content .hentry .entry-content #et-boc .et_builder_inner_content .et_pb_section_0 .et_pb_row .et_pb_column .et_pb_module .et_pb_text_inner h6{
+	width:auto !important;
+}
+
+body.page-id-7681 .et_pb_section_0 p .wp-image-6813{
+	position:relative;
+	left:-5px;
+	top:5px;
+}
+
+body.page-id-7681 .et_pb_section_0 p .wp-image-6810{
+	position:relative;
+	top:1px;
+}
+
+@media (max-width:980px){
+
+	body.page-id-7681 .et_pb_specialty_column .et_pb_module h6{
+	max-width:23%;
+}
+
+body.page-id-7681 .et_pb_section_0 .et_pb_column h6{
+	max-width:23%;
+	visibility:hidden;
+}
+
+body.page-id-7681 #et-boc .et_pb_section_0{
+	background-image:none !important;
+}
+
+body.page-id-7681 #et-boc .et_pb_section_2{
+	background-image:none !important;
+	}
+
+}
+
+
+
+@media (min-width:981px){
+
+	body.page-id-7681 .et_pb_section_0 .et_pb_row:nth-child(3) .et_pb_column:nth-child(2){
+
+	margin-right:22px;
+}
+
+body.page-id-7681 .et_pb_section_2 .et_pb_column{
 	margin-right:23px;
 	}
 

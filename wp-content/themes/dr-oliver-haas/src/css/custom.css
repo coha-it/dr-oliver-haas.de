@@ -1,7 +1,7 @@
 /* Globals */
 body #et-boc .et_pb_column strong,
 body #et-boc .et_pb_column b {font-family: 'Geomanistbold', 'geomanistbold', 'geomanistregular';font-weight: normal;}
-
+.et_pb_section {overflow: hidden;}
 
 /* =============== OWL */
 /* Owl Fixes */
