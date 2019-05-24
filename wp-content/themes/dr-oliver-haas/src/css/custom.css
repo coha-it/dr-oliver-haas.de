@@ -38,18 +38,18 @@ body #et-boc .et_pb_column b {font-family: 'Geomanistbold', 'geomanistbold', 'ge
 .onlyHover:hover .et_pb_text_inner p {font-size: inherit;}
 
 /* ================== TEXT OVERFLOW */
-.textOverflow         .et_pb_text_inner {transition: 350ms;}
-.textOverflow         .et_pb_text_inner .overflowTrigger {left: 100%;font-size: .85em;cursor: pointer;white-space: nowrap;display: none;transition: color 200ms;}
-.textOverflow         .et_pb_text_inner .overflowTrigger:hover {text-decoration: underline;}
+.textOverflow         .et_pb_text_inner {transition: all 350ms, margin 0ms;}
+.textOverflow         .overflowTrigger {font-size: .85em;cursor: pointer;white-space: nowrap;display: none;transition: color 200ms;}
+.textOverflow         .overflowTrigger:hover {text-decoration: underline;}
 
-.textOverflow.cutted  .et_pb_text_inner {text-overflow: ellipsis;overflow: hidden;white-space: nowrap; cursor: pointer;}
-.textOverflow.cutted  .et_pb_text_inner .overflowTrigger {position: absolute;}
-.textOverflow.cutted:hover  .et_pb_text_inner .overflowTrigger {color: #ffd860;}
+.textOverflow.cutted  .et_pb_text_inner {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;cursor: pointer;margin-right: 150px;}
+.textOverflow.cutted  .overflowTrigger {position: absolute;}
+.textOverflow.cutted:hover .overflowTrigger {color: #ffd860;}
 
-.textOverflow.cutted  .et_pb_text_inner .overflowTrigger.opener {display: inline-block;padding: 7px 10px;margin: -7px -10px;}
+.textOverflow.cutted .overflowTrigger.opener {display: inline-block;padding: 7px 10px;margin: -7px -10px;margin-left: 0px;top: 0;right: 5px;left: unset;}
 
-.textOverflow:not(.cutted) .et_pb_text_inner .overflowTrigger.closer {display: inline-block;color: #ffd860;}
 .textOverflow:not(.cutted) .et_pb_text_inner {font-size: inherit;}
+.textOverflow:not(.cutted) .overflowTrigger.closer {display: inline-block;color: #ffd860;}
 
 
 /* ================== CSS: TEXT OVERFLOW */

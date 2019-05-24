@@ -32,6 +32,7 @@ function add_theme_codes() {
     wp_enqueue_script( 'script-greensock-tweenmax',             get_stylesheet_directory_uri().'/src/js/greensock/TweenMax.min.js', ['jquery']);
     wp_enqueue_script( 'script-scrollmagic',                    get_stylesheet_directory_uri().'/src/js/scrollmagic/ScrollMagic.min.js', ['jquery']);
     wp_enqueue_script( 'script-animation-gsap',                 get_stylesheet_directory_uri().'/src/js/scrollmagic/plugins/animation.gsap.min.js', ['jquery']);
+    wp_enqueue_script( 'script-parallax',                       get_stylesheet_directory_uri().'/src/js/parallax/parallax.min.js', ['jquery']);
 
     // Custom CSS
     wp_enqueue_script( 'custom-script-2', get_stylesheet_directory_uri().'/src/js/custom/custom.js', 'all');

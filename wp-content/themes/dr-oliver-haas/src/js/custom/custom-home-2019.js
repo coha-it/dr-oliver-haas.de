@@ -21,10 +21,11 @@ jQuery(document).ready(function($) {
 
     // JQUERY TEXT OVERFLOW
     jQuery('.textOverflow').addClass('cutted');
-    jQuery('.textOverflow .et_pb_text_inner').append('&nbsp;&nbsp;<span class="overflowTrigger opener">[Mehr erfahren]</span><span class="overflowTrigger closer">[Weniger anzeigen]</span>');
+    jQuery('.textOverflow').append('<span class="overflowTrigger opener">[Mehr erfahren]</span>');
+    jQuery('.textOverflow .et_pb_text_inner').append('<span class="overflowTrigger closer">[Weniger anzeigen]</span>');
 
     // Open the Box
-    $(document).on('click', '.textOverflow.cutted .et_pb_text_inner', function() {
+    $(document).on('click', '.textOverflow.cutted', function() {
         var elem = $(this);
         var tof = elem.closest('.textOverflow');
 
