@@ -943,6 +943,42 @@ class DSM_CalderaForms extends ET_Builder_Module {
 			et_pb_generate_responsive_css( $file_padding_values, '%%order_class%% .file-prevent-overflow', 'padding', $render_slug );
 		}
 
+		if ( class_exists( 'Caldera_Forms' ) ) {
+			add_filter( 'caldera_forms_render_field_file', function( $field_file, $field_type ){
+				if ( 'dropdown' == $field_type ) {
+					return dirname(__FILE__) . '/includes/dropdown/field.php';
+				}
+				if ( 'button' == $field_type ) {
+					return dirname(__FILE__) . '/includes/button/field.php';
+				}
+				if ( 'radio' == $field_type ) {
+					return dirname(__FILE__) . '/includes/radio/field.php';
+				}
+				if ( 'checkbox' == $field_type ) {
+					return dirname(__FILE__) . '/includes/checkbox/field.php';
+				}
+				if ( 'html' == $field_type ) {
+					return dirname(__FILE__) . '/includes/html/field.php';
+				}
+				   if ( 'advanced_file' == $field_type ) {
+					return dirname(__FILE__) . '/includes/advanced_file/field.php';
+				}
+		
+				return $field_file;
+			}, 10, 2);
+			//disable CF styles
+			function dsm_filter_caldera_forms_get_style_includes( $style_includes ) {
+				$style_includes = wp_parse_args( array(
+					'grid'  => false,
+					'alert' => false,
+					'form'  => false
+				) );
+		
+				return $style_includes; 
+			};
+			add_filter( 'caldera_forms_get_style_includes', 'dsm_filter_caldera_forms_get_style_includes', 10, 1 );
+		}
+
 		// Module classnames
 		$this->add_classname( array(
 			'' !== $description_background_color ? 'dsm_cf_description_label' : '',
@@ -975,42 +1011,6 @@ class DSM_CalderaForms extends ET_Builder_Module {
 }
 
 new DSM_CalderaForms;
-
-if ( class_exists( 'Caldera_Forms' ) ) {
-	add_filter( 'caldera_forms_render_field_file', function( $field_file, $field_type ){
-	    if ( 'dropdown' == $field_type ) {
-	        return dirname(__FILE__) . '/includes/dropdown/field.php';
-	    }
-	    if ( 'button' == $field_type ) {
-	        return dirname(__FILE__) . '/includes/button/field.php';
-	    }
-	    if ( 'radio' == $field_type ) {
-	        return dirname(__FILE__) . '/includes/radio/field.php';
-	    }
-	    if ( 'checkbox' == $field_type ) {
-	        return dirname(__FILE__) . '/includes/checkbox/field.php';
-	    }
-	    if ( 'html' == $field_type ) {
-	        return dirname(__FILE__) . '/includes/html/field.php';
-	    }
-	   	if ( 'advanced_file' == $field_type ) {
-	        return dirname(__FILE__) . '/includes/advanced_file/field.php';
-	    }
-
-	    return $field_file;
-	}, 10, 2);
-	//disable CF styles
-	function dsm_filter_caldera_forms_get_style_includes( $style_includes ) {
-		$style_includes = wp_parse_args( array(
-			'grid'  => false,
-			'alert' => false,
-			'form'  => false
-		) );
-
-	    return $style_includes; 
-	};
-	add_filter( 'caldera_forms_get_style_includes', 'dsm_filter_caldera_forms_get_style_includes', 10, 1 );
-}
 
 function dsm_get_caldera_forms() {
 	$options = array();

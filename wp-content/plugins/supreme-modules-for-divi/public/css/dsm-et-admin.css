@@ -1,0 +1,71 @@
+.et-db #et-boc .et-fb-modules-list li.dsm_flipbox,
+.et-db #et-boc .et-fb-modules-list li.dsm_perspective_image,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_divider,
+.et-db #et-boc .et-fb-modules-list li.dsm_typing_effect,
+.et-db #et-boc .et-fb-modules-list li.dsm_gradient_text,
+.et-db #et-boc .et-fb-modules-list li.dsm_button,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments,
+.et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_badges,
+.et-db #et-boc .et-fb-modules-list li.dsm_menu,
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist {
+    background: #6b09eb;
+    color: #fff;
+    font-size: 10px;
+}
+
+.et-db #et-boc .et-fb-modules-list li.dsm_typing_effect:before,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:before,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:before,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_badges:before {
+    font-family: ETmodules !important;
+}
+
+.et-db #et-boc .et-fb-modules-list li.dsm_flipbox:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_divider:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_typing_effect:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_gradient_text:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_button:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_badges:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_menu:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_flipbox:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_divider:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_typing_effect:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_gradient_text:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_button:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_badges:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_menu:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_flipbox:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_divider:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_typing_effect:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_gradient_text:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_button:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_text_badges:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_menu:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:focus {
+    background: rgba(107, 9, 235, 0.78);
+    color: #fff;
+}

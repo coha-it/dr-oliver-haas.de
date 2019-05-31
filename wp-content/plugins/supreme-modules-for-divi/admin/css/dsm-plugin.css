@@ -1,0 +1,124 @@
+#toplevel_page_divi_supreme_settings .wp-menu-image img {
+    width: 20px;
+    height: 20px;
+    padding: 7px 0 0;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.dsm-section-subtitle th {
+    padding: 0;
+}
+
+.dsm-section-subtitle h3 {
+    margin: 0;
+}
+#dsm_general th {
+    white-space: nowrap;
+}
+#dsm_general .form-table {
+    padding: 23px 15px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    background: #fff;
+    margin-top: 2em;
+    border-collapse: initial;
+}
+
+#dsm_general h2 {
+    padding: 9px 0 4px 0;
+    font-size: 1.3em;
+}
+
+.dsm-settings-checkbox fieldset label {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.dsm-settings-checkbox input {
+    display: none;
+}
+
+.dsm-settings-checkbox .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.dsm-settings-checkbox .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.dsm-settings-checkbox input:checked+.slider {
+    background-color: #6b09eb;
+}
+
+.dsm-settings-checkbox input:focus+.slider {
+    box-shadow: 0 0 1px #6b09eb;
+}
+
+.dsm-settings-checkbox input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+.dsm-settings-checkbox .round {
+    border-radius: 24px;
+}
+
+.dsm-settings-checkbox .round:before {
+    border-radius: 50%;
+}
+
+#dsm_general p.submit .button-primary {
+    color: #fff;
+    border-color: #25db92;
+    border-radius: 50px;
+    font-size: 14px;
+    background: #25db92;
+    text-shadow: none;
+    padding: 15px 30px;
+    line-height: 1;
+    box-shadow: none;
+    box-shadow: 0px 12px 18px -6px rgba(0, 0, 0, 0.19);
+    font-weight: 700;
+    height: initial;
+    transition: color 300ms ease 0ms, color 300ms ease 0ms, background-color 300ms ease 0ms, background-color 300ms ease 0ms, border 300ms ease 0ms, border 300ms ease 0ms, border-radius 300ms ease 0ms, border-radius 300ms ease 0ms;
+}
+
+#dsm_general p.submit .button-primary:hover,
+#dsm_general p.submit .button-primary:focus {
+    background: #fff;
+    color: #30323d;
+    border-color: #fff;
+    border-radius: 4px;
+}
+
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_top_header .dsm-remove-default-footer-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-remove-default-footer-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-conditional-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-css-classes-meta-box-options {
+    display: none;
+}
+
+#dsm_header_footer_meta_box p:last-child {
+    margin-bottom: 0;
+}

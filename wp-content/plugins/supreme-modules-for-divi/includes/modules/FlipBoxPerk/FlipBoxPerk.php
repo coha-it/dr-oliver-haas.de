@@ -132,7 +132,7 @@ class DSM_FlipBox_Perk extends ET_Builder_Module {
 			et_pb_generate_responsive_css( $flipbox_height_values, '%%order_class%% .dsm-flipbox', 'height', $render_slug );
 		}
 
-		if ( '0.6s' !== $flipbox_speed ) {
+		//if ( '0.6s' !== $flipbox_speed ) {
 			ET_Builder_Element::set_style( $render_slug, array(
 				'selector'    => '%%order_class%% .dsm_flipbox_child',
 				'declaration' => sprintf(
@@ -140,7 +140,7 @@ class DSM_FlipBox_Perk extends ET_Builder_Module {
 					esc_attr( $flipbox_speed )
 				),
 			) );
-		}
+		//}
 
 		// Render module content
 		$output = sprintf(

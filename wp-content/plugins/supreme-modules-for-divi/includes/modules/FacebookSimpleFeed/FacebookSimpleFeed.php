@@ -172,10 +172,9 @@ class DSM_FacebookSimpleFeed extends ET_Builder_Module {
 		$output = sprintf(
 			'<div class="dsm-facebook-feed">
 				<div id="fb-root"></div>
-				<div class="fb-page" data-href="%2$s" data-tabs="timeline" data-width="%7$s" data-height="%6$s" data-small-header="%5$s" data-adapt-container-width="true" data-hide-cover="%3$s" data-show-facepile="%4$s">
+				<div class="fb-page" data-href="%1$s" data-tabs="timeline" data-width="%6$s" data-height="%5$s" data-small-header="%4$s" data-adapt-container-width="true" data-hide-cover="%2$s" data-show-facepile="%3$s">
 				</div>
 			</div>',
-			esc_attr( $fb_app_id ),
 			esc_url( $fb_page_url ),
 			esc_attr( $fb_hide_cover ),
 			esc_attr( $fb_show_facepile ),

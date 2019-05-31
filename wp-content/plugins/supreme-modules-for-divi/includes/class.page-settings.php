@@ -27,8 +27,8 @@ class DSM_Settings {
     }
 
     function admin_menu() {
-        add_menu_page( __( 'Divi Supreme', 'dsm-supreme-modules-for-divi' ), __( 'Divi Supreme', 'dsm-supreme-modules-for-divi' ), 'manage_options', 'divi_supreme_settings', array($this, 'plugin_page'), plugins_url( 'supreme-modules-for-divi/assets/img/icon-128x128.png' ), 99 );
-        if ( dsm_setting_get_option( 'dsm_use_header_footer', 'dsm_general' ) == 'on' ) {
+        add_menu_page( __( 'Divi Supreme', 'dsm-supreme-modules-for-divi' ), __( 'Divi Supreme', 'dsm-supreme-modules-for-divi' ), 'manage_options', 'divi_supreme_settings', array($this, 'plugin_page'), plugins_url( 'supreme-modules-for-divi/admin/img/icon-128x128.png' ), 99 );
+        if ( $this->settings_api->get_option( 'dsm_use_header_footer', 'dsm_general' ) == 'on' ) {
             add_submenu_page( 'divi_supreme_settings', __( 'Divi Templates', 'dsm-supreme-modules-for-divi' ), __( 'Divi Templates', 'dsm-supreme-modules-for-divi' ), 'manage_options', 'edit.php?post_type=dsm_header_footer' );
         }
     }

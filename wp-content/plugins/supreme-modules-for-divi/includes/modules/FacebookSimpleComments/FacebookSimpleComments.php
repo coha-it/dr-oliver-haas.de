@@ -121,9 +121,8 @@ class DSM_FacebookSimpleComments extends ET_Builder_Module {
 		$output = sprintf(
 			'<div class="dsm-facebook-comments">
 				<div id="fb-root"></div>
-				<div class="fb-comments" data-href="%2$s" data-colorscheme="%4$s" data-numposts="%3$s" data-order-by="%5$s" width="100%%"></div>
+				<div class="fb-comments" data-href="%1$s" data-colorscheme="%3$s" data-numposts="%2$s" data-order-by="%4$s" width="100%%"></div>
 			</div>',
-			esc_attr( $fb_app_id ),
 			esc_url( $page_url ),
 			esc_attr( $num_posts ),
 			esc_attr( $color_scheme ),

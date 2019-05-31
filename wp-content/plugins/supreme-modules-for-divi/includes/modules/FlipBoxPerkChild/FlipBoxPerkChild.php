@@ -155,8 +155,8 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'button' => array(
 					'label' => esc_html__( 'Button', 'dsm-supreme-modules-for-divi' ),
 					'css' => array(
-						'plugin_main' => "{$this->main_css_element} .et_pb_button",
-						'alignment'   => "{$this->main_css_element} .et_pb_button_wrapper",
+						'plugin_main' => '%%order_class%% .et_pb_button',
+						'alignment'   => '%%order_class%% .et_pb_button_wrapper',
 					),
 					'use_alignment' => true,
 					'box_shadow'    => array(

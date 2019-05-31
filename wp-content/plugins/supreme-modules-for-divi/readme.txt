@@ -5,7 +5,7 @@ Donate link: https://suprememodules.com/
 Requires at least: 4.5
 Tested up to: 5.2
 Requires PHP: 5.6
-Stable tag: 1.5.3
+Stable tag: 1.5.7
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,23 @@ Divi Builder >= version 2.1
 PHP version >= 5.6
 
 == Changelog ==
+= 1.5.7 - 30.05.2019 =
+* Fixed: Caldera Forms Rendering issue on the frontend when using shortcode and when user is not using Caldera Forms Module.
+
+= 1.5.6 - 25.05.2019 =
+* Improved: Divi Supreme Embed Google Map Module now will automatically change the map language based on your WordPress language.
+* Improved: Divi Facebook Feed and Facebook Comments SDK version.
+
+= 1.5.5 - 23.05.2019 =
+* Improved: Divi Flipbox not animating due to recent Divi CSS conflict when using hover animation.
+* Fixed: Divi Flipbox Button Alignment default to left.
+* Fixed: Divi Flipbox Title Tag on Visual Builder. It should be H4 instead of H2.
+
+= 1.5.4 - 22.05.2019 =
+* Improved: Overwrite the plugin and is based on the WordPress Plugin API, Coding Standards, and Documentation Standards.
+* Improved: Overall better coding.
+* Improved: Compatible with Divi Supreme Pro version even Divi Supreme Free is installed.
+
 = 1.5.3 - 15.05.2019 =
 * Added: Custom Radio and Checkbox style to Divi Supreme Caldera Forms Module.
 * Improved: Automatically disable Alert Style, Form Styles and Grid Structure on the frontend when using Divi Supreme Caldera Forms Module.
