@@ -3,7 +3,7 @@
 Plugin Name: Divi Supreme Modules
 Plugin URI:  https://suprememodules.com
 Description: Supreme Modules enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
-Version:     1.5.7
+Version:     1.6.3
 Author:      Supreme Modules
 Author URI:  https://suprememodules.com/about-us/
 License:     GPL2
@@ -27,7 +27,7 @@ along with Supreme Modules. If not, see https://www.gnu.org/licenses/gpl-2.0.htm
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! defined('DSM_VERSION') ) {
-    define( 'DSM_VERSION', '1.5.7' );
+    define( 'DSM_VERSION', '1.6.3' );
 }
 if ( ! defined('DSM_SHORTCODE') ) {
     define( 'DSM_SHORTCODE', 'divi_shortcode' );

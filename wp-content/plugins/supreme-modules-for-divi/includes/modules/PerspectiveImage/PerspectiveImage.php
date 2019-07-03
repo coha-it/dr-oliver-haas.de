@@ -142,9 +142,35 @@ class DSM_Perspective_Image extends ET_Builder_Module {
 					'url',
 					'url_new_window',
 					'use_overlay',
+					'show_lightbox_other_img',
 				),
 				'toggle_slug'       => 'link',
 				'description'       => esc_html__( 'Here you can choose whether or not the image should open in Lightbox. Note: if you select to open the image in Lightbox, url options below will be ignored.', 'dsm-supreme-modules-for-divi' ),
+			),
+			'show_lightbox_other_img' => array(
+				'label'             => esc_html__( 'Use Other Lightbox Image', 'dsm-supreme-modules-pro-for-divi' ),
+				'type'              => 'yes_no_button',
+				'option_category'   => 'configuration',
+				'options'           => array(
+					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
+					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
+				),
+				'default_on_front' => 'off',
+				'affects'           => array(
+					'show_lightbox_other_img_src',
+				),
+				'toggle_slug'       => 'link',
+				'description'       => esc_html__( 'Here you can choose whether you want to have another image should open in Lightbox.', 'dsm-supreme-modules-pro-for-divi' ),
+			),
+			'show_lightbox_other_img_src' => array(
+				'type'               => 'upload',
+				'option_category'    => 'basic_option',
+				'upload_button_text' => esc_attr__( 'Upload an Lightbox image', 'dsm-supreme-modules-for-divi' ),
+				'choose_text'        => esc_attr__( 'Choose an Lightbox Image', 'dsm-supreme-modules-for-divi' ),
+				'update_text'        => esc_attr__( 'Set As Lightbox Image', 'dsm-supreme-modules-for-divi' ),
+				'hide_metadata'      => true,
+				'description'        => esc_html__( 'Upload your desired image, or type in the URL to the image you would like to display.', 'dsm-supreme-modules-pro-for-divi' ),
+				'toggle_slug'       => 'link',
 			),
 			'url' => array(
 				'label'           => esc_html__( 'Image Link URL', 'dsm-supreme-modules-for-divi' ),
@@ -352,6 +378,8 @@ class DSM_Perspective_Image extends ET_Builder_Module {
 		$hover_icon              = $this->props['hover_icon'];
 		$use_overlay             = $this->props['use_overlay'];
 		$animation_style         = $this->props['animation_style'];
+		$show_lightbox_other_img = $this->props['show_lightbox_other_img'];
+		$show_lightbox_other_img_src = $this->props['show_lightbox_other_img_src'];
 		$perspective             = $this->props['perspective'];
 		$dsm_rotate_y             = $this->props['dsm_rotate_y'];
 		$dsm_rotate_y_hover       = $this->get_hover_value( 'dsm_rotate_y' );
@@ -464,10 +492,11 @@ class DSM_Perspective_Image extends ET_Builder_Module {
 		);
 
 		if ( 'on' === $show_in_lightbox ) {
-			$output = sprintf( '<a href="%1$s" class="et_pb_lightbox_image" title="%3$s">%2$s</a>',
+			$output = sprintf( '<a href="%1$s" class="et_pb_lightbox_image" title="%3$s" data-mfp-src="%4$s">%2$s</a>',
 				esc_attr( $src ),
 				$output,
-				esc_attr( $alt )
+				esc_attr( $alt ),
+				'on' === $show_lightbox_other_img && '' !== $show_lightbox_other_img_src ? esc_url( $show_lightbox_other_img_src ) : esc_url( $src )
 			);
 		} else if ( '' !== $url ) {
 			$output = sprintf( '<a href="%1$s"%3$s>%2$s</a>',

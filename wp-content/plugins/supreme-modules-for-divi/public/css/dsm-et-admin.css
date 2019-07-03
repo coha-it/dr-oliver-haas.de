@@ -7,11 +7,13 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed,
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments,
 .et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu,
-.et-db #et-boc .et-fb-modules-list li.dsm_pricelist {
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist,
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours {
     background: #6b09eb;
     color: #fff;
     font-size: 10px;
@@ -20,7 +22,8 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_typing_effect:before,
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:before,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:before,
-.et-db #et-boc .et-fb-modules-list li.dsm_text_badges:before {
+.et-db #et-boc .et-fb-modules-list li.dsm_text_badges:before,
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours:before {
     font-family: ETmodules !important;
 }
 
@@ -33,11 +36,13 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:hover,
+et-db #et-boc .et-fb-modules-list li.dsm_business_hours:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_flipbox:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_divider:active,
@@ -47,11 +52,13 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:active,
+et-db #et-boc .et-fb-modules-list li.dsm_business_hours:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_flipbox:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_divider:focus,
@@ -61,11 +68,13 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_comments:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_contact_form_7:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_caldera_forms:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_google_map:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:focus,
-.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:focus {
+.et-db #et-boc .et-fb-modules-list li.dsm_pricelist:focus,
+et-db #et-boc .et-fb-modules-list li.dsm_business_hours:focus {
     background: rgba(107, 9, 235, 0.78);
     color: #fff;
 }

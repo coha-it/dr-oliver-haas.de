@@ -967,15 +967,6 @@ class DSM_CalderaForms extends ET_Builder_Module {
 				return $field_file;
 			}, 10, 2);
 			//disable CF styles
-			function dsm_filter_caldera_forms_get_style_includes( $style_includes ) {
-				$style_includes = wp_parse_args( array(
-					'grid'  => false,
-					'alert' => false,
-					'form'  => false
-				) );
-		
-				return $style_includes; 
-			};
 			add_filter( 'caldera_forms_get_style_includes', 'dsm_filter_caldera_forms_get_style_includes', 10, 1 );
 		}
 
@@ -1029,3 +1020,15 @@ function dsm_get_caldera_forms() {
 
     return $options;
 }
+
+if ( ! function_exists( 'dsm_filter_caldera_forms_get_style_includes' ) ) :
+function dsm_filter_caldera_forms_get_style_includes( $style_includes ) {
+	$style_includes = wp_parse_args( array(
+		'grid'  => false,
+		'alert' => false,
+		'form'  => false
+	) );
+
+	return $style_includes; 
+}
+endif;

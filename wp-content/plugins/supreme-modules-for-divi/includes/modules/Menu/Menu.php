@@ -18,12 +18,13 @@ class DSM_NavMenu extends ET_Builder_Module {
 		$this->settings_modal_toggles  = array(
 			'general'  => array(
 				'toggles' => array(
-					'main_content' => esc_html__( 'Text', 'dsm-supreme-modules-for-divi' ),
+					'main_content' => esc_html__( 'Menu', 'dsm-supreme-modules-for-divi' ),
 				),
 			),
 			'advanced' => array(
 				'toggles' => array(
 					'menu_style' => esc_html__( 'Menu Style', 'dsm-supreme-modules-for-divi' ),
+					'submenu_style' => esc_html__( 'Sub Menu Style', 'dsm-supreme-modules-for-divi' ),
 				),
 			),
 		);
@@ -81,7 +82,6 @@ class DSM_NavMenu extends ET_Builder_Module {
 			),
 			'text'       => array(
 				'use_background_layout' => true,
-				'toggle_slug' => 'links',
 				'options' => array(
 					'text_orientation'  => array(
 						'default_on_front' => 'left',
@@ -92,12 +92,13 @@ class DSM_NavMenu extends ET_Builder_Module {
 					),
 				),
 			),
-			'button'     => false,
 			'margin_padding'  => array(
 				'css'     => array(
 					'main' => '%%order_class%%',
 				),
 			),
+			'link_options'          => false,
+			'button'     => false,
 		);
 	}
 
@@ -146,6 +147,28 @@ class DSM_NavMenu extends ET_Builder_Module {
 				'toggle_slug'  => 'menu',
 				'hover'        => 'tabs',
 			),
+			'menu_space_between' => array(
+				'label'           => esc_html__( 'Space Between', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'range',
+				'option_category' => 'layout',
+				'mobile_options'  => true,
+				'responsive'      => true,
+				'default_unit'    => 'px',
+				'default'		  => '0px',
+				'tab_slug'     => 'advanced',
+				'toggle_slug'  => 'menu',
+			),
+			'menu_layout' => array(
+				'label'           => esc_html__( 'Menu Layout', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'select',
+				'option_category' => 'layout',
+				'options'         => array(
+					'vertical'  => esc_html__( 'Vertical', 'dsm-supreme-modules-for-divi' ),
+				),
+				'default' => 'vertical',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'menu_style',
+			),
 			'list_style_type' => array(
 				'label'           => esc_html__( 'List Style Type', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'select',
@@ -160,6 +183,36 @@ class DSM_NavMenu extends ET_Builder_Module {
 				'default_on_front' => 'disc',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'menu_style',
+				'show_if' => array(
+					'menu_layout' => 'vertical',
+				),
+			),
+			'list_style_color' => array(
+				'label'        => esc_html__( 'List Style Color', 'dsm-supreme-modules-for-divi' ),
+				'type'         => 'color-alpha',
+				'custom_color' => true,
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'menu_style',
+				'show_if_not' => array(
+					'list_style_type' => 'none',
+				),
+				'show_if' => array(
+					'menu_layout' => 'vertical',
+				),
+			),
+			'submenu_left_space' => array(
+				'label'           => esc_html__( 'Left Spacing', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'range',
+				'option_category' => 'layout',
+				'mobile_options'  => true,
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'submenu_style',
+				'responsive'      => true,
+				'default_unit'    => 'px',
+				'default'		  => '20px',
+				'show_if' => array(
+					'menu_layout' => 'vertical',
+				),
 			),
 			'__menu' => array(
 				'type'                => 'computed',
@@ -183,19 +236,19 @@ class DSM_NavMenu extends ET_Builder_Module {
 		} else {
 			$fw_menu_custom_class = 'et_pb_menu_page_id-' . $menu_item->object_id;
 		}
-
 		$menu_item->classes[] = $fw_menu_custom_class;
 		return $menu_item;
 	}
 
 	/**
-	 * Get fullwidth menu markup for fullwidth menu module
-	 *
-	 * @return string of fullwidth menu markup
-	 */
+    * Get fullwidth menu markup for fullwidth menu module
+    *
+    * @return string of fullwidth menu markup
+    */
 	static function get_dsm_navmenu( $args = array() ) {
 		$defaults = array(
 			'list_style_type' => '',
+			'menu_layout' => '',
 			'menu_id'           => '',
 		);
 
@@ -212,6 +265,7 @@ class DSM_NavMenu extends ET_Builder_Module {
 			$menuClass .= ' et_disable_top_tier';
 		}
 		$menuClass .= ( '' !== $args['list_style_type'] ? sprintf( ' %s', esc_attr( 'dsm-menu-style-type-' . $args['list_style_type'] ) ) : '' );
+		$menuClass .= ( '' !== $args['menu_layout'] ? sprintf( ' %s', esc_attr( 'dsm-menu-layout-' . $args['menu_layout'] ) ) : '' );
 
 		$primaryNav = '';
 
@@ -279,14 +333,25 @@ class DSM_NavMenu extends ET_Builder_Module {
 		$title_bottom_gap_phone = $this->props['title_bottom_gap_phone'];
 		$title_bottom_gap_last_edited = $this->props['title_bottom_gap_last_edited'];
 		$menu_id = $this->props['menu_id'];
-		$list_style_type  = $this->props['list_style_type'];
+		$menu_layout = $this->props['menu_layout'];
+		$list_style_type = $this->props['list_style_type'];
+		$list_style_color = $this->props['list_style_color'];
 		$menu_link_text_color = $this->props['menu_link_text_color'];
 		$menu_link_text_color_hover = $this->get_hover_value('menu_link_text_color');
+		$menu_space_between = $this->props['menu_space_between'];
+		$menu_space_between_tablet = $this->props['menu_space_between_tablet'];
+		$menu_space_between_phone = $this->props['menu_space_between_phone'];
+		$menu_space_between_last_edited = $this->props['menu_space_between_last_edited'];
+		$submenu_left_space = $this->props['submenu_left_space'];
+		$submenu_left_space_tablet = $this->props['submenu_left_space_tablet'];
+		$submenu_left_space_phone = $this->props['submenu_left_space_phone'];
+		$submenu_left_space_last_edited = $this->props['submenu_left_space_last_edited'];
 		$header_level = $this->props['header_level'];
 
 		$menu = self::get_dsm_navmenu( array(
 			'menu_id'           => $menu_id,
 			'list_style_type' => $list_style_type,
+			'menu_layout' => $menu_layout,
 		) );
 
 		if ( '10px' !== $title_bottom_gap || '' !== $title_bottom_gap_tablet || '' !== $title_bottom_gap_phone ) {
@@ -299,6 +364,32 @@ class DSM_NavMenu extends ET_Builder_Module {
 			);
 
 			et_pb_generate_responsive_css( $title_bottom_gap_values, '%%order_class%% .dsm-menu-title', 'padding-bottom', $render_slug );
+		}
+
+		if ( '0px' !== $menu_space_between || '' !== $menu_space_between_tablet || '' !== $menu_space_between_phone ) {
+			$menu_space_between_responsive_active = et_pb_get_responsive_status( $menu_space_between_last_edited );
+
+			$menu_space_between_values = array(
+				'desktop' => $menu_space_between,
+				'tablet'  => $menu_space_between_responsive_active ? $menu_space_between_tablet : '',
+				'phone'   => $menu_space_between_responsive_active ? $menu_space_between_phone : '',
+			);
+
+			et_pb_generate_responsive_css( $menu_space_between_values, '%%order_class%% .dsm-menu li:not(:last-child)', 'margin-bottom', $render_slug );
+			et_pb_generate_responsive_css( $menu_space_between_values, '%%order_class%% .dsm-menu .menu-item-has-children .sub-menu>li', 'margin-top', $render_slug );
+
+		}
+
+		if ( '20px' !== $submenu_left_space || '' !== $submenu_left_space_tablet || '' !== $submenu_left_space_phone ) {
+			$submenu_left_space_responsive_active = et_pb_get_responsive_status( $submenu_left_space_last_edited );
+
+			$submenu_left_space_values = array(
+				'desktop' => $submenu_left_space,
+				'tablet'  => $submenu_left_space_responsive_active ? $submenu_left_space_tablet : '',
+				'phone'   => $submenu_left_space_responsive_active ? $submenu_left_space_phone : '',
+			);
+
+			et_pb_generate_responsive_css( $submenu_left_space_values, '%%order_class%% .dsm-menu .menu-item-has-children .sub-menu', 'padding-left', $render_slug );
 		}
 
 		if ( '' !== $menu_link_text_color ) {
@@ -323,10 +414,20 @@ class DSM_NavMenu extends ET_Builder_Module {
 
 		if ( 'disc' !== $list_style_type ) {
 			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%% ul.dsm-menu',
+				'selector'    => '%%order_class%% ul.dsm-menu, %%order_class%% ul.dsm-menu .sub-menu',
 				'declaration' => sprintf(
 					'list-style-type: %1$s;',
 					esc_attr( $list_style_type )
+				),
+			) );
+		}
+
+		if ( '' !== $list_style_color ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%% ul.dsm-menu li',
+				'declaration' => sprintf(
+					'color: %1$s;',
+					esc_html( $list_style_color )
 				),
 			) );
 		}

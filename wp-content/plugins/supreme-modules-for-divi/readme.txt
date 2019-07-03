@@ -3,9 +3,9 @@ Contributors: divisupreme, kenng87
 Tags: Divi, Divi Module, Divi Contact Form, divi theme, divi builder, Divi Gradient Text, Divi Typing Effect, Divi 3D Image, Divi Image, Divi Text Divider, facebook feed, facebook comments
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.2
+Tested up to: 5.2.2
 Requires PHP: 5.6
-Stable tag: 1.5.7
+Stable tag: 1.6.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Divi Supreme Modules plugin enhances the experience and features found on Divi a
 
 Divi Supreme Modules plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
 
-Divi Supreme contains 15 Divi custom modules and more to come soon.
+Divi Supreme contains 16 Divi custom modules and more to come soon.
 
 - Supreme Divi Gradient Text - By using Divi's built-in background gradient tool, this module allow you to have gradient text without coding.
 - Supreme Divi Flipbox - With 4 types of Flipbox effect to choose from (Flip Left, Flip Right, Flip Up and Flip Down), you can create stunning interactive content that converts. 
@@ -32,6 +32,8 @@ Divi Supreme contains 15 Divi custom modules and more to come soon.
 - Supreme Divi Text Badges - This will show a badge before or after the text. A great way to show highlighted/important text badge.
 - Supreme Divi Menu - Display your WordPress menu and design it in whatever way you want. Use it for Footer or Sidebar.
 - Supreme Divi Price List - Create attractive and stunning Price List for your business with easy options. Perfect for menus, catalogs, product lists and any other list of featured items.
+- Supreme Divi Business Hours - This will allow customers to know your service availability time.
+
 
 Divi Supreme Extentions
 
@@ -89,6 +91,28 @@ Divi Builder >= version 2.1
 PHP version >= 5.6
 
 == Changelog ==
+= 1.6.3 - 19.06.2019 =
+* Added: Divi Business Hours Module.
+* Fixed: Price List module echoing out class name on the frontend.
+
+= 1.6.2 - 13.06.2019 =
+* Removed: www typo on php file.
+
+= 1.6.1 - 13.06.2019 =
+* Fixed: Caldera Forms Module not rendering the correct fields on Visual Builder.
+
+= 1.6 - 04.06.2019 =
+* Fixed: Fatal error - Cannot redeclare function when using multiple Caldera Forms Module.
+
+= 1.5.9 - 03.06.2019 =
+* Added: Another Lightbox Image URL Option to Supreme Image Module when using Lightbox.
+
+= 1.5.8 - 02.06.2019 =
+* Enhanced: Supreme Menu Module with Sub Menu.
+* Added: More responsive options for spacing and bottom gap and sub menu left spacing.
+* Added: List Style Color.
+* Added: Menu Layout Vertical – Prepare for future update (Horizontal).
+
 = 1.5.7 - 30.05.2019 =
 * Fixed: Caldera Forms Rendering issue on the frontend when using shortcode and when user is not using Caldera Forms Module.
 

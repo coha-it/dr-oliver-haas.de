@@ -270,7 +270,6 @@ class DSM_PriceList_Child extends ET_Builder_Module {
 					%2$s
 				</div>
 				%4$s
-				%5$s
 			</div>',
 			$title,
 			$price,

@@ -984,7 +984,34 @@ class Dsm_Supreme_Modules_For_Divi {
     public function dsm_load_caldera_forms() {
 	    if ( ! wp_verify_nonce( $_POST['et_admin_load_nonce'], 'et_admin_load_nonce' ) ) {
             wp_die();
-        }  
+        }
+        if ( class_exists( 'Caldera_Forms' ) ) {
+			add_filter( 'caldera_forms_render_field_file', function( $field_file, $field_type ){
+			    if ( 'dropdown' == $field_type ) {
+			        return dirname(__FILE__) . '/modules/CalderaForms/includes/dropdown/field.php';
+			    }
+			    if ( 'button' == $field_type ) {
+			        return dirname(__FILE__) . '/modules/CalderaForms/includes/button/field.php';
+			    }
+			    if ( 'radio' == $field_type ) {
+			        return dirname(__FILE__) . '/modules/CalderaForms/includes/radio/field.php';
+			    }
+			    if ( 'checkbox' == $field_type ) {
+			        return dirname(__FILE__) . '/modules/CalderaForms/includes/checkbox/field.php';
+			    }
+			    if ( 'html' == $field_type ) {
+			        return dirname(__FILE__) . '/modules/CalderaForms/includes/html/field.php';
+			    }
+			   	if ( 'advanced_file' == $field_type ) {
+			        return dirname(__FILE__) . '/modules/CalderaForms/includes/advanced_file/field.php';
+			    }
+                return $field_file;
+                var_dump($field_file);
+			}, 10, 2);
+			//disable CF styles
+		
+			add_filter( 'caldera_forms_get_style_includes', 'dsm_filter_caldera_forms_get_style_includes', 10, 1 );
+		}
         echo do_shortcode( '[caldera_form id="' . $_POST['cf_library'] . '"]' );
         wp_die();
     }
