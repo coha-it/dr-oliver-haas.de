@@ -42,11 +42,11 @@ body #et-boc .et_pb_column b {font-family: 'Geomanistbold', 'geomanistbold', 'ge
 .textOverflow         .overflowTrigger {font-size: .85em;cursor: pointer;white-space: nowrap;display: none;transition: color 200ms;}
 .textOverflow         .overflowTrigger:hover {text-decoration: underline;}
 
-.textOverflow.cutted  .et_pb_text_inner {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;cursor: pointer;margin-right: 150px;}
+.textOverflow.cutted  .et_pb_text_inner {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;cursor: pointer;/* margin-right: 150px; */}
 .textOverflow.cutted  .overflowTrigger {position: absolute;}
 .textOverflow.cutted:hover .overflowTrigger {color: #ffd860;}
 
-.textOverflow.cutted .overflowTrigger.opener {display: inline-block;padding: 7px 10px;margin: -7px -10px;margin-left: 0px;top: 0;right: 5px;left: unset;}
+.textOverflow.cutted .overflowTrigger.opener {display: inline-block;padding: 7px 10px;padding-left: 0;margin: -7px -10px;margin-left: 0px;top: 0;right: 5px;left: unset;left: 0;top: 100%;}
 
 .textOverflow:not(.cutted) .et_pb_text_inner {font-size: inherit;}
 .textOverflow:not(.cutted) .overflowTrigger.closer {display: inline-block;color: #ffd860;}
