@@ -1,3 +1,292 @@
+version 3.25.4 ( updated 07-03-2019 )
+- Fixed the Visual Builder re-loading after opening a settings modal quickly after the builder loaded.
+- Fixed Visual Builder double loading issue that occured when using CPT Layout Injector plugins.
+- Fixed Visual Builder double loading issue that occured when using different language settings for WordPress and user.
+- Fixed Visual Builder double loading issue that occured once after rolling back to an older Divi version.
+- Fixed Visual Builder double loading issue that occured while Divi Safe Mode was active.
+- Fixed Visual Builder double loading issue that occured on some servers that added extra white spaces to builder definitions.
+- Fixed Border Options controls mobile and hover icons disappearing.
+- Fixed a bug in the Classic Divi Builder that caused module setting migrations to not be performed when importing layouts using the Divi Library and Portability features.
+- Further reduced PHP memory usage.
+- Fixed an error when Backend Visual Builder was used with WP versions prior 5.0.
+- In some cases after using settings modal select control, the select did not lose it's hover state even after cursor hovered over another option.
+- Added Slider Content Width and Content Max Width options.
+- Updated Deutsch translations from the community.
+- Prevent draggable padding getting hidden while dragging and holding shift key.
+- Fixed module Parallax Background conflict with module overflow options.
+- Fixed list style type, list style position, list style item indent, blockquote border weight, and blockquote border color not being rendered on the FE.
+- Fixed Add New Column functionality when adding modules with Insert Module Quick Action.
+- Fixed undefined content error that causes VB to not be able to paste module after deleting the last module on the column.
+- Fixed border styles not working on Fullwidth Header Image element.
+- Fixed background color when it was set as initial on incorrect condition by removing duplicated background image properties when background image and gradient are activated at the same time.
+- Fixed section add row button spacing.
+- Fixed button custom padding not working on various modules when the custom icon is disabled.
+- Improved mouse cursor appearance when moving over Locked Module content.
+- Fixed undefined variable when processing background image on button element.
+- Fixed issue with Blurb module text center alignment on tablet and phone.
+- Fixed javascript warning when grid mode is enabled.
+- Fixed Module Alignment control not working.
+- Updated Deutsch translations from the community.
+- Fixed button options styles not being rendered on Theme Customizer.
+- Fixed background image not being displayed when setting background color on theme customizer on button element.
+	* core/components/Portability.php
+	* core/components/SupportCenter.php
+	* core/languages/de_DE.po
+	* functions.php
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/core.php
+	* includes/builder/framework.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/frontend-builder/helpers.php
+	* includes/builder/functions.php
+	* includes/builder/languages/de_DE.po
+	* includes/builder/main-structure-elements.php
+	* includes/builder/module/BarCountersItem.php
+	* includes/builder/module/FullwidthHeader.php
+	* includes/builder/module/FullwidthPostSlider.php
+	* includes/builder/module/FullwidthSlider.php
+	* includes/builder/module/PostSlider.php
+	* includes/builder/module/Slider.php
+	* includes/builder/module/SliderItem.php
+	* includes/builder/module/field/MarginPadding.php
+	* includes/builder/post/type/Layout.php
+	* includes/builder/scripts/builder.js
+	* js/theme-customizer.js
+	* lang/de_DE.po
+
+version 3.25.3 ( updated 06-25-2019 )
+- Changed the default Shop module sorting option to match the configured value in the Customizer.
+- Added a new "Sort by Menu Order" option to the Shop module to match the previous default. All current users will automatically be switched to this mode for backwards compatibility.
+- Fixed Parent Row/Section Hover Buttons Stuck On After Adding Column.
+- Fixed Modules Animation preview in Visual Builder.
+- Fixed console warning about react incorrect prop name.
+- Fixed a case of Visual Builder page loading being slow with PHP 5.X.
+- Fixed cases when module add button is not appearing.
+- Fixed box shadow not being rendered on blog image when using fullwidth layout.
+- Fixed inability to change Circle Counter margin left & right settings.
+- Fixed VB not being updated correctly after we extend layout setting on Filterable Portfolio and Portfolio module.
+- Fixed Mailchimp List select option reset.
+- Fixed incorrect target when copy and paste Meta Text options group or individual option to Blog, Comments, Post Slider, and Fullwidth Post Slider on module level.
+- Fixed inability to set border image to use solid style on Blog module when using Grid layout.
+- Fixed module alignment not working on VB when responsive settings is enabled on Width, but disabled on Module Alignment.
+- Fixed title font size not rendered properly in Visual Builder phone mode for Audio module.
+- Fixed Fullwidth Modules should appear after Regular Modules in Quick Actions modal.
+- Add hover settings support for Circle Color, Circle Background Color, and Circle Background Opacity of Circle Counter module.
+- Fixed reset styles doesn't work on multiple selected items.
+- Fixed background glitch when editing any fields with range control type.
+- Added hover support for Slider navigation.
+- Fixed Settings Modal Scrolling at the Edit Row step in Product Tour.
+- Fixed header showing then hiding on page load.
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/core.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/module/Blog.php
+	* includes/builder/module/CircleCounter.php
+	* includes/builder/module/FullwidthPostSlider.php
+	* includes/builder/module/FullwidthSlider.php
+	* includes/builder/module/PostSlider.php
+	* includes/builder/module/Shop.php
+	* includes/builder/module/Slider.php
+	* includes/builder/module/SliderItem.php
+	* includes/builder/module/field/Border.php
+	* includes/builder/module/helpers/Slider.php
+	* includes/builder/module/settings/Migration.php
+	* includes/builder/module/settings/migration/ShopOrderByDefault.php
+	* includes/builder/scripts/frontend-builder-scripts.js
+	* js/custom.js
+
+version 3.25.2 ( updated 06-21-2019 )
+- Fixed missing default padding for Columns in Specialty Sections in some cases.
+- Fixed Column Options Migration in Classic Editor.
+- Fixed inability to set global background color from Theme Customizer.
+- Fixed Divider height set to 0px after theme update.
+- Fixed PHP warning undefined module_id on column.
+- Fixed Background Image rendering for Specialty Section Columns in Visual Builder.
+- Disabled insert column hover line when Row has max Columns.
+- Fixed empty column minimum height in Safari.
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/main-structure-elements.php
+	* includes/builder/module/settings/migration/DividerHeight.php
+	* includes/builder/scripts/builder.js
+
+version 3.25.1 ( updated 06-20-2019 )
+- Fixed parallax class adding for columns without parallax images.
+- Fixed Column Settings Migration.
+- Fixed an error when Visual Builder was used with WP versions prior 5.0.
+	* includes/builder/frontend-builder/assets.php
+	* includes/builder/frontend-builder/assets/backports/hooks.js
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/main-structure-elements.php
+	* includes/builder/module/settings/Migration.php
+	* includes/builder/module/settings/migration/ColumnOptions.php
+
+version 3.25 ( updated 06-20-2019 )
+- Fixed broken contact form layout on tablet.
+- Fixed text color not working on tablet and phone when we define it on text element of Text module, title text element of Blog module, and filter criteria text of Filterable Portfolio module.
+- Fixed incorrect target when copy and paste Fields options group or individual option to Contact Form, Comments, Login, and Email Optin on module level.
+- Fixed issue when quick actions shortcut is enabled when the editable block is active or editing admin label in wireframe mode.
+- Added new Column Options into Divi Builder.
+- Improved free search results sorting priority for Go To items in Quick Actions.
+- Fixed a Builder error that could happen when Visual Editor was disabled in User Profile.
+- Disable draggable sizing for user roles that do not have permissions for Design setting.
+- Fixed PHP cache files not being deleted on some systems.
+- Added hover tooltips to Transparent and Current Color swatches.
+- Fixed third party modules having incorrect button styling when used on custom post types.
+- Fixed some errors that could be triggered while trying to load or save the PHP Cache.
+- Fixed copy/paste issue between Speciality and Normal section, when Speciality Inner row Sizing settings was copied on Normal section.
+- Fixed Speciality Section Inner Module Alignment.
+- Fixed cases when user could not focus on inline text editor for modules in 1/4 columns.
+- Added the "Really Simple SSL" plugin to Support Center's Safe Mode whitelist.
+- Fixed Project meta section appearing twice on projects that use the "No Sidebar" layout and do not use the builder.
+	* core/components/SupportCenter.php
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/frontend-builder/helpers.php
+	* includes/builder/functions.php
+	* includes/builder/main-structure-elements.php
+	* includes/builder/module/field/MaxWidth.php
+	* includes/builder/module/helpers/ResponsiveOptions.php
+	* includes/builder/module/settings/Migration.php
+	* includes/builder/module/settings/migration/Animation.php
+	* includes/builder/module/settings/migration/BackgroundUI.php
+	* includes/builder/module/settings/migration/BorderOptions.php
+	* includes/builder/module/settings/migration/ColumnOptions.php
+	* includes/builder/module/settings/migration/ContactFormItemOptionsSerialization.php
+	* includes/builder/module/settings/migration/DiscontinueHtmlEncoding.php
+	* includes/builder/module/settings/migration/DividerHeight.php
+	* includes/builder/module/settings/migration/DropShadowToBoxShadow.php
+	* includes/builder/module/settings/migration/EmailOptinContent.php
+	* includes/builder/module/settings/migration/FilterOptions.php
+	* includes/builder/module/settings/migration/FullwidthHeader.php
+	* includes/builder/module/settings/migration/FullwidthHeader2.php
+	* includes/builder/module/settings/migration/HoverOptions.php
+	* includes/builder/module/settings/migration/InnerShadowToBoxShadow.php
+	* includes/builder/module/settings/migration/OptionsHarmony.php
+	* includes/builder/module/settings/migration/OptionsHarmony2.php
+	* includes/builder/module/settings/migration/RowCustomWidthToSizing.php
+	* includes/builder/module/settings/migration/RowZeroGutter.php
+	* includes/builder/module/settings/migration/ShopModuleSlugs.php
+	* includes/builder/module/settings/migration/TeamMemberIconHover.php
+	* includes/builder/module/settings/migration/UIImprovements.php
+	* includes/builder/scripts/builder.js
+	* includes/builder/scripts/frontend-builder-scripts.js
+	* includes/builder/styles/style.css
+	* single-project.php
+
+version 3.24.1 ( updated 06-12-2019 )
+- Fixed row mobile max width overwriting max width provided by user.
+- Fixed Draggble Spacing controls size when margin/padding value is a non numeric value.
+- Fixed module styles affecting module popover styles.
+- Prevented draggable padding controls rendering when editing in inline editor.
+- Removed unnecessary Google Maps reinit process and use Google Maps set options method to update grayscale filters on mobile.
+- Fixed Quick Access not rendering options under heading sub toggle.
+- Introduced background preview delete and reset functionalities to enable or disable background entirely on specific preview mode.
+- Added smooth scroll support for link modules.
+- Improved loading method for Support Center.
+- Fixed scrolling to comment reply form.
+	* core/components/PageResource.php
+	* core/components/SupportCenter.php
+	* core/components/SupportCenterMUAutoloader.php
+	* core/components/init.php
+	* core/functions.php
+	* epanel/custom_functions.php
+	* functions.php
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/feature/ErrorReport.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/frontend-builder/helpers.php
+	* includes/builder/main-structure-elements.php
+	* includes/builder/module/helpers/ResponsiveOptions.php
+	* includes/builder/scripts/frontend-builder-scripts.js
+	* includes/builder/styles/frontend-builder-style.less
+	* js/custom.js
+
+version 3.24 ( updated 06-06-2019 )
+- Prevented possibility to edit draggable sizing of modules inside locked section.
+- Fixed Map and FullWidth Map height.
+- Fixed ability to use valid CSS string values, like auto, inherit, etc. as the value for Custom Margin field.
+- Prevent transition animation on VB when the mouse leaves any module.
+- Added several PHP Optimizations.
+- Fixed draggable spacing indicator hiding too early.
+- Fixed issue where units were defaulting to the wrong value in some cases.
+- Fixed legacy builder issue where Width / Max-Width values didn't have any unit set and will save as px instead of %.
+- Fixed Blurb Image getting responsive width even when it is disabled.
+- Fixed issue where section rows get full width even when the row width is not updated.
+- Updated contact form field validation so that spaces and dashes are now allowed.
+- Fixed draggable spacing controls size when window is resized.
+- Added Z-Index and Overflow support for Accordion Items.
+- Prevent adding Height values without unit.
+- Adjusted Background Video MP4/WebM help text.
+- Fixed hover styles were not being extended into other modules.
+- Fixed fade animation with transforms on FE.
+- Removed unused lang directory on builder repo.
+- Improved Divi Error Reporting.
+- Fixed the formatting of a Support Center plugin error message.
+- Modified Support Center to recommend a minimum of 1000 (down from 3000) for PHP's max_input_vars setting.
+- Improved the method used by the Support Center's Safe Mode toggle to verify that the "mu-plugins" directory exists.
+- Improved error handling for Support Center's Remote Access activation.
+- Fixed row default Max Width being different from customizer content width.
+	* core/admin/css/support-center.css
+	* core/admin/js/core.js
+	* core/admin/js/support-center.js
+	* core/components/SupportCenter.php
+	* core/components/api/email/Providers.php
+	* core/functions.php
+	* et-pagebuilder/et-pagebuilder.php
+	* functions.php
+	* includes/builder/class-et-builder-element.php
+	* includes/builder/core.php
+	* includes/builder/feature/ErrorReport.php
+	* includes/builder/framework.php
+	* includes/builder/frontend-builder/assets.php
+	* includes/builder/frontend-builder/bundle.js
+	* includes/builder/frontend-builder/helpers.php
+	* includes/builder/functions.php
+	* includes/builder/lang/ar.po
+	* includes/builder/lang/bg_BG.po
+	* includes/builder/lang/cs_CZ.po
+	* includes/builder/lang/da_DK.po
+	* includes/builder/lang/de_DE.po
+	* includes/builder/lang/el.po
+	* includes/builder/lang/en_US.po
+	* includes/builder/lang/es_ES.po
+	* includes/builder/lang/fi.po
+	* includes/builder/lang/fr_FR.po
+	* includes/builder/lang/he_IL.po
+	* includes/builder/lang/hu_HU.po
+	* includes/builder/lang/id_ID.po
+	* includes/builder/lang/it_IT.po
+	* includes/builder/lang/ja.po
+	* includes/builder/lang/ko_KR.po
+	* includes/builder/lang/ms_MY.po
+	* includes/builder/lang/nb_NO.po
+	* includes/builder/lang/nl_NL.po
+	* includes/builder/lang/pl_PL.po
+	* includes/builder/lang/pt_BR.po
+	* includes/builder/lang/ro_RO.po
+	* includes/builder/lang/ru_RU.po
+	* includes/builder/lang/sk_SK.po
+	* includes/builder/lang/sr_RS.po
+	* includes/builder/lang/sv_SE.po
+	* includes/builder/lang/th.po
+	* includes/builder/lang/tl.po
+	* includes/builder/lang/tr_TR.po
+	* includes/builder/lang/uk.po
+	* includes/builder/lang/vi.po
+	* includes/builder/lang/zh_CN.po
+	* includes/builder/module/ContactFormItem.php
+	* includes/builder/module/FullwidthMap.php
+	* includes/builder/module/Map.php
+	* includes/builder/module/Signup.php
+	* includes/builder/module/field/Height.php
+	* includes/builder/module/settings/Migration.php
+	* includes/builder/module/settings/migration/DividerHeight.php
+	* includes/builder/plugin-compat/sitepress-multilingual-cms.php
+	* includes/builder/scripts/builder.js
+	* includes/builder/styles/frontend-builder-style.less
+	* js/custom.js
+
 version 3.23.3 ( updated 05-24-2019 )
 - Fixed issue where you couldn't hex color on background gradient color start and end.
 - Fixed PHP warning on Library due to incorrect translation on closed anchor tag.

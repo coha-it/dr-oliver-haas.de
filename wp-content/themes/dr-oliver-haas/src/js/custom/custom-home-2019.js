@@ -49,5 +49,40 @@ jQuery(document).ready(function($) {
         tof.addClass('cutted');
     });
 
+    // Perform a hard-download
+    $('a.download').each(function(i, e) {
+        var elem = $(e);
+        var href = elem.attr('href');
+        var filename = href.substr(href.lastIndexOf('/') + 1);
+        elem.attr('download', filename);
+    });
+
+    // All a-Hrefs add something to the URL
+    $('a[href^="#"]').not('a[href="#"]').on('click', function(e) {
+        e.preventDefault();
+
+        var elem = $(this);
+        var hash = elem.attr('href');
+
+        // window.location.hash = hash;
+
+        if (window.history.pushState) {
+            history.pushState({}, '', window.location.origin + window.location.pathname + hash);
+        } else {
+            window.location.hash = hash;
+        }
+    });
+
+    // Scroll to Hash
+    // if(window.location.hash) {
+    //     $('html,body').animate({scrollTop:$(window.location.hash).offset().top}, 500);
+    // }
+
+    // Simulate the Nav-Close by clicking the main content
+    jQuery('#et-main-area').on('click', function() {
+        if($('.mobile_nav').hasClass('opened')) {
+            jQuery('.mobile_menu_bar_toggle').click();
+        }
+    });
 
 });

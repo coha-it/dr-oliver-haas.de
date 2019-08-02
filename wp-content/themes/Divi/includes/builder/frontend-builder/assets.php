@@ -93,14 +93,14 @@ function et_fb_get_dynamic_asset( $prefix, $post_type = false, $update = false )
 		$post_type = isset( $post->post_type ) ? $post->post_type : 'post';
 	}
 
-	$post_type = sanitize_text_field( $post_type );
+	$post_type = sanitize_file_name( $post_type );
 
 	if ( ! in_array( $prefix, array( 'helpers', 'definitions' ) ) ) {
 		$prefix = '';
 	}
 
 	// Per language Cache due to definitions/helpers being localized.
-	$lang   = get_user_locale();
+	$lang   = sanitize_file_name( get_user_locale() );
 	$cache  = sprintf( '%s/%s', ET_Core_PageResource::get_cache_directory(), $lang );
 	$files  = glob( sprintf( '%s/%s-%s-*.js', $cache, $prefix, $post_type ) );
 	$exists = is_array( $files ) && count( $files ) > 0;
@@ -242,6 +242,12 @@ function et_fb_enqueue_assets() {
 		'react-tiny-mce',
 		$builder_modules_script_handle,
 	);
+
+	if ( ! wp_script_is( 'wp-hooks', 'registered' ) ) {
+		// Use bundled wp-hooks script when WP < 5.0
+		wp_register_script( 'wp-hooks', "{$assets}/backports/hooks.js" );
+		$dependencies_list[] = 'wp-hooks';
+	}
 
 	// Add dependency on et-shortcode-js only if Divi Theme is used or ET Shortcodes plugin activated
 	if ( ! et_is_builder_plugin_active() || et_is_shortcodes_plugin_active() ) {

@@ -1,5 +1,7 @@
 <?php
 
+require_once 'helpers/Slider.php';
+
 class ET_Builder_Module_Slider extends ET_Builder_Module {
 	function init() {
 		$this->name            = esc_html__( 'Slider', 'et_builder' );
@@ -170,6 +172,25 @@ class ET_Builder_Module_Slider extends ET_Builder_Module {
 						'%%order_class%% .et_pb_section_video_bg',
 					),
 				),
+			),
+			'max_width'             => array(
+				'extra'   => array(
+					'content' => array(
+						'use_module_alignment' => false,
+						'css' => array(
+							'main' => '%%order_class%% .et_pb_slide > .et_pb_container',
+						),
+						'options' => array(
+							'width'     => array(
+								'label' => esc_html__( 'Content Width', 'et_builder' ),
+								'default' => '100%',
+							),
+							'max_width' => array(
+								'label' => esc_html__( 'Content Max Width', 'et_builder' ),
+							),
+						)
+					)
+				)
 			),
 		);
 
@@ -357,6 +378,7 @@ class ET_Builder_Module_Slider extends ET_Builder_Module {
 				'tab_slug'       => 'advanced',
 				'toggle_slug'    => 'navigation',
 				'mobile_options' => true,
+				'hover'          => 'tabs',
 			),
 			'dot_nav_custom_color'   => array(
 				'label'          => esc_html__( 'Dot Navigation Color', 'et_builder' ),
@@ -366,8 +388,18 @@ class ET_Builder_Module_Slider extends ET_Builder_Module {
 				'tab_slug'       => 'advanced',
 				'toggle_slug'    => 'navigation',
 				'mobile_options' => true,
+				'hover'          => 'tabs',
 			),
 		);
+
+		return $fields;
+	}
+
+	public function get_transition_fields_css_props() {
+		$fields = parent::get_transition_fields_css_props();
+
+		$fields['dot_nav_custom_color'] = array( 'background-color' => et_pb_slider_options()->get_dots_selector() );
+		$fields['arrows_custom_color']  = array( 'all' => et_pb_slider_options()->get_arrows_selector() );
 
 		return $fields;
 	}
@@ -541,12 +573,8 @@ class ET_Builder_Module_Slider extends ET_Builder_Module {
 			) );
 		}
 
-		$fullwidth = 'et_pb_fullwidth_slider' === $render_slug ? 'on' : 'off';
-
 		// Module classnames
-		if ( 'off' === $fullwidth ) {
-			$this->add_classname( 'et_pb_slider_fullwidth_off' );
-		}
+		$this->add_classname( 'et_pb_slider_fullwidth_off' );
 
 		if ( 'off' === $show_arrows ) {
 			$this->add_classname( 'et_pb_slider_no_arrows' );
@@ -574,6 +602,9 @@ class ET_Builder_Module_Slider extends ET_Builder_Module {
 		if ( 'on' === $show_image_video_mobile ) {
 			$this->add_classname( 'et_pb_slider_show_image' );
 		}
+
+		$this->generate_responsive_hover_style( 'arrows_custom_color', et_pb_slider_options()->get_arrows_selector(), 'color' );
+		$this->generate_responsive_hover_style( 'dot_nav_custom_color', et_pb_slider_options()->get_dots_selector(), 'background-color' );
 
 		$output = sprintf(
 			'<div%3$s class="%1$s">

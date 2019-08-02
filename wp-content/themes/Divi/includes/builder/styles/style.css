@@ -5865,6 +5865,10 @@ textarea#et_pb_custom_css:focus::-webkit-scrollbar-thumb,
 	min-height: 48px;
 }
 
+.et-pb-sortable-options--disabled li {
+	cursor: default;
+}
+
 .et-pb-column-layouts,
 .et-pb-all-modules,
 .et_pb_saved_layouts_list {

@@ -191,8 +191,8 @@ class ET_Builder_Module_Fullwidth_Header extends ET_Builder_Module {
 				'image'   => array(
 					'css'          => array(
 						'main' => array(
-							'border_radii'  => '%%order_class%% .header-logo, %%order_class%% .header-image-container img',
-							'border_styles' => '%%order_class%% .header-logo, %%order_class%% .header-image-container img',
+							'border_radii'  => '%%order_class%%.et_pb_fullwidth_header .header-logo, %%order_class%%.et_pb_fullwidth_header .header-image-container img',
+							'border_styles' => '%%order_class%%.et_pb_fullwidth_header .header-logo, %%order_class%%.et_pb_fullwidth_header .header-image-container img',
 						)
 					),
 					'label_prefix' => esc_html__( 'Image', 'et_builder' ),

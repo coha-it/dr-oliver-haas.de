@@ -41,6 +41,10 @@ function et_builder_should_load_framework() {
 		return $should_load = true;
 	}
 
+	if ( ET_Core_Portability::doing_import() ) {
+		return $should_load = true;
+	}
+
 	$is_admin = is_admin();
 	$required_admin_pages = array( 'edit.php', 'post.php', 'post-new.php', 'admin.php', 'customize.php', 'edit-tags.php', 'admin-ajax.php', 'export.php', 'options-permalink.php', 'themes.php', 'revision.php' ); // list of admin pages where we need to load builder files
 	$specific_filter_pages = array( 'edit.php', 'post.php', 'post-new.php', 'admin.php', 'edit-tags.php' ); // list of admin pages where we need more specific filtering
@@ -3769,6 +3773,9 @@ if ( ! function_exists( 'et_fb_is_enabled' ) ) :
  * @return bool
  */
 function et_fb_is_enabled( $post_id = false ) {
+	// Cache results since the function could end up being called thousands of times.
+	static $cache = array();
+
 	if ( ! $post_id ) {
 		global $post;
 
@@ -3781,15 +3788,21 @@ function et_fb_is_enabled( $post_id = false ) {
 		return $check;
 	}
 
+	if ( ! $post_id ) {
+		return false;
+	}
+
+	if ( isset( $cache[ $post_id ] ) ) {
+		return $cache[ $post_id ];
+	}
+
+	$cache[ $post_id ] = false;
+
 	if ( is_admin() ) {
 		return false;
 	}
 
 	if ( is_customize_preview() ) {
-		return false;
-	}
-
-	if ( ! $post_id ) {
 		return false;
 	}
 
@@ -3808,6 +3821,8 @@ function et_fb_is_enabled( $post_id = false ) {
 	if ( ! et_pb_is_allowed( 'use_visual_builder' ) ) {
 		return false;
 	}
+
+	$cache[ $post_id ] = true;
 
 	return true;
 }
@@ -5442,12 +5457,15 @@ function et_fb_delete_builder_assets() {
 	$new_files = glob( sprintf( '%s/*/*.js', $cache ) );
 	$new_files = is_array( $new_files ) ? $new_files : array();
 
-	foreach ( array_merge( $old_files, $new_files ) as $file ) {
+	// Modules cache
+	$modules_files = glob( sprintf( '%s/*/*.data', $cache ) );
+	$modules_files = is_array( $modules_files ) ? $modules_files : array();
+
+	foreach ( array_merge( $old_files, $new_files, $modules_files ) as $file ) {
 		@unlink( $file );
 	}
 }
 endif;
-
 
 if ( ! function_exists( 'et_fb_enqueue_open_sans' ) ):
 function et_fb_enqueue_open_sans() {

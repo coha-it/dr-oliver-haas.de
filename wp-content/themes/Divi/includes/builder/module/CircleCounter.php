@@ -160,6 +160,7 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 				'toggle_slug'       => 'circle',
 				'description'       => esc_html__( 'This will change the fill color for the bar.', 'et_builder' ),
 				'mobile_options'    => true,
+				'hover'             => 'tabs',
 			),
 			'circle_color' => array(
 				'label'             => esc_html__( 'Circle Background Color', 'et_builder' ),
@@ -169,6 +170,7 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 				'tab_slug'          => 'advanced',
 				'toggle_slug'       => 'circle',
 				'mobile_options'    => true,
+				'hover'             => 'tabs',
 			),
 			'circle_color_alpha' => array(
 				'label'           => esc_html__( 'Circle Background Opacity', 'et_builder' ),
@@ -186,6 +188,7 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 				'toggle_slug'     => 'circle',
 				'unitless'        => true,
 				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 		);
 		return $fields;
@@ -213,16 +216,22 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 		$bar_bg_color_values             = et_pb_responsive_options()->get_property_values( $this->props, 'bar_bg_color' );
 		$bar_bg_color_tablet             = isset( $bar_bg_color_values['tablet'] ) ? $bar_bg_color_values['tablet'] : '';
 		$bar_bg_color_phone              = isset( $bar_bg_color_values['phone'] ) ? $bar_bg_color_values['phone'] : '';
+		$bar_bg_color_hover              = et_pb_hover_options()->get_value( 'bar_bg_color', $this->props, '' );
+		$bar_bg_color_hover_enabled      = et_builder_is_hover_enabled( 'bar_bg_color', $this->props );
 
 		$circle_color                    = $this->props['circle_color'];
 		$circle_color_values             = et_pb_responsive_options()->get_property_values( $this->props, 'circle_color' );
 		$circle_color_tablet             = isset( $circle_color_values['tablet'] ) ? $circle_color_values['tablet'] : '';
 		$circle_color_phone              = isset( $circle_color_values['phone'] ) ? $circle_color_values['phone'] : '';
+		$circle_color_hover              = et_pb_hover_options()->get_value( 'circle_color', $this->props, '' );
+		$circle_color_hover_enabled      = et_builder_is_hover_enabled( 'circle_color', $this->props );
 
 		$circle_color_alpha              = $this->props['circle_color_alpha'];
 		$circle_color_alpha_values       = et_pb_responsive_options()->get_property_values( $this->props, 'circle_color_alpha' );
 		$circle_color_alpha_tablet       = isset( $circle_color_alpha_values['tablet'] ) ? $circle_color_alpha_values['tablet'] : '';
 		$circle_color_alpha_phone        = isset( $circle_color_alpha_values['phone'] ) ? $circle_color_alpha_values['phone'] : '';
+		$circle_color_alpha_hover        = et_pb_hover_options()->get_value( 'circle_color_alpha', $this->props, '' );
+		$circle_color_alpha_hover_enable = et_builder_is_hover_enabled( 'circle_color_alpha', $this->props );
 
 		$number = str_ireplace( '%', '', $number );
 
@@ -235,6 +244,9 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 		$bar_bg_color_data_phone  = '' !== $bar_bg_color_phone ?
 			sprintf( ' data-bar-bg-color-phone="%1$s"', esc_attr( $bar_bg_color_phone ) )
 			: '';
+		$bar_bg_color_data_hover  = '' !== $bar_bg_color_hover && $bar_bg_color_hover_enabled ?
+			sprintf( ' data-bar-bg-color-hover="%1$s"', esc_attr( $bar_bg_color_hover ) )
+			: '';
 
 		$circle_color_data        = '' !== $circle_color ?
 			sprintf( ' data-color="%1$s"', esc_attr( $circle_color ) )
@@ -245,6 +257,9 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 		$circle_color_data_phone  = '' !== $circle_color_phone ?
 			sprintf( ' data-color-phone="%1$s"', esc_attr( $circle_color_phone ) )
 			: '';
+		$circle_color_data_hover  = '' !== $circle_color_hover && $circle_color_hover_enabled ?
+			sprintf( ' data-color-hover="%1$s"', esc_attr( $circle_color_hover ) )
+			: '';
 
 		$circle_color_alpha_data        = '' !== $circle_color_alpha ?
 			sprintf( ' data-alpha="%1$s"', esc_attr( $circle_color_alpha ) )
@@ -254,6 +269,9 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 			: '';
 		$circle_color_alpha_data_phone  = '' !== $circle_color_alpha_phone ?
 			sprintf( ' data-alpha-phone="%1$s"', esc_attr( $circle_color_alpha_phone ) )
+			: '';
+		$circle_color_alpha_data_hover  = '' !== $circle_color_alpha_hover && $circle_color_alpha_hover_enable ?
+			sprintf( ' data-alpha-hover="%1$s"', esc_attr( $circle_color_alpha_hover ) )
 			: '';
 
 		$data_background_layout       = '';
@@ -290,7 +308,7 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 
 		$output = sprintf(
 			'<div%1$s class="%2$s"%11$s%12$s>
-				<div class="et_pb_circle_counter_inner" data-number-value="%3$s" data-bar-bg-color="%4$s"%7$s%8$s%13$s%14$s%15$s%16$s%17$s%18$s>
+				<div class="et_pb_circle_counter_inner" data-number-value="%3$s" data-bar-bg-color="%4$s"%7$s%8$s%13$s%14$s%15$s%16$s%17$s%18$s%19$s%20$s%21$s>
 				%10$s
 				%9$s
 					<div class="percent"><p><span class="percent-value"></span>%5$s</p></div>
@@ -314,7 +332,10 @@ class ET_Builder_Module_Circle_Counter extends ET_Builder_Module {
 			$circle_color_data_tablet, // #15
 			$circle_color_data_phone,
 			$circle_color_alpha_data_tablet,
-			$circle_color_alpha_data_phone
+			$circle_color_alpha_data_phone,
+			$bar_bg_color_data_hover,
+			$circle_color_data_hover, // #20
+			$circle_color_alpha_data_hover
 		);
 
 		return $output;

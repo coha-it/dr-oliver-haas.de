@@ -4,7 +4,7 @@ require_once 'module/helpers/Overflow.php';
 
 if ( ! defined( 'ET_BUILDER_PRODUCT_VERSION' ) ) {
 	// Note, this will be updated automatically during grunt release task.
-	define( 'ET_BUILDER_PRODUCT_VERSION', '3.23.3' );
+	define( 'ET_BUILDER_PRODUCT_VERSION', '3.25.4' );
 }
 
 if ( ! defined( 'ET_BUILDER_VERSION' ) ) {
@@ -22,6 +22,10 @@ if ( ! defined( 'ET_BUILDER_DIR_RESOLVED_PATH' ) ) {
 // When set to true, the builder will use the new loading method
 if ( ! defined( 'ET_BUILDER_CACHE_ASSETS' ) ) {
 	define( 'ET_BUILDER_CACHE_ASSETS', ! isset( $_REQUEST['nocache'] ) );
+}
+
+if ( ! defined( 'ET_BUILDER_CACHE_MODULES' ) ) {
+	define( 'ET_BUILDER_CACHE_MODULES', apply_filters( 'et_builder_cache_modules', true ) );
 }
 
 if ( ! defined( 'ET_BUILDER_JSON_ENCODE_OPTIONS' ) ) {
@@ -1036,6 +1040,7 @@ function et_fb_current_page_params() {
 		'paged'                    => is_front_page() ? $et_paged : $paged,
 		'post_modified'            => isset( $post->ID ) ? esc_attr( $post->post_modified ) : '',
 		'lang'                     => get_locale(),
+		'langCode'                 => get_locale(),
 	);
 
 	return apply_filters( 'et_fb_current_page_params', $current_page );
@@ -1957,6 +1962,8 @@ endif;
 
 if ( ! function_exists( 'et_builder_set_element_font' ) ) :
 function et_builder_set_element_font( $font, $use_important = false, $default = false ) {
+	static $cache = array();
+
 	$style = '';
 
 	if ( '' === $font ) {
@@ -1995,9 +2002,19 @@ function et_builder_set_element_font( $font, $use_important = false, $default = 
 		$font_line_style_default      = isset( $font_values_default[8] ) ? $font_values_default[8] : '';
 
 		if ( '' !== $font_name && $font_name_default !== $font_name ) {
-			et_builder_enqueue_font( $font_name );
+			if ( empty( $cache[ $font_name ] ) ) {
+				et_builder_enqueue_font( $font_name );
+				$font_family         = et_builder_get_font_family( $font_name );
+				$cache[ $font_name ] = $font_family;
+			} else {
+				$font_family = $cache[ $font_name ];
+			}
 
-			$style .= et_builder_get_font_family( $font_name, $use_important ) . ' ';
+			if ( $use_important ) {
+				$font_family = rtrim( $font_family, ';' ) . ' !important;';
+			}
+
+			$style .= "$font_family ";
 		}
 
 		$style .= et_builder_set_element_font_style( 'font-weight', ( '' !== $font_weight_default ), ( '' !== $font_weight ), 'normal', $font_weight, $use_important );
@@ -3507,6 +3524,12 @@ function et_bfb_enqueue_scripts() {
 	wp_enqueue_script( 'et_bfb_google_maps_api', esc_url( add_query_arg( array( 'key' => et_pb_get_google_api_key(), 'callback' => 'initMap' ), is_ssl() ? 'https://maps.googleapis.com/maps/api/js' : 'http://maps.googleapis.com/maps/api/js' ) ), array(), '3', true );
 
 	wp_enqueue_script( 'et_pb_media_library', ET_BUILDER_URI . '/scripts/ext/media-library.js', array( 'media-editor' ), ET_BUILDER_PRODUCT_VERSION, true );
+
+	if ( ! wp_script_is( 'wp-hooks', 'registered' ) ) {
+		// Use bundled wp-hooks script when WP < 5.0
+		wp_enqueue_script( 'wp-hooks', ET_BUILDER_URI. '/frontend-builder/assets/backports/hooks.js');
+	}
+
 	wp_enqueue_script( 'et_bfb_admin_js', ET_BUILDER_URI . '/scripts/bfb_admin_script.js', array( 'jquery', 'et_pb_media_library' ), ET_BUILDER_PRODUCT_VERSION, true );
 	wp_localize_script( 'et_bfb_admin_js', 'et_bfb_options', apply_filters( 'et_bfb_options', array(
 		'ajaxurl'                     => admin_url( 'admin-ajax.php' ),
@@ -5686,17 +5709,21 @@ function et_pb_pagebuilder_meta_box() {
 	// Advanced Settings Buttons Module
 	printf(
 		'<script type="text/template" id="et-builder-advanced-setting">
-			<a href="#" class="et-pb-advanced-setting-remove">
-				<span>%1$s</span>
-			</a>
+			<%% if ( \'et_pb_column\' !== module_type && \'et_pb_column_inner\' !== module_type ) { %%>
+				<a href="#" class="et-pb-advanced-setting-remove">
+					<span>%1$s</span>
+				</a>
+			<%% } %%>
 
 			<a href="#" class="et-pb-advanced-setting-options">
 				<span>%2$s</span>
 			</a>
-
-			<a href="#" class="et-pb-clone et-pb-advanced-setting-clone">
-				<span>%3$s</span>
-			</a>
+			
+			<%% if ( \'et_pb_column\' !== module_type && \'et_pb_column_inner\' !== module_type ) { %%>
+				<a href="#" class="et-pb-clone et-pb-advanced-setting-clone">
+					<span>%3$s</span>
+				</a>
+			<%% } %%>
 		</script>',
 		esc_html__( 'Delete', 'et_builder' ),
 		esc_html__( 'Settings', 'et_builder' ),
@@ -8661,14 +8688,21 @@ function et_fb_update_builder_assets() {
 
 	$post_type = ! empty( $_POST['et_post_type'] ) ? sanitize_text_field( $_POST['et_post_type'] ) : 'post';
 
-	$data = array(
-		// Update helpers cached js file
-		'helpers' => et_fb_get_dynamic_asset( 'helpers', $post_type, true ),
-		// Update definitions cached js file
-		'definitions' => et_fb_get_dynamic_asset( 'definitions', $post_type, true ),
-	);
+	// Update helpers cached js file
+	$helpers = et_fb_get_dynamic_asset( 'helpers', $post_type, true );
+	// Update definitions cached js file
+	$definitions = et_fb_get_dynamic_asset( 'definitions', $post_type, true );
 
-	die( json_encode( $data ) );
+	// When either definitions or helpers needs an update, also clear modules cache.
+	if ( $definitions['updated'] || $helpers['updated'] ) {
+		$modules_cache = ET_Builder_Element::get_cache_filename( $post_type );
+
+		if ( file_exists( $modules_cache ) ) {
+			@unlink( $modules_cache );
+		}
+	}
+
+	die( json_encode( array( 'helpers' => $helpers, 'definitions' => $definitions ) ) );
 }
 add_action( 'wp_ajax_et_fb_update_builder_assets', 'et_fb_update_builder_assets' );
 
@@ -8702,7 +8736,7 @@ function et_fb_get_builder_definitions( $post_type ) {
 	$unique_fields = array();
 	$unique_count  = 0;
 
-	foreach ( array( 'general_fields', 'advanced_fields' ) as $source ) {
+	foreach ( array( 'custom_css', 'general_fields', 'advanced_fields' ) as $source ) {
 		$definitions  = &$fields_data[ $source ];
 		$module_names = array_keys( $definitions );
 
@@ -8861,7 +8895,7 @@ function et_fb_remove_site_url_protocol( $json ) {
 function et_fb_get_asset_definitions( $content, $post_type ) {
 	$definitions = et_fb_get_builder_definitions( $post_type );
 	return sprintf(
-		'window.ETBuilderBackend = jQuery.extend(true, %s, window.ETBuilderBackend)',
+		'window.ETBuilderBackend=jQuery.extend(true,%s,window.ETBuilderBackend)',
 		et_fb_remove_site_url_protocol( wp_json_encode( $definitions, ET_BUILDER_JSON_ENCODE_OPTIONS ) )
 	);
 }
@@ -10116,4 +10150,121 @@ if ( ! function_exists( 'et_builder_module_prop' ) ) {
 
 		return null === $value || '' === $value ? $default : $value;
     }
+}
+
+if ( ! function_exists( 'et_pb_get_column_svg' ) ) {
+	/**
+	 * Returns svg which represents the requried columns type
+	 *
+	 * @param string $type
+	 *
+	 * @return string svg code.
+	 */
+	function et_pb_get_column_svg( $type ) {
+		$svg = '';
+
+		switch ( $type ) {
+			case '4_4':
+				$svg = '<rect width="100%" height="20" y="5" rx="5" ry="5" />';
+				break;
+			case '1_2,1_2':
+				$svg = '<rect width="48.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="48.5%" height="20" y="5" rx="5" ry="5" x="51.5%" />';
+				break;
+			case '1_3,1_3,1_3':
+				$svg = '<rect width="31.3%" height="20" y="5" rx="5" ry="5" />
+						<rect width="31.3%" height="20" y="5" rx="5" ry="5" x="34.3%" />
+						<rect width="31.3%" height="20" y="5" rx="5" ry="5" x="68.6%" />';
+				break;
+			case '1_4,1_4,1_4,1_4':
+				$svg = '<rect width="22.75%" height="20" y="5" rx="5" ry="5" />
+						<rect width="22.75%" height="20" y="5" rx="5" ry="5" x="25.75%" />
+						<rect width="22.75%" height="20" y="5" rx="5" ry="5" x="51.5%" />
+						<rect width="22.75%" height="20" y="5" rx="5" ry="5" x="77.25%" />';
+				break;
+			case '1_5,1_5,1_5,1_5,1_5':
+				$svg = '<rect width="17.6%" height="20" y="5" rx="5" ry="5" />
+						<rect width="17.6%" height="20" y="5" rx="5" ry="5" x="20.6%" />
+						<rect width="17.6%" height="20" y="5" rx="5" ry="5" x="41.2%" />
+						<rect width="17.6%" height="20" y="5" rx="5" ry="5" x="61.8%" />
+						<rect width="17.6%" height="20" y="5" rx="5" ry="5" x="82.4%" />';
+				break;
+			case '1_6,1_6,1_6,1_6,1_6,1_6':
+				$svg = '<rect width="14.16%" height="20" y="5" rx="5" ry="5" />
+						<rect width="14.16%" height="20" y="5" rx="5" ry="5" x="17.16%" />
+						<rect width="14.16%" height="20" y="5" rx="5" ry="5" x="34.32%" />
+						<rect width="14.16%" height="20" y="5" rx="5" ry="5" x="51.48%" />
+						<rect width="14.16%" height="20" y="5" rx="5" ry="5" x="68.64%" />
+						<rect width="14.16%" height="20" y="5" rx="5" ry="5" x="85.8%" />';
+				break;
+			case '2_5,3_5' :
+				$svg = '<rect width="38.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="58.5%" height="20" y="5" rx="5" ry="5" x="41.5%" />';
+				break;
+			case '3_5,2_5' :
+				$svg = '<rect width="58.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="38.5%" height="20" y="5" rx="5" ry="5" x="61.5%" />';
+				break;
+			case '1_3,2_3' :
+				$svg = '<rect width="31.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="65.5%" height="20" y="5" rx="5" ry="5" x="34.5%" />';
+				break;
+			case '2_3,1_3' :
+				$svg = '<rect width="65.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="31.5%" height="20" y="5" rx="5" ry="5" x="68.5%" />';
+				break;
+			case '1_4,3_4' :
+				$svg = '<rect width="23.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="73.5%" height="20" y="5" rx="5" ry="5" x="26.5%" />';
+				break;
+			case '3_4,1_4' :
+				$svg = '<rect width="73.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="23.5%" height="20" y="5" rx="5" ry="5" x="76.5%" />';
+				break;
+			case '1_4,1_2,1_4':
+				$svg = '<rect width="23.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="47%" height="20" y="5" rx="5" ry="5" x="26.5%" />
+						<rect width="23.5%" height="20" y="5" rx="5" ry="5" x="76.5%" />';
+				break;
+			case '1_5,3_5,1_5':
+				$svg = '<rect width="18.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="57%" height="20" y="5" rx="5" ry="5" x="21.5%" />
+						<rect width="18.5%" height="20" y="5" rx="5" ry="5" x="81.5%" />';
+				break;
+			case '1_4,1_4,1_2':
+				$svg = '<rect width="23.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="23.5%" height="20" y="5" rx="5" ry="5" x="26.5%" />
+						<rect width="47%" height="20" y="5" rx="5" ry="5" x="53%" />';
+				break;
+			case '1_2,1_4,1_4':
+				$svg = '<rect width="47%" height="20" y="5" rx="5" ry="5" />
+						<rect width="23.5%" height="20" y="5" rx="5" ry="5" x="50%" />
+						<rect width="23.5%" height="20" y="5" rx="5" ry="5" x="76.5%" />';
+				break;
+			case '1_5,1_5,3_5':
+				$svg = '<rect width="18.5%" height="20" y="5" rx="5" ry="5" />
+						<rect width="18.5%" height="20" y="5" rx="5" ry="5" x="21.5%" />
+						<rect width="57%" height="20" y="5" rx="5" ry="5" x="43%" />';
+				break;
+			case '3_5,1_5,1_5':
+				$svg = '<rect width="57%" height="20" y="5" rx="5" ry="5" />
+						<rect width="18.5%" height="20" y="5" rx="5" ry="5" x="60%" />
+						<rect width="18.5%" height="20" y="5" rx="5" ry="5" x="81.5%" />';
+				break;
+			case '1_6,1_6,1_6,1_2':
+				$svg = '<rect width="14.6%" height="20" y="5" rx="5" ry="5" />
+						<rect width="14.6%" height="20" y="5" rx="5" ry="5" x="18.1%" />
+						<rect width="14.6%" height="20" y="5" rx="5" ry="5" x="36.2%" />
+						<rect width="45.7%" height="20" y="5" rx="5" ry="5" x="54.3%" />';
+				break;
+			case '1_2,1_6,1_6,1_6':
+				$svg = '<rect width="47%" height="20" y="5" rx="5" ry="5" />
+						<rect width="14.6%" height="20" y="5" rx="5" ry="5" x="50%" />
+						<rect width="14.6%" height="20" y="5" rx="5" ry="5" x="67.6%" />
+						<rect width="14.6%" height="20" y="5" rx="5" ry="5" x="85.2%" />';
+				break;
+		}
+
+		return $svg;
+	}
 }

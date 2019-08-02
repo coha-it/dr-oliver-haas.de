@@ -101,7 +101,7 @@ function et_setup_theme() {
 add_action( 'after_setup_theme', 'et_setup_theme' );
 
 function et_divi_load_unminified_scripts( $load ) {
-	/** @see ET_Support_Center::toggle_safe_mode */
+	/** @see ET_Core_Support_Center::toggle_safe_mode */
 	if ( et_core_is_safe_mode_active() ) {
 		return true;
 	}
@@ -114,7 +114,7 @@ function et_divi_load_unminified_scripts( $load ) {
 }
 
 function et_divi_load_unminified_styles( $load ) {
-	/** @see ET_Support_Center::toggle_safe_mode */
+	/** @see ET_Core_Support_Center::toggle_safe_mode */
 	if ( et_core_is_safe_mode_active() ) {
 		return true;
 	}
@@ -6066,7 +6066,7 @@ function et_divi_add_customizer_css() {
 			return;
 		}
 
-		/** @see ET_Support_Center::toggle_safe_mode */
+		/** @see ET_Core_Support_Center::toggle_safe_mode */
 		if ( et_core_is_safe_mode_active() ) {
 			return;
 		}
@@ -6687,7 +6687,7 @@ function et_divi_add_customizer_css() {
 					 font-size: <?php echo esc_html( $button_text_size ); ?>px;
 				<?php } ?>
 				<?php if ( 'rgba(0,0,0,0)' !== $button_bg_color ) { ?>
-					background: <?php echo esc_html( $button_bg_color ); ?>;
+					background-color: <?php echo esc_html( $button_bg_color ); ?>;
 				<?php } ?>
 				<?php if ( 2 !== $button_border_width ) { ?>
 					border-width: <?php echo esc_html( $button_border_width ); ?>px !important;
@@ -9415,13 +9415,11 @@ function et_pb_check_options_access() {
  */
 function et_add_divi_support_center(){
 	// Make sure we don't load it twice
-	if ( class_exists( 'ET_Support_Center' ) ) {
-		return;
+	if ( ! class_exists( 'ET_Core_Support_Center' ) ) {
+		include_once 'core/components/SupportCenter.php';
 	}
 
-	include_once 'core/components/SupportCenter.php';
-
-	$support_center = new ET_Support_Center('divi_theme');
+	$support_center = new ET_Core_Support_Center('divi_theme');
 	$support_center->init();
 }
 add_action('init', 'et_add_divi_support_center' );
@@ -9811,3 +9809,23 @@ if ( ! function_exists( 'et_divi_footer_active_sidebars' ) ):
 		return $et_active_sidebar;
 	}
 endif;
+
+/**
+ * Check if the theme has boxed layout enabled
+ *
+ * @return bool
+ */
+function et_divi_is_boxed_layout() {
+    return true === et_get_option( 'boxed_layout', false );
+}
+
+/**
+ * Get current theme content container width
+ *
+ * @return int
+ */
+function et_divi_get_content_width() {
+	$value = absint( et_get_option( 'content_width', 1080 ) );
+
+	return ( 1080 === $value && et_divi_is_boxed_layout() ) ? 1200 : $value;
+}

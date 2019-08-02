@@ -356,6 +356,13 @@ function et_core_is_fb_enabled() {
 }
 endif;
 
+if ( ! function_exists( 'et_core_is_saving_builder_modules_cache' ) ):
+function et_core_is_saving_builder_modules_cache() {
+	// This filter is set when Modules Cache is being saved.
+	return apply_filters( 'et_builder_modules_is_saving_cache', false );
+}
+endif;
+
 
 /**
  * Is Gutenberg active?
@@ -873,7 +880,7 @@ if ( ! function_exists( 'et_core_is_safe_mode_active' ) ):
  *
  * @since ?.?
  *
- * @see ET_Support_Center::toggle_safe_mode
+ * @see ET_Core_Support_Center::toggle_safe_mode
  *
  * @return bool
  */

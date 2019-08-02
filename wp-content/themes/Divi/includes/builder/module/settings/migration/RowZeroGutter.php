@@ -33,7 +33,8 @@ class ET_Builder_Module_Settings_Migration_RowZeroGutter extends ET_Builder_Modu
 		$saved_value,
 		$saved_field_name,
 		$attrs,
-		$content
+		$content,
+		$module_address
 	) {
 		$raw_field = str_replace( 'inner_', '', $field_name );
 		$gutter    = et_builder_module_prop( 'gutter_width', $attrs, '' );

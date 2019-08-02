@@ -26,7 +26,7 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 		$et_single_post = $( 'body.single' ),
 		$et_window = $(window),
 		etRecalculateOffset = false,
-		et_header_height,
+		et_header_height = 0,
 		et_header_modifier,
 		et_header_offset,
 		et_primary_header_top,
@@ -875,10 +875,10 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 		$( window ).resize( function(){
 			var window_width                = parseInt( $et_window.width() ),
 				has_container               = $et_container.length > 0,
-				et_container_previous_width = !has_container ? 0 : parseInt( $et_container.data('previous-width') ),
+				et_container_previous_width = !has_container ? 0 : parseInt( $et_container.data('previous-width') ) || 0,
 				et_container_css_width      = $et_container.css( 'width' ),
 				et_container_width_in_pixel = ( typeof et_container_css_width !== 'undefined' ) ? et_container_css_width.substr( -1, 1 ) !== '%' : '',
-				et_container_actual_width   = !has_container ? 0 : et_container_width_in_pixel ? parseInt( $et_container.width() ) : ( ( parseInt( $et_container.width() ) / 100 ) * window_width ), // $et_container.width() doesn't recognize pixel or percentage unit. It's our duty to understand what it returns and convert it properly
+				et_container_actual_width   = !has_container ? 0 : et_container_width_in_pixel ? parseInt( $et_container.width() ) : ( parseInt( (parseInt( $et_container.width() ) / 100).toFixed(0) ) * window_width ), // $et_container.width() doesn't recognize pixel or percentage unit. It's our duty to understand what it returns and convert it properly
 				containerWidthChanged       = $et_container.length && et_container_previous_width !== et_container_actual_width,
 				$slide_menu_container       = $( '.et_slide_in_menu_container' ),
 				$adminbar                   = isBuilder ? window.top.jQuery('#wpadminbar') : $('#wpadminbar'),
@@ -1135,7 +1135,9 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 						et_pb_toggle_fullscreen_menu();
 					}
 
-					et_pb_smooth_scroll( target, false, 800 );
+					setTimeout(function() {
+						et_pb_smooth_scroll( target, false, 800 );
+					}, 0);
 
 					if ( ! $( '#main-header' ).hasClass( 'et-fixed-header' ) && $( 'body' ).hasClass( 'et_fixed_nav' ) && $( window ).width() > 980 ) {
 						setTimeout(function(){

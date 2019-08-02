@@ -5,7 +5,7 @@ window.wp = window.wp || {};
 /**
  * The builder version and product name will be updated by grunt release task. Do not edit!
  */
-window.et_builder_version = '3.23.3';
+window.et_builder_version = '3.25.4';
 window.et_builder_product_name = 'Divi';
 
 ( function($) {
@@ -1061,13 +1061,9 @@ window.et_builder_product_name = 'Divi';
 
 					// Enable history saving and set meta for history
 					ET_PageBuilder_App.allowHistorySaving( 'edited', 'column' );
-
-					if ( ! skip_reinit ) {
-						et_reinitialize_builder_layout();
-					}
 				}
 
-				if ( typeof that.model.get( 'template_type' ) !== 'undefined' && 'section' === that.model.get( 'template_type' ) && 'on' === that.model.get( 'et_pb_specialty' ) ) {
+				if (typeof that.model.get('template_type') !== 'undefined' && 'section' === that.model.get('template_type') && 'on' === that.model.get('et_pb_specialty') || !skip_reinit) {
 					et_reinitialize_builder_layout();
 				}
 
@@ -2578,6 +2574,9 @@ window.et_builder_product_name = 'Divi';
 
 					// hide "change columns structure" icon, column layout can be re-applied using "Insert column(s)" button
 					this.$( '.et-pb-change-structure' ).hide();
+
+					// Reinit builder layout to make sure columns updated correctly in the shortocde.
+					et_reinitialize_builder_layout();
 				}
 
 				// Enable history saving and set meta for history
@@ -4002,7 +4001,10 @@ window.et_builder_product_name = 'Divi';
 					layout.name         = 'layout.json';
 
 					$window.on( 'et_fb_layout_import_finished.et_bb', function() {
-						resolve( { content: get( window.et_fb_import_layout_response, 'data.postContent', '' ) } );
+						resolve( {
+							content:    get( window.et_fb_import_layout_response, 'data.postContent', '' ),
+							migrations: get(window.et_fb_import_layout_response, 'data.migrations', '')
+						} );
 						$window.off( 'et_fb_layout_import_finished.et_bb' );
 					} );
 
@@ -5108,14 +5110,18 @@ window.et_builder_product_name = 'Divi';
 
 				this.$content_textarea = this.$el.siblings('.et-pb-option-main-content').find('#et_pb_content_main');
 
-				this.$sortable_options.sortable( {
-					axis : 'y',
-					cancel : '.et-pb-advanced-setting-remove, .et-pb-advanced-setting-options',
-					update : function( event, ui ) {
-						ET_PageBuilder_Events.trigger( 'et-advanced-module:updated' );
-						ET_PageBuilder_Events.trigger( 'et-advanced-module:updated_order' );
-					}
-				} );
+				if (!_.includes(['et_pb_column', 'et_pb_column_inner'], this.module_type)) {
+					this.$sortable_options.sortable({
+						axis : 'y',
+						cancel : '.et-pb-advanced-setting-remove, .et-pb-advanced-setting-options',
+						update : function(event, ui) {
+							ET_PageBuilder_Events.trigger('et-advanced-module:updated');
+							ET_PageBuilder_Events.trigger('et-advanced-module:updated_order');
+						}
+					});
+				} else {
+					this.$sortable_options.addClass('et-pb-sortable-options--disabled');
+				}
 
 				this.$add_sortable_item = this.$el.find( '.et-pb-add-sortable-option' ).addClass( 'et-pb-add-sortable-initial' );
 			},
@@ -5209,25 +5215,37 @@ window.et_builder_product_name = 'Divi';
 						prefixed_attributes = {},
 						found_inner_shortcodes = typeof shortcode_content !== 'undefined' && shortcode_content !== '' && shortcode_content.match( reg_exp ),
 						name_changes = et_pb_options.et_pb_module_settings_migrations.name_changes;
-
+					
+					var isColumnItem = _.includes(['et_pb_column', 'et_pb_column_inner'], shortcode_name);
+					
 					module_settings = {
 						type : 'module',
 						module_type : module_type,
-						cid : ET_PageBuilder_Layout.generateNewId(),
+						cid : module_cid,
 						view : this_el,
 						created : 'auto',
 						mode : 'advanced',
 						parent : this_el.attributes['cid'],
 						parent_cid : this_el.model.model.attributes['cid']
 					};
+					var parent_view = ET_PageBuilder_Layout.getView(this_el.model.model.attributes['cid']);
+					
+					if (isColumnItem) {
+						var $columns = $(parent_view.$el).find('.et-pb-column');
+
+						if (!_.isUndefined($columns[ shortcode_index ])) {
+							module_settings.column_cid = $($columns[ shortcode_index ]).data('cid');
+						}
+					}
 
 					if ( _.isObject( shortcode_attributes['named'] ) ) {
 						for ( var key in shortcode_attributes['named'] ) {
 							var prefixed_key = key !== 'admin_label' ? 'et_pb_' + key : key,
 								setting_value;
 
-							if ( shortcode_name === 'column' && prefixed_key === 'et_pb_type' )
+							if (isColumnItem && prefixed_key === 'et_pb_type') {
 								prefixed_key = 'layout';
+							}
 
 							setting_value = shortcode_attributes['named'][key];
 
@@ -5354,7 +5372,9 @@ window.et_builder_product_name = 'Divi';
 			className : 'et-sortable-title',
 
 			initialize : function() {
-				template_name = '#et-builder-advanced-setting-' + this.model.get( 'module_type' ) + '-title';
+				module_type_processed = 'et_pb_column_inner' === this.model.get('module_type') ? 'et_pb_column' : this.model.get('module_type');
+
+				template_name = '#et-builder-advanced-setting-' + module_type_processed + '-title';
 
 				this.template = _.template( $( template_name ).html() );
 
@@ -5990,7 +6010,14 @@ window.et_builder_product_name = 'Divi';
 					parent_view.model.unset( 'value_changes' );
 				}
 
-				this.model.set( attributes, { silent : true } );
+				// Column settings are stored in child modules when editing Row. Save them into appropriate column
+				if (!_.isUndefined(this_view.model.attributes.column_cid)) {
+					var additionalModuleToUpdate = ET_PageBuilder_Layout.getView(this_view.model.attributes.column_cid);
+
+					additionalModuleToUpdate.model.set(attributes, { silent : true });
+				}
+
+				this.model.set(attributes, { silent : true });
 
 				ET_PageBuilder_Events.trigger( 'et-advanced-module:updated' );
 				ET_PageBuilder_Events.trigger( 'et-advanced-module:saved' );
@@ -6006,8 +6033,10 @@ window.et_builder_product_name = 'Divi';
 
 			initialize : function() {
 				this.model = this.options.view.options.view.model;
+				
+				module_type_processed = 'et_pb_column_inner' === this.model.get('module_type') ? 'et_pb_column' : this.model.get('module_type');
 
-				this.template = _.template( $( '#et-builder-advanced-setting-' + this.model.get( 'module_type' ) ).html() );
+				this.template = _.template($('#et-builder-advanced-setting-' + module_type_processed).html());
 			},
 
 			events : {
@@ -8482,6 +8511,11 @@ window.et_builder_product_name = 'Divi';
 						}
 					}
 
+					// Make Sure columns added as content for Rows, so we can render column settings.
+					if (_.includes(['row', 'row_inner'], shortcode_name)) {
+						module_settings['et_pb_content'] = shortcode_content;
+					}
+
 					// convert line break placeholders into real line-breaks for the message pattern option in Contact Form module
 					if ('et_pb_contact_form' === shortcode_name && typeof module_settings['et_pb_custom_message'] !== 'undefined') {
 						// unescape content to make sure quotes displayed correctly in the Editor.
@@ -8907,8 +8941,8 @@ window.et_builder_product_name = 'Divi';
 											column_cid = $this_column_inner.data( 'cid' ),
 											module = ET_PageBuilder_Modules.findWhere( { cid : column_cid } );
 
-										if ( true === include_whole_inner_row ) {
-											shortcode += '[et_pb_column_inner type="' + module.get('layout') + '" saved_specialty_column_type="' + specialty_column_layout + '"]';
+										if (true === include_whole_inner_row) {
+											shortcode += this_el.generateModuleShortcode($(this), true, layout_type, ignore_global_tag, 'column_inner', false, false, specialty_column_layout);
 										}
 
 										$this_column_inner.find( '.et_pb_module_block' ).each( function() {
@@ -8962,7 +8996,7 @@ window.et_builder_product_name = 'Divi';
 									module = ET_PageBuilder_Modules.findWhere( { cid : column_cid } );
 
 								if ( ( ( false === all_sections && ( true === include_whole_section || true === include_whole_row ) ) || true === all_sections ) && true !== skip_row ) {
-									shortcode += '[et_pb_column type="' + module.get('layout') + '"]';
+									shortcode += this_el.generateModuleShortcode($(this), true, layout_type, ignore_global_tag, 'column');
 								}
 
 								$this_column.find( '.et_pb_module_block' ).each( function() {
@@ -8993,7 +9027,7 @@ window.et_builder_product_name = 'Divi';
 			return shortcode;
 			},
 
-			generateModuleShortcode : function( $module, open_tag_only, layout_type, ignore_global_tag, defined_module_type, ignore_global_tabs, is_saving_global ) {
+			generateModuleShortcode : function($module, open_tag_only, layout_type, ignore_global_tag, defined_module_type, ignore_global_tabs, is_saving_global, specialty_column_type) {
 				var attributes = '',
 					content = '',
 					$this_module = $module,
@@ -9169,6 +9203,15 @@ window.et_builder_product_name = 'Divi';
 				// prefix sections with a bb_built attr flag
 				if ( 'section' === module_type ) {
 					attributes = ' bb_built="1"' + attributes;
+				}
+
+				if (_.includes(['column', 'column_inner'], module_type)) {
+					attributes = ' type="' + module.get('layout') + '"' + attributes;
+					prefix = 'et_pb_';
+
+					if ('column_inner' === module_type) {
+						attributes += ' saved_specialty_column_type="' + specialty_column_type + '"';
+					}
 				}
 
 				shortcode = '[' + prefix + module_type + attributes;
@@ -15776,7 +15819,8 @@ window.et_builder_product_name = 'Divi';
 					range_value       = $this_el.val(),
 					$range_input      = 'all' === this_device ? $this_el.siblings( '.et-pb-range-input' ) : $this_el.siblings( '.et-pb-range-input.et_pb_setting_mobile_' + this_device ),
 					initial_value_set = $range_input.data( 'initial_value_set' ) || false,
-					range_input_value = et_pb_sanitize_input_unit_value( $.trim( $range_input.val() ), false, 'no_default_unit' ),
+					default_unit      = $range_input.data( 'unit' ) || 'no_default_unit',
+					range_input_value = et_pb_sanitize_input_unit_value( $.trim( $range_input.val() ), false, default_unit ),
 					number,
 					length;
 
@@ -15841,10 +15885,12 @@ window.et_builder_product_name = 'Divi';
 				} );
 			}
 
-			$range_input.on( 'keyup change', function( event ) {
+			$range_input.on( 'keyup change', _.debounce(function( event ) {
 				var $this_el      = $(this),
 					this_device   = typeof $this_el.data( 'device' ) === 'undefined' ? 'all' : $this_el.data( 'device' ),
-					this_value    = et_pb_get_range_input_value( $this_el, true ),
+					input_value   = et_pb_get_range_input_value( $this_el, true ),
+					default_unit  = $this_el.data( 'unit' ) || 'no_default_unit',
+					this_value    = et_pb_sanitize_input_unit_value( input_value, false, default_unit ),
 					$range_slider = 'all' === this_device ? $this_el.siblings( '.et-pb-range' ) : $this_el.siblings( '.et-pb-range.et_pb_setting_mobile_' + this_device ),
 					update_step   = false,
 					slider_value;
@@ -15858,10 +15904,11 @@ window.et_builder_product_name = 'Divi';
 
 				et_pb_check_range_boundaries( $range_slider, slider_value, update_step );
 
+				$this_el.val( this_value );
 				$range_slider.val( slider_value ).trigger( 'et_pb_setting:change' );
 
 				et_pb_update_mobile_defaults( $this_el );
-			} );
+			}, 700 ));
 
 			if ( $validate_unit_field.length ) {
 				$validate_unit_field.each( function() {
@@ -16787,7 +16834,7 @@ window.et_builder_product_name = 'Divi';
 
 			result = parseFloat( value );
 			if ( _.isUndefined( default_unit ) || 'no_default_unit' !== default_unit ) {
-				result += 'px';
+				result += default_unit || 'px';
 			}
 
 			// Return and automatically append px (default value)
@@ -17805,19 +17852,19 @@ window.et_builder_product_name = 'Divi';
 				} );
 			}
 
-			// If current loop is module, look for module item's migration content. Module item value migration won't be parsed correctly on page load because module item is not visibly rendered on page layout
+			// If current loop is module or row, look for module item's migration content. Module item value migration won't be parsed correctly on page load because module item is not visibly rendered on page layout
 			// thus, get module item based on current module's address then assign it as element to module object. This element will be fetched when module's setting modal is rendered
-			if ( 'module' === module_type ) {
-				var module_items_value_changes = {},
-					module_address_length = module_address.length;
+			if (_.includes(['module', 'row'], module_type)) {
+				var module_items_value_changes = {};
+				var module_address_length = module_address.length;
 
-				_.forEach( value_changes, function( item_changes, item_address ) {
-					if ( module_address + '.' === String( item_address ).substr( 0, ( module_address_length + 1 ) ) ) {
-						module_items_value_changes[ item_address.substr( module_address.length + 1 ) ] = item_changes;
+				_.forEach(value_changes, function(item_changes, item_address) {
+					if (module_address + '.' === String(item_address).substr(0, (module_address_length + 1))) {
+						module_items_value_changes[ item_address.substr(module_address.length + 1) ] = item_changes;
 					}
-				} );
+				});
 
-				if ( ! _.isEmpty( module_items_value_changes ) ) {
+				if (! _.isEmpty(module_items_value_changes)) {
 					curent_settings['named']['value_changes'] = module_items_value_changes;
 				}
 			}

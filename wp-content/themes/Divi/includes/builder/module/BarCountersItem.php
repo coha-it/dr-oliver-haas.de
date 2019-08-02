@@ -168,10 +168,10 @@ class ET_Builder_Module_Bar_Counters_Item extends ET_Builder_Module {
 				$parallax_classname[] = 'et_pb_parallax_css';
 			}
 
-			$parallax_background = sprintf( '<div
+			$parallax_background = sprintf( '<div class="et_parallax_bg_wrap"><div
 					class="%1$s"
 					style="background-image: url(%2$s);"
-					></div>',
+					></div></div>',
 				esc_attr( implode( ' ', $parallax_classname ) ),
 				esc_attr( $background_image )
 			);

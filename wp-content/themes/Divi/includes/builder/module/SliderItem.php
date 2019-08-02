@@ -1,5 +1,7 @@
 <?php
 
+require_once 'helpers/Slider.php';
+
 class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 	function init() {
 		$this->name                        = esc_html__( 'Slide', 'et_builder' );
@@ -202,7 +204,20 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 					),
 				),
 			),
-			'max_width'             => false,
+			'max_width'             => array(
+				'use_module_alignment' => false,
+				'css' => array(
+					'main' => '.et_pb_slider %%order_class%%.et_pb_slide > .et_pb_container',
+				),
+				'options' => array(
+					'width'     => array(
+						'label' => esc_html__( 'Content Width', 'et_builder' ),
+					),
+					'max_width' => array(
+						'label' => esc_html__( 'Content Max Width', 'et_builder' ),
+					),
+				),
+			),
 			'height'                => false,
 		);
 
@@ -412,6 +427,7 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 				'tab_slug'       => 'advanced',
 				'toggle_slug'    => 'navigation',
 				'mobile_options' => true,
+				'hover'          => 'tabs',
 			),
 			'dot_nav_custom_color' => array(
 				'label'          => esc_html__( 'Dot Navigation Color', 'et_builder' ),
@@ -421,6 +437,7 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 				'tab_slug'       => 'advanced',
 				'toggle_slug'    => 'navigation',
 				'mobile_options' => true,
+				'hover'          => 'tabs',
 			),
 			'admin_title' => array(
 				'label'       => esc_html__( 'Admin Label', 'et_builder' ),
@@ -468,6 +485,9 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 			'background-color' => '%%order_class%% .et_pb_slide_overlay_container, %%order_class%% .et_pb_text_overlay_wrapper',
 			'color' => self::$_->array_get( $this->advanced_fields, 'text.css.main', '%%order_class%%' ),
 		);
+
+		$fields['dot_nav_custom_color'] = array( 'background-color' => et_pb_slider_options()->get_dots_selector() );
+		$fields['arrows_custom_color']  = array( 'all' => et_pb_slider_options()->get_arrows_selector() );
 
 		return $fields;
 	}
@@ -627,17 +647,7 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 		$background_layout_tablet        = isset( $background_layout_values['tablet'] ) ? $background_layout_values['tablet'] : '';
 		$background_layout_phone         = isset( $background_layout_values['phone'] ) ? $background_layout_values['phone'] : '';
 
-		$arrows_custom_color             = $this->props['arrows_custom_color'];
-		$arrows_custom_color_values      = et_pb_responsive_options()->get_property_values( $this->props, 'arrows_custom_color' );
-		$arrows_custom_color_tablet      = isset( $arrows_custom_color_values['tablet'] ) ? $arrows_custom_color_values['tablet'] : '';
-		$arrows_custom_color_phone       = isset( $arrows_custom_color_values['phone'] ) ? $arrows_custom_color_values['phone'] : '';
-
-		$dot_nav_custom_color            = $this->props['dot_nav_custom_color'];
-		$dot_nav_custom_color_values     = et_pb_responsive_options()->get_property_values( $this->props, 'dot_nav_custom_color' );
-		$dot_nav_custom_color_tablet     = isset( $dot_nav_custom_color_values['tablet'] ) ? $dot_nav_custom_color_values['tablet'] : '';
-		$dot_nav_custom_color_phone      = isset( $dot_nav_custom_color_values['phone'] ) ? $dot_nav_custom_color_values['phone'] : '';
-
-		global $et_pb_slider_has_video, $et_pb_slider_parallax, $et_pb_slider_parallax_method, $et_pb_slider_show_mobile, $et_pb_slider_custom_icon, $et_pb_slider_custom_icon_tablet, $et_pb_slider_custom_icon_phone, $et_pb_slider_item_num, $et_pb_slider_button_rel;
+		global $et_pb_slider, $et_pb_slider_has_video, $et_pb_slider_parallax, $et_pb_slider_parallax_method, $et_pb_slider_show_mobile, $et_pb_slider_custom_icon, $et_pb_slider_custom_icon_tablet, $et_pb_slider_custom_icon_phone, $et_pb_slider_item_num, $et_pb_slider_button_rel;
 
 		$et_pb_slider_item_num++;
 
@@ -690,8 +700,6 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 			'display_button'      => true,
 		) );
 
-		$class = '';
-
 		if ( 'on' === $use_bg_overlay ) {
 			// Background Overlay Color.
 			et_pb_responsive_options()->generate_responsive_css( $bg_overlay_color_values, '%%order_class%%.et_pb_slide .et_pb_slide_overlay_container', 'background-color', $render_slug, '', 'color' );
@@ -731,30 +739,6 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 				$video_embed
 			);
 		}
-
-		$data_dot_nav_custom_color = '' !== $dot_nav_custom_color
-			? sprintf( ' data-dots_color="%1$s"', esc_attr( $dot_nav_custom_color ) )
-			: '';
-
-		$data_dot_nav_custom_color_tablet = '' !== $dot_nav_custom_color_tablet
-			? sprintf( ' data-dots_color-tablet="%1$s"', esc_attr( $dot_nav_custom_color_tablet ) )
-			: '';
-
-		$data_dot_nav_custom_color_phone = '' !== $dot_nav_custom_color_phone
-			? sprintf( ' data-dots_color-phone="%1$s"', esc_attr( $dot_nav_custom_color_phone ) )
-			: '';
-
-		$data_arrows_custom_color = '' !== $arrows_custom_color
-			? sprintf( ' data-arrows_color="%1$s"', esc_attr( $arrows_custom_color ) )
-			: '';
-
-		$data_arrows_custom_color_tablet = '' !== $arrows_custom_color_tablet
-			? sprintf( ' data-arrows_color-tablet="%1$s"', esc_attr( $arrows_custom_color_tablet ) )
-			: '';
-
-		$data_arrows_custom_color_phone = '' !== $arrows_custom_color_phone
-			? sprintf( ' data-arrows_color-phone="%1$s"', esc_attr( $arrows_custom_color_phone ) )
-			: '';
 
 		// Images: Add CSS Filters and Mix Blend Mode rules (if set)
 		if ( array_key_exists( 'image', $this->advanced_fields ) && array_key_exists( 'css', $this->advanced_fields['image'] ) ) {
@@ -802,6 +786,13 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 			$this->add_classname( 'et-pb-active-slide' );
 		}
 
+		$parent_class = self::$_->array_get( $et_pb_slider, 'order_class', 'et_pb_slider' );
+		$order_class  = self::get_module_order_class( $render_slug );
+		$prefix       = sprintf( '.%1$s[data-active-slide="%2$s"]', $parent_class, $order_class );
+
+		$this->generate_responsive_hover_style( 'arrows_custom_color', et_pb_slider_options()->get_arrows_selector( $prefix ), 'color' );
+		$this->generate_responsive_hover_style( 'dot_nav_custom_color', et_pb_slider_options()->get_dots_selector( $prefix ), 'background-color' );
+
 		// Remove automatically added classnames
 		$this->remove_classname( array(
 			'et_pb_module',
@@ -839,7 +830,7 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 		}
 
 		$output = sprintf(
-			'<div class="%4$s"%7$s%8$s%10$s%11$s%12$s%13$s%14$s%15$s>
+			'<div class="%4$s"%7$s%8$s%10$s%11$s data-slide-id="%12$s">
 				%6$s
 				%9$s
 				<div class="et_pb_container clearfix">
@@ -860,15 +851,12 @@ class ET_Builder_Module_Slider_Item extends ET_Builder_Module {
 			$this->module_classname( $render_slug ),
 			$video_background, // #5
 			$parallax_image_background,
-			$data_dot_nav_custom_color,
-			$data_arrows_custom_color,
+			'',
+			'',
 			'on' === $use_bg_overlay ? '<div class="et_pb_slide_overlay_container"></div>' : '',
 			et_core_esc_previously( $data_background_layout ), // #10
 			et_core_esc_previously( $data_background_layout_hover ),
-			$data_dot_nav_custom_color_tablet,
-			$data_dot_nav_custom_color_phone,
-			$data_arrows_custom_color_tablet,
-			$data_arrows_custom_color_phone // #15
+			self::get_module_order_class( $render_slug )
 		);
 
 		return $output;

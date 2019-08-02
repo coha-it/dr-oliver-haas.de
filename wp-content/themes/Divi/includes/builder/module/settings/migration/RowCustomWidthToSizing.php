@@ -47,7 +47,8 @@ class ET_Builder_Module_Settings_Migration_RowCustomWidthToSizing extends ET_Bui
 		$saved_value,
 		$saved_field_name,
 		$attrs,
-		$content
+		$content,
+		$module_address
 	) {
 		$raw_field = str_replace( 'inner_', '', $field_name );
 

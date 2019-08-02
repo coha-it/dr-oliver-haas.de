@@ -198,6 +198,7 @@ function et_fb_get_dynamic_backend_helpers() {
 		'abTesting'                    => et_builder_ab_options( $post->ID ),
 		'conditionalTags'              => et_fb_conditional_tag_params(),
 		'commentsModuleMarkup'         => et_fb_get_comments_markup(),
+		'failureNotification'          => et_builder_get_failure_notification_modal(),
 		/**
 		 * Filters taxonomies array.
 		 *
@@ -419,7 +420,6 @@ function et_fb_get_static_backend_helpers($post_type) {
 		'et_builder_css_media_queries' => ET_Builder_Element::get_media_quries( 'for_js' ),
 		'builderOptions'               => et_builder_options(),
 		'builderVersion'               => ET_BUILDER_PRODUCT_VERSION,
-		'failureNotification'          => et_builder_get_failure_notification_modal(),
 		'noBuilderSupportNotification' => et_builder_get_no_builder_notification_modal(),
 		'noBrowserSupportNotification' => et_builder_get_no_browser_notification_modal(),
 		'exitNotification'             => et_builder_get_exit_notification_modal(),
@@ -1296,6 +1296,8 @@ function et_fb_get_static_backend_helpers($post_type) {
 			'colorpicker'              => array(
 				'clear'                => esc_html__( 'Clear', 'et_builder' ),
 				'select'               => esc_html__( 'Select', 'et_builder' ),
+				'noColor'              => esc_html__( 'Transparent', 'et_builder' ),
+				'addColor'             => esc_html__( 'Add Color', 'et_builder' ),
 			),
 			'colorManager'             => array(
 				'saved'                => esc_html__( 'Saved', 'et_builder' ),
@@ -1875,8 +1877,9 @@ function et_fb_get_static_backend_helpers($post_type) {
 					'update'       => esc_html__( 'Change Column Structure', 'et_builder' ),
 					'rightMenu'    => esc_html__( 'Other Row Settings', 'et_builder' ),
 				),
-				'addButton' => esc_html__( 'Add New Row', 'et_builder' ),
-				'chooseColumn' => esc_html__( 'Choose Column Structure', 'et_builder' ),
+				'addButton'       => esc_html__( 'Add New Row', 'et_builder' ),
+				'addColumnButton' => esc_html__( 'Add New Column', 'et_builder' ),
+				'chooseColumn'    => esc_html__( 'Choose Column Structure', 'et_builder' ),
 			),
 			'module' => array(
 				'tab' => array(
@@ -1908,18 +1911,20 @@ function et_fb_get_static_backend_helpers($post_type) {
 			'buttonReport'     => esc_html__( 'Report This Error', 'et_builder' ),
 			'buttonSaveReload' => esc_html__( 'Save and Reload', 'et_builder' ),
 			'modal' => array(
-				'title'                => esc_html__( 'Report An Error', 'et_builder' ),
-				'noAccountMessage'     => esc_html__( 'Elegant Themes username and API key have not been configured on this site. Error reporting requires username and API key to work.', 'et_builder' ),
-				'noAccountGuide'       => esc_html__( 'Click the button below, then go to Updates tab.', 'et_builder' ),
-				'noAccountButtonLabel' => esc_html__( 'Configure username and API key', 'et_builder' ),
-				'consentTitle'         => esc_html__( 'Data Transfer Agreement', 'et_builder' ),
-				'consentDescription'   => esc_html__( 'The following information will be sent to our team when you submit an error report. This includes the complete content of this page, a detailed error report, and basic information about your website such as which plugins you have installed, which software versions you are using and more. The full list of data transfered in this report will include the following:', 'et_builder' ),
-				'consentLabel'         => esc_html__( 'I agree to transfer this data to Elegant Themes.', 'et_builder' ),
-				'buttonLabel'          => esc_html__( 'Send Error Report', 'et_builder' ),
-				'successMessage'       => esc_html__( 'Thank you for reporting this issue. Your report has been successfully sent.', 'et_builder' ),
-				'successAutoclose'     => esc_html__( 'This message will be automatically closed in 3 seconds.', 'et_builder' ),
-				'debugInfo'            => ET_Builder_Error_Report::get_debug_info(),
-				'errorMessage'         => esc_html__( 'An error occurred, please try again.', 'et_builder' ),
+				'title'                   => esc_html__( 'Report An Error', 'et_builder' ),
+				'noAccountMessage'        => esc_html__( 'Elegant Themes username and API key have not been configured on this site. Error reporting requires username and API key to work.', 'et_builder' ),
+				'noAccountGuide'          => esc_html__( 'Click the button below, then go to Updates tab.', 'et_builder' ),
+				'noAccountButtonLabel'    => esc_html__( 'Configure username and API key', 'et_builder' ),
+				'consentTitle'            => esc_html__( 'Data Transfer Agreement', 'et_builder' ),
+				'consentDescription'      => esc_html__( 'The following information will be sent to our team when you submit an error report. This includes the complete content of this page, a detailed error report, and basic information about your website such as which plugins you have installed, which software versions you are using and more. The full list of data transfered in this report will include the following:', 'et_builder' ),
+				'consentNotes'            => esc_html__( 'Error Descripion', 'et_builder' ),
+				'consentNotesDescription' => esc_html__( 'Describe what exactly you did before this error message appears on the builder. This is optional but really helpful for us to fix this issue. So the more accurate your description is, the easier for us to fix it.', 'et_builder' ),
+				'consentLabel'            => esc_html__( 'I agree to transfer this data to Elegant Themes.', 'et_builder' ),
+				'buttonLabel'             => esc_html__( 'Send Error Report', 'et_builder' ),
+				'successMessage'          => esc_html__( 'Thank you for reporting this issue. Your report has been successfully sent.', 'et_builder' ),
+				'successAutoclose'        => esc_html__( 'This message will be automatically closed in 3 seconds.', 'et_builder' ),
+				'debugInfo'               => ET_Builder_Error_Report::get_debug_info(),
+				'errorMessage'            => esc_html__( 'An error occurred, please try again.', 'et_builder' ),
 			),
 		),
 		/**
@@ -1945,6 +1950,7 @@ function et_fb_get_static_backend_helpers($post_type) {
 				'enable' => esc_html__( 'Use Dynamic Content', 'et_builder' ),
 				'disable' => esc_html__( 'Remove Dynamic Content', 'et_builder' ),
 				'settings' => esc_html__( 'Edit Dynamic Content', 'et_builder' ),
+				'reset'    => esc_html__( 'Reset Dynamic Content', 'et_builder' ),
 			),
 		),
 	);
@@ -1965,7 +1971,7 @@ function et_fb_get_static_backend_helpers($post_type) {
 function et_fb_get_asset_helpers( $content, $post_type ) {
 	$helpers = et_fb_get_static_backend_helpers( $post_type );
 	return sprintf(
-		'window.ETBuilderBackend = jQuery.extend(true, %s, window.ETBuilderBackendDynamic)',
+		'window.ETBuilderBackend=jQuery.extend(true,%s,window.ETBuilderBackendDynamic)',
 		et_fb_remove_site_url_protocol( wp_json_encode( $helpers, ET_BUILDER_JSON_ENCODE_OPTIONS ) )
 	);
 }

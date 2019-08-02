@@ -367,15 +367,16 @@ class ET_Builder_Module_Shop extends ET_Builder_Module_Type_PostBased {
 				'type'              => 'select',
 				'option_category'   => 'configuration',
 				'options'           => array(
-					'menu_order'  => esc_html__( 'Default Sorting', 'et_builder' ),
+					'default'    => esc_html__( 'Default Sorting', 'et_builder' ),
+					'menu_order' => esc_html__( 'Sort by Menu Order', 'et_builder' ),
 					'popularity' => esc_html__( 'Sort By Popularity', 'et_builder' ),
-					'rating' => esc_html__( 'Sort By Rating', 'et_builder' ),
-					'date' => esc_html__( 'Sort By Date: Oldest To Newest', 'et_builder' ),
-					'date-desc' => esc_html__( 'Sort By Date: Newest To Oldest', 'et_builder' ),
-					'price' => esc_html__( 'Sort By Price: Low To High', 'et_builder' ),
+					'rating'     => esc_html__( 'Sort By Rating', 'et_builder' ),
+					'date'       => esc_html__( 'Sort By Date: Oldest To Newest', 'et_builder' ),
+					'date-desc'  => esc_html__( 'Sort By Date: Newest To Oldest', 'et_builder' ),
+					'price'      => esc_html__( 'Sort By Price: Low To High', 'et_builder' ),
 					'price-desc' => esc_html__( 'Sort By Price: High To Low', 'et_builder' ),
 				),
-				'default_on_front' => 'menu_order',
+				'default_on_front' => 'default',
 				'description'       => esc_html__( 'Choose how your products should be ordered.', 'et_builder' ),
 				'computed_affects'  => array(
 					'__shop',
@@ -520,6 +521,11 @@ class ET_Builder_Module_Shop extends ET_Builder_Module_Type_PostBased {
 					array_flip( $raw_product_categories )
 				);
 			}
+		}
+
+		if ( 'default' === $orderby ) {
+			// Leave the attribute empty to allow WooCommerce to take over and use the default sorting.
+			$orderby = '';
 		}
 
 		if ( in_array( $orderby, array( 'price-desc', 'date-desc' ) ) ) {

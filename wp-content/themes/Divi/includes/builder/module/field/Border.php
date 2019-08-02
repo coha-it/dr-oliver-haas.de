@@ -567,10 +567,6 @@ class ET_Builder_Module_Field_Border extends ET_Builder_Module_Field_Base {
 	 * @return bool
 	 */
 	public function needs_border_reset_class( $module_slug, $attrs ) {
-		if ( 'et_pb_blog' === $module_slug && 'off' === self::$_->array_get( $attrs, 'fullwidth' ) ) {
-			return false;
-		}
-
 		if ( in_array( $module_slug, self::$_no_border_reset ) ) {
 			return false;
 		}
