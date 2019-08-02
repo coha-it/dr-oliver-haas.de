@@ -730,8 +730,16 @@ class wfConfig {
 				}
 				else {
 					if (!self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val, autoload) values (%%s, X'%s', 'no')", $dataChunk), $chunkedValueKey . $chunks)) {
-						$errno = mysql_errno($wpdb->dbh);
-						wordfence::status(2, 'error', "Error writing value chunk for {$key} (MySQL error: [$errno] {$wpdb->last_error})");
+						if ($useMySQLi) {
+							$errno = mysqli_errno($wpdb->dbh);
+							wordfence::status(2, 'error', "Error writing value chunk for {$key} (MySQL error: [$errno] {$wpdb->last_error})");
+						}
+						else if (function_exists('mysql_errno')) {
+							// phpcs:ignore PHPCompatibility.Extensions.RemovedExtensions.mysql_DeprecatedRemoved
+							$errno = mysql_errno($wpdb->dbh);
+							wordfence::status(2, 'error', "Error writing value chunk for {$key} (MySQL error: [$errno] {$wpdb->last_error})");
+						}
+						
 						return false;
 					}
 				}
@@ -1408,6 +1416,9 @@ Options -ExecCGI
 				case 'disableWAFBlacklistBlocking':
 				{
 					$wafConfig->setConfig($key, wfUtils::truthyToInt($value));
+					if (method_exists(wfWAF::getInstance()->getStorageEngine(), 'purgeIPBlocks')) {
+						wfWAF::getInstance()->getStorageEngine()->purgeIPBlocks(wfWAFStorageInterface::IP_BLOCKS_BLACKLIST);
+					}
 					$saved = true;
 					break;
 				}
@@ -1456,6 +1467,10 @@ Options -ExecCGI
 						wfConfig::set($key, '');
 					}
 					
+					if (method_exists(wfWAF::getInstance()->getStorageEngine(), 'purgeIPBlocks')) {
+						wfWAF::getInstance()->getStorageEngine()->purgeIPBlocks(wfWAFStorageInterface::IP_BLOCKS_BLACKLIST);
+					}
+					
 					$saved = true;
 					break;
 				}
@@ -1469,6 +1484,11 @@ Options -ExecCGI
 					}
 					
 					$wafConfig->setConfig('whitelistedServiceIPs', @json_encode(wfUtils::whitelistedServiceIPs()));
+					
+					if (method_exists(wfWAF::getInstance()->getStorageEngine(), 'purgeIPBlocks')) {
+						wfWAF::getInstance()->getStorageEngine()->purgeIPBlocks(wfWAFStorageInterface::IP_BLOCKS_BLACKLIST);
+					}
+					
 					$saved = true;
 					break;
 				}
@@ -1666,7 +1686,6 @@ Options -ExecCGI
 					wfConfig::set($key, $value);
 				}
 				else if (WFWAF_DEBUG) {
-					//TODO: remove me when done with QA
 					error_log("*** DEBUG: Config option '{$key}' missing save handler.");
 				}
 			}
