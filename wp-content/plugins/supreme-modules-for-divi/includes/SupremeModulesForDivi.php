@@ -27,7 +27,7 @@ class DSM_SupremeModulesForDivi extends DiviExtension {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.0';
+	public $version = DSM_VERSION;
 
 	/**
 	 * DSM_SupremeModulesForDivi constructor.

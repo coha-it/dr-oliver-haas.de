@@ -239,8 +239,15 @@ namespace WPForms {
 		 */
 		private function includes_magic() {
 
-			// Autoloader is put into its own file to save space here.
-			require_once WPFORMS_PLUGIN_DIR . 'autoloader.php';
+			// Autoload Composer packages.
+			require_once WPFORMS_PLUGIN_DIR . 'vendor/autoload.php';
+
+			if ( version_compare( phpversion(), '5.5', '>=' ) ) {
+				/*
+				 * Load PHP 5.5 email subsystem.
+				 */
+				add_action( 'wpforms_loaded', array( '\WPForms\Emails\Summaries', 'get_instance' ) );
+			}
 
 			/*
 			 * Load admin components. Exclude from frontend.

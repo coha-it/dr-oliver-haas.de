@@ -1387,6 +1387,8 @@ End of comment */ ', 'custom-css-js') . PHP_EOL . PHP_EOL;
             return false;
 
         remove_filter( 'use_block_editor_for_post', array( 'Classic_Editor', 'choose_editor' ), 100, 2 );
+        add_filter( 'use_block_editor_for_post', '__return_false', 100 );
+        add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
     }
 }
 

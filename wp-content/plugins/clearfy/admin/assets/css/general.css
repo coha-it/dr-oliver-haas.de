@@ -33,10 +33,10 @@
     //float: right;
   }*/
 }
-#WBCR .wbcr-factory-pages-410-impressive-page-template .wbcr-factory-page-header {
+#WBCR .wbcr-factory-pages-421-impressive-page-template .wbcr-factory-page-header {
   height: 80px !important;
 }
-#WBCR .wbcr-factory-pages-410-impressive-page-template .wbcr-factory-page-header .wbcr-factory-header-logo span {
+#WBCR .wbcr-factory-pages-421-impressive-page-template .wbcr-factory-page-header .wbcr-factory-header-logo span {
   display: inline-block !important;
 }
 #WBCR .row {
@@ -259,6 +259,7 @@
 #WBCR #wbcr-clearfy-quick-mode-board .wbcr-clearfy-switch {
   position: relative;
   padding: 15px 20px;
+  margin-right: 20px;
   font-size: 12px;
   text-transform: uppercase;
   background: #f1f1f1;

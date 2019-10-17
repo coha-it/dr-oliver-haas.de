@@ -65,6 +65,7 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 					),
 					'block_elements' => array(
 						'tabbed_subtoggles' => true,
+						'bb_icons_support'  => true,
 					),
 				),
 			),
@@ -73,8 +74,8 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 				'image'   => array(
 					'css'             => array(
 						'main' => array(
-							'border_radii'  => '%%order_class%% .et_pb_slide_image',
-							'border_styles' => '%%order_class%% .et_pb_slide_image',
+							'border_radii'  => '%%order_class%% .et_pb_slide_image img',
+							'border_styles' => '%%order_class%% .et_pb_slide_image img',
 						)
 					),
 					'label_prefix'    => esc_html__( 'Image', 'et_builder' ),
@@ -103,7 +104,7 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 					'tab_slug'          => 'advanced',
 					'toggle_slug'       => 'image',
 					'css'               => array(
-						'main' => '%%order_class%% .et_pb_slide_image',
+						'main' => '%%order_class%% .et_pb_slide_image img',
 					),
 					'default_on_fronts' => array(
 						'color'    => '',
@@ -252,6 +253,8 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 				'default_on_front' => 'on',
 				'toggle_slug'     => 'elements',
 				'description'     => esc_html__( 'This setting allows you to turn the navigation arrows on or off.', 'et_builder' ),
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'show_pagination' => array(
 				'label'           => esc_html__( 'Show Controls', 'et_builder' ),
@@ -264,6 +267,8 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 				'default_on_front' => 'on',
 				'toggle_slug'     => 'elements',
 				'description'     => esc_html__( 'Disabling this option will remove the circle button at the bottom of the slider.', 'et_builder' ),
+				'mobile_options'  => true,
+				'hover'           => 'tabs',
 			),
 			'show_content_on_mobile' => array(
 				'label'           => esc_html__( 'Show Content On Mobile', 'et_builder' ),
@@ -402,7 +407,9 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 
 	function before_render() {
 		global $et_pb_slider_has_video, $et_pb_slider_parallax, $et_pb_slider_parallax_method, $et_pb_slider_show_mobile, $et_pb_slider_custom_icon, $et_pb_slider_custom_icon_tablet, $et_pb_slider_custom_icon_phone, $et_pb_slider_item_num, $et_pb_slider_button_rel;
+		global $et_pb_slider_parent_type;
 
+		$et_pb_slider_parent_type = $this->slug;
 		$et_pb_slider_item_num = 0;
 
 		$parallax        = $this->props['parallax'];
@@ -531,6 +538,7 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 	}
 
 	function render( $attrs, $content = null, $render_slug ) {
+		$multi_view              = et_pb_multi_view_options($this);
 		$show_arrows             = $this->props['show_arrows'];
 		$show_pagination         = $this->props['show_pagination'];
 		$parallax                = $this->props['parallax'];
@@ -612,8 +620,19 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 		// Remove automatically added classnames
 		$this->remove_classname( 'et_pb_fullwidth_slider' );
 
+		$multi_view_data_attr = $multi_view->render_attrs( array(
+			'classes' => array(
+				'et_pb_slider_no_arrows' => array(
+					'show_arrows' => 'off',
+				),
+				'et_pb_slider_no_pagination' => array(
+					'show_pagination' => 'off',
+				),
+			),
+		) );
+
 		$output = sprintf(
-			'<div%3$s class="%1$s">
+			'<div%3$s class="%1$s"%5$s>
 				<div class="et_pb_slides">
 					%2$s
 				</div> <!-- .et_pb_slides -->
@@ -623,7 +642,8 @@ class ET_Builder_Module_Fullwidth_Slider extends ET_Builder_Module {
 			$this->module_classname( $render_slug ),
 			$content,
 			$this->module_id(),
-			$this->inner_shadow_back_compatibility( $render_slug )
+			$this->inner_shadow_back_compatibility( $render_slug ),
+			$multi_view_data_attr // $5
 		);
 
 		// Reset passed slider item value

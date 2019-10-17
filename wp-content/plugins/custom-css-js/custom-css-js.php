@@ -3,7 +3,7 @@
  * Plugin Name: Simple Custom CSS and JS 
  * Plugin URI: https://wordpress.org/plugins/custom-css-js/
  * Description: Easily add Custom CSS or JS to your website with an awesome editor.
- * Version: 3.26
+ * Version: 3.27
  * Author: SilkyPress.com 
  * Author URI: https://www.silkypress.com
  * License: GPL2
@@ -12,7 +12,7 @@
  * Domain Path: /languages/
  *
  * WC requires at least: 2.3.0
- * WC tested up to: 3.6
+ * WC tested up to: 3.7
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,6 +29,7 @@ final class CustomCSSandJS {
 
     public $search_tree = false;
     protected static $_instance = null; 
+    private $settings = array();
 
 
     /**
@@ -82,6 +83,7 @@ final class CustomCSSandJS {
         }
 
         $this->search_tree = get_option( 'custom-css-js-tree' );
+        $this->settings = get_option('ccj_settings');
 
         if ( ! $this->search_tree || count( $this->search_tree ) == 0 ) {
             return false;
@@ -140,9 +142,13 @@ final class CustomCSSandJS {
 
         // print the `internal` code
         if ( strpos( $function, 'internal' ) !== false ) {
-
-            $before = '<!-- start Simple Custom CSS and JS -->' . PHP_EOL; 
-            $after = '<!-- end Simple Custom CSS and JS -->' . PHP_EOL;
+            if ( isset($this->settings['remove_comments']) && $this->settings['remove_comments'] ) {
+                $before = '';
+                $after = '';
+            } else {
+                $before = '<!-- start Simple Custom CSS and JS -->' . PHP_EOL; 
+                $after = '<!-- end Simple Custom CSS and JS -->' . PHP_EOL;
+            }
             if ( strpos( $function, 'css' ) !== false ) {
                 $before .= '<style type="text/css">' . PHP_EOL;
                 $after = '</style>' . PHP_EOL . $after;
@@ -155,7 +161,15 @@ final class CustomCSSandJS {
 
             foreach( $args as $_post_id ) {
                 if ( strstr( $_post_id, 'css' ) || strstr( $_post_id, 'js' ) ) {
-                    @include_once( CCJ_UPLOAD_DIR . '/' . $_post_id );
+                    if ( isset($this->settings['remove_comments']) && $this->settings['remove_comments'] ) {
+                        ob_start();
+                        @include_once( CCJ_UPLOAD_DIR . '/' . $_post_id );
+                        $custom_code = ob_get_clean();
+                        $custom_code = str_replace(array('<!-- start Simple Custom CSS and JS -->' . PHP_EOL, '<!-- end Simple Custom CSS and JS -->' . PHP_EOL), '', $custom_code);
+                        echo $custom_code;
+                    } else {
+                        @include_once( CCJ_UPLOAD_DIR . '/' . $_post_id );
+                    }
                 } else {
                     $post = get_post( $_post_id );
                     echo $before . $post->post_content . $after;
@@ -204,7 +218,7 @@ final class CustomCSSandJS {
     function set_constants() {
         $dir = wp_upload_dir();
         $constants = array(
-            'CCJ_VERSION'         => '3.26',
+            'CCJ_VERSION'         => '3.27',
             'CCJ_UPLOAD_DIR'      => $dir['basedir'] . '/custom-css-js', 
             'CCJ_UPLOAD_URL'      => $dir['baseurl'] . '/custom-css-js', 
             'CCJ_PLUGIN_FILE'     => __FILE__,

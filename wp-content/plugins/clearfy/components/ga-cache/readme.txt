@@ -1,10 +1,10 @@
 === Local Google Analytics for Wordpress - caches external requests ===
 Tags: analytics,google analytics,google analytics dashboard,google analytics plugin,google analytics widget,gtag
-Contributors: webcraftic, JeromeMeyer62
+Contributors: webcraftic, alexkovalevv, JeromeMeyer62, creativemotion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VDX7JNTQPNPFW
 Requires at least: 4.2
-Tested up to: 4.9
-Requires PHP: 5.2
+Tested up to: 5.2
+Requires PHP: 5.4
 Stable tag: trunk
 License: GPLv2
 
@@ -35,9 +35,6 @@ Also if you want to gain 100 performance rating on Google Pagespeed Insights, th
 * Russian
 
 If you want to help with the translation, please contact me through this site or through the contacts inside the plugin.
-
-#### BIG THANKS ####
-Many thanks to [Jerome Meyer](http://www.arobase62.fr/2011/03/23/simple-google-analytics/), for his great contribution to the development of this plugin.
 
 #### THANKS TO THE PLUGINS' AUTHORS ####
 We used some plugins functions:
@@ -77,21 +74,29 @@ We invite you to check out a few other related free plugins that our team has al
 == Screenshots ==
 1. Control panel
 
-== Frequently Asked Questions ==
-= Does plugin work with multisite? =
-No plugin does not support multisites. This is temporary and we will try to add support for networks in the future.
-
 == Changelog ==
+= 3.1.2 =
+* Fixed: A bug with creating a local copy of the Google analytics library.
+
+= 3.1.1 =
+* Added: Compatibility with Wordpress 4.2 - 5.x
+* Added: Multisite support
+* Fixed: Minor bugs
+
 = version 3.0.1 =
 * Fixed small bugs
+
 = version 3.0.0 =
 * The Simple Google Analytics plugin has some major changes. Unfortunately, the old version of the plugin (2.2.2) is no longer supported, but you still can download it from the WordPress repository in case if the new release doesn’t work for you.
   We’ve updated the code and fixed the compatibility issue for the latest WordPress and PHP versions. We’ve also added additional feature of the Google Analytics cache – this way your website will load faster. The plugin’s name has been changed to Google Analytics cache, but all features remained the same.
   Please, check plugin settings and its performance on your website. We do care about you and want to avoid any problems with the new version.
+
 = version 2.2.3 =
 * Author change
+
 = version 2.2.2 =
 * Add a comment when the code isn't loaded while being logged
+
 = version 2.2.1 =
 * Corrected the analytics code to prevent non-detection from Google
 = version 2.2.0 =

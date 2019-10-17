@@ -1,47 +1,52 @@
 <?php
 
 // Exit if accessed directly
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 /**
  * ajax action for switch option
  */
-function wbcr_upm_change_flag()
-{
-    $is_theme = false;
-    $app = WUPM_Plugin::app();
-    $slug = $app->request->post('theme', null, true);
-    if (!empty($slug)) {
-        $is_theme = true;
-    } else {
-        $slug = $app->request->post('plugin', null, true);
-    }
+function wbcr_upm_change_flag() {
+	if ( ! current_user_can( 'install_plugins' ) ) {
+		wp_die( - 1, 403 );
+	}
 
-    $flag = $app->request->post('flag', null, true);
-    $new_value = (bool)$app->request->post('value');
+	$is_theme = false;
 
-    if (empty($slug) or empty($flag)) {
-        wp_send_json_error(array('error_message' => __('Required arguments of slug, flag is empty!', 'webcraftic-updates-manager')));
-    }
+	$app  = WUPM_Plugin::app();
+	$slug = $app->request->post( 'theme', null, true );
 
-    if ($is_theme) {
-        $plugin_filters = new WUPM_ThemeFilters($app);
-    } else {
-        $plugin_filters = new WUPM_PluginFilters($app);
-    }
+	if ( ! empty( $slug ) ) {
+		$is_theme = true;
+	} else {
+		$slug = $app->request->post( 'plugin', null, true );
+	}
 
-    $method = (($new_value) ? 'disable' : 'enable') . $flag;
+	$flag      = $app->request->post( 'flag', null, true );
+	$new_value = (bool) $app->request->post( 'value' );
 
-    if (!method_exists($plugin_filters, $method)) {
-        wp_send_json_error(array('error_message' => __('Method %s is not found!', 'webcraftic-updates-manager')));
-    }
+	if ( empty( $slug ) or empty( $flag ) ) {
+		wp_send_json_error( [ 'error_message' => __( 'Required arguments of slug, flag is empty!', 'webcraftic-updates-manager' ) ] );
+	}
 
-    $plugin_filters->$method($slug);
-    $plugin_filters->save();
+	if ( $is_theme ) {
+		$plugin_filters = new WUPM_ThemeFilters( $app );
+	} else {
+		$plugin_filters = new WUPM_PluginFilters( $app );
+	}
 
-    wp_send_json_success();
+	$method = ( ( $new_value ) ? 'disable' : 'enable' ) . $flag;
+
+	if ( ! method_exists( $plugin_filters, $method ) ) {
+		wp_send_json_error( [ 'error_message' => __( 'Method %s is not found!', 'webcraftic-updates-manager' ) ] );
+	}
+
+	$plugin_filters->$method( $slug );
+	$plugin_filters->save();
+
+	wp_send_json_success();
 }
 
-add_action('wp_ajax_wbcr-upm-change-flag', 'wbcr_upm_change_flag');
+add_action( 'wp_ajax_wbcr-upm-change-flag', 'wbcr_upm_change_flag' );

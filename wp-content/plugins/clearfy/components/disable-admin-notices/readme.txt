@@ -1,10 +1,10 @@
 === Disable admin notices individually  ===
 Tags: hide admin notices, hide updates nags, hide nags, disable notices, disable update nags, disable nags, disable admin notices
-Contributors: webcraftic
+Contributors: webcraftic, alexkovalevv, creativemotion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VDX7JNTQPNPFW
 Requires at least: 4.2
-Tested up to: 4.9
-Requires PHP: 5.2
+Tested up to: 5.2
+Requires PHP: 5.4
 Stable tag: trunk
 License: GPLv2
 
@@ -54,10 +54,18 @@ If you want to help with the translation, please contact me through this site or
 3. Notifications panel (optional)
 
 == Changelog ==
+= 1.1.1 =
+* Added: Compatibility with Learndash
+* Added: Compatibility with Wordpress 4.2 - 5.x
+* Added: Multisite support
+* Added: Minor link style (hide notification forever) changes.
+
 = 1.0.6 =
 * Fixed: compatibility with some plugins and themes
+
 = 1.0.5 =
 * Fixed: Prefix bug
+
 = 1.0.4 =
 * Fixed: Compatibility with Clearfy plugin
 * ADDED: Plugin options caching to reduce database queries for 90%. Clearfy became lighter and faster.

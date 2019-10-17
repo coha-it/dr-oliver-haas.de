@@ -60,21 +60,27 @@ class FormSelector implements IntegrationInterface {
 			WPFORMS_VERSION
 		);
 
-		\register_block_type( 'wpforms/form-selector', array(
-			'attributes'      => array(
-				'formId'       => array(
-					'type' => 'string',
+		\register_block_type(
+			'wpforms/form-selector',
+			array(
+				'attributes'      => array(
+					'formId'       => array(
+						'type' => 'string',
+					),
+					'displayTitle' => array(
+						'type' => 'boolean',
+					),
+					'displayDesc'  => array(
+						'type' => 'boolean',
+					),
+					'className'    => array(
+						'type' => 'string',
+					),
 				),
-				'displayTitle' => array(
-					'type' => 'boolean',
-				),
-				'displayDesc'  => array(
-					'type' => 'boolean',
-				),
-			),
-			'editor_style'    => 'wpforms-gutenberg-form-selector',
-			'render_callback' => array( $this, 'get_form_html' ),
-		) );
+				'editor_style'    => 'wpforms-gutenberg-form-selector',
+				'render_callback' => array( $this, 'get_form_html' ),
+			)
+		);
 	}
 
 	/**
@@ -98,7 +104,7 @@ class FormSelector implements IntegrationInterface {
 			'show_title'        => \esc_html__( 'Show Title', 'wpforms-lite' ),
 			'show_description'  => \esc_html__( 'Show Description', 'wpforms-lite' ),
 			'panel_notice_head' => \esc_html__( 'Heads up!', 'wpforms-lite' ),
-			'panel_notice_text' => \esc_html__( 'Dont forget to test your form.', 'wpforms-lite' ),
+			'panel_notice_text' => \esc_html__( 'Do not forget to test your form.', 'wpforms-lite' ),
 			'panel_notice_link' => \esc_html__( 'Check out our complete guide!', 'wpforms-lite' ),
 		);
 
@@ -149,24 +155,45 @@ class FormSelector implements IntegrationInterface {
 			return '';
 		}
 
-		$is_gb_editor = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context'];
+		$is_gb_editor = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST['context'] ) && 'edit' === $_REQUEST['context']; // phpcs:ignore
 
 		$title = ! empty( $attr['displayTitle'] ) ? true : false;
 		$desc  = ! empty( $attr['displayDesc'] ) ? true : false;
 
 		// Disable form fields if called from the Gutenberg editor.
 		if ( $is_gb_editor ) {
-			\add_filter( 'wpforms_frontend_container_class', function ( $classes ) {
-				$classes[] = 'wpforms-gutenberg-form-selector';
-				$classes[] = 'wpforms-container-full';
-				return $classes;
-			} );
-			\add_action( 'wpforms_frontend_output', function () {
-				echo '<fieldset disabled>';
-			}, 3 );
-			\add_action( 'wpforms_frontend_output', function () {
-				echo '</fieldset>';
-			}, 30 );
+			\add_filter(
+				'wpforms_frontend_container_class',
+				function ( $classes ) {
+					$classes[] = 'wpforms-gutenberg-form-selector';
+					$classes[] = 'wpforms-container-full';
+					return $classes;
+				}
+			);
+			\add_action(
+				'wpforms_frontend_output',
+				function () {
+					echo '<fieldset disabled>';
+				},
+				3
+			);
+			\add_action(
+				'wpforms_frontend_output',
+				function () {
+					echo '</fieldset>';
+				},
+				30
+			);
+		}
+
+		if ( ! empty( $attr['className'] ) ) {
+			\add_filter(
+				'wpforms_frontend_container_class',
+				function ( $classes ) use ( $attr ) {
+					$cls = array_map( 'esc_attr', explode( ' ', $attr['className'] ) );
+					return array_unique( array_merge( $classes, $cls ) );
+				}
+			);
 		}
 
 		\ob_start();

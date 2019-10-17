@@ -12,8 +12,8 @@
  */
 function wbcr_clearfy_get_sidebar_premium_widget() {
 	
-	$buy_premium_url = WbcrFactoryClearfy206_Helpers::getWebcrafticSitePageUrl( WCL_Plugin::app()->getPluginName(), 'pricing', 'license_page' );
-	$upgrade_price   = WbcrFactoryClearfy206_Helpers::getClearfyBusinessPrice();
+	$buy_premium_url = WbcrFactoryClearfy213_Helpers::getWebcrafticSitePageUrl( WCL_Plugin::app()->getPluginName(), 'pricing', 'license_page' );
+	$upgrade_price   = WbcrFactoryClearfy213_Helpers::getClearfyBusinessPrice();
 	
 	ob_start();
 	?>
@@ -49,8 +49,8 @@ function wbcr_clearfy_get_sidebar_support_widget() {
 	
 	$output = '';
 	
-	$free_support_url     = WbcrFactoryClearfy206_Helpers::getWebcrafticSitePageUrl( WCL_Plugin::app()->getPluginName(), 'support', 'support_widget' );
-	$page_hot_support_url = WbcrFactoryClearfy206_Helpers::getWebcrafticSitePageUrl( WCL_Plugin::app()->getPluginName(), 'hot-support', 'support_widget' );
+	$free_support_url     = WbcrFactoryClearfy213_Helpers::getWebcrafticSitePageUrl( WCL_Plugin::app()->getPluginName(), 'support', 'support_widget' );
+	$page_hot_support_url = WbcrFactoryClearfy213_Helpers::getWebcrafticSitePageUrl( WCL_Plugin::app()->getPluginName(), 'hot-support', 'support_widget' );
 	
 	ob_start();
 	?>

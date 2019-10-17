@@ -179,7 +179,7 @@ class Dsm_Supreme_Modules_For_Divi {
 		add_action( 'admin_enqueue_scripts', array( $this, 'dsm_admin_load_enqueue' ) );
     	new Dsm_Supreme_Modules_For_Divi_Review( array(
 			'slug'        => $this->get_plugin_name(),
-			'name'        => 'Divi Supreme Pro',
+			'name'        => __( 'Divi Supreme', 'dsm-supreme-modules-for-divi' ),
 			'time_limit'  => intval('864000'),
 		) );
 
@@ -192,11 +192,12 @@ class Dsm_Supreme_Modules_For_Divi {
 		add_action( 'init', array( $this, 'dsm_flush_rewrite_rules' ), 20 );
 		if ( $this->settings_api->get_option( 'dsm_use_header_footer', 'dsm_general' ) == 'on' ) {
 			add_action( 'init', array( $this, 'dsm_header_footer_posttypes' ), 0 );
-			add_filter( 'single_template', array( $this, 'dsm_load_headerfooter_template' ) );
+            add_filter( 'single_template', array( $this, 'dsm_load_headerfooter_template' ) );
+            add_filter( 'post_class', array( $this, 'dsm_load_headerfooter_post_class' ), 11 );
 			add_action( 'add_meta_boxes', array( $this, 'dsm_add_header_footer_meta_box' ), 11 );
 			add_action( 'save_post', array( $this, 'dsm_save_header_footer_meta_box' ), 10, 3 );
-			add_action( 'et_after_main_content', array( $this, 'dsm_custom_footer' ) );
-			add_action( 'template_redirect', array( $this, 'dsm_redirect_404' ) );
+            add_action( 'et_after_main_content', array( $this, 'dsm_custom_footer' ) );
+            add_filter( 'template_include', array( $this, 'dsm_redirect_template' ) );
 			add_action( 'wp_print_scripts', array( $this, 'dsm_custom_footer_settings' ), 30 );
 			add_action( 'admin_notices', array( $this, 'dsm_header_footer_admin_notice' ) );
 		}
@@ -388,7 +389,20 @@ class Dsm_Supreme_Modules_For_Divi {
             }
         }
     }
-
+    /**
+     * Shortcode Empty Paragraph fix
+     *
+     * @since 1.0.0
+     */
+    public function dsm_fix_shortcodes( $content ){
+        $array = array (
+            '<p>[' => '[', 
+            ']</p>' => ']', 
+            ']<br />' => ']'
+        );
+        $content = strtr( $content, $array );
+        return $content;
+    }
     /**
      * Creates the Divi Template
      *
@@ -440,6 +454,13 @@ class Dsm_Supreme_Modules_For_Divi {
 
         return $template;
     }
+    public function dsm_load_headerfooter_post_class( $classes ) {
+        global $post;
+        if ($post->post_type == 'dsm_header_footer') {
+            $classes = array_diff( $classes, array( 'et_pb_post' ) );
+        }
+        return $classes;
+    }
     public function dsm_header_footer_meta_box_options($post) {
         wp_nonce_field( 'dsm-header-footer-meta-box-nonce', 'dsm-header-footer-meta-box-nonce' );
         ?>
@@ -451,7 +472,7 @@ class Dsm_Supreme_Modules_For_Divi {
                         $option_values = array(
                             'footer' => __( 'Footer', 'dsm-supreme-modules-for-divi' ),
                             '404' => __( '404', 'dsm-supreme-modules-for-divi' ),
-                            //'header'   => __( 'Header (Not available)', 'dsm-supreme-modules-for-divi' ),
+                            'search_no_result' => __( 'Search No Result', 'dsm-supreme-modules-for-divi' ),
                         );
 
                         foreach($option_values as $key => $value) {
@@ -473,29 +494,17 @@ class Dsm_Supreme_Modules_For_Divi {
                 <label for="dsm-css-classes-meta-box-options" style="display: block; font-weight: bold; margin-bottom: 5px;">CSS Classes:</label>
                 <input name="dsm-css-classes-meta-box-options" style="width:100%;" type="text" value="<?php echo get_post_meta($post->ID, 'dsm-css-classes-meta-box-options', true); ?>">
             </p>
-            <p class="dsm-remove-default-footer-meta-box-options">
-            <label for="dsm-remove-default-footer-meta-box-options" style="display: block; font-weight: bold; margin-bottom: 5px;">Remove default Divi footer</label>
-            <select name="dsm-remove-default-footer-meta-box-options">
-                <?php 
-                    $option_values = array(
-                        'no' => __( 'No', 'dsm-supreme-modules-for-divi' ),
-                        'yes'   => __( 'Yes', 'dsm-supreme-modules-for-divi' ),
-                    );
-
-                    foreach($option_values as $key => $value) {
-                        if($key == get_post_meta($post->ID, 'dsm-remove-default-footer-meta-box-options', true)) {
-                            ?>
-                                <option value="<?php echo $key; ?>" selected><?php echo $value; ?></option>
-                            <?php    
-                        }
-                        else {
-                            ?>
-                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-                            <?php
-                        }
-                    }
-                ?>
-            </select>
+            <p class="dsm-remove-default-footer-meta-box-options" style="margin-bottom: 0;">
+                <input type="checkbox" name="dsm-remove-default-footer-meta-box-options" id="dsm-remove-default-footer-meta-box-options" value="yes" <?php if ( isset ( get_post_meta($post->ID)['dsm-remove-default-footer-meta-box-options'] ) ) checked( get_post_meta($post->ID)['dsm-remove-default-footer-meta-box-options'][0], 'yes' ); ?> />
+                <label for="dsm-remove-default-footer-meta-box-options">Remove default Divi footer</label>
+            </p>
+            <p class="dsm-footer-show-on-blank-template-meta-box-options" style="margin-bottom: 0; margin-top: 0;">
+                <input type="checkbox" name="dsm-footer-show-on-blank-template" id="dsm-footer-show-on-blank-template" value="yes" <?php if ( isset ( get_post_meta($post->ID)['dsm-footer-show-on-blank-template'] ) ) checked( get_post_meta($post->ID)['dsm-footer-show-on-blank-template'][0], 'yes' ); ?> />
+                <label for="dsm-footer-show-on-blank-template">Show on Blank Page Template</label>
+            </p>
+            <p class="dsm-footer-show-on-404-template-meta-box-options" style="margin-top: 0;">
+                <input type="checkbox" name="dsm-footer-show-on-404-template" id="dsm-footer-show-on-404-template" value="yes" <?php if ( isset ( get_post_meta($post->ID)['dsm-footer-show-on-404-template'] ) ) checked( get_post_meta($post->ID)['dsm-footer-show-on-404-template'][0], 'yes' ); ?> />
+                <label for="dsm-footer-show-on-404-template">Show on 404 Page</label>
             </p>
             <p><?php _e( 'Note: Footer Template will only show up on the frontend.', 'dsm-supreme-modules-for-divi' ); ?></p>
         </div>
@@ -532,13 +541,25 @@ class Dsm_Supreme_Modules_For_Divi {
         }
 
         if ( isset( $_POST['dsm-remove-default-footer-meta-box-options'] ) ) {
-            update_post_meta( $post_id, 'dsm-remove-default-footer-meta-box-options', esc_attr( $_POST['dsm-remove-default-footer-meta-box-options'] ) );
-        }
+            $dsm_remove_default_footer = $_POST['dsm-remove-default-footer-meta-box-options'];
+        }   
+        update_post_meta($post_id, 'dsm-remove-default-footer-meta-box-options', $dsm_remove_default_footer);
+
+        if ( isset( $_POST['dsm-footer-show-on-blank-template'] ) ) {
+            $dsm_footer_hide_on_blank_template = $_POST['dsm-footer-show-on-blank-template'];
+        }  
+        update_post_meta($post_id, 'dsm-footer-show-on-blank-template', $dsm_footer_hide_on_blank_template);
+
+        if ( isset( $_POST['dsm-footer-show-on-404-template'] ) ) {
+            $dsm_footer_show_404_template = $_POST['dsm-footer-show-on-404-template'];
+        }  
+        update_post_meta($post_id, 'dsm-footer-show-on-404-template', $dsm_footer_show_404_template);
         /*
         if ( isset( $_POST['dsm-embed-footer-in-vb'] ) ) {
             update_post_meta( $post_id, 'dsm-embed-footer-in-vb', sanitize_text_field( $_POST['dsm-embed-footer-in-vb'] ) );
         }*/
     }
+    
     public function dsm_custom_footer() {
         $footer_args = array(
             'post_type' => 'dsm_header_footer',
@@ -579,8 +600,9 @@ class Dsm_Supreme_Modules_For_Divi {
         );
 
         if ( $footer_template->have_posts() ) {
+            add_filter('the_content', array( $this, 'dsm_fix_shortcodes' ) );
             $footer_template_ID = $footer_template->post->ID;
-            $footer_template_shortcode = apply_filters('the_content', get_post_field('post_content', $footer_template_ID));
+            $footer_template_shortcode = do_shortcode( get_post_field( 'post_content', $footer_template_ID ) );
             $footer_template_css = get_post_custom($footer_template_ID);
 
             if ( $footer_template_css['dsm-css-classes-meta-box-options'][0] != '' ) {
@@ -588,44 +610,45 @@ class Dsm_Supreme_Modules_For_Divi {
             } else {
                 $footer_template_css_output = '';
             }
-
+            
+            /*Get Blank Template*/
+            global $post;
+            if ( !$post ) {
+                return false;
+            }
+            
+            if ( get_post_meta( $post->ID, '_wp_page_template', true ) === 'page-template-blank.php' && ( $footer_template_css['dsm-footer-show-on-blank-template'][0] == '' || $footer_template_css['dsm-footer-show-on-blank-template'][0] == 'no' ) ) {
+                return;
+            }
+            
             if ( !et_core_is_fb_enabled() ) {
                 $footer_output = sprintf(
-                    '<footer id="dsm-footer" class="dsm-footer" itemscope="itemscope" itemtype="https://schema.org/WPFooter">%1$s</footer>
+                    '<footer id="dsm-footer" class="%2$s" itemscope="itemscope" itemtype="https://schema.org/WPFooter">%1$s</footer>
                     ',
-                    $footer_template_shortcode
+                    $footer_template_shortcode,
+                    ( '' !== $footer_template_css_output ? 'dsm-footer ' . $footer_template_css_output : 'dsm-footer' )
                 );
                 echo $footer_output;
             }
         }
     }
-    public function dsm_redirect_404() {
-        $dsm_four_zero_four_args = array(
-            'post_type' => 'dsm_header_footer',
-            'meta_key'     => 'dsm-header-footer-meta-box-options',
-            'meta_value'   => '404',
-            'meta_type'    => 'post',
-            'meta_query'     => array(
-                array(
-                    'key'     => 'dsm-header-footer-meta-box-options',
-                    'value'   => '404',
-                    'compare' => '==',
-                    'type'    => 'post',
-                ),
-            ),
-        );
-
-        $dsm_four_zero_four_template = new WP_Query(
-            $dsm_four_zero_four_args
-        );
-
-        if ( $dsm_four_zero_four_template->have_posts() ) {
-            if ( is_404() ) :
-                include( plugin_dir_path( __FILE__ ) . 'templates/page-template-404.php' );
-                exit;
-                endif;
+    public function dsm_redirect_template($template) {
+        global $wp_query;
+        if ( is_404() ) {
+            return plugin_dir_path( __FILE__ ) . 'templates/page-template-404.php';
         }
+        if ( is_search() ) {
+            if ( 0 == $wp_query->found_posts ) {
+                return plugin_dir_path( __FILE__ ) . 'templates/page-template-search.php';
+            }
+        }
+        /*
+        if ( basename($template) === 'page.php') {
+            return plugin_dir_path( __FILE__ ) . 'templates/page-template.php';
+        }*/
+        return $template;
     }
+
     public function dsm_custom_footer_settings() {
         $footer_args = array(
             'post_type' => 'dsm_header_footer',
@@ -1006,7 +1029,6 @@ class Dsm_Supreme_Modules_For_Divi {
 			        return dirname(__FILE__) . '/modules/CalderaForms/includes/advanced_file/field.php';
 			    }
                 return $field_file;
-                var_dump($field_file);
 			}, 10, 2);
 			//disable CF styles
 		

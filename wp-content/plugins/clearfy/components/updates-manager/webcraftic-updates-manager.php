@@ -4,85 +4,132 @@
  * Plugin URI: https://wordpress.org/plugins/webcraftic-updates-manager/
  * Description: Manage all your WordPress updates, automatic updates, logs, and loads more.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.0.8
+ * Version: 1.1.1
  * Text Domain: webcraftic-updates-manager
  * Domain Path: /languages/
- * Author URI: https://clearfy.pro
- * Framework Version: FACTORY_409_VERSION
+ * Author URI: https://webcraftic.com
+ * Framework Version: FACTORY_421_VERSION
  */
-if ( ! defined( 'WUPM_PLUGIN_VERSION' ) ) {
-	define( 'WUPM_PLUGIN_VERSION', '1.0.8' );
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-// Fix for ithemes sync. When the ithemes sync plugin accepts the request, set the WP_ADMIN constant,
-// after which the plugin Clearfy begins to create errors, and how the logic of its work is broken.
-// Solution to simply terminate the plugin if there is a request from ithemes sync
-// --------------------------------------
-if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'ithemes_sync_request' ) {
-	return;
-}
+/**
+ * Developers who contributions in the development plugin:
+ *
+ * Alexander Kovalev
+ * ---------------------------------------------------------------------------------
+ * Full plugin development.
+ *
+ * Email:         alex.kovalevv@gmail.com
+ * Personal card: https://alexkovalevv.github.io
+ * Personal repo: https://github.com/alexkovalevv
+ * ---------------------------------------------------------------------------------
+ */
 
-if ( isset( $_GET['ithemes-sync-request'] ) && ! empty( $_GET['ithemes-sync-request'] ) ) {
-	return;
-}
-// ----------------------------------------
-if ( ! defined( 'WUPM_PLUGIN_DIR' ) ) {
-	define( 'WUPM_PLUGIN_DIR', dirname( __FILE__ ) );
-}
-if ( ! defined( 'WUPM_PLUGIN_BASE' ) ) {
-	define( 'WUPM_PLUGIN_BASE', plugin_basename( __FILE__ ) );
-}
-if ( ! defined( 'WUPM_PLUGIN_URL' ) ) {
-	define( 'WUPM_PLUGIN_URL', plugins_url( null, __FILE__ ) );
-}
+/**
+ * -----------------------------------------------------------------------------
+ * CHECK REQUIREMENTS
+ * Check compatibility with php and wp version of the user's site. As well as checking
+ * compatibility with other plugins from Webcraftic.
+ * -----------------------------------------------------------------------------
+ */
 
+require_once( dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-requirements.php' );
 
-
-if ( ! defined( 'LOADING_UPDATES_MANAGER_AS_ADDON' ) ) {
-	require_once( WUPM_PLUGIN_DIR . '/libs/factory/core/includes/check-compatibility.php' );
-	require_once( WUPM_PLUGIN_DIR . '/libs/factory/clearfy/includes/check-clearfy-compatibility.php' );
-}
-
-$plugin_info = array(
-	'prefix'         => 'wbcr_upm_',//wbcr_upm_
+// @formatter:off
+$wupm_plugin_info = array(
+	'prefix'         => 'wbcr_updates_manager_',//wbcr_upm_
 	'plugin_name'    => 'wbcr_updates_manager',
 	'plugin_title'   => __( 'Webcraftic Updates Manager', 'webcraftic-updates-manager' ),
-	'plugin_version' => WUPM_PLUGIN_VERSION,
-	'plugin_build'   => 'free',
-	//'updates' => WUPM_PLUGIN_DIR . '/updates/'
+
+	// PLUGIN SUPPORT
+	'support_details'      => array(
+		'url'       => 'https://webcraftic.com',
+		'pages_map' => array(
+			'support'  => 'support',           // {site}/support
+			'docs'     => 'docs'               // {site}/docs
+		)
+	),
+
+	// PLUGIN ADVERTS
+	'render_adverts' => true,
+	'adverts_settings'    => array(
+		'dashboard_widget' => true, // show dashboard widget (default: false)
+		'right_sidebar'    => true, // show adverts sidebar (default: false)
+		'notice'           => true, // show notice message (default: false)
+	),
+
+	// FRAMEWORK MODULES
+	'load_factory_modules' => array(
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_422', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_419', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_421', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_213', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_103', 'admin')
+	)
 );
 
-/**
- * Проверяет совместимость с Wordpress, php и другими плагинами.
- */
-$compatibility = new Wbcr_FactoryClearfy_Compatibility( array_merge( $plugin_info, array(
-	'factory_version'                  => 'FACTORY_409_VERSION',
+$wupm_compatibility = new Wbcr_Factory421_Requirements( __FILE__, array_merge( $wupm_plugin_info, array(
 	'plugin_already_activate'          => defined( 'WUPM_PLUGIN_ACTIVE' ),
-	'plugin_as_component'              => defined( 'LOADING_UPDATES_MANAGER_AS_ADDON' ),
-	'plugin_dir'                       => WUPM_PLUGIN_DIR,
-	'plugin_base'                      => WUPM_PLUGIN_BASE,
-	'plugin_url'                       => WUPM_PLUGIN_URL,
-	'required_php_version'             => '5.3',
+	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',
-	'required_clearfy_check_component' => true
+	'required_clearfy_check_component' => false
 ) ) );
 
+
 /**
- * Если плагин совместим, то он продолжит свою работу, иначе будет остановлен,
- * а пользователь получит предупреждение.
+ * If the plugin is compatible, then it will continue its work, otherwise it will be stopped,
+ * and the user will throw a warning.
  */
-if ( ! $compatibility->check() ) {
+if ( ! $wupm_compatibility->check() ) {
 	return;
 }
 
+/**
+ * -----------------------------------------------------------------------------
+ * CONSTANTS
+ * Install frequently used constants and constants for debugging, which will be
+ * removed after compiling the plugin.
+ * -----------------------------------------------------------------------------
+ */
+
+// This plugin is activated
 define( 'WUPM_PLUGIN_ACTIVE', true );
+define( 'WUPM_PLUGIN_VERSION', $wupm_compatibility->get_plugin_version() );
+define( 'WUPM_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'WUPM_PLUGIN_BASE', plugin_basename( __FILE__ ) );
+define( 'WUPM_PLUGIN_URL', plugins_url( null, __FILE__ ) );
 
-if ( ! defined( 'LOADING_UPDATES_MANAGER_AS_ADDON' ) ) {
-	require_once( WUPM_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * PLUGIN INIT
+ * -----------------------------------------------------------------------------
+ */
+
+require_once( WUPM_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+require_once( WUPM_PLUGIN_DIR . '/includes/class-plugin.php' );
+
+try {
+	new WUPM_Plugin( __FILE__, array_merge( $wupm_plugin_info, array(
+		'plugin_version'     => WUPM_PLUGIN_VERSION,
+		'plugin_text_domain' => $wupm_compatibility->get_text_domain(),
+	) ) );
+} catch( Exception $e ) {
+	// Plugin wasn't initialized due to an error
+	define( 'WUPM_PLUGIN_THROW_ERROR', true );
+
+	$wupm_plugin_error_func = function () use ( $e ) {
+		$error = sprintf( "The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Webcraftic Updates manager', $e->getMessage(), $e->getCode() );
+		echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
+	};
+
+	add_action( 'admin_notices', $wupm_plugin_error_func );
+	add_action( 'network_admin_notices', $wupm_plugin_error_func );
 }
-
-require_once( WUPM_PLUGIN_DIR . '/includes/class.plugin.php' );
-
-if ( ! defined( 'LOADING_UPDATES_MANAGER_AS_ADDON' ) ) {
-	new WUPM_Plugin( __FILE__, $plugin_info );
-}
+// @formatter:on

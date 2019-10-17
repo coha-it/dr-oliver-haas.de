@@ -22,7 +22,6 @@ class ET_Builder_Module_Settings_Migration_RowCustomWidthToSizing extends ET_Bui
 				$field            = $module === 'et_pb_section' ? "inner_$key" : $key;
 				$fields[ $field ] = array(
 					'affected_fields' => array(
-						'gutter_width'                        => array( $module ),
 						'make_fullwidth'                      => array( $module ),
 						'use_custom_width'                    => array( $module ),
 						'width_unit'                          => array( $module ),

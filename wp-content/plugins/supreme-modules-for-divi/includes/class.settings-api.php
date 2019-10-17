@@ -518,7 +518,7 @@ class DSM_Settings_API {
      */
     function show_forms() {
         ?>
-        <div id="poststuff">
+        <div id="poststuff" class="dsm-settings-panel">
             <div id="post-body" class="metabox-holder columns-2">
                 <div id="post-body-content">
                     <div class="meta-box-sortables ui-sortable">
@@ -532,7 +532,7 @@ class DSM_Settings_API {
                                 do_action( 'wsa_form_bottom_' . $form['id'], $form );
                                 if ( isset( $this->settings_fields[ $form['id'] ] ) ):
                                 ?>
-                                <div style="padding-left: 10px">
+                                <div>
                                     <?php submit_button(); ?>
                                 </div>
                                 <?php endif; ?>

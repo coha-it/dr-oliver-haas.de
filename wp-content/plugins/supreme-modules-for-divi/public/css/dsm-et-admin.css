@@ -13,7 +13,8 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist,
-.et-db #et-boc .et-fb-modules-list li.dsm_business_hours {
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours,
+.et-db #et-boc .et-fb-modules-list li.dsm_icon_list {
     background: #6b09eb;
     color: #fff;
     font-size: 10px;
@@ -23,7 +24,8 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_facebook_feed:before,
 .et-db #et-boc .et-fb-modules-list li.dsm_embed_twitter_timeline:before,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:before,
-.et-db #et-boc .et-fb-modules-list li.dsm_business_hours:before {
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours:before,
+.et-db #et-boc .et-fb-modules-list li.dsm_icon_list:before {
     font-family: ETmodules !important;
 }
 
@@ -42,7 +44,8 @@
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:hover,
-et-db #et-boc .et-fb-modules-list li.dsm_business_hours:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours:hover,
+.et-db #et-boc .et-fb-modules-list li.dsm_icon_list:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_flipbox:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_divider:active,
@@ -58,7 +61,8 @@ et-db #et-boc .et-fb-modules-list li.dsm_business_hours:hover,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:active,
-et-db #et-boc .et-fb-modules-list li.dsm_business_hours:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours:active,
+.et-db #et-boc .et-fb-modules-list li.dsm_icon_list:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_flipbox:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_perspective_image:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_divider:focus,
@@ -74,7 +78,12 @@ et-db #et-boc .et-fb-modules-list li.dsm_business_hours:active,
 .et-db #et-boc .et-fb-modules-list li.dsm_text_badges:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_menu:focus,
 .et-db #et-boc .et-fb-modules-list li.dsm_pricelist:focus,
-et-db #et-boc .et-fb-modules-list li.dsm_business_hours:focus {
+.et-db #et-boc .et-fb-modules-list li.dsm_business_hours:focus,
+.et-db #et-boc .et-fb-modules-list li.dsm_icon_list:focus {
     background: rgba(107, 9, 235, 0.78);
     color: #fff;
+}
+
+.et-db #et-boc .et-fb-modules-list li[class^="dsm"]:before {
+    color:#fff
 }

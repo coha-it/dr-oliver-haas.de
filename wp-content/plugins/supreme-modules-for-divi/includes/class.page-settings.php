@@ -38,13 +38,12 @@ class DSM_Settings {
             array(
                 'id'    => 'dsm_general',
                 'title' => __( 'Divi Supreme General Settings', 'dsm-supreme-modules-for-divi' ),
-                'desc'  => __( 'Divi Supreme features a huge collection of custom creative modules and extensions that can be used in the Divi Theme, Extra Theme and the Divi Builder. This is really a premium plugin that you can get for free on WordPress plugin repository. Here&apos;s where you can find extra features for Divi to help you build better websites.', 'dsm-supreme-modules-for-divi' ),
+                //'desc'  => __( 'Divi Supreme features a huge collection of custom creative modules and extensions that can be used in the Divi Theme, Extra Theme and the Divi Builder. This is really a premium plugin that you can get for free on WordPress plugin repository. Here&apos;s where you can find extra features for Divi to help you build better websites.', 'dsm-supreme-modules-for-divi' ),
             ),
-            /*
             array(
-                'id'    => 'dsm_advanced',
-                'title' => __( 'Advanced', 'dsm-supreme-modules-for-divi' )
-            )*/
+                'id'    => 'dsm_settings_misc',
+                'title' => __( 'Misc', 'dsm-supreme-modules-for-divi' )
+            )
         );
         return $sections;
     }
@@ -88,43 +87,14 @@ class DSM_Settings {
                     'default' => 'off'
                 ),
             ),
-            /*
-            'dsm_advanced' => array(
-                array(
-                    'name'    => 'color',
-                    'label'   => __( 'Color', 'wedevs' ),
-                    'desc'    => __( 'Color description', 'wedevs' ),
-                    'type'    => 'color',
-                    'default' => ''
+            'dsm_settings_misc' => array(
+                'dsm_uninstall_on_delete' => array(
+                    'name'  => 'dsm_uninstall_on_delete',
+                    'label' => __( 'Remove Data on Uninstall?', 'dsm-supreme-modules-for-divi' ),
+                    'desc' => __( 'Check this box if you would like Divi Supreme to completely remove all of its data when the plugin is deleted.', 'dsm-supreme-modules-for-divi' ),
+                    'type' => 'checkbox',
                 ),
-                array(
-                    'name'    => 'password',
-                    'label'   => __( 'Password', 'wedevs' ),
-                    'desc'    => __( 'Password description', 'wedevs' ),
-                    'type'    => 'password',
-                    'default' => '123'
-                ),
-                array(
-                    'name'    => 'wysiwyg',
-                    'label'   => __( 'Advanced Editor', 'wedevs' ),
-                    'desc'    => __( 'WP_Editor description', 'wedevs' ),
-                    'type'    => 'wysiwyg',
-                    'default' => ''
-                ),
-                array(
-                    'name'    => 'multicheck',
-                    'label'   => __( 'Multile checkbox', 'wedevs' ),
-                    'desc'    => __( 'Multi checkbox description', 'wedevs' ),
-                    'type'    => 'multicheck',
-                    'default' => array('one' => 'one', 'four' => 'four'),
-                    'options' => array(
-                        'one'   => 'One',
-                        'two'   => 'Two',
-                        'three' => 'Three',
-                        'four'  => 'Four'
-                    )
-                ),
-            )*/
+            ),
         );
 
         return $settings_fields;

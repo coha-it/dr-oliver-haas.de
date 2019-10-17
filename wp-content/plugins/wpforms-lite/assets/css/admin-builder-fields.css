@@ -184,6 +184,9 @@
 	padding: 12px 5px 12px 18px;
 	border-radius: 2px;
 	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 #wpforms-panel-fields .wpforms-add-fields-button.upgrade-modal,
@@ -329,6 +332,10 @@
 	border-bottom: 1px solid #b1bac3;
 	text-decoration: none;
 	outline: 0;
+}
+
+#wpforms-panel-fields .wpforms-field-option-group-toggle.upgrade-modal {
+	opacity: 0.6;
 }
 
 #wpforms-panel-fields .wpforms-field-option-group-toggle span {

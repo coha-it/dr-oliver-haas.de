@@ -96,6 +96,7 @@ class CustomCSSandJS_AdminConfig {
 
             $settings = get_option('ccj_settings');
             if ( !isset($settings['add_role'] ) ) $settings['add_role'] = false;
+            if ( !isset($settings['remove_comments'] ) ) $settings['remove_comments'] = false;
 
             // If the "add role" option changed
             if ( $data['add_role'] !== $settings['add_role'] && current_user_can('update_plugins')) {
@@ -163,6 +164,7 @@ class CustomCSSandJS_AdminConfig {
             'ccj_htmlentities'      => false, 
             'ccj_htmlentities2'     => false,
             'add_role'              => false,
+            'remove_comments'       => false,
         ) );
     }
 
@@ -210,6 +212,8 @@ class CustomCSSandJS_AdminConfig {
 
         $ccj_htmlentities2_help = __('If you use HTML tags in your code (for example '.htmlentities('<input> or <textarea>').') and you notice that they disappear and the editor looks weird, then you need to enable this option.', 'custom-css-js');
 
+        $remove_comments_help = __('In your page\'s HTML there is a comment added before and after the internal CSS or JS in order to help you locate your custom code. Enable this option in order to remove that comment.', 'custom-css-js');
+
         ?>
 
         <h2><?php echo __('Editor Settings', 'custom-css-js'); ?></h2>
@@ -242,6 +246,14 @@ class CustomCSSandJS_AdminConfig {
             </tr>
             </table>
         <?php endif; ?>
+        <table class="form-table">
+        <tr>
+        <th scope="row"><label for="remove_comments"><?php _e('Remove the comments from HTML', 'custom-css-js') ?> <span class="dashicons dashicons-editor-help" rel="tipsy" title="<?php echo $remove_comments_help; ?>"></span></label></th>
+        <td><input type="checkbox" name="remove_comments" id = "remove_comments" value="1" <?php checked($settings['remove_comments'], true); ?> />
+        </td>
+        </tr>
+        </table>
+
         <table class="form-table">
         <tr>
         <th>&nbsp;</th>

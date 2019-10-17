@@ -103,6 +103,7 @@ function wpforms_settings_license_callback( $args ) {
 
 	// Lite users don't need to worry about license keys.
 	if ( ! wpforms()->pro || ! class_exists( 'WPForms_License', false ) ) {
+
 		$output  = '<p>' . esc_html__( 'You\'re using WPForms Lite - no license needed. Enjoy!', 'wpforms-lite' ) . ' 🙂</p>';
 		$output .=
 			'<p>' .
@@ -133,6 +134,12 @@ function wpforms_settings_license_callback( $args ) {
 					)
 				) .
 			'</p>';
+
+		$output .= '<hr><p>' . esc_html__( 'Already purchased?  Simply enter your license key below to connect with WPForms PRO!', 'wpforms-lite' ) . '</p>';
+		$output .= '<p>';
+		$output .= '<input type="password" id="wpforms-settings-upgrade-license-key" placeholder="' . esc_attr__( 'Paste license key here', 'wpforms-lite' ) . '" value="" />';
+		$output .= '<button type="button" class="wpforms-btn wpforms-btn-md wpforms-btn-orange" id="wpforms-settings-connect-btn">' . esc_attr__( 'Connect', 'wpforms-lite' ) . '</button>';
+		$output .= '</p>';
 
 		return $output;
 	}

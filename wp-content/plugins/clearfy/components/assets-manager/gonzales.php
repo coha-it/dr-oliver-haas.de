@@ -4,93 +4,134 @@
  * Plugin URI: https://wordpress.org/plugins/gonzales/
  * Description: Increase the speed of the pages by disabling unused scripts (.JS) and styles (.CSS). Make your website REACTIVE!
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.0.7
+ * Version: 2.0.1
  * Text Domain: gonzales
  * Domain Path: /languages/
- * Author URI: https://clearfy.pro
- * Framework Version: FACTORY_409_VERSION
+ * Author URI: https://webcraftic.com
+ * Framework Version: FACTORY_421_VERSION
  */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( ! defined( 'WGZ_PLUGIN_VERSION' ) ) {
-	define( 'WGZ_PLUGIN_VERSION', '1.0.7' );
-}
 
-// Fix for ithemes sync. When the ithemes sync plugin accepts the request, set the WP_ADMIN constant,
-// after which the plugin Clearfy begins to create errors, and how the logic of its work is broken.
-// Solution to simply terminate the plugin if there is a request from ithemes sync
-// --------------------------------------
-if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'ithemes_sync_request' ) {
-	return;
-}
+/**
+ * Developers who contributions in the development plugin:
+ *
+ * Alexander Kovalev
+ * ---------------------------------------------------------------------------------
+ * Full plugin development.
+ *
+ * Email:         alex.kovalevv@gmail.com
+ * Personal card: https://alexkovalevv.github.io
+ * Personal repo: https://github.com/alexkovalevv
+ * ---------------------------------------------------------------------------------
+ */
 
-if ( isset( $_GET['ithemes-sync-request'] ) && ! empty( $_GET['ithemes-sync-request'] ) ) {
-	return;
-}
-// ----------------------------------------
+/**
+ * -----------------------------------------------------------------------------
+ * CHECK REQUIREMENTS
+ * Check compatibility with php and wp version of the user's site. As well as checking
+ * compatibility with other plugins from Webcraftic.
+ * -----------------------------------------------------------------------------
+ */
 
-if ( ! defined( 'WGZ_PLUGIN_DIR' ) ) {
-	define( 'WGZ_PLUGIN_DIR', dirname( __FILE__ ) );
-}
-if ( ! defined( 'WGZ_PLUGIN_BASE' ) ) {
-	define( 'WGZ_PLUGIN_BASE', plugin_basename( __FILE__ ) );
-}
-if ( ! defined( 'WGZ_PLUGIN_URL' ) ) {
-	define( 'WGZ_PLUGIN_URL', plugins_url( null, __FILE__ ) );
-}
+require_once( dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-requirements.php' );
 
-
-
-if ( ! defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
-	require_once( WGZ_PLUGIN_DIR . '/libs/factory/core/includes/check-compatibility.php' );
-	require_once( WGZ_PLUGIN_DIR . '/libs/factory/clearfy/includes/check-clearfy-compatibility.php' );
-}
-
-$plugin_info = array(
+// @formatter:off
+$wgnz_plugin_info = array(
 	'prefix'         => 'wbcr_gnz_',
 	'plugin_name'    => 'wbcr_gonzales',
 	'plugin_title'   => __( 'Webcraftic assets manager', 'gonzales' ),
-	'plugin_version' => WGZ_PLUGIN_VERSION,
-	'plugin_build'   => 'free',
-	'updates'        => WGZ_PLUGIN_DIR . '/updates/'
+
+	// PLUGIN SUPPORT
+	'support_details'      => array(
+		'url'       => 'https://webcraftic.com',
+		'pages_map' => array(
+			'support'  => 'support',           // {site}/support
+			'docs'     => 'docs'               // {site}/docs
+		)
+	),
+
+	// PLUGIN ADVERTS
+	'render_adverts' => true,
+	'adverts_settings'    => array(
+		'dashboard_widget' => true, // show dashboard widget (default: false)
+		'right_sidebar'    => true, // show adverts sidebar (default: false)
+		'notice'           => true, // show notice message (default: false)
+	),
+
+	// FRAMEWORK MODULES
+	'load_factory_modules' => array(
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_422', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_419', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_421', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_213', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_103', 'admin')
+	)
 );
 
-/**
- * Проверяет совместимость с Wordpress, php и другими плагинами.
- */
-$compatibility = new Wbcr_FactoryClearfy_Compatibility( array_merge( $plugin_info, array(
-	'factory_version'                  => 'FACTORY_409_VERSION',
+$wgnz_compatibility = new Wbcr_Factory421_Requirements( __FILE__, array_merge( $wgnz_plugin_info, array(
 	'plugin_already_activate'          => defined( 'WGZ_PLUGIN_ACTIVE' ),
-	'plugin_as_component'              => defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ),
-	'plugin_dir'                       => WGZ_PLUGIN_DIR,
-	'plugin_base'                      => WGZ_PLUGIN_BASE,
-	'plugin_url'                       => WGZ_PLUGIN_URL,
-	'required_php_version'             => '5.3',
+	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',
-	'required_clearfy_check_component' => true
+	'required_clearfy_check_component' => false
 ) ) );
 
+
 /**
- * Если плагин совместим, то он продолжит свою работу, иначе будет остановлен,
- * а пользователь получит предупреждение.
+ * If the plugin is compatible, then it will continue its work, otherwise it will be stopped,
+ * and the user will throw a warning.
  */
-if ( ! $compatibility->check() ) {
+if ( ! $wgnz_compatibility->check() ) {
 	return;
 }
 
+/**
+ * -----------------------------------------------------------------------------
+ * CONSTANTS
+ * Install frequently used constants and constants for debugging, which will be
+ * removed after compiling the plugin.
+ * -----------------------------------------------------------------------------
+ */
+
+// This plugin is activated
 define( 'WGZ_PLUGIN_ACTIVE', true );
+define( 'WGZ_PLUGIN_VERSION', $wgnz_compatibility->get_plugin_version() );
+define( 'WGZ_PLUGIN_DIR', dirname( __FILE__ ) );
+define( 'WGZ_PLUGIN_BASE', plugin_basename( __FILE__ ) );
+define( 'WGZ_PLUGIN_URL', plugins_url( null, __FILE__ ) );
 
-if ( ! defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
-	require_once( WGZ_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * PLUGIN INIT
+ * -----------------------------------------------------------------------------
+ */
+
+require_once ( WGZ_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+require_once ( WGZ_PLUGIN_DIR . '/includes/functions.php' );
+require_once ( WGZ_PLUGIN_DIR . '/includes/class-plugin.php' );
+
+
+try {
+	new WGZ_Plugin( __FILE__, array_merge( $wgnz_plugin_info, array(
+		'plugin_version'     => WGZ_PLUGIN_VERSION,
+		'plugin_text_domain' => $wgnz_compatibility->get_text_domain(),
+	) ) );
+} catch( Exception $e ) {
+	// Plugin wasn't initialized due to an error
+	define( 'WGZ_PLUGIN_THROW_ERROR', true );
+
+	$wgnz_plugin_error_func = function () use ( $e ) {
+		$error = sprintf( "The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Webcraftic Assets Manager', $e->getMessage(), $e->getCode() );
+		echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
+	};
+
+	add_action( 'admin_notices', $wgnz_plugin_error_func );
+	add_action( 'network_admin_notices', $wgnz_plugin_error_func );
 }
-
-require_once( WGZ_PLUGIN_DIR . '/includes/class.plugin.php' );
-
-if ( ! defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
-	new WGZ_Plugin( __FILE__, $plugin_info );
-}
-
-
+// @formatter:on

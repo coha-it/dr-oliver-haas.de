@@ -7,7 +7,7 @@ class DSM_CalderaForms extends ET_Builder_Module {
 
 	protected $module_credits = array(
 		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
+		'author'     => 'Divi Supreme',
 		'author_uri' => 'https://suprememodules.com/',
 	);
 
@@ -24,9 +24,36 @@ class DSM_CalderaForms extends ET_Builder_Module {
 			),
 			'advanced' => array(
 				'toggles' => array(
-					'header'   => array(
-						'title'    => esc_html__( 'Title', 'dsm-supreme-modules-for-divi' ),
+					'header' => array(
+						'title'    => esc_html__( 'Header Text', 'dsm-supreme-modules-pro-for-divi' ),
 						'priority' => 5,
+						'tabbed_subtoggles' => true,
+						'sub_toggles' => array(
+							'h1' => array(
+								'name' => 'H1',
+								'icon' => 'text-h1',
+							),
+							'h2' => array(
+								'name' => 'H2',
+								'icon' => 'text-h2',
+							),
+							'h3' => array(
+								'name' => 'H3',
+								'icon' => 'text-h3',
+							),
+							'h4' => array(
+								'name' => 'H4',
+								'icon' => 'text-h4',
+							),
+							'h5' => array(
+								'name' => 'H5',
+								'icon' => 'text-h5',
+							),
+							'h6' => array(
+								'name' => 'H6',
+								'icon' => 'text-h6',
+							),
+						),
 					),
 					'body'   => array(
 						'title'    => esc_html__( 'Body', 'dsm-supreme-modules-for-divi' ),
@@ -65,21 +92,86 @@ class DSM_CalderaForms extends ET_Builder_Module {
 		return array(
 			'text' => false,
 			'fonts'      => array(
-				'header' => array(
-					'label'    => esc_html__( 'Title', 'dsm-supreme-modules-for-divi' ),
+				'header'   => array(
+					'label'    => esc_html__( 'Heading', 'dsm-supreme-modules-pro-for-divi' ),
 					'css'      => array(
-						'main' => "{$this->main_css_element} .dsm-cf-html h2, {$this->main_css_element} .dsm-cf-html h1, {$this->main_css_element} .dsm-cf-html h3, {$this->main_css_element} .dsm-cf-html h4, {$this->main_css_element} .dsm-cf-html h5, {$this->main_css_element} .dsm-cf-html h6",
-						'important' => 'all',
+						'main' => "{$this->main_css_element} .dsm-cf-html h1",
 					),
 					'font_size' => array(
-						'default'      => '26px',
+						'default' => absint( et_get_option( 'body_header_size', '30' ) ) . 'px',
 					),
-					'line_height'    => array(
+					'toggle_slug' => 'header',
+					'sub_toggle'  => 'h1',
+				),
+				'header_2'   => array(
+					'label'    => esc_html__( 'Heading 2', 'dsm-supreme-modules-pro-for-divi' ),
+					'css'      => array(
+						'main' => "{$this->main_css_element} .dsm-cf-html h2",
+					),
+					'font_size' => array(
+						'default' => '26px',
+					),
+					'line_height' => array(
 						'default' => '1em',
 					),
-					'header_level' => array(
-						'default' => 'h2',
+					'toggle_slug' => 'header',
+					'sub_toggle'  => 'h2',
+				),
+				'header_3'   => array(
+					'label'    => esc_html__( 'Heading 3', 'dsm-supreme-modules-pro-for-divi' ),
+					'css'      => array(
+						'main' => "{$this->main_css_element} .dsm-cf-html h3",
 					),
+					'font_size' => array(
+						'default' => '22px',
+					),
+					'line_height' => array(
+						'default' => '1em',
+					),
+					'toggle_slug' => 'header',
+					'sub_toggle'  => 'h3',
+				),
+				'header_4'   => array(
+					'label'    => esc_html__( 'Heading 4', 'dsm-supreme-modules-pro-for-divi' ),
+					'css'      => array(
+						'main' => "{$this->main_css_element} .dsm-cf-html h4",
+					),
+					'font_size' => array(
+						'default' => '18px',
+					),
+					'line_height' => array(
+						'default' => '1em',
+					),
+					'toggle_slug' => 'header',
+					'sub_toggle'  => 'h4',
+				),
+				'header_5'   => array(
+					'label'    => esc_html__( 'Heading 5', 'dsm-supreme-modules-pro-for-divi' ),
+					'css'      => array(
+						'main' => "{$this->main_css_element} .dsm-cf-html h5",
+					),
+					'font_size' => array(
+						'default' => '16px',
+					),
+					'line_height' => array(
+						'default' => '1em',
+					),
+					'toggle_slug' => 'header',
+					'sub_toggle'  => 'h5',
+				),
+				'header_6'   => array(
+					'label'    => esc_html__( 'Heading 6', 'dsm-supreme-modules-pro-for-divi' ),
+					'css'      => array(
+						'main' => "{$this->main_css_element} .dsm-cf-html h6",
+					),
+					'font_size' => array(
+						'default' => '14px',
+					),
+					'line_height' => array(
+						'default' => '1em',
+					),
+					'toggle_slug' => 'header',
+					'sub_toggle'  => 'h6',
 				),
 				'body'   => array(
 					'label'    => esc_html__( 'Body', 'dsm-supreme-modules-for-divi' ),
@@ -495,12 +587,12 @@ class DSM_CalderaForms extends ET_Builder_Module {
                 'option_category'   => 'layout',
 				'tab_slug'         => 'advanced',
 				'toggle_slug'      => 'cf_basic_file',
-				'mobile_options'  => true,
 				'validate_unit'   => true,
 				'default'         => '',
 				'default_unit'    => 'px',
 				'default_on_front'=> '',
-				'responsive'      => true,
+				'mobile_options'  => true,
+				'hover'             => 'tabs',
 			),
 			'file_background_color' => array(
 				'label'            => esc_html__( 'Background Color', 'dsm-supreme-modules-for-divi' ),
@@ -634,6 +726,16 @@ class DSM_CalderaForms extends ET_Builder_Module {
 		return et_pb_get_alignment( $text_orientation );
 	}
 
+	public function get_transition_fields_css_props() {
+		$fields = parent::get_transition_fields_css_props();
+
+		$fields['file_padding'] = array(
+			'padding' => '%%order_class%% .file-prevent-overflow',
+		);
+
+		return $fields;
+	}
+
 	public function render( $attrs, $content = null, $render_slug ) {
 		$cf_library = $this->props['cf_library'];
 		$show_validation = $this->props['show_validation'];
@@ -649,10 +751,11 @@ class DSM_CalderaForms extends ET_Builder_Module {
 		$file_background_color = $this->props['file_background_color'];
 		$error_msg_background_color = $this->props['error_msg_background_color'];
 		$validation_success_background_color = $this->props['validation_success_background_color'];
+		$file_padding_hover = $this->get_hover_value( 'file_padding' );
 		$file_padding = $this->props['file_padding'];
-		$file_padding_tablet      = $this->props['file_padding_tablet'];
-		$file_padding_phone       = $this->props['file_padding_phone'];
-		$file_padding_last_edited = $this->props['file_padding_last_edited'];
+		$file_padding_values      = et_pb_responsive_options()->get_property_values( $this->props, 'file_padding' );
+		$file_padding_tablet      = isset( $file_padding_values['tablet'] ) ? $file_padding_values['tablet'] : '';
+		$file_padding_phone       = isset( $file_padding_values['phone'] ) ? $file_padding_values['phone'] : '';
 		$input_textarea_select_margin_bottom = $this->props['input_textarea_select_margin_bottom'];
 		$input_textarea_select_margin_bottom_tablet      = $this->props['input_textarea_select_margin_bottom_tablet'];
 		$input_textarea_select_margin_bottom_phone       = $this->props['input_textarea_select_margin_bottom_phone'];
@@ -674,6 +777,17 @@ class DSM_CalderaForms extends ET_Builder_Module {
 		$checkbox_checked_color = $this->props['checkbox_checked_color'];
 		$checkbox_checked_background_color = $this->props['checkbox_checked_background_color'];
 		$checkbox_background_color = $this->props['checkbox_background_color'];
+		$input_textarea_select_text_color = $this->props['input_textarea_select_text_color'];
+		
+		if ( '' !== $input_textarea_select_text_color ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%% .dsm-caldera-forms-select:after',
+				'declaration' => sprintf(
+					'border-color: %1$s transparent transparent;',
+					esc_html( $input_textarea_select_text_color )
+				),
+			) );
+		}
 
 		if ( '#ee0000' !== $label_required_asterisk_color ) {
 			ET_Builder_Element::set_style( $render_slug, array(
@@ -731,7 +845,7 @@ class DSM_CalderaForms extends ET_Builder_Module {
 				%%order_class%% input[type=number],
 				%%order_class%% input[type=phone],
 				%%order_class%% input[type=date],
-				%%order_class%% select,
+				%%order_class%% select.form-control,
 				%%order_class%% textarea',
 				'declaration' => sprintf(
 					'background-color: %1$s;',
@@ -878,70 +992,12 @@ class DSM_CalderaForms extends ET_Builder_Module {
 			et_pb_generate_responsive_css( $input_textarea_select_margin_bottom_values, '%%order_class%% .form-group', 'margin-bottom', $render_slug );
 		}
 
-		if ( '' !== $file_padding_tablet || '' !== $file_padding_phone || '' !== $file_padding ) {
-        	$dwd_file_padding = array( '', '', '', '' );
-			foreach(explode("|", $file_padding) as $key => $val) {
-				if ($key === 0 && '' !== $val) {
-					$dwd_file_padding['padding-top'] = $val;
-				}
-				if ($key === 1 && '' !== $val) {
-					$dwd_file_padding['padding-right'] = $val;
-				}
-				if ($key === 2 && '' !== $val) {
-					$dwd_file_padding['padding-bottom'] = $val;
-				}
-				if ($key === 3 && '' !== $val) {
-					$dwd_file_padding['padding-left'] = $val;
-				}
-			}
-
-			$file_padding = $dwd_file_padding;
-
-			$dwd_file_padding_tablet = array( '', '', '', '' );
-			foreach(explode("|", $file_padding_tablet) as $key => $val) {
-				if ($key === 0 && '' !== $val) {
-					$dwd_file_padding_tablet['padding-top'] = $val;
-				}
-				if ($key === 1 && '' !== $val) {
-					$dwd_file_padding_tablet['padding-right'] = $val;
-				}
-				if ($key === 2 && '' !== $val) {
-					$dwd_file_padding_tablet['padding-bottom'] = $val;
-				}
-				if ($key === 3 && '' !== $val) {
-					$dwd_file_padding_tablet['padding-left'] = $val;
-				}
-			}
-			
-			$file_padding_tablet = $dwd_file_padding_tablet;
-
-			$dwd_file_padding_phone = array( '', '', '', '' );
-			foreach(explode("|", $file_padding_phone) as $key => $val) {
-				if ($key === 0 && '' !== $val) {
-					$dwd_file_padding_phone['padding-top'] = $val;
-				}
-				if ($key === 1 && '' !== $val) {
-					$dwd_file_padding_phone['padding-right'] = $val;
-				}
-				if ($key === 2 && '' !== $val) {
-					$dwd_file_padding_phone['padding-bottom'] = $val;
-				}
-				if ($key === 3 && '' !== $val) {
-					$dwd_file_padding_phone['padding-left'] = $val;
-				}
-			}
-			
-			$file_padding_phone = $dwd_file_padding_phone;
-
-			$file_responsive_active = et_pb_get_responsive_status( $file_padding_last_edited );
-			$file_padding_values = array(
-				'desktop' => $file_padding,
-				'tablet'  => $file_responsive_active ? $file_padding_tablet : '',
-				'phone'   => $file_responsive_active ? $file_padding_phone : '',
-			);
-
-			et_pb_generate_responsive_css( $file_padding_values, '%%order_class%% .file-prevent-overflow', 'padding', $render_slug );
-		}
+		$this->apply_custom_margin_padding(
+            $render_slug,
+            'file_padding',
+            'padding',
+            '%%order_class%% .file-prevent-overflow'
+		);
 
 		if ( class_exists( 'Caldera_Forms' ) ) {
 			add_filter( 'caldera_forms_render_field_file', function( $field_file, $field_type ){
@@ -999,6 +1055,46 @@ class DSM_CalderaForms extends ET_Builder_Module {
 
 		return $output;
 	}
+
+	public function apply_custom_margin_padding($function_name, $slug, $type, $class, $important = false) {
+        $slug_value = $this->props[$slug];
+        $slug_value_tablet = $this->props[$slug . '_tablet'];
+        $slug_value_phone = $this->props[$slug . '_phone'];
+        $slug_value_last_edited = $this->props[$slug . '_last_edited'];
+        $slug_value_responsive_active = et_pb_get_responsive_status($slug_value_last_edited);
+
+        if (isset($slug_value) && !empty($slug_value)) {
+            ET_Builder_Element::set_style($function_name, array(
+                'selector' => $class,
+                'declaration' => et_builder_get_element_style_css($slug_value, $type, $important),
+            ));
+        }
+
+        if (isset($slug_value_tablet) && !empty($slug_value_tablet) && $slug_value_responsive_active) {
+            ET_Builder_Element::set_style($function_name, array(
+                'selector' => $class,
+                'declaration' => et_builder_get_element_style_css($slug_value_tablet, $type, $important),
+                'media_query' => ET_Builder_Element::get_media_query('max_width_980'),
+            ));
+        }
+
+        if (isset($slug_value_phone) && !empty($slug_value_phone) && $slug_value_responsive_active) {
+            ET_Builder_Element::set_style($function_name, array(
+                'selector' => $class,
+                'declaration' => et_builder_get_element_style_css($slug_value_phone, $type, $important),
+                'media_query' => ET_Builder_Element::get_media_query('max_width_767'),
+            ));
+		}
+		if ( et_builder_is_hover_enabled( $slug, $this->props ) ) {
+			if (isset($this->props[$slug.'__hover']) ) {
+				$hover = $this->props[$slug.'__hover'];
+				ET_Builder_Element::set_style($function_name, array(
+					'selector' => $this->add_hover_to_order_class($class),
+					'declaration' => et_builder_get_element_style_css($hover, $type, $important),
+				));
+			}
+		}
+    }
 }
 
 new DSM_CalderaForms;

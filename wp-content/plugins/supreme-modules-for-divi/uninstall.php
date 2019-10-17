@@ -29,3 +29,9 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+if ( get_option('dsm_settings_misc')['dsm_uninstall_on_delete'] == 'on' ) {
+	delete_option( 'dsm_general' );
+	delete_option( 'dsm_settings_misc' );
+	delete_option( 'dsm-supreme-modules-for-divi-activation-date' );
+}

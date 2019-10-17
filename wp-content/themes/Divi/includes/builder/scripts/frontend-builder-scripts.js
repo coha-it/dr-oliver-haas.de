@@ -1,6 +1,6 @@
 // Check whether current page is inside (visual) builder or not
 var isBuilder = 'object' === typeof window.ET_Builder;
-
+ 
 /*! ET frontend-builder-scripts.js */
 (function($){
 	var $et_window = $(window);
@@ -37,6 +37,31 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 		}
 
 		return $found;
+	};
+
+	/*
+	 * Star-based rating UI.
+	 * @see: WooCommerce's woocommerce/assets/js/frontend/single-product.js file
+	 */
+	window.et_pb_init_woo_star_rating = function($rating_selector) {
+		var $rating_parent  = $rating_selector.closest('div');
+		var $existing_stars = $rating_parent.find('p.stars');
+
+		if ($existing_stars.length > 0) {
+			$existing_stars.remove();
+		}
+
+		$rating_selector.hide().before(
+			'<p class="stars">\
+				<span>\
+					<a class="star-1" href="#">1</a>\
+					<a class="star-2" href="#">2</a>\
+					<a class="star-3" href="#">3</a>\
+					<a class="star-4" href="#">4</a>\
+					<a class="star-5" href="#">5</a>\
+				</span>\
+			</p>'
+		);
 	};
 
 	window.et_pb_init_modules = function() {
@@ -281,7 +306,7 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 
 					// Removing DOM that was added by slider
 					$et_slider.find('.et-pb-slider-arrows, .et-pb-controllers').remove();
-					$et_slider.siblings('.et_pb_carousel').remove();
+					$et_slider.siblings('.et_pb_carousel, .et-pb-controllers').remove();
 
 					// Remove references
 					$et_slider.removeData( 'et_pb_simple_slider' );
@@ -389,25 +414,27 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 					et_fix_slider_height( $et_slider );
 				} );
 
-				$et_slider.et_slider_move_to = function ( direction ) {
-					var $active_slide = $et_slide.eq( et_active_slide );
+				$et_slider.et_slider_move_to = function (direction) {
+					$et_slide = $et_slider.closest_descendent(settings.slide);
+					var $active_slide = $et_slide.eq(et_active_slide);
 
 					$et_slider.et_animation_running = true;
 
-					$et_slider.removeClass('et_slide_transition_to_next et_slide_transition_to_previous').addClass('et_slide_transition_to_' + direction );
+					$et_slider.removeClass('et_slide_transition_to_next et_slide_transition_to_previous').addClass('et_slide_transition_to_' + direction);
 
 					$et_slider.find('.et-pb-moved-slide').removeClass('et-pb-moved-slide');
 
-					if ( direction == 'next' || direction == 'previous' ){
+					if (direction === 'next' || direction === 'previous'){
 
-						if ( direction == 'next' )
-							et_active_slide = ( et_active_slide + 1 ) < et_slides_number ? et_active_slide + 1 : 0;
-						else
-							et_active_slide = ( et_active_slide - 1 ) >= 0 ? et_active_slide - 1 : et_slides_number - 1;
+						if (direction === 'next') {
+							et_active_slide = (et_active_slide + 1) < et_slides_number ? et_active_slide + 1 : 0;
+						} else {
+							et_active_slide = (et_active_slide - 1) >= 0 ? et_active_slide - 1 : et_slides_number - 1;
+						}
 
 					} else {
 
-						if ( et_active_slide == direction ) {
+						if (et_active_slide === direction) {
 							$et_slider.et_animation_running = false;
 							return;
 						}
@@ -422,7 +449,7 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 						clearTimeout(et_slider_timer);
 					}
 
-					var $next_slide	= $et_slide.eq( et_active_slide );
+					var $next_slide	= $et_slide.eq(et_active_slide);
 
 					$et_slider.trigger('slide', {current: $active_slide, next: $next_slide});
 
@@ -2420,48 +2447,48 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 				et_pb_countdown_timer_init( $et_pb_countdown_timer );
 			}
 
-			if ( $et_pb_tabs.length || is_frontend_builder ) {
-				window.et_pb_tabs_init = function( $et_pb_tabs ) {
-					var $et_pb_tabs_li = $et_pb_tabs.find( '.et_pb_tabs_controls li' );
+			if ($et_pb_tabs.length || is_frontend_builder) {
+				window.et_pb_tabs_init = function ($et_pb_tabs) {
+					var $et_pb_tabs_li = $et_pb_tabs.find('.et_pb_tabs_controls li');
 
-					$et_pb_tabs.et_pb_simple_slider( {
-						use_controls   : false,
-						use_arrows     : false,
-						slide          : '.et_pb_all_tabs > div',
-						tabs_animation : true
-					} ).on('et_hashchange', function( event ){
+					$et_pb_tabs.et_pb_simple_slider({
+						use_controls: false,
+						use_arrows: false,
+						slide: '.et_pb_all_tabs > div',
+						tabs_animation: true
+					}).on('et_hashchange', function (event) {
 						var params = event.params;
-						var $the_tabs = $( '#' + event.target.id );
+						var $the_tabs = $('#' + event.target.id);
 						var active_tab = params[0];
-						if ( !$the_tabs.find( '.et_pb_tabs_controls li' ).eq( active_tab ).hasClass('et_pb_tab_active') ) {
-							$the_tabs.find( '.et_pb_tabs_controls li' ).eq( active_tab ).click();
+						if (!$the_tabs.find('.et_pb_tabs_controls li').eq(active_tab).hasClass('et_pb_tab_active')) {
+							$the_tabs.find('.et_pb_tabs_controls li').eq(active_tab).click();
 						}
 					});
 
-					$et_pb_tabs_li.click( function() {
-						var $this_el        = $(this),
-							$tabs_container = $this_el.closest( '.et_pb_tabs' ).data('et_pb_simple_slider');
+					$et_pb_tabs_li.click(function () {
+						var $this_el = $(this),
+							$tabs_container = $this_el.closest('.et_pb_tabs').data('et_pb_simple_slider');
 
-						if ( $tabs_container.et_animation_running ) return false;
+						if ($tabs_container.et_animation_running) return false;
 
-						$this_el.addClass( 'et_pb_tab_active' ).siblings().removeClass( 'et_pb_tab_active' );
+						$this_el.addClass('et_pb_tab_active').siblings().removeClass('et_pb_tab_active');
 
-						$tabs_container.data('et_pb_simple_slider').et_slider_move_to( $this_el.index() );
+						$tabs_container.data('et_pb_simple_slider').et_slider_move_to($this_el.index());
 
-						if ( $this_el.closest( '.et_pb_tabs' ).attr('id') ) {
+						if ($this_el.closest('.et_pb_tabs').attr('id')) {
 							var tab_state = [];
-							tab_state.push( $this_el.closest( '.et_pb_tabs' ).attr('id') );
-							tab_state.push( $this_el.index() );
-							tab_state = tab_state.join( et_hash_module_param_seperator );
-							et_set_hash( tab_state );
+							tab_state.push($this_el.closest('.et_pb_tabs').attr('id'));
+							tab_state.push($this_el.index());
+							tab_state = tab_state.join(et_hash_module_param_seperator);
+							et_set_hash(tab_state);
 						}
 
 						return false;
-					} );
+					});
 
 					window.et_pb_set_tabs_height();
 				};
-				window.et_pb_tabs_init( $et_pb_tabs );
+				window.et_pb_tabs_init($et_pb_tabs);
 			}
 
 			if ( $et_pb_map.length || is_frontend_builder ) {
@@ -2494,9 +2521,13 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 						this_map_grayscale = '-' + this_map_grayscale.toString();
 					}
 
+					// Being saved to pass lat and lang of center location.
+					var data_center_lat = parseFloat($this_map.attr('data-center-lat')) || 0;
+					var data_center_lng = parseFloat($this_map.attr('data-center-lng')) || 0;
+
 					$this_map_container.data('map', new google.maps.Map( $this_map[0], {
 						zoom: parseInt( $this_map.attr('data-zoom') ),
-						center: new google.maps.LatLng( parseFloat( $this_map.attr('data-center-lat') ) , parseFloat( $this_map.attr('data-center-lng') )),
+						center: new google.maps.LatLng(data_center_lat, data_center_lng),
 						mapTypeId: google.maps.MapTypeId.ROADMAP,
 						scrollwheel: $this_map.attr('data-mouse-wheel') == 'on' ? true : false,
 						draggable: is_draggable,
@@ -2541,6 +2572,12 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 								infowindow_active = infowindow;
 
 								infowindow.open( $this_map_container.data('map'), marker );
+
+								// Trigger mouse hover event for responsive content swap.
+								$this_marker.closest('.et_pb_module').trigger('mouseleave');
+								setTimeout(function (){
+									$this_marker.closest('.et_pb_module').trigger('mouseenter');
+								}, 1);
 							});
 						}
 					});
@@ -2557,28 +2594,26 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 				}
 			}
 
-			if ( $et_pb_shop.length ) {
-				$et_pb_shop.each( function() {
-					var $this_el    = $(this),
-						icon        = $this_el.data('icon') || '',
-						icon_tablet = $this_el.data('icon-tablet') || '',
-						icon_phone  = $this_el.data('icon-phone') || '',
-						$overlay    = $this_el.find( '.et_overlay' );
+			$('.et_pb_shop, .et_pb_wc_upsells, .et_pb_wc_related_products').each(function() {
+				var $this_el    = $(this);
+				var icon        = $this_el.data('icon') || '';
+				var icon_tablet = $this_el.data('icon-tablet') || '';
+				var icon_phone  = $this_el.data('icon-phone') || '';
+				var $overlay    = $this_el.find('.et_overlay');
 
-					// Set data icon and inline icon class.
-					if ( icon !== '' ) {
-						$overlay.attr( 'data-icon', icon ).addClass( 'et_pb_inline_icon' );
-					}
+				// Set data icon and inline icon class.
+				if (icon !== '') {
+					$overlay.attr('data-icon', icon).addClass('et_pb_inline_icon');
+				}
 
-					if ( icon_tablet !== '' ) {
-						$overlay.attr( 'data-icon-tablet', icon_tablet ).addClass( 'et_pb_inline_icon_tablet' );
-					}
+				if (icon_tablet !== '') {
+					$overlay.attr('data-icon-tablet', icon_tablet).addClass('et_pb_inline_icon_tablet');
+				}
 
-					if ( icon_phone !== '' ) {
-						$overlay.attr( 'data-icon-phone', icon_phone ).addClass( 'et_pb_inline_icon_phone' );
-					}
-				} );
-			}
+				if (icon_phone !== '') {
+					$overlay.attr('data-icon-phone', icon_phone).addClass('et_pb_inline_icon_phone');
+				}
+			});
 
 			$et_pb_background_layout_hoverable.each(function() {
 				var $this_el                = $(this);
@@ -3092,7 +3127,7 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 							}
 
 							// add error message for the field if it is required and empty
-							if ('required' === required_mark && ('' === this_val || true === unchecked)) {
+						if ('required' === required_mark && ('' === this_val || true === unchecked) && ! $this_el.is('[id^="et_pb_contact_et_number_"]')) {
 
 								if (false === $this_wrapper) {
 									$this_el.addClass('et_contact_error');
@@ -4080,7 +4115,8 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 				});
 			}
 
-			function et_animate_element( $element ) {
+			function et_animate_element($elementOriginal) {
+				var $element = $elementOriginal;
 				if ($element.hasClass('et_had_animation')) {
 					return;
 				}
@@ -4092,6 +4128,7 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 				var animation_intensity        = $element.attr('data-animation-intensity');
 				var animation_starting_opacity = $element.attr('data-animation-starting-opacity');
 				var animation_speed_curve      = $element.attr('data-animation-speed-curve');
+				var $buttonWrapper             = $element.parent('.et_pb_button_module_wrapper');
 
 				// Avoid horizontal scroll bar when section is rolled
 				if ($element.is('.et_pb_section') && 'roll' === animation_style) {
@@ -4107,6 +4144,12 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 				// Check if the animation speed curve is one of the allowed ones and set it to the default one if it is not
 				if ( $.inArray( animation_speed_curve, ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'] ) === -1 ) {
 					animation_speed_curve = 'ease-in-out';
+				}
+
+				if ($buttonWrapper.length > 0) {
+					$element.removeClass('et_animated');
+					$element = $buttonWrapper;
+					$element.addClass('et_animated');
 				}
 
 				$element.css({
@@ -4794,7 +4837,10 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 					'.et_pb_contact_captcha',
 
 					// Tabs
-					'.et_pb_tabs_controls a'
+					'.et_pb_tabs_controls a',
+
+					// Woo Image
+					'.flex-control-nav *'
 				];
 
 				for (var i = 0; i < click_exceptions.length; i++) {
@@ -5213,6 +5259,10 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 				$( 'section.et_pb_fullscreen' ).each( function(){
 					$.proxy( et_calc_fullscreen_section, $( this ) )();
 				});
+
+				if (is_frontend_builder) {
+					return;
+				}
 
 				clearTimeout(et_calc_fullscreen_section.timeout);
 
@@ -6100,11 +6150,18 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 		// Hover transition are disabled for section dividers to prevent visual glitches while document is loading,
 		// we can enable them again now.
 		$('.et_pb_top_inside_divider.et-no-transition, .et_pb_bottom_inside_divider.et-no-transition').removeClass('et-no-transition');
-		( et_pb_box_shadow_elements||[] ).map(et_pb_box_shadow_apply_overlay);
+
+		// Set a delay just to make sure all modules are ready before we append box shadow container.
+		// Similar approach exists on VB custom CSS output.
+		setTimeout(function() {
+			(et_pb_box_shadow_elements||[]).map(et_pb_box_shadow_apply_overlay);
+		}, 0);
 	});
 
 	$(window).load(function() {
 		var $body = $('body');
+		// set load event here because safari sometimes will not run load events registered on et_pb_init_modules.
+		window.et_load_event_fired = true;
 		// fix Safari letter-spacing bug when styles applied in `head`
 		// Trigger styles redraw by changing body display property to differentvalue and reverting it back to original.
 		if ($body.hasClass('safari')) {
@@ -6139,6 +6196,59 @@ var isBuilder = 'object' === typeof window.ET_Builder;
                     $wc.css({opacity: opacity});
                 }, 0);
 			}
+		}
+
+		/*
+		 * Reinit Star Ratings in Woo Modules.
+		 * Deafuilt Woocommerce scripts do not init Star Ratings correctly
+		 * if there are more than 1 place with stars on page
+		 * Run this on .load event after woocommerce modules are ready and processed.
+		 */
+		if ($('.et_pb_module #rating').length > 0) {
+			$('.et_pb_module #rating').each( function(){
+				window.et_pb_init_woo_star_rating($(this));
+			});
+		}
+
+		/*
+		 * Apply Custom icons to Woo Module Buttons.
+		 * All the buttons generated in WooCommerce template and we cannot add custom attributes
+		 * Therefore we have to use js to add it.
+		 */
+		if ($('.et_pb_woo_custom_button_icon').length > 0) {
+			$('.et_pb_woo_custom_button_icon').each(function() {
+				var $thisModule        = $(this);
+				var buttonClass        = $thisModule.data('button-class');
+				var $buttonEl          = $thisModule.find('.' + buttonClass);
+				var buttonIcon         = $thisModule.attr('data-button-icon');
+				var buttonIconTablet   = $thisModule.attr('data-button-icon-tablet');
+				var buttonIconPhone    = $thisModule.attr('data-button-icon-phone');
+				var buttonClassName    = 'et_pb_promo_button et_pb_button';
+
+				$buttonEl.addClass(buttonClassName);
+
+				if (buttonIcon || buttonIconTablet || buttonIconPhone) {
+					$buttonEl.addClass('et_pb_custom_button_icon');
+					$buttonEl.attr('data-icon', buttonIcon);
+					$buttonEl.attr('data-icon-tablet', buttonIconTablet);
+					$buttonEl.attr('data-icon-phone', buttonIconPhone);
+				}
+			});
+		}
+
+		/**
+		 * Hide empty WooCommerce Meta module
+		 * Meta module component is toggled using classname, thus js visibility check to determine
+		 * whether the module is "empty" (visibility-wise) or not
+		 */
+		if ($('.et_pb_wc_meta').length > 0) {
+			$('.et_pb_wc_meta').each(function() {
+				var $thisModule = $(this);
+
+				if ('' === $thisModule.find('.product_meta span:visible').text()) {
+					$thisModule.addClass('et_pb_wc_meta_empty');
+				}
+			});
 		}
 	});
 
@@ -6212,4 +6322,787 @@ var isBuilder = 'object' === typeof window.ET_Builder;
 		}
 	}
 	et_fix_html_margin();
+
+	// Muti View Data Handler (Responsive + Hover)
+	var et_multi_view = {
+		contexts: ['content', 'attrs', 'styles', 'classes', 'visibility'],
+		windowWidth: $(window).width(),
+		init: function () {
+			$('#main-header, #main-footer').off('mouseenter', et_multi_view.resetHoverStateHandler);
+			$('#main-header, #main-footer').on('mouseenter', et_multi_view.resetHoverStateHandler);
+
+			$('[data-et-multi-view]').each(function () {
+				var data = et_multi_view.getData($(this));
+
+				et_multi_view.normalStateHandler(data);
+
+				if (data.$hoverSelector && data.$hoverSelector.length) {
+					data.$hoverSelector.off('touchstart touchend', et_multi_view.touchStateHandler);
+					data.$hoverSelector.on('touchstart touchend', et_multi_view.touchStateHandler);
+
+					data.$hoverSelector.off('mouseenter mouseleave', et_multi_view.hoverStateHandler);
+					data.$hoverSelector.on('mouseenter mouseleave', et_multi_view.hoverStateHandler);
+				}
+			});
+		},
+		normalStateHandler: function (data) {
+			if (!data || et_multi_view.isEmptyObject(data.normalState)) {
+				return;
+			}
+
+			et_multi_view.callbackHandlerDefault(data.normalState, data.$target, data.$source, data.slug);
+		},
+		touchStateHandler: function (event) {
+			var $hoverSelector = $(this);
+
+			if ('touchend' === event.type) {
+				setTimeout(function () {
+					$hoverSelector.on('mouseenter mouseleave', et_multi_view.hoverStateHandler);
+				}, 1)
+			} else if (event.type === 'touchstart') {
+				$hoverSelector.off('mouseenter mouseleave', et_multi_view.hoverStateHandler);
+			}
+		},
+		hoverStateHandler: function (event) {
+			var $hoverSelector = $(this);
+			var datas = [];
+
+			if ($hoverSelector.data('etMultiView')) {
+				datas.push(et_multi_view.getData($hoverSelector));
+			}
+
+			$hoverSelector.find('[data-et-multi-view]').each(function () {
+				datas.push(et_multi_view.getData($(this)));
+			});
+
+			if (event.type === 'mouseenter' && !$hoverSelector.hasClass('et_multi_view__hovered')) {
+				et_multi_view.resetHoverStateHandler($hoverSelector);
+				$hoverSelector.addClass('et_multi_view__hovered');
+
+				for (var index = 0; index < datas.length; index++) {
+					var data = datas[index];
+
+					if (data && !et_multi_view.isEmptyObject(data.normalState) && !et_multi_view.isEmptyObject(data.hoverState)) {
+						et_multi_view.callbackHandlerDefault(data.hoverState, data.$target, data.$source, data.slug);
+					}
+				}
+			} else if (event.type === 'mouseleave' && $hoverSelector.hasClass('et_multi_view__hovered')) {
+				for (var index = 0; index < datas.length; index++) {
+					var data = datas[index];
+
+					if (data && !et_multi_view.isEmptyObject(data.normalState) && !et_multi_view.isEmptyObject(data.hoverState)) {
+						et_multi_view.callbackHandlerDefault(data.normalState, data.$target, data.$source, data.slug);
+					}
+				}
+
+				$hoverSelector.removeClass('et_multi_view__hovered');
+			}
+		},
+		resetHoverStateHandler: function ($exclude) {
+			$('[data-et-multi-view]').each(function () {
+				var data = et_multi_view.getData($(this));
+
+				if (data &&
+					data.$hoverSelector &&
+					data.$hoverSelector.length &&
+					data.$hoverSelector.hasClass('et_multi_view__hovered') &&
+					!data.$hoverSelector.is($exclude)
+				) {
+					data.$hoverSelector.trigger('mouseleave');
+				}
+			});
+		},
+		getData: function ($source) {
+			if (!$source || !$source.length) {
+				return false;
+			}
+
+			var screenMode = et_multi_view.getScreenMode();
+			var data = $source.data('etMultiView');
+
+			if (!data) {
+				return false;
+			}
+
+			if (typeof data === 'string') {
+				data = et_multi_view.tryParseJSON(data);
+			}
+
+			if (!data || !data.schema || !data.slug) {
+				return false;
+			}
+
+			var $target = data.target ? $(data.target) : $source;
+
+			if (!$target || !$target.length) {
+				return false;
+			}
+
+			var normalState = {};
+			var hoverState = {};
+
+			for (var i = 0; i < et_multi_view.contexts.length; i++) {
+				var context = et_multi_view.contexts[i];
+
+				// Set context data.
+				if (data.schema && data.schema.hasOwnProperty(context)) {
+					// Set normal state context data.
+					if (data.schema[context].hasOwnProperty(screenMode)) {
+						normalState[context] = data.schema[context][screenMode];
+					} else {
+						if (screenMode === 'tablet' && data.schema[context].hasOwnProperty('desktop')) {
+							normalState[context] = data.schema[context].desktop;
+						} else if (screenMode === 'phone' && data.schema[context].hasOwnProperty('tablet')) {
+							normalState[context] = data.schema[context].tablet;
+						} else if (screenMode === 'phone' && data.schema[context].hasOwnProperty('desktop')) {
+							normalState[context] = data.schema[context].desktop;
+						}
+					}
+
+					// Set hover state context data.
+					if (data.schema[context].hasOwnProperty('hover')) {
+						hoverState[context] = data.schema[context].hover;
+					}
+				}
+			}
+
+			var $hoverSelector = data.hover_selector ? $(data.hover_selector) : false;
+
+			if (!$hoverSelector || !$hoverSelector.length) {
+				$hoverSelector = $source.hasClass('.et_pb_module') ? $source : $source.closest('.et_pb_module');
+			}
+
+			return {
+				normalState: normalState,
+				hoverState: hoverState,
+				$target: $target,
+				$source: $source,
+				$hoverSelector: $hoverSelector,
+				slug: data.slug,
+				screenMode: screenMode
+			};
+		},
+		callbackHandlerDefault: function (data, $target, $source, slug) {
+			var callbackHandlerCustom = et_multi_view.getCallbackHandlerCustom(slug, data, $target);
+
+			if (callbackHandlerCustom && typeof callbackHandlerCustom === 'function') {
+				return callbackHandlerCustom(data, $target, $source, slug);
+			}
+
+			var updated = {};
+
+			if (data.hasOwnProperty('content')) {
+				updated.content = et_multi_view.updateContent(data.content, $target, $source);
+			}
+
+			if (data.hasOwnProperty('attrs')) {
+				updated.attrs = et_multi_view.updateAttrs(data.attrs, $target, $source);
+			}
+
+			if (data.hasOwnProperty('styles')) {
+				updated.styles = et_multi_view.updateStyles(data.styles, $target, $source);
+			}
+
+			if (data.hasOwnProperty('classes')) {
+				updated.classes = et_multi_view.updateClasses(data.classes, $target, $source);
+			}
+
+			if (data.hasOwnProperty('visibility')) {
+				updated.visibility = et_multi_view.updateVisibility(data.visibility, $target, $source);
+			}
+
+			return et_multi_view.isEmptyObject(updated) ? false : updated;
+		},
+		callbackHandlerCounter: function (data, $target, $source, slug) {
+			var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+			if (updated && updated.attrs && updated.attrs.hasOwnProperty('data-width')) {
+				window.et_bar_counters_init($target);
+			}
+		},
+		callbackHandlerNumberCounter: function (data, $target, $source, slug) {
+			if ($target.hasClass('title')) {
+				return et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+
+			var attrs = data.attrs || false;
+
+			if (!attrs) {
+				return;
+			}
+
+			if (attrs.hasOwnProperty('data-percent-sign')) {
+				et_multi_view.updateContent(attrs['data-percent-sign'], $target.find('.percent-sign'), $source);
+			}
+
+			if (attrs.hasOwnProperty('data-number-value')) {
+				var $the_counter = $target.closest('.et_pb_number_counter');
+				var numberValue = attrs['data-number-value'] || 50;
+				var numberSeparator = attrs['data-number-separator'] || '';
+
+				var updated = et_multi_view.updateAttrs({
+					'data-number-value': numberValue,
+					'data-number-separator': numberSeparator,
+				}, $the_counter, $source);
+
+				if (updated && $the_counter.data('easyPieChart')) {
+					$the_counter.data('easyPieChart').update(numberValue);
+				}
+			}
+		},
+		callbackHandlerCircleCounter: function (data, $target, $source, slug) {
+			if (!$target.hasClass('et_pb_circle_counter_inner')) {
+				return et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+
+			var attrs = data.attrs || false;
+
+			if (!attrs) {
+				return;
+			}
+
+			if (attrs.hasOwnProperty('data-percent-sign')) {
+				et_multi_view.updateContent(attrs['data-percent-sign'], $target.find('.percent-sign'), $source);
+			}
+
+			if (attrs.hasOwnProperty('data-number-value')) {
+				var $the_counter = $target.closest('.et_pb_circle_counter_inner');
+				var numberValue = attrs['data-number-value'];
+
+				var attrsUpdated = et_multi_view.updateAttrs({
+					'data-number-value': numberValue,
+				}, $the_counter, $source);
+
+				if (attrsUpdated && $the_counter.data('easyPieChart')) {
+					window.et_pb_circle_counter_init($the_counter);
+					$the_counter.data('easyPieChart').update(numberValue);
+				}
+			}
+		},
+		callbackHandlerSlider: function (data, $target, $source, slug) {
+			var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+			if ($target.hasClass('et_pb_module') && updated && updated.classes) {
+				if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_no_arrows') !== -1) {
+					$target.find('.et-pb-slider-arrows').addClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.remove && updated.classes.remove.indexOf('et_pb_slider_no_arrows') !== -1) {
+					$target.find('.et-pb-slider-arrows').removeClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_no_pagination') !== -1) {
+					$target.find('.et-pb-controllers').addClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.remove && updated.classes.remove.indexOf('et_pb_slider_no_pagination') !== -1) {
+					$target.find('.et-pb-controllers').removeClass('et_multi_view_hidden');
+				}
+			}
+		},
+		callbackHandlerPostSlider: function (data, $target, $source, slug) {
+			var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+			if ($target.hasClass('et_pb_module') && updated && updated.classes) {
+				if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_no_arrows') !== -1) {
+					$target.find('.et-pb-slider-arrows').addClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.remove && updated.classes.remove.indexOf('et_pb_slider_no_arrows') !== -1) {
+					$target.find('.et-pb-slider-arrows').removeClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_no_pagination') !== -1) {
+					$target.find('.et-pb-controllers').addClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.remove && updated.classes.remove.indexOf('et_pb_slider_no_pagination') !== -1) {
+					$target.find('.et-pb-controllers').removeClass('et_multi_view_hidden');
+				}
+			}
+		},
+		callbackHandlerVideoSlider: function (data, $target, $source, slug) {
+			var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+			if ($target.hasClass('et_pb_slider') && updated && updated.classes) {
+				if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_no_arrows') !== -1) {
+					$target.find('.et-pb-slider-arrows').addClass('et_multi_view_hidden');
+				}
+
+				if (updated.classes.remove && updated.classes.remove.indexOf('et_pb_slider_no_arrows') !== -1) {
+					$target.find('.et-pb-slider-arrows').removeClass('et_multi_view_hidden');
+				}
+
+				var isInitSlider = function () {
+					if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_dots') !== -1) {
+						return 'et_pb_slider_dots';
+					}
+
+					if (updated.classes.add && updated.classes.add.indexOf('et_pb_slider_carousel') !== -1) {
+						return 'et_pb_slider_carousel';
+					}
+
+					return false;
+				};
+
+				var sliderControl = isInitSlider();
+
+				if (sliderControl) {
+					var sliderApi = $target.data('et_pb_simple_slider');
+
+					if (typeof sliderApi === 'object') {
+						sliderApi.et_slider_destroy();
+					}
+
+					et_pb_slider_init($target);
+
+					if (sliderControl === 'et_pb_slider_carousel') {
+						$target.siblings('.et_pb_carousel').et_pb_simple_carousel({
+							slide_duration: 1000
+						});
+					}
+				}
+			}
+		},
+		callbackHandlerSliderItem: function (data, $target, $source, slug) {
+			if (!$target.hasClass('et_pb_slide_video') && !$target.is('img')) {
+				return et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+
+			if ($target.hasClass('et_pb_slide_video')) {
+				var $contentNew = data && data.content ? $(data.content) : false;
+				var $contentOld = $target.html().indexOf('fluid-width-video-wrapper') !== -1
+					? $($target.find('.fluid-width-video-wrapper').html())
+					: $($target.html());
+
+				if (!$contentNew || !$contentOld) {
+					return;
+				}
+				var updated = false;
+
+				if ($contentNew.hasClass('wp-video') && $contentOld.hasClass('wp-video')) {
+					var isVideoNeedUpdate = function () {
+						if ($contentNew.find('source').length !== $contentOld.find('source').length) {
+							return true;
+						}
+
+						var isDifferentAttr = false;
+
+						$contentNew.find('source').each(function (index) {
+							var $contentOldSource = $contentOld.find('source').eq(index);
+
+							if ($(this).attr('src') !== $contentOldSource.attr('src')) {
+								isDifferentAttr = true;
+							}
+						});
+
+						return isDifferentAttr;
+					};
+
+					if (isVideoNeedUpdate()) {
+						updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+					}
+				} else if ($contentNew.is('iframe') && $contentOld.is('iframe') && $contentNew.attr('src') !== $contentOld.attr('src')) {
+					updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+				} else if (($contentNew.hasClass('wp-video') && $contentOld.is('iframe')) || ($contentNew.is('iframe') && $contentOld.hasClass('wp-video'))) {
+					updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+				}
+
+				if (updated && updated.content) {
+					if ($contentNew.is('iframe')) {
+						$target.closest('.et_pb_module').fitVids();
+					} else {
+						var videoWidth = $contentNew.find('video').attr('width');
+						var videoHeight = $contentNew.find('video').attr('height');
+						var videContainerWidth = $target.width();
+						var videContainerHeight = (videContainerWidth / videoWidth) * videoHeight;
+
+						$target.find('video').mediaelementplayer({
+							videoWidth: parseInt(videContainerWidth),
+							videoHeight: parseInt(videContainerHeight),
+							autosizeProgress: false,
+							success: function (mediaElement, domObject) {
+								var $domObject = $(domObject);
+								var videoMarginTop = (videContainerHeight - $domObject.height()) + $(mediaElement).height();
+
+								$domObject.css('margin-top', videoMarginTop + 'px');
+							},
+						});
+					}
+				}
+			} else if ($target.is('img')) {
+				var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+				if (updated && updated.attrs && updated.attrs.src) {
+					var $slider = $target.closest('.et_pb_module');
+
+					$target.css('visibility', 'hidden');
+
+					et_fix_slider_height($slider);
+
+					setTimeout(function () {
+						et_fix_slider_height($slider);
+						$target.css('visibility', 'visible');
+					}, 100);
+				}
+			}
+		},
+		callbackHandlerVideo: function (data, $target, $source, slug) {
+			if ($target.hasClass('et_pb_video_overlay')) {
+				return et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+
+			var updated = false;
+
+			var $contentNew = data && data.content ? $(data.content) : false;
+			var $contentOld = $target.html().indexOf('fluid-width-video-wrapper') !== -1
+				? $($target.find('.fluid-width-video-wrapper').html())
+				: $($target.html());
+
+			if (!$contentNew || !$contentOld) {
+				return;
+			}
+
+			if ($contentNew.is('video') && $contentOld.is('video')) {
+				var isVideoNeedUpdate = function () {
+					if ($contentNew.find('source').length !== $contentOld.find('source').length) {
+						return true;
+					}
+
+					var isDifferentAttr = false;
+
+					$contentNew.find('source').each(function (index) {
+						var $contentOldSource = $contentOld.find('source').eq(index);
+
+						if ($(this).attr('src') !== $contentOldSource.attr('src')) {
+							isDifferentAttr = true;
+						}
+					});
+
+					return isDifferentAttr;
+				};
+
+				if (isVideoNeedUpdate()) {
+					updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+				}
+			} else if ($contentNew.is('iframe') && $contentOld.is('iframe') && $contentNew.attr('src') !== $contentOld.attr('src')) {
+				updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			} else if (($contentNew.is('video') && $contentOld.is('iframe')) || ($contentNew.is('iframe') && $contentOld.is('video'))) {
+				updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+
+			if (updated && updated.content) {
+				if ($contentNew.is('iframe') && $.fn.fitVids) {
+					$target.fitVids();
+				}
+			}
+
+			return updated;
+		},
+		callbackHandlerBlog: function (data, $target, $source, slug) {
+			var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+			if (updated && updated.classes && updated.classes.add && updated.classes.add.indexOf('et_pb_blog_show_content') !== -1) {
+				et_reinit_waypoint_modules();
+			}
+		},
+		callbackHandlerTestimonial: function (data, $target, $source, slug) {
+			if (!$source.hasClass('et_pb_testimonial_description_inner')) {
+				return et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+
+			$.each($target.find('.et_pb_testimonial_author').prevAll(), function () {
+				$(this).remove();
+			});
+
+			$target.find('.et_pb_testimonial_author').before($(data.content));
+
+			if (!$source.hasClass('et_multi_view_swapped')) {
+				$source.addClass('et_multi_view_swapped');
+			}
+		},
+		callbackHandlerWooCommerceBreadcrumb: function(data, $target, $source, slug) {
+			if (data.content) {
+				return et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+			}
+			if (data.attrs && data.attrs.hasOwnProperty('href')) {
+				var hrefValue = data.attrs['href'];
+				return et_multi_view.updateAttrs({href: hrefValue}, $target, $source);
+			}
+		},
+		callbackHandlerWooCommerceTabs: function(data, $target, $source, slug) {
+			var updated = et_multi_view.callbackHandlerDefault(data, $target, $source, slug + '__faked');
+
+			if (updated && updated.attrs && updated.attrs.hasOwnProperty('data-include_tabs')) {
+				// Show only the enabled Tabs i.e. Hide all tabs and show as required.
+				$target.find('li').hide();
+				$target.find('li').removeClass('et_pb_tab_active');
+
+				var tabClasses = [];
+				var include_tabs = updated.attrs['data-include_tabs'].split('|');
+				include_tabs.forEach(function(elem) {
+					if ('' === elem.trim()) {
+						return;
+					}
+					tabClasses.push(elem + '_tab');
+				});
+
+				tabClasses.forEach(function(elemClass, idx) {
+					if (0 === idx) {
+						$('.' + elemClass).addClass('et_pb_tab_active');
+					}
+					$('.' + elemClass).show();
+				});
+			}
+		},
+		getCallbackHandlerCustom: function (slug) {
+			switch (slug) {
+				case 'et_pb_counter':
+					return et_multi_view.callbackHandlerCounter;
+
+				case 'et_pb_number_counter':
+					return et_multi_view.callbackHandlerNumberCounter;
+
+				case 'et_pb_circle_counter':
+					return et_multi_view.callbackHandlerCircleCounter;
+
+				case 'et_pb_slider':
+				case 'et_pb_fullwidth_slider':
+					return et_multi_view.callbackHandlerSlider;
+
+				case 'et_pb_post_slider':
+				case 'et_pb_fullwidth_post_slider':
+					return et_multi_view.callbackHandlerPostSlider;
+
+				case 'et_pb_video_slider':
+					return et_multi_view.callbackHandlerVideoSlider;
+
+				case 'et_pb_slide':
+					return et_multi_view.callbackHandlerSliderItem;
+
+				case 'et_pb_video':
+					return et_multi_view.callbackHandlerVideo;
+
+				case 'et_pb_blog':
+					return et_multi_view.callbackHandlerBlog;
+
+				case 'et_pb_testimonial':
+					return et_multi_view.callbackHandlerTestimonial;
+
+				case 'et_pb_wc_breadcrumb':
+					return et_multi_view.callbackHandlerWooCommerceBreadcrumb;
+				case 'et_pb_wc_tabs':
+					return et_multi_view.callbackHandlerWooCommerceTabs;
+
+				default:
+					return false;
+			}
+		},
+		updateContent: function (content, $target, $source) {
+			if (typeof content === 'undefined') {
+				return false;
+			}
+
+			var updated = false;
+
+			if ($target.html() !== content) {
+				$target.empty().html(content);
+				updated = true;
+			}
+
+			if (updated && !$source.hasClass('et_multi_view_swapped')) {
+				$source.addClass('et_multi_view_swapped');
+			}
+
+			return updated;
+		},
+		updateAttrs: function (attrs, $target, $source) {
+			if (!attrs) {
+				return false;
+			}
+
+			var updated = {};
+
+			$.each(attrs, function (key, value) {
+				switch (key) {
+					case 'class':
+						// Do nothing, use classes data contexts and updateClasses method instead.
+						break;
+
+					case 'style':
+						// Do nothing, use styles data contexts and updateStyles method instead.
+						break;
+
+					default:
+						if ($target.attr(key) !== value) {
+							$target.attr(key, value);
+
+							if (key.indexOf('data-') === 0) {
+								$target.data(key.replace('data-', ''), value);
+							}
+
+							updated[key] = value;
+						}
+						break;
+				}
+			});
+
+			if (et_multi_view.isEmptyObject(updated)) {
+				return false;
+			}
+
+			if (!$source.hasClass('et_multi_view_swapped')) {
+				$source.addClass('et_multi_view_swapped');
+			}
+
+			return updated;
+		},
+		updateStyles: function (styles, $target, $source) {
+			if (!styles) {
+				return false;
+			}
+
+			var updated = {};
+
+			$.each(styles, function (key, value) {
+				if ($target.css(key) !== value) {
+					$target.css(key, value);
+					updated[key] = value;
+				}
+			});
+
+			if (et_multi_view.isEmptyObject(updated)) {
+				return false;
+			}
+
+			if (!$source.hasClass('et_multi_view_swapped')) {
+				$source.addClass('et_multi_view_swapped');
+			}
+
+			return updated;
+		},
+		updateClasses: function (classes, $target, $source) {
+			if (!classes) {
+				return false;
+			}
+
+			var updated = {};
+
+			// Add CSS class
+			if (classes.add) {
+				for (var i = 0; i < classes.add.length; i++) {
+					if (!$target.hasClass(classes.add[i])) {
+						$target.addClass(classes.add[i]);
+
+						if (!updated.hasOwnProperty('add')) {
+							updated.add = [];
+						}
+						updated.add.push(classes.add[i]);
+					}
+				}
+			}
+
+			// Remove CSS class
+			if (classes.remove) {
+				for (var i = 0; i < classes.remove.length; i++) {
+					if ($target.hasClass(classes.remove[i])) {
+						$target.removeClass(classes.remove[i]);
+
+						if (!updated.hasOwnProperty('remove')) {
+							updated.remove = [];
+						}
+						updated.remove.push(classes.remove[i]);
+					}
+				}
+			}
+
+			if (et_multi_view.isEmptyObject(updated)) {
+				return false;
+			}
+
+			if (!$source.hasClass('et_multi_view_swapped')) {
+				$source.addClass('et_multi_view_swapped');
+			}
+
+			return updated;
+		},
+		updateVisibility: function (isVisible, $target, $source) {
+			var updated = {};
+
+			if (isVisible && $target.hasClass('et_multi_view_hidden')) {
+				$target.removeClass('et_multi_view_hidden');
+				updated.isVisible = true;
+			}
+
+			if (!isVisible && !$target.hasClass('et_multi_view_hidden')) {
+				$target.addClass('et_multi_view_hidden');
+				updated.isHidden = true;
+			}
+
+			if (et_multi_view.isEmptyObject(updated)) {
+				return false;
+			}
+
+			if (!$source.hasClass('et_multi_view_swapped')) {
+				$source.addClass('et_multi_view_swapped');
+			}
+
+			return updated;
+		},
+		isEmptyObject: function (obj) {
+			if (!obj) {
+				return true;
+			}
+
+			var isEmpty = true;
+
+			for (var key in obj) {
+				if (obj.hasOwnProperty(key)) {
+					isEmpty = false;
+				}
+			}
+
+			return isEmpty;
+		},
+		tryParseJSON: function (string) {
+			try {
+				return JSON.parse(string);
+			} catch (e) {
+				return false;
+			}
+		},
+		getScreenMode: function () {
+			var screenMode;
+
+			if (et_multi_view.windowWidth > 980) {
+				screenMode = 'desktop';
+			} else if (et_multi_view.windowWidth > 767) {
+				screenMode = 'tablet';
+			} else {
+				screenMode = 'phone';
+			}
+
+			return screenMode;
+		},
+	};
+
+	if (!isBuilder) {
+		$(document).ready(et_multi_view.init);
+
+		var et_multi_view_timer = null;
+		$(window).on('resize', function () {
+			// Make sure only to run this when the actual window size width is changed
+			var resizedWindowWidth = $(window).width();
+
+			if (resizedWindowWidth === et_multi_view.windowWidth) {
+				return;
+			}
+
+			et_multi_view.windowWidth = resizedWindowWidth;
+
+			clearTimeout(et_multi_view_timer);
+
+			et_multi_view_timer = setTimeout(et_multi_view.init, 300);
+		});
+	}
 })(jQuery);

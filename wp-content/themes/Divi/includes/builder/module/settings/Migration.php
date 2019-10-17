@@ -18,8 +18,8 @@ abstract class ET_Builder_Module_Settings_Migration {
 
 	public static $last_hook_checked;
 	public static $last_hook_check_decision;
-	public static $max_version = '3.25.3';
-	
+	public static $max_version = '3.27.4';
+
 	public static $migrated    = array();
 	public static $migrations = array(
 		'3.0.48'  => 'BackgroundUI',
@@ -44,6 +44,7 @@ abstract class ET_Builder_Module_Settings_Migration {
 		'3.23.4'  => 'DividerHeight',
 		'3.25'    => 'ColumnOptions',
 		'3.25.3'  => 'ShopOrderByDefault',
+		'3.27.4'  => 'TextAlignment',
 	);
 
 	public static $migrations_by_version = array();

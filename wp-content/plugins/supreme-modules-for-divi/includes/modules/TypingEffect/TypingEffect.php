@@ -7,7 +7,7 @@ class DSM_TypingEffect extends ET_Builder_Module {
 
 	protected $module_credits = array(
 		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
+		'author'     => 'Divi Supreme',
 		'author_uri' => 'https://suprememodules.com/',
 	);
 
@@ -25,7 +25,10 @@ class DSM_TypingEffect extends ET_Builder_Module {
 			),
 			'advanced' => array(
 				'toggles' => array(
-					'typing_styles'        => esc_html__( 'Typing Styles', 'dsm-supreme-modules-for-divi' ),
+					'typing_styles'          => array(
+						'title'    => esc_html__( 'Typing Styles', 'dsm-supreme-modules-pro-for-divi' ),
+						'priority' => 56,
+					),
 				),
 			),
 		);
@@ -35,9 +38,10 @@ class DSM_TypingEffect extends ET_Builder_Module {
 		return array(
 			'fonts'      => array(
 				'header' => array(
-					'label'    => esc_html__( 'Title', 'dsm-supreme-modules-for-divi' ),
+					'label'    => esc_html__( 'Main', 'dsm-supreme-modules-for-divi' ),
 					'css'      => array(
 						'main' => '%%order_class%% h1.et_pb_module_header, %%order_class%% h2.et_pb_module_header, %%order_class%% h3.et_pb_module_header, %%order_class%% h4.et_pb_module_header, %%order_class%% h5.et_pb_module_header, %%order_class%% h6.et_pb_module_header',
+						'text_align' => '%%order_class%%',
 					),
 					'font_size' => array(
 						'default'      => '30px',
@@ -54,7 +58,7 @@ class DSM_TypingEffect extends ET_Builder_Module {
 				),
 			),
 			'text'       => array(
-				'use_text_orientation' => true,
+				'use_text_orientation' => false,
 				'use_background_layout' => true,
 				'css' => array(
 					'text_shadow' => '%%order_class%%',
@@ -64,6 +68,7 @@ class DSM_TypingEffect extends ET_Builder_Module {
 						'default' => 'light',
 					),
 				),
+				'toggle_slug'     => 'header',
 			),
 			'borders'               => array(
 				'default' => array(
@@ -88,10 +93,10 @@ class DSM_TypingEffect extends ET_Builder_Module {
 	public function get_fields() {
 		return array(
 			'typing_effect' => array(
-				'label'           => esc_html__( 'Typing Effect', 'dsm-supreme-modules-for-divi' ),
+				'label'           => esc_html__( 'Typing Effect Text', 'dsm-supreme-modules-pro-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'The title of your Typing Effect. Use "|" as a separator. eg Word One|Text Two|Divi 3', 'dsm-supreme-modules-for-divi' ),
+				'description'     => esc_html__( 'The title of your Typing Effect Text. Use "|" as a separator. eg Word One|Text Two|Divi 3', 'dsm-supreme-modules-pro-for-divi' ),
 				'default_on_front' => 'Design Divi sites with|Divi|Supreme',
 				'toggle_slug'     => 'main_content',
 			),
@@ -173,7 +178,7 @@ class DSM_TypingEffect extends ET_Builder_Module {
 		if ( '' !== $typing_effect ) {
 			$typing_effect = sprintf( '<%1$s class="dsm-typing-effect et_pb_module_header"><span class="dsm-typing" data-dsm-typing-strings="%2$s"%3$s%4$s></span></%1$s>',
 				et_pb_process_header_level( $header_level, 'h1' ),
-				$typing_effect,
+				htmlspecialchars($typing_effect, ENT_QUOTES),
 				esc_attr(" data-dsm-typing-speed={$typing_speed} data-dsm-typing-backspeed={$typing_backspeed} data-dsm-typing-backdelay={$typing_backdelay}"),
 				( 'off' !== $typing_loop ? esc_attr(' data-dsm-typing-loop=true') : esc_attr(' data-dsm-typing-loop=false') )
 			);
@@ -203,7 +208,6 @@ class DSM_TypingEffect extends ET_Builder_Module {
 		);
 
 		return $output;
-		//return $this->_render_module_wrapper( $output, $render_slug );
 	}
 }
 

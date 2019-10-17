@@ -44,7 +44,26 @@ jQuery(document).ready( function($) {
             editor.setSize(cm_width, cm_height);
         });
 
+        var postID = document.getElementById('post_ID') != null ? document.getElementById('post_ID').value : 0;
 
+        var getCookie = function (name) {
+            var value = '; ' + document.cookie;
+            var parts = value.split('; ' + name + '=');
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        };
+
+
+        // Saving cursor state
+        editor.on('cursorActivity', function () {
+            var curPos = editor.getCursor();
+            document.cookie = 'hesh_plugin_pos=' + postID + ',' + curPos.line + ',' + curPos.ch;
+        });
+
+        // Restoring cursor state
+        var curPos = (getCookie('hesh_plugin_pos') || '0,0,0').split(',');
+        if (postID === curPos[0]) {
+            editor.setCursor(parseFloat(curPos[1]), parseFloat(curPos[2]));
+        }
 
     }
 

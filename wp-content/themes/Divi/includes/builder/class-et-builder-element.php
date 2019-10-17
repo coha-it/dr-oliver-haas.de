@@ -10,6 +10,7 @@ add_action( 'init', array( 'ET_Builder_Element', 'set_media_queries' ), 11 );
 require_once 'module/helpers/Overflow.php';
 require_once 'module/helpers/HoverOptions.php';
 require_once 'module/helpers/ResponsiveOptions.php';
+require_once 'module/helpers/MultiViewOptions.php';
 require_once 'module/helpers/Height.php';
 require_once 'module/helpers/MinHeight.php';
 require_once 'module/helpers/MaxHeight.php';
@@ -17,7 +18,12 @@ require_once 'module/helpers/Width.php';
 require_once 'module/helpers/MaxWidth.php';
 require_once 'module/helpers/Alignment.php';
 require_once 'module/helpers/TransitionOptions.php';
+require_once 'module/helpers/OptionTemplate.php';
 require_once 'module/field/Factory.php';
+
+if ( et_is_woocommerce_plugin_active() ) {
+	require_once 'module/helpers/WooCommerceModules.php';
+}
 
 /**
  * Base class for all builder elements.
@@ -111,7 +117,11 @@ class ET_Builder_Element {
 	public static $setting_advanced_styles = false;
 	public static $uses_module_classname = array();
 
-	protected static $_fields_unprocessed = array();
+	protected static $_fields_unprocessed          = array();
+	protected static $_default_props               = array();
+
+	// Slugs of modules for which an option template has been rebuilt.
+	protected static $_has_rebuilt_option_template = array();
 
 	private static $_cache           = false;
 
@@ -158,6 +168,9 @@ class ET_Builder_Element {
 	protected $is_background = false;
 	private $_is_official_module;
 
+	// woocommerce module
+	private $_is_woocommerce_module;
+
 	/**
 	 * Holds module styles for the current request.
 	 *
@@ -174,6 +187,7 @@ class ET_Builder_Element {
 	private static $modules = array();
 	private static $parent_modules = array();
 	private static $child_modules = array();
+	private static $woocommerce_modules = array();
 	private static $current_module_index = 0;
 	private static $structure_modules = array();
 	private static $structure_module_slugs = array();
@@ -201,6 +215,11 @@ class ET_Builder_Element {
 	 */
 	public static $data_utils = null;
 
+	/**
+	 * @var ET_Builder_Module_Helper_OptionTemplate
+	 */
+	public static $option_template = null;
+
 	public static $field_dependencies = array();
 
 	public static $can_reset_element_indexes = true;
@@ -209,6 +228,11 @@ class ET_Builder_Element {
 	const HIDE_ON_MOBILE   = 'et-hide-mobile';
 
 	protected $module_credits;
+
+	/**
+	 * @var ET_Builder_Custom_Defaults_Settings
+	 */
+	protected static $custom_defaults_manager = null;
 
 	function __construct() {
 		self::$current_module_index++;
@@ -255,6 +279,14 @@ class ET_Builder_Element {
 			self::$_ = self::$data_utils = ET_Core_Data_Utils::instance();
 		}
 
+		if ( null === self::$custom_defaults_manager ) {
+			self::$custom_defaults_manager = ET_Builder_Custom_Defaults_Settings::instance();
+		}
+
+		if ( null === self::$option_template ) {
+			self::$option_template = et_pb_option_template();
+		}
+
 		$this->init();
 
 		$this->settings_modal_tabs    = $this->get_settings_modal_tabs();
@@ -263,7 +295,10 @@ class ET_Builder_Element {
 
 		$this->_set_advanced_fields_config();
 
-		$this->_is_official_module = self::_is_official_module( get_class( $this ) );
+		$current_class = get_class( $this );
+
+		$this->_is_official_module    = self::_is_official_module( $current_class );
+		$this->_is_woocommerce_module = self::_is_woocommerce_module( $current_class );
 
 		$this->make_options_filterable();
 
@@ -436,6 +471,12 @@ class ET_Builder_Element {
 			} else {
 				self::$parent_modules[ $post_type ][ $this->slug ] = $this;
 			}
+		}
+
+		// WooCommerce modules data only deterimine whether a module is WooCommerce modules or not
+		// it doesn't need to be aware whether it is available in certain CPT or not.
+		if ( $this->_is_woocommerce_module ) {
+			self::$woocommerce_modules[] = $this->slug;
 		}
 
 		if ( ! isset( $this->no_render ) ) {
@@ -658,6 +699,17 @@ class ET_Builder_Element {
 		return $is_official;
 	}
 
+	private static function _is_woocommerce_module( $class_name ) {
+		try {
+			$reflection  = new ReflectionClass( $class_name );
+			$is_woocommerce = self::$_->includes( $reflection->getFileName(), ET_BUILDER_DIR_RESOLVED_PATH . '/module/woocommerce' );
+		} catch( Exception $err ) {
+			$is_woocommerce = false;
+		}
+
+		return $is_woocommerce;
+	}
+
 	protected function _set_advanced_fields_config() {
 		$this->advanced_fields = $this->get_advanced_fields_config();
 
@@ -670,7 +722,8 @@ class ET_Builder_Element {
 	}
 
 	/**
-	 * Retrieve Post ID from 1 of 3 sources depending on which exists:
+	 * Retrieve Post ID from 1 of 4 sources depending on which exists:
+	 * - $_POST['current_page']['id']
 	 * - $_POST['et_post_id']
 	 * - $_GET['post']
 	 * - get_the_ID()
@@ -681,6 +734,11 @@ class ET_Builder_Element {
 	 * @return int|bool
 	 */
 	public static function get_current_post_id() {
+		// Getting correct post id in computed_callback request.
+		if ( wp_doing_ajax() && $post_id = self::$_->array_get( $_POST, 'current_page.id' ) ) {
+			return absint( $post_id );
+		}
+
 		if ( wp_doing_ajax() && isset( $_POST['et_post_id'] ) ) {
 			return absint( $_POST['et_post_id'] );
 		}
@@ -874,6 +932,10 @@ class ET_Builder_Element {
 		$unprocessed = &self::$_fields_unprocessed;
 
 		foreach ( $fields as $field => $definition ) {
+			if ( true === $definition ) {
+				continue;
+			}
+
 			// Have to use md5 now because needed by modules cache.
 			$key = md5( serialize( $definition ) );
 			if ( ! isset( $unprocessed[ $key ] ) ) {
@@ -1517,11 +1579,13 @@ class ET_Builder_Element {
 		}
 
 		foreach ( $values as $attr => $value ) {
-			if ( ! preg_match('~_hover(_enabled)?$~', $attr ) ) {
+			$regex = '/(__hover|__hover_enabled|_last_edited|_tablet|_phone)?$/';
+
+			if ( ! preg_match( $regex, $attr ) ) {
 				continue;
 			}
 
-			$resolved[$attr] = $value;
+			$resolved[ $attr ] = $value;
 		}
 
 		return $resolved;
@@ -1690,7 +1754,11 @@ class ET_Builder_Element {
 	 * @return string                     The module's HTML output.
 	 */
 	function _render( $attrs, $content = null, $render_slug, $parent_address = '', $global_parent = '', $global_parent_type = '', $parent_type = '' ) {
-		global $et_fb_processing_shortcode_object, $et_pb_current_parent_type;
+		global $et_fb_processing_shortcode_object, $et_pb_current_parent_type, $et_pb_parent_section_type;
+
+		$this->_maybe_rebuild_option_template();
+
+		$attrs = $this->_maybe_add_custom_defaults( $attrs, $render_slug );
 
 		$enabled_dynamic_attributes = $this->_get_enabled_dynamic_attributes( $attrs );
 
@@ -1948,14 +2016,17 @@ class ET_Builder_Element {
 					$animation_style .= ucfirst( $animation_direction );
 				}
 
-				foreach ( preg_grep( '/(transform_)/', array_keys( $this->props ) ) as $index => $key ) {
-					if ( strpos( $key, 'link' ) !== false || strpos( $key, 'hover' ) !== false ) {
-						continue;
-					}
+				// avoid custom animation on button because animation is applied to the wrapper so transforms do not need to combine.
+				if ( 'et_pb_button' !== $render_slug ) {
+					foreach ( preg_grep( '/(transform_)/', array_keys( $this->props ) ) as $index => $key ) {
+						if ( strpos( $key, 'link' ) !== false || strpos( $key, 'hover' ) !== false ) {
+							continue;
+						}
 
-					if ( ! empty( $this->props[ $key ] ) ) {
-						$animation_style = 'transformAnim';
-						break;
+						if ( ! empty( $this->props[ $key ] ) ) {
+							$animation_style = 'transformAnim';
+							break;
+						}
 					}
 				}
 			}
@@ -2085,6 +2156,7 @@ class ET_Builder_Element {
 		if ( ! $et_fb_processing_shortcode_object ) {
 			if ( 'et_pb_section' === $render_slug ) {
 				$et_pb_current_parent_type = isset( $this->props['specialty'] ) && 'on' === $this->props['specialty'] ? 'et_pb_specialty_section' : 'et_pb_section';
+				$et_pb_parent_section_type = $et_pb_current_parent_type;
 			} else if ( 'et_pb_specialty_section' === $et_pb_current_parent_type && 'et_pb_column' === $render_slug ) {
 				$et_pb_current_parent_type = 'et_pb_specialty_column';
 			}
@@ -2200,6 +2272,9 @@ class ET_Builder_Element {
 		$must_print_fields = apply_filters( $this->slug . '_must_print_attributes', $must_print_fields );
 		$slug              = isset( $this->global_settings_slug ) ? $this->global_settings_slug : $this->slug;
 
+		$module_slug            = self::$custom_defaults_manager->maybe_convert_module_type( $this->slug, $this->props );
+		$module_custom_defaults = self::$custom_defaults_manager->get_module_custom_defaults( $module_slug );
+
 		foreach ( $fields as $field_key => $field_settings ) {
 			$global_setting_name  = "$slug-$field_key";
 			$global_setting_value = ET_Global_Settings::get_value( $global_setting_name );
@@ -2210,7 +2285,7 @@ class ET_Builder_Element {
 
 			$attr_value = self::$_->array_get( $this->props, $field_key, '' );
 
-			if ( $attr_value && $attr_value === $global_setting_value ) {
+			if ( $attr_value && $attr_value === $global_setting_value && ! array_key_exists( $field_key, $module_custom_defaults ) ) {
 				$this->props[ $field_key ] = '';
 			}
 		}
@@ -2363,6 +2438,7 @@ class ET_Builder_Element {
 		$use_updated_global_sync_method = false;
 		$global_module_id = isset( $atts['global_module'] ) ? $atts['global_module'] : false;
 		$is_global_template = false;
+		$real_parent_type = $parent_type;
 
 		if ( $render_slug && $render_slug !== $this->slug ) {
 			if ( $rendering_module = self::get_module( $render_slug, $this->get_post_type() ) ) {
@@ -2501,42 +2577,39 @@ class ET_Builder_Element {
 			}
 		}
 
+		$module_slug = self::$custom_defaults_manager->maybe_convert_module_type( $this->slug, $this->props );
+		$module_custom_defaults = self::$custom_defaults_manager->get_module_custom_defaults( $module_slug );
+
 		foreach( $this->props as $shortcode_attr_key => $shortcode_attr_value ) {
-			if ( isset( $fields[ $shortcode_attr_key ]['type'] ) && 'computed' === $fields[ $shortcode_attr_key ]['type'] ) {
+			$value = $shortcode_attr_value;
 
-				$field = $fields[ $shortcode_attr_key ];
-				$depends_on = array();
+			// don't set the default, unless, lol, the value is literally 'default'
+			if ( 'default' !== $value ) {
+				// handle 'preset' type of attributes
+				if ( isset( $fields[ $shortcode_attr_key ]['default'] ) && is_array( $fields[ $shortcode_attr_key ]['default'] ) ) {
+					$preset_attribute_name  = $fields[ $shortcode_attr_key ]['default'][0];
+					$preset_default_value   = et_()->array_get( $fields[ $preset_attribute_name ], 'default', 'none' );
+					$preset_attribute_value = et_()->array_get( $this->props, $preset_attribute_name, $preset_default_value );
+					$value_from_preset      = et_()->array_get( $fields[ $shortcode_attr_key ]['default'][1], $preset_attribute_value, '' );
+					if ( $value == $value_from_preset ) {
+						$value = '';
+					}
+				} else {
+					$is_equal_to_default          = isset( $fields[ $shortcode_attr_key ]['default'] ) && $value === $fields[ $shortcode_attr_key ]['default'];
+					$is_equal_to_default_on_front = isset( $fields[ $shortcode_attr_key ]['default_on_front'] ) && $value === $fields[ $shortcode_attr_key ]['default_on_front'];
+					$has_custom_default           = isset( $module_custom_defaults[ $shortcode_attr_key ] );
 
-				if ( isset( $field['computed_depends_on'] ) ) {
-					foreach ( $field['computed_depends_on'] as $depends_on_field ) {
-						// Need to check if depended field is exist to avoid error.
-						$dependency_value = isset( $this->props[ $depends_on_field ] ) ? $this->props[ $depends_on_field ] : '';
-
-						if ( '' === $dependency_value ) {
-							if ( isset( $this->fields_unprocessed[ $depends_on_field]['default'] ) ) {
-								$dependency_value = $this->fields_unprocessed[ $depends_on_field ]['default'];
-							}
+					if ( $has_custom_default && isset( $atts[ $shortcode_attr_key ] ) ) {
+						$is_equal_to_custom_default = $has_custom_default && $atts[ $shortcode_attr_key ] === $module_custom_defaults[ $shortcode_attr_key ];
+						$value                      = $is_equal_to_custom_default ? '' : $atts[ $shortcode_attr_key ];
+					} else {
+						if ( $is_equal_to_default || $is_equal_to_default_on_front ) {
+							$value = '';
 						}
-
-						$depends_on[ $depends_on_field ] = $dependency_value;
 					}
 				}
 
-				if ( isset( $field['computed_variables'] ) ) {
-					$depends_on['computed_variables'] = $field['computed_variables'];
-				}
-
-				if ( ! is_callable( $field['computed_callback'] ) ) {
-					wp_die( esc_html( $shortcode_attr_key . ' Callback:' . $field['computed_callback'] . ' is not callable.... ' ) );
-				}
-
-				$value = call_user_func( $field['computed_callback'], $depends_on );
 			} else {
-				$value = $shortcode_attr_value;
-			}
-
-			// dont set the default, unless, lol, the value is literally 'default'
-			if ( isset( $fields[ $shortcode_attr_key ]['default'] ) && $value === $fields[ $shortcode_attr_key ]['default'] && $value !== 'default' ) {
 				$value = '';
 			}
 
@@ -2639,6 +2712,7 @@ class ET_Builder_Element {
 			// TODO make address be _address, its conflicting with 'address' prop in map module... (not sure how though, they are in diffent places...)
 			'address'                     => $address,
 			'child_slug'                  => $this->child_slug,
+			'parent_slug'                 => $real_parent_type,
 			'vb_support'                  => $this->vb_support,
 			'parent_address'              => $parent_address,
 			'shortcode_index'             => $render_count,
@@ -2648,6 +2722,7 @@ class ET_Builder_Element {
 			'attrs'                       => $attrs,
 			'content'                     => $prepared_content,
 			'is_module_child'             => 'child' === $module_type,
+			'is_structure_element'        => !empty($this->is_structure_element),
 			'is_official_module'          => $this->_is_official_module,
 			'child_title_var'             => $child_title_var,
 			'child_title_fallback_var'    => $child_title_fallback_var,
@@ -2754,6 +2829,79 @@ class ET_Builder_Element {
 	}
 
 	/**
+	 * Rebuild option template in $this->fields_unprocessed property into actual field if needed.
+	 *
+	 * @since 3.28
+	 */
+	protected function _maybe_rebuild_option_template() {
+		// Once module's option template inside $this->fields_unprocessed is rebuilt, the next
+		// module's `_render()` won't need it. Thus, skip this to speed up performance.
+		if ( in_array( $this->slug, self::$_has_rebuilt_option_template ) ) {
+			return;
+		}
+
+		foreach( $this->fields_unprocessed as $field_name => $field ) {
+			// If first two field name matches template prefix, it is safely assume that current
+			// unprocessed fields is reference to option template.
+			if ( self::$option_template->is_enabled() && self::$option_template->is_option_template_field( $field_name ) ) {
+				// Rebuild fields
+				$rebuilt_fields = self::$option_template->rebuild_field_template( $field_name );
+
+				// Assign rebuilt fields to module's unprocessed fields
+				foreach( $rebuilt_fields as $rebuilt_field_name => $rebuilt_field ) {
+					$this->fields_unprocessed[ $rebuilt_field_name ] = $rebuilt_field;
+				}
+
+				// Remove option template field
+				unset( $this->fields_unprocessed[ $field_name ] );
+			}
+		}
+
+		self::$_has_rebuilt_option_template[] = $this->slug;
+	}
+
+	/**
+	 * Adds module custom defaults.
+	 *
+	 * @since 3.26
+	 *
+	 * @param array  $attrs        The list of a module attributes
+	 * @param string $render_slug  The real slug from the shortcode
+	 *
+	 * @return array
+	 */
+	protected function _maybe_add_custom_defaults( $attrs, $render_slug ) {
+		if ( et_fb_is_enabled() || et_builder_bfb_enabled() ) {
+			return $attrs;
+		}
+
+		$render_slug            = self::$custom_defaults_manager->maybe_convert_module_type( $render_slug, $attrs );
+		$module_custom_defaults = self::$custom_defaults_manager->get_module_custom_defaults( $render_slug );
+
+		if ( is_array( $attrs ) ) {
+			// We need a special handler for social media child items module background color setting
+			// as it has different default background color for each network.
+			if ( 'et_pb_social_media_follow_network' === $render_slug
+				&& ! empty( $attrs['social_network'] )
+				&& ! empty( $attrs['background_color'] )
+				&& ! empty( $module_custom_defaults['background_color'] )
+				&& $attrs['background_color'] !== $module_custom_defaults['background_color']
+			) {
+				$background_color_definition = self::$_->array_get( $this->get_fields(), "social_network.options.{$attrs['social_network']}.data.color" );
+
+				if ( $background_color_definition === $attrs['background_color'] ) {
+					// Unset the background color attrs if it was default based on selected network.
+					unset( $attrs['background_color'] );
+				}
+			}
+
+			return array_merge( $module_custom_defaults, $attrs );
+		}
+
+		return $module_custom_defaults;
+	}
+
+	/**
 	 * Add additional option fields.
 	 *
 	 * @since 3.23 Introduce form field options set. Also, add codes to generate responsive options
@@ -2823,154 +2971,20 @@ class ET_Builder_Element {
 
 		$this->_additional_fields_options = array();
 
-		// Add hover field indication
-		$additional_options['hover_enabled'] = array(
-			'type'    => 'skip',
-			'default' => 0,
-		);
-
 		$is_column_module = in_array( $this->slug, array( 'et_pb_column', 'et_pb_column_inner' ) );
 
-		if ( ! empty( $additional_options ) ) {
-			// delete second level advanced options default values
-			if ( isset( $this->type ) && 'child' === $this->type && !$is_column_module && apply_filters( 'et_pb_remove_child_module_defaults', true ) ) {
-				foreach ( $additional_options as $name => $settings ) {
-					if ( isset( $additional_options[ $name ]['default'] ) && ! isset( $additional_options[ $name ]['default_on_child'] ) ) {
-						$additional_options[ $name ]['default'] = '';
-					}
+		// delete second level advanced options default values
+		if ( isset( $this->type ) && 'child' === $this->type && ! $is_column_module && apply_filters( 'et_pb_remove_child_module_defaults', true ) ) {
+			foreach ( $additional_options as $name => $settings ) {
+				if ( isset( $additional_options[ $name ]['default'] ) && ! isset( $additional_options[ $name ]['default_on_child'] ) ) {
+					$additional_options[ $name ]['default'] = '';
 				}
 			}
-
-			// Generate responsive fields for additional options (Design).
-			// There are 4 types where the mobile_options exist on the options.
-			// 1. Exist on the option definition.
-			// 2. Exist on the computed field type, just like point 1 but we threat it differently
-			//    because there are some properties need to be updated and added.
-			// 3. Exist on the background-field.
-			// 4. Exist on the composite field.
-			foreach ( $additional_options as $field_name => $field ) {
-				$is_mobile_options = isset( $field['mobile_options'] ) && $field['mobile_options'];
-				$is_hover          = isset( $field['hover'] ) && 'tabs' === $field['hover'];
-				$field_type        = isset( $field['type'] ) ? $field['type'] : '';
-				$field_context     = isset( $field['context'] ) ? $field['context'] : '';
-				$field_last_edited = isset( $field['last_edited'] ) ? $field['last_edited'] : '';
-
-				// Mobile options property maybe exist on the field.
-				if ( $is_mobile_options ) {
-					// Get tab and toggle slugs value.
-					$tab_slug    = isset( $field['tab_slug'] ) ? $field['tab_slug'] : '';
-					$toggle_slug = isset( $field['toggle_slug'] ) ? $field['toggle_slug'] : '';
-
-					// 2. Mobile options property for computed fields.
-					if ( 'computed' === $field_type ) {
-						// Computed depends on. Add suffix after depends on info.
-						if ( ! empty( $field['computed_depends_on'] ) ) {
-							$computed_depends_on = $field['computed_depends_on'];
-							foreach ( $computed_depends_on as $depends_value ) {
-								if ( $is_hover ) {
-									array_push( $field['computed_depends_on'], "{$depends_value}_tablet", "{$depends_value}_phone", "{$depends_value}__hover" );
-								} else {
-									array_push( $field['computed_depends_on'], "{$depends_value}_tablet", "{$depends_value}_phone" );
-								}
-							}
-						}
-
-						// Computed minimum. Add suffix after minimum info.
-						if ( ! empty( $field['computed_minimum'] ) ) {
-							$computed_minimum = $field['computed_minimum'];
-							foreach ( $computed_minimum as $minimum_value ) {
-								if ( $is_hover ) {
-									array_push( $field['computed_minimum'], "{$minimum_value}_tablet", "{$minimum_value}_phone", "{$minimum_value}__hover" );
-								} else {
-									array_push( $field['computed_minimum'], "{$minimum_value}_tablet", "{$minimum_value}_phone" );
-								}
-							}
-						}
-
-						$additional_options["{$field_name}"] = $field;
-
-						continue;
-					}
-
-					// 3. Mobile options property maybe exist under background field.
-					if ( 'background-field' === $field_type ) {
-						// Just in case current field is background-field and the mobile_options
-						// attributes are located in the fields. Ensure background fields is exist.
-						if ( ! empty( $field['background_fields'] ) ) {
-							// Fetch the fields and check for mobile_options.
-							foreach ( $field['background_fields'] as $background_name => $background_field ) {
-								if ( isset( $background_field['mobile_options'] ) && $background_field['mobile_options'] ) {
-									// Get tab and toggle slugs value.
-									$tab_slug    = isset( $background_field['tab_slug'] ) ? $background_field['tab_slug'] : '';
-									$toggle_slug = isset( $background_field['toggle_slug'] ) ? $background_field['toggle_slug'] : '';
-
-									// Add fields with responsive suffix for each devices.
-									$additional_options = array_merge(
-										$additional_options,
-										et_pb_responsive_options()->generate_responsive_fields( $background_name, $toggle_slug, $tab_slug )
-									);
-								}
-							}
-						}
-
-						continue;
-					}
-
-					// 1. Mobile options property added directly on options definition. Add fields
-					//    with responsive suffix for each devices.
-					$additional_options = array_merge(
-						$additional_options,
-						et_pb_responsive_options()->generate_responsive_fields( $field_name, $toggle_slug, $tab_slug, $field )
-					);
-
-					// Additional last edited field just in case we need more last edited field.
-					if ( ! empty( $field_last_edited ) ) {
-						$additional_options["{$field_last_edited}_last_edited"] = array(
-							'type'        => 'skip',
-							'tab_slug'    => $tab_slug,
-							'toggle_slug' => $toggle_slug,
-						);
-					}
-
-					continue;
-				}
-
-				// 4. Mobile options property maybe exist under composite field.
-				if ( 'composite' === $field_type ) {
-					// Just in case current field is composite and the mobile_options attributes
-					// are located in the controls. Ensure composite structure is exist.
-					$composite_structure = isset( $field['composite_structure'] ) ? $field['composite_structure'] : array();
-					if ( empty( $composite_structure ) ) {
-						continue;
-					}
-
-					foreach ( $composite_structure as $composite_field ) {
-						// Ensure composite field controls is exist and not empty.
-						$composite_field_controls = isset( $composite_field['controls'] ) ? $composite_field['controls'] : array();
-						if ( empty( $composite_field_controls ) ) {
-							continue;
-						}
-
-						// Fetch the controls and check for mobile_options.
-						foreach ( $composite_field_controls as $control_name => $control ) {
-							if ( isset( $control['mobile_options'] ) && $control['mobile_options'] ) {
-								// Get tab and toggle slugs value.
-								$tab_slug    = isset( $control['tab_slug'] ) ? $control['tab_slug'] : '';
-								$toggle_slug = isset( $control['toggle_slug'] ) ? $control['toggle_slug'] : '';
-
-								// Add fields with responsive suffix for each devices.
-								$additional_options = array_merge(
-									$additional_options,
-									et_pb_responsive_options()->generate_responsive_fields( $control_name, $toggle_slug, $tab_slug )
-								);
-							}
-						}
-					}
-				}
-			}
-
-			$this->_set_fields_unprocessed($additional_options );
 		}
+
+		$additional_options = et_pb_responsive_options()->create( $additional_options );
+
+		$this->_set_fields_unprocessed( $additional_options );
 	}
 
 	/**
@@ -3470,10 +3484,11 @@ class ET_Builder_Element {
 					),
 				);
 
-				// Tabbed toggles status.
+				// Tabbed toggle & BB icons support status.
 				$tabbed_subtoggles = isset( $option_settings['block_elements']['tabbed_subtoggles'] ) ? $option_settings['block_elements']['tabbed_subtoggles'] : false;
+				$bb_icons_support  = isset( $option_settings['block_elements']['bb_icons_support'] ) ? $option_settings['block_elements']['bb_icons_support'] : false;
 
-				$this->_add_settings_modal_sub_toggles( $tab_slug, $toggle_slug, $block_elements, $tabbed_subtoggles );
+				$this->_add_settings_modal_sub_toggles( $tab_slug, $toggle_slug, $block_elements, $tabbed_subtoggles, $bb_icons_support );
 
 				// Block Elements - 3. Set additional options for ul/ol/qoute sub toggles.
 				// a. UL - Type, Position, and Indent.
@@ -3625,6 +3640,7 @@ class ET_Builder_Element {
 						'step' => '1',
 					),
 					'mobile_options'   => true,
+					'hover'            => 'tabs',
 				);
 				$additional_options["{$option_name}_quote_border_color"] = array(
 					'label'           => esc_html__( 'Blockquote Border Color', 'et_builder' ),
@@ -3638,6 +3654,7 @@ class ET_Builder_Element {
 					'field_template'  => 'color',
 					'priority'        => 90,
 					'mobile_options'  => true,
+					'hover'           => 'tabs',
 				);
 
 				// Set default on child font settings.
@@ -3733,6 +3750,8 @@ class ET_Builder_Element {
 				'tab_slug'       => $tab_slug,
 				'toggle_slug'    => $toggle_slug,
 				'description'    => esc_html__( 'Here you can choose whether background color setting above should be used or not.', 'et_builder' ),
+				'mobile_options' => true,
+				'hover'          => 'tabs',
 			);
 		}
 
@@ -3756,8 +3775,6 @@ class ET_Builder_Element {
 				$this->generate_background_options( 'background', 'video', $tab_slug, $toggle_slug, null )
 			);
 		}
-
-		$this->_additional_fields_options = array_merge( $this->_additional_fields_options, $additional_options );
 
 		// Allow module to configure specific options
 
@@ -3984,8 +4001,9 @@ class ET_Builder_Element {
 					$message = "You're Doing It Wrong! You shouldn't define border settings in 'advanced_fields' directly. All the Border settings should be defined via provided API";
 					et_debug( $message );
 				} else {
-					// Add border options to advanced_fields
-					$this->advanced_fields["border{$suffix}"][ $border_key_name ] = $this->_additional_fields_options[ $border_key_name ];
+					// Border used to rely on $this->advanced_fields complete configuration for
+					// rendering. Since option template update, border style rendering fetches
+					// border setting based on rebuilt fields on demand for performance reason.
 				}
 			}
 		}
@@ -4371,7 +4389,7 @@ class ET_Builder_Element {
 				'description'       => esc_html__( 'Pick a color to use for the button background.', 'et_builder' ),
 				'type'              => 'background-field',
 				'base_name'         => "{$option_name}_bg",
-				'context'           => "{$option_name}_bg",
+				'context'           => "{$option_name}_bg_color",
 				'option_category'   => 'button',
 				'custom_color'      => true,
 				'default'           => ET_Global_Settings::get_value( 'all_buttons_bg_color' ),
@@ -4580,6 +4598,9 @@ class ET_Builder_Element {
 				'tab_slug'        => $tab_slug,
 				'toggle_slug'     => $toggle_slug,
 				'depends_show_if' => 'on',
+				'show_if'         => array(
+					"custom_{$option_name}" => 'on',
+				),
 			));
 
 			$additional_options = array_merge( $additional_options, $option );
@@ -4988,7 +5009,7 @@ class ET_Builder_Element {
 			);
 		}
 
-		if ( isset( $this->slug ) && 'et_pb_gallery' === $this->slug ) {
+		if ( isset( $this->slug ) && in_array( $this->slug, array( 'et_pb_gallery', 'et_pb_wc_images', 'et_pb_wc_gallery' ), true ) ) {
 			$additional_options['auto'] = array(
 				'label'           => esc_html__( 'Automatic Animation', 'et_builder' ),
 				'type'            => 'yes_no_button',
@@ -6209,6 +6230,8 @@ class ET_Builder_Element {
 			array( 'option' => 'text_shadow_vertical_length', 'slug' => 'text_shadow', 'prop' => 'text-shadow', ),
 			array( 'option' => 'text_shadow_blur_strength', 'slug' => 'text_shadow', 'prop' => 'text-shadow', ),
 			array( 'option' => 'text_shadow_color', 'slug' => 'text_shadow', 'prop' => 'text-shadow', ),
+			array( 'option' => 'border_weight', 'slug' => 'quote', 'prop' => 'border-width', ),
+			array( 'option' => 'border_color', 'slug' => 'quote', 'prop' => 'border-color', ),
 		);
 		$fields = array();
 
@@ -6408,6 +6431,11 @@ class ET_Builder_Element {
 			return;
 		}
 
+		// Set link_options to false to disable Link options.
+		if ( false === self::$_->array_get( $this->advanced_fields, 'link_options' ) ) {
+			return;
+		}
+
 		// Link options settings have to be array
 		if ( ! is_array( self::$_->array_get( $this->advanced_fields, 'link_options' ) ) ) {
 			return;
@@ -6513,7 +6541,7 @@ class ET_Builder_Element {
 			$key = "{$prop_name}{$suffix}";
 
 			// Continue if {property_name}__hover_enabled is not defined/"on"
-			if ( empty( $this->props[$key]) || 'on' !== $this->props[ $key ] ) {
+			if ( empty( $this->props[$key]) || 0 !== strpos($this->props[ $key ], 'on' ) ) {
 				continue;
 			}
 
@@ -6655,13 +6683,15 @@ class ET_Builder_Element {
 	 * Add settings under sub toggles.
 	 *
 	 * @since 3.23
+	 * @since 3.26.7 Add support to set custom icons on sub toggles.
 	 *
 	 * @param string  $tab_slug          Current tab slug.
 	 * @param string  $toggle_slug       Current toggle slug.
 	 * @param array   $sub_toggle_items  Sub toggles settings need to be added.
 	 * @param boolean $tabbed_subtoggles Tabbed sub toggle status.
+	 * @param boolean $bb_icons_support  BB icons support status.
 	 */
-	protected function _add_settings_modal_sub_toggles( $tab_slug, $toggle_slug, $sub_toggle_items, $tabbed_subtoggles = false ) {
+	protected function _add_settings_modal_sub_toggles( $tab_slug, $toggle_slug, $sub_toggle_items, $tabbed_subtoggles = false, $bb_icons_support = false ) {
 		// Ensure tab slug is exist.
 		if ( ! isset( $this->settings_modal_toggles[ $tab_slug ] ) ) {
 			$this->settings_modal_toggles[ $tab_slug ] = array();
@@ -6692,6 +6722,11 @@ class ET_Builder_Element {
 		if ( $tabbed_subtoggles ) {
 			$this->settings_modal_toggles[ $tab_slug ]['toggles'][ $toggle_slug ]['tabbed_subtoggles'] = $tabbed_subtoggles;
 		}
+
+		// Set BB icons support status.
+		if ( $bb_icons_support ) {
+			$this->settings_modal_toggles[ $tab_slug ]['toggles'][ $toggle_slug ]['bb_icons_support'] = $bb_icons_support;
+		}
 	}
 
 	private function _get_fields() {
@@ -6705,7 +6740,12 @@ class ET_Builder_Element {
 
 		foreach ( $this->fields as $field_name => $field ) {
 			$this->fields[ $field_name ] = apply_filters('et_builder_module_fields_' . $this->slug . '_field_' . $field_name, $field );
-			$this->fields[ $field_name ]['name'] = $field_name;
+
+			// Option template replaces field's array configuration into string which refers to
+			// saved template data & template id
+			if ( is_array( $this->fields[ $field_name ] ) ) {
+				$this->fields[ $field_name ]['name'] = $field_name;
+			}
 		}
 
 		return $this->fields;
@@ -6916,6 +6956,13 @@ class ET_Builder_Element {
 	}
 
 	/**
+	 * Returns modules custom defaults settings
+	 */
+	public static function get_custom_defaults() {
+		return self::$custom_defaults_manager->get_custom_defaults();
+	}
+
+	/**
 	 * Get custom tabs for the module's settings modal. This method is meant to be overridden in module classes.
 	 *
 	 * @since 3.1
@@ -7050,6 +7097,11 @@ class ET_Builder_Element {
 	}
 
 	function wrap_settings_option( $option_output, $field, $name = '' ) {
+		// Option template convert array field into string id; return early to prevent error
+		if ( is_string( $field ) ) {
+			return self::get_unique_bb_key( $option_output );
+		}
+
 		$depends      = false;
 		$new_depends  = isset( $field['show_if'] ) || isset( $field['show_if_not'] );
 		$depends_attr = '';
@@ -8136,6 +8188,11 @@ class ET_Builder_Element {
 	function get_field_name( $field ) {
 		$prefix = 'et_pb_';
 
+		// Option template convert array field into string id; return early to prevent error
+		if ( is_string( $field ) ) {
+			return $prefix . 'option_template_' . $field;
+		}
+
 		// Don't add 'et_pb_' prefix to the "Admin Label" field.
 		if ( 'admin_label' === $field['name'] ) {
 			return $field['name'];
@@ -8224,6 +8281,12 @@ class ET_Builder_Element {
 		$need_mobile_options = isset( $field['mobile_options'] ) && $field['mobile_options'] ? true : false;
 		$only_options = isset( $field['only_options'] ) ? $field['only_options'] : false;
 		$is_child = isset( $this->type ) && 'child' === $this->type;
+
+		// Option template convert array field into string id; return early to prevent error
+		if ( is_string( $field ) ) {
+			return '';
+		}
+
 		// Make sure 'type' is always set to prevent PHP notices
 		if ( empty( $field['type'] ) ) {
 			$field['type'] = 'no-type';
@@ -8233,7 +8296,7 @@ class ET_Builder_Element {
 		// margin/padding, text/number, and range support responsive settings. Later on, we added
 		// responsive settings to all settings. However BB is no longer supported, so we need to
 		// disable mobile options on those selected field types.
-		$unsupported_mobile_options = array( 'upload-gallery', 'background-field', 'warning', 'tiny_mce', 'codemirror', 'textarea', 'custom_css', 'options_list', 'sortable_list', 'conditional_logic', 'text_align', 'select', 'divider', 'yes_no_button', 'multiple_buttons', 'font', 'select_with_option_groups', 'select_animation', 'presets_shadow', 'select_box_shadow', 'presets', 'color', 'color-alpha', 'upload', 'checkbox', 'multiple_checkboxes', 'hidden' );
+		$unsupported_mobile_options = array( 'upload-gallery', 'background-field', 'warning', 'tiny_mce', 'codemirror', 'textarea', 'custom_css', 'options_list', 'sortable_list', 'conditional_logic', 'text_align', 'align', 'select', 'divider', 'yes_no_button', 'multiple_buttons', 'font', 'select_with_option_groups', 'select_animation', 'presets_shadow', 'select_box_shadow', 'presets', 'color', 'color-alpha', 'upload', 'checkbox', 'multiple_checkboxes', 'hidden' );
 		if ( $need_mobile_options && in_array( $field['type'], $unsupported_mobile_options ) ) {
 			$need_mobile_options = false;
 		}
@@ -8530,6 +8593,7 @@ class ET_Builder_Element {
 					esc_html__( 'Add New Rule', 'et_builder' )
 				);
 				break;
+			case 'align':
 			case 'text_align':
 			case 'select':
 			case 'divider':
@@ -8537,6 +8601,7 @@ class ET_Builder_Element {
 			case 'multiple_buttons':
 			case 'font':
 			case 'select_with_option_groups':
+				$is_align = in_array( $field['type'], array( 'text_align', 'align' ) );
 				if ( 'font' === $field['type'] ) {
 					$field['id']    .= '_select';
 					$field_name     .= '_select';
@@ -8544,7 +8609,7 @@ class ET_Builder_Element {
 					$field['options'] = array();
 				}
 
-				if ( 'text_align' === $field['type'] ) {
+				if ( $is_align ) {
 					$field['class'] = 'et-pb-text-align-select';
 				}
 
@@ -8602,9 +8667,9 @@ class ET_Builder_Element {
 					$field_el .= $hidden_field;
 				}
 
-				if ( 'text_align' === $field['type'] ) {
+				if ( $is_align ) {
 					$text_align_options = ! empty( $field[ 'options' ] ) ? array_keys( $field[ 'options' ] ) : array( 'left', 'center', 'right', 'justified' );
-					$is_module_alignment = in_array( $field['name'], array( 'et_pb_module_alignment', 'et_pb_button_alignment' ) ) || ( isset( $field['options_icon'] ) && 'module_align'  === $field['options_icon'] );
+					$is_module_alignment = 'align' === $field['type'] || ( in_array( $field['name'], array( 'et_pb_module_alignment', 'et_pb_button_alignment' ) ) || ( isset( $field['options_icon'] ) && 'module_align'  === $field['options_icon'] ) );
 
 					$text_align_style_button_html = sprintf(
 						'<%%= window.et_builder.options_text_align_buttons_output(%1$s, "%2$s") %%>',
@@ -9321,7 +9386,11 @@ class ET_Builder_Element {
 
 		// Sort fields array by tab name
 		foreach ( $fields as $field_slug => $field_options ) {
-			$field_options['_order_number'] = $i;
+			// Option template replaces field's array configuration into string which refers to
+			// saved template data & template id; thus add index order if $field_options is array.
+			if ( is_array( $field_options ) ) {
+				$field_options['_order_number'] = $i;
+			}
 
 			$tab_slug = ! empty( $field_options['tab_slug'] ) ? $field_options['tab_slug'] : 'general';
 			$tabs_fields[ $tab_slug ][ $field_slug ] = $field_options;
@@ -9703,8 +9772,15 @@ class ET_Builder_Element {
 			return $this->__call( 'get_shortcode_fields', array() );
 		}
 
+		// Get module's default props from static property If current module's default props
+		// have been generated before.
+		if ( isset( self::$_default_props[ $this->slug ] ) ) {
+			return self::$_default_props[ $this->slug ];
+		}
+
 		$fields = array();
 
+		// Resolve option template
 		foreach( $this->process_fields( $this->fields_unprocessed ) as $field_name => $field ) {
 			$value = '';
 
@@ -9737,6 +9813,10 @@ class ET_Builder_Element {
 		$fields['template_type'] = '';
 		$fields['inline_fonts'] = '';
 		$fields['collapsed'] = '';
+
+		// Default props of each modules are always identical; thus saves it as static prop
+		// so the next same modules doesn't need to process all of these again repetitively.
+		self::$_default_props[ $this->slug ] = $fields;
 
 		return $fields;
 	}
@@ -10300,17 +10380,27 @@ class ET_Builder_Element {
 				$important = in_array( 'letter-spacing', $important_options ) || $use_global_important ? ' !important' : '';
 
 				if ( et_builder_is_hover_enabled( $letter_spacing_option_name, $this->props ) ) {
-					$hover_style .= sprintf(
-						'letter-spacing: %1$s%2$s; ',
-						esc_html( et_builder_process_range_value( $letter_spacing_hover ) ),
-						esc_html( $important )
-					);
+					if ( isset( $option_settings['css']['letter_spacing_hover'] ) ) {
+						self::set_style( $function_name, array(
+							'selector'    => $option_settings['css']['letter_spacing_hover'],
+							'declaration' => sprintf(
+								'letter-spacing: %1$s%2$s;',
+								esc_html( et_builder_process_range_value( $letter_spacing_hover ) ),
+								esc_html( $important )
+							),
+							'priority'    => $this->_style_priority,
+						) );
+					} else {
+						$hover_style .= sprintf(
+							'letter-spacing: %1$s%2$s; ',
+							esc_html( et_builder_process_range_value( $letter_spacing_hover ) ),
+							esc_html( $important )
+						);
+					}
 				}
 
 				if ( isset( $option_settings['css']['letter_spacing'] ) ) {
 					if ( et_builder_is_hover_enabled( $letter_spacing_option_name, $this->props ) ) {
-						$letter_spacing_hover = $this->props[ $letter_spacing_option_name_hover ];
-
 						if ( $default_letter_spacing !== $letter_spacing_hover ) {
 							if ( isset( $option_settings['css']['color'] ) ) {
 								$sel = et_pb_hover_options()->add_hover_to_order_class( $option_settings['css']['letter_spacing'] );
@@ -10675,6 +10765,20 @@ class ET_Builder_Element {
 
 					et_pb_responsive_options()->generate_responsive_css( $border_weight_values, $quote_selector, 'border-width', $function_name );
 
+					// Option quote border weight on hover.
+					$border_weight_hover_value = et_pb_hover_options()->get_value( $border_weight_name, $this->props );
+
+					if ( '' !== $border_weight_hover_value && et_builder_is_hover_enabled( $border_weight_name, $this->props ) ) {
+						self::set_style( $function_name, array(
+							'selector'    => "{$quote_selector}:hover",
+							'declaration' => sprintf(
+								'border-width: %1$s%2$s;',
+								esc_html( et_builder_process_range_value( $border_weight_hover_value ) ),
+								esc_html( $important )
+							),
+						) );
+					}
+
 					// Option quote border color.
 					$border_color_name          = "{$option_name}_border_color";
 					$is_border_color_responsive = et_pb_responsive_options()->is_responsive_enabled( $this->props, $border_color_name );
@@ -10685,6 +10789,20 @@ class ET_Builder_Element {
 					);
 
 					et_pb_responsive_options()->generate_responsive_css( $border_color_values, $quote_selector, 'border-color', $function_name, '', 'color' );
+
+					// Option quote border weight on hover.
+					$border_color_hover_value = et_pb_hover_options()->get_value( $border_color_name, $this->props );
+
+					if ( '' !== $border_color_hover_value && et_builder_is_hover_enabled( $border_color_name, $this->props ) ) {
+						self::set_style( $function_name, array(
+							'selector'    => "{$quote_selector}:hover",
+							'declaration' => sprintf(
+								'border-color: %1$s%2$s;',
+								esc_html( $border_color_hover_value ),
+								esc_html( $important )
+							),
+						) );
+					}
 				}
 			}
 		}
@@ -10711,6 +10829,7 @@ class ET_Builder_Element {
 		$important = isset( $settings['css']['important'] ) && $settings['css']['important'] ? ' !important' : '';
 
 		// Possible values for use_background_* variables are true, false, or 'fields_only'
+		$has_background_color_toggle_options   = $this->advanced_fields['background']['has_background_color_toggle'];
 		$use_background_color_gradient_options = $this->advanced_fields['background']['use_background_color_gradient'];
 		$use_background_image_options          = $this->advanced_fields['background']['use_background_image'];
 		$use_background_color_options          = $this->advanced_fields['background']['use_background_color'];
@@ -10920,7 +11039,7 @@ class ET_Builder_Element {
 			// C. Background Color.
 			if ( $use_background_color_options && 'fields_only' !== $use_background_color_options ) {
 
-				$use_background_color_value = et_pb_responsive_options()->get_any_value( $this->props, "use_background_color{$suffix}" );
+				$use_background_color_value = et_pb_responsive_options()->get_any_value( $this->props, "use_background_color{$suffix}", 'on', true );
 
 				if ( ! $has_background_gradient_and_image && 'off' !== $use_background_color_value ) {
 					$background_color       = et_pb_responsive_options()->get_inheritance_background_value( $this->props, 'background_color', $device, 'background', $this->fields_unprocessed );
@@ -10934,6 +11053,13 @@ class ET_Builder_Element {
 							esc_html( $important )
 						);
 					}
+				} else if ( $has_background_color_toggle_options && 'off' === $use_background_color_value && ! $is_desktop ) {
+					// Reset - If current module has background color toggle, it's off, and current mode
+					// it's not desktop, we should reset the background color.
+					$style .= sprintf(
+						'background-color: initial %1$s; ',
+						esc_html( $important )
+					);
 				}
 			}
 
@@ -11143,7 +11269,8 @@ class ET_Builder_Element {
 			// Background Color Hover.
 			if ( $use_background_color_options && 'fields_only' !== $use_background_color_options ) {
 
-				$use_background_color_hover_value = self::$_->array_get( $this->props, 'use_background_color', false );
+				$use_background_color_hover_value = self::$_->array_get( $this->props, 'use_background_color__hover', '' );
+				$use_background_color_hover_value = ! empty( $use_background_color_hover_value ) ? $use_background_color_hover_value : self::$_->array_get( $this->props, 'use_background_color', 'on' );
 
 				if ( ! $has_background_gradient_and_image_hover && 'off' !== $use_background_color_hover_value ) {
 					$background_color_hover = et_pb_responsive_options()->get_inheritance_background_value( $this->props, 'background_color', 'hover', 'background', $this->fields_unprocessed );
@@ -11156,6 +11283,13 @@ class ET_Builder_Element {
 							esc_html( $important )
 						);
 					}
+				} else if ( $has_background_color_toggle_options && 'off' === $use_background_color_hover_value ) {
+					// Reset - If current module has background color toggle, it's off, and current mode
+					// it's not desktop, we should reset the background color.
+					$style .= sprintf(
+						'background-color: initial %1$s; ',
+						esc_html( $important )
+					);
 				}
 			}
 
@@ -11807,7 +11941,12 @@ class ET_Builder_Element {
 			'overflow-x' => $overflow->get_field_x(),
 			'overflow-y' => $overflow->get_field_y(),
 		);
-		$controls   = ET_Builder_Module_Fields_Factory::get( 'Overflow' )->get_fields();
+		$controls   = ET_Builder_Module_Fields_Factory::get( 'Overflow' )->get_fields( array(), true );
+
+		// Rebuilt template if template id is returned by get_fields()
+		if ( self::$option_template->is_enabled() && is_string( $controls ) ) {
+			$controls = self::$option_template->rebuild_field_template( $controls );
+		}
 
 		foreach ( $fields as $prop => $field ) {
 			$default_value   = self::$_->array_get( $controls[ $field ], 'default', '' );
@@ -12941,8 +13080,8 @@ class ET_Builder_Element {
 							// Reset - If background has image and gradient, force background-color: initial.
 							if ( $has_background_color_gradient && $has_background_image && $background_blend_inherit !== $background_blend_default ) {
 								$has_background_gradient_and_image = true;
-								$background_color_style            = 'initial'; 
-								$background_style .= 'background-color: initial; ';
+								$background_color_style            = 'initial';
+								$background_style                  .= 'background-color: initial; ';
 							}
 
 							$processed_background_blend = $background_blend;
@@ -13283,13 +13422,13 @@ class ET_Builder_Element {
 				'phone'   => $is_field_bg_color_responsive ? esc_attr( et_pb_responsive_options()->get_any_value( $this->props, "{$option_name}_background_color_phone" ) ) : '',
 			);
 
-			$field_bg_color_important = $force_global_important ? ' !important' : '';
+			$field_bg_color_important = $force_global_important || in_array( 'background_color', $important_list, true ) ? ' !important;' : '';
 
 			et_pb_responsive_options()->generate_responsive_css( $field_bg_color_values, $bg_color_selector, 'background-color', $function_name, $field_bg_color_important, 'color' );
 
 			// 3.a.2. Field Background Hover Color.
 			$field_bg_color_hover = $this->get_hover_value("{$option_name}_background_color" );
-			if ( '' !== $field_bg_color_hover ) {
+			if ( ! empty( $field_bg_color_hover ) ) {
 				self::set_style( $function_name, array(
 					'selector'    => $bg_color_hover_selector,
 					'declaration' => sprintf( 'background-color:%1$s%2$s;', $field_bg_color_hover, $field_bg_color_important ),
@@ -13304,13 +13443,13 @@ class ET_Builder_Element {
 				'phone'   => $is_field_focus_bg_color_responsive ? esc_attr( et_pb_responsive_options()->get_any_value( $this->props, "{$option_name}_focus_background_color_phone" ) ) : '',
 			);
 
-			$field_focus_bg_color_important = $force_global_important ? ' !important' : '';
+			$field_focus_bg_color_important = $force_global_important || in_array( 'focus_background_color', $important_list, true ) ? ' !important' : '';
 
 			et_pb_responsive_options()->generate_responsive_css( $field_focus_bg_color_values, $bg_color_focus_selector, 'background-color', $function_name, $field_focus_bg_color_important, 'color' );
 
 			// 3.b.2. Field Focus Background Hover Color.
 			$field_focus_bg_color_hover = $this->get_hover_value("{$option_name}_focus_background_color" );
-			if ( '' !== $field_focus_bg_color_hover ) {
+			if ( ! empty( $field_focus_bg_color_hover ) ) {
 				self::set_style( $function_name, array(
 					'selector'    => $bg_color_focus_hover_selector,
 					'declaration' => sprintf( 'background-color:%1$s%2$s;', $field_focus_bg_color_hover, $field_focus_bg_color_important ),
@@ -13332,7 +13471,7 @@ class ET_Builder_Element {
 
 			// 3.c.2. Field Text Color.
 			$field_text_color_hover = $this->get_hover_value("{$option_name}_text_color" );
-			if ( '' !== $field_text_color_hover ) {
+			if ( ! empty( $field_text_color_hover ) ) {
 				$text_color_hover_selector = $placeholder_option ? "{$text_color_hover_selector}, {$placeholder_hover_selector}" : $text_color_hover_selector;
 				self::set_style( $function_name, array(
 					'selector'    => $text_color_hover_selector,
@@ -13355,7 +13494,7 @@ class ET_Builder_Element {
 
 			// 3.d.2. Field Focus Text Hover Color.
 			$field_focus_text_color_hover = $this->get_hover_value("{$option_name}_focus_text_color" );
-			if ( '' !== $field_focus_text_color_hover ) {
+			if ( ! empty( $field_focus_text_color_hover ) ) {
 				$text_color_focus_hover_selector = $placeholder_option ? "{$text_color_focus_hover_selector}, {$placeholder_focus_hover_selector}" : $text_color_focus_hover_selector;
 				self::set_style( $function_name, array(
 					'selector'    => $text_color_focus_hover_selector,
@@ -13398,6 +13537,26 @@ class ET_Builder_Element {
 						'selector'    => $this->add_hover_to_selectors( $selector ),
 						'declaration' => trim( $hover_css ),
 					) );
+			}
+
+			if ( et_pb_responsive_options()->is_responsive_enabled( $this->props, "custom_css_{$slug}" ) ) {
+				$tablet_css = et_pb_responsive_options()->get_tablet_value( "custom_css_{$slug}", $this->props );
+				if ( ! empty( $tablet_css ) ) {
+					self::set_style( $function_name, array(
+						'selector'    => $selector,
+						'declaration' => trim( $tablet_css ),
+						'media_query' => ET_Builder_Element::get_media_query( 'max_width_980' ),
+					) );
+				}
+
+				$phone_css = et_pb_responsive_options()->get_phone_value( "custom_css_{$slug}", $this->props );
+				if ( ! empty( $phone_css ) ) {
+					self::set_style( $function_name, array(
+						'selector'    => $selector,
+						'declaration' => trim( $phone_css ),
+						'media_query' => ET_Builder_Element::get_media_query( 'max_width_767' ),
+					) );
+				}
 			}
 		}
 	}
@@ -14057,6 +14216,10 @@ class ET_Builder_Element {
 		return apply_filters( 'et_builder_get_child_modules', $child_modules, $post_type );
 	}
 
+	static function get_woocommerce_modules() {
+		return apply_filters( 'et_builder_get_woocommerce_modules', self::$woocommerce_modules );
+	}
+
 	/**
 	 * Get registered module icons
 	 *
@@ -14390,11 +14553,26 @@ class ET_Builder_Element {
 			}
 
 			foreach ( $_module->fields_unprocessed as $field_key => $field ) {
-				if ( isset( $field['tab_slug'] ) && 'general' !== $field['tab_slug'] ) {
+				$is_option_template = self::$option_template->is_option_template_field( $field_key );
+
+				// Do not process field template
+				if ( ! $is_option_template && ( isset( $field['tab_slug'] ) && 'general' !== $field['tab_slug'] ) ) {
+					continue;
+				}
+
+				// Skip if current option template isn't eligible for `advanced` tab
+				if ( $is_option_template && ! self::$option_template->is_template_inside_tab( 'general', $field ) ) {
 					continue;
 				}
 
 				$module_fields[ $_module_slug ][ $field_key ] = $field;
+			}
+
+			// Some module types must be separated for the Custom Defaults.
+			// For example we keep all section types as `et_pb_section` however they need separate Custom Defaults.
+			$additional_slugs = self::$custom_defaults_manager->get_module_additional_slugs( $_module_slug );
+			foreach ( $additional_slugs as $alias ) {
+				$module_fields[ $alias ] = $module_fields[ $_module_slug ];
 			}
 		}
 
@@ -14494,7 +14672,15 @@ class ET_Builder_Element {
 			}
 
 			foreach ( $_module->fields_unprocessed as $field_key => $field ) {
-				if ( ! isset( $field['tab_slug'] ) || 'advanced' !== $field['tab_slug'] ) {
+				$is_option_template = self::$option_template->is_option_template_field( $field_key );
+
+				// Do not process field template
+				if ( ! $is_option_template && ( ! isset( $field['tab_slug'] ) || 'advanced' !== $field['tab_slug'] ) ) {
+					continue;
+				}
+
+				// Skip if current option template isn't eligible for `advanced` tab
+				if ( $is_option_template && ! self::$option_template->is_template_inside_tab( 'advanced', $field ) ) {
 					continue;
 				}
 
@@ -14515,6 +14701,13 @@ class ET_Builder_Element {
 				if ( isset( $_module->advanced_fields['border']['border_radii'] ) ) {
 					$module_fileds[ $_module_slug ]['border_radii'] = array_merge( $module_fields[ $_module_slug ]['border_radii'], $_module->advanced_fields['border']['border_radii'] );
 				}
+			}
+
+			// Some module types must be separated for the Custom Defaults.
+			// For example we keep all section types as `et_pb_section` however they need separate Custom Defaults.
+			$additional_slugs = self::$custom_defaults_manager->get_module_additional_slugs( $_module_slug );
+			foreach ( $additional_slugs as $alias ) {
+				$module_fields[ $alias ] = $module_fields[ $_module_slug ];
 			}
 		}
 
@@ -14555,17 +14748,31 @@ class ET_Builder_Element {
 			$module_fields[ $_module_slug ] = $_module->custom_css_fields;
 
 			foreach ( $module_fields[ $_module_slug ] as &$item ) {
-				$item['hover'] = self::$_->array_get( $item, 'hover', 'tabs' );
+				$item['hover']          = self::$_->array_get( $item, 'hover', 'tabs' );
+				$item['mobile_options'] = self::$_->array_get( $item, 'mobile_options', true );
 			}
 
 			// Automatically added module ID and module class fields to setting modal's CSS tab
 			if ( ! empty( $_module->fields_unprocessed ) ) {
 				foreach ( $_module->fields_unprocessed as $field_unprocessed_key => $field_unprocessed ) {
-					if ( isset( $field_unprocessed['tab_slug'] ) && 'custom_css' === $field_unprocessed['tab_slug'] &&
-						 isset( $field_unprocessed['type'] ) && ! in_array( $field_unprocessed['type'], $custom_css_unwanted_types ) ) {
+					$has_tab_slug               = isset( $field_unprocessed['tab_slug'] );
+					$is_css_field               = $has_tab_slug && 'custom_css' === $field_unprocessed['tab_slug'];
+					$has_type                   = isset( $field_unprocessed['type'] );
+					$is_unwanted_css_field      = $has_type && in_array( $field_unprocessed['type'], $custom_css_unwanted_types );
+					$is_template_inside_css_tab = is_string( $field_unprocessed ) && self::$option_template->is_template_inside_tab( 'custom_css', $field_unprocessed );
+
+					// Option template's template that might be rendered in custom_css tab
+					if ( ( $is_css_field && ! $is_unwanted_css_field ) || $is_template_inside_css_tab ) {
 						$module_fields[ $_module_slug ][ $field_unprocessed_key ] = $field_unprocessed;
 					}
 				}
+			}
+
+			// Some module types must be separated for the Custom Defaults.
+			// For example we keep all section types as `et_pb_section` however they need separate Custom Defaults.
+			$additional_slugs = self::$custom_defaults_manager->get_module_additional_slugs( $_module_slug );
+			foreach ( $additional_slugs as $alias ) {
+				$module_fields[ $alias ] = $module_fields[ $_module_slug ];
 			}
 		}
 
@@ -15959,6 +16166,7 @@ class ET_Builder_Element {
 			'display_button'      => true,
 			'has_wrapper'         => true,
 			'url_new_window'      => '',
+			'multi_view_data'     => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -16001,7 +16209,7 @@ class ET_Builder_Element {
 		) : '';
 
 		// Render button
-		return sprintf( '%7$s<a%9$s class="%5$s" href="%1$s"%3$s%4$s%6$s%10$s%11$s>%2$s</a>%8$s',
+		return sprintf( '%7$s<a%9$s class="%5$s" href="%1$s"%3$s%4$s%6$s%10$s%11$s%12$s>%2$s</a>%8$s',
 			esc_url( $args['button_url'] ),
 			et_core_esc_previously( $button_text ),
 			( 'on' === $args['url_new_window'] ? ' target="_blank"' : '' ),
@@ -16012,7 +16220,8 @@ class ET_Builder_Element {
 			$args['has_wrapper'] ? '</div>' : '',
 			'' !== $args['button_id'] ? sprintf( ' id="%1$s"', esc_attr( $args['button_id'] ) ) : '',
 			et_core_esc_previously( $data_icon_tablet ), // #10
-			et_core_esc_previously( $data_icon_phone )
+			et_core_esc_previously( $data_icon_phone ),
+			et_core_esc_previously( $args['multi_view_data'] )
 		);
 	}
 
@@ -16322,6 +16531,34 @@ class ET_Builder_Element {
 					return;
 				}
 				list ( self::$_cache, self::$_fields_unprocessed ) = $result;
+
+				// Define option template variable instead of using list to avoid error that might
+				// happen when option template file exists (theme is updated) and frontend is
+				// accessed while static module field data hasn't been updated
+				$cached_option_template_data          = et_()->array_get( $result, '2', array() );
+				$cached_option_template               = et_()->array_get( $result, '3', array() );
+				$cached_option_template_tab_slug_maps = et_()->array_get( $result, '4', array() );
+
+				// init_cache() is called really early. $template property might not be available yet
+				if ( null === self::$option_template ) {
+					self::$option_template = et_pb_option_template();
+				}
+
+				// Set option template data from static cache if exist
+				if ( is_array( $cached_option_template_data ) && ! empty( $cached_option_template_data ) ) {
+					self::$option_template->set_data( $cached_option_template_data );
+				}
+
+				// Set option template from static cache if exist
+				if ( is_array( $cached_option_template ) && ! empty( $cached_option_template ) ) {
+					self::$option_template->set_templates( $cached_option_template );
+				}
+
+				// Set option template tab slug maps from static cache if exist
+				if ( is_array( $cached_option_template_tab_slug_maps ) && ! empty( $cached_option_template_tab_slug_maps ) ) {
+					self::$option_template->set_tab_slug_map( $cached_option_template_tab_slug_maps );
+				}
+
 				// Box Shadow sets WP hooks internally so we gotta load it anyway -> #blame_george.
 				ET_Builder_Module_Fields_Factory::get( 'BoxShadow' );
 			} else {
@@ -16384,12 +16621,134 @@ class ET_Builder_Element {
 		return is_writable( dirname( $file ) ) ? $file : false;
 	}
 
+	/**
+	 * Get Module cache file name's id.
+	 *
+	 * @since 3.28
+	 *
+	 * @param mixed $post_type When set to `false`, autodetect.
+	 *
+	 * @return bool|string
+	 */
+	public static function get_cache_filename_id( $post_type = false ) {
+		$filename = self::get_cache_filename( $post_type );
+
+		if ( ! is_string( $filename ) ) {
+			return false;
+		}
+
+		preg_match( '/(?<=-)[0-9]*(?=.data)/', $filename, $matches );
+
+		return isset( $matches[0] ) ? $matches[0] : false;
+	}
+
 	public static function save_cache() {
 		remove_filter( 'et_builder_modules_is_saving_cache', '__return_true' );
 		$cache = self::get_cache_filename();
 		if ( $cache ) {
-			@file_put_contents( $cache, serialize( array( self::$_cache, self::$_fields_unprocessed, '2.0' ) ) );
+			@file_put_contents( $cache, serialize( array(
+				self::$_cache,
+				self::$_fields_unprocessed,
+				self::$option_template->all(),
+				self::$option_template->templates(),
+				self::$option_template->get_tab_slug_map(),
+				'3.0'
+			) ) );
 		}
+	}
+
+	/**
+	 * Render image element HTML
+	 *
+	 * @since 3.27.1
+	 *
+	 * @param  string $image_props        Image data props key or actual image URL.
+	 * @param  array  $image_attrs_raw    List of extra image attributes.
+	 * @param  array  $echo               Wheter to print the image output or return it.
+	 * @param  array  $disable_responsive Wheter to enable the responsive image or not.
+	 *
+	 * @return string              The images's HTML output. Empty string on failure.
+	 */
+	protected function render_image( $image_props, $image_attrs_raw = array(), $echo = true, $disable_responsive = false ) {
+		// Bail early when the $image_props arg passed is empty.
+		if ( ! $image_props ) {
+			return '';
+		}
+
+		$img_src = $image_props && is_string( $image_props ) ? self::$_->array_get( $this->props, $image_props, $image_props ) : $image_props;
+
+		if ( ! $img_src ) {
+			return '';
+		}
+
+		if ( ! count( $image_attrs_raw ) ) {
+			$html = sprintf(
+				'<img src="%1$s" />',
+				esc_url( $img_src )
+			);
+
+			return et_image_add_srcset_and_sizes( $html, $echo );
+		}
+
+		$image_attrs = array();
+
+		$is_disable_responsive = $disable_responsive || ! et_is_responsive_images_enabled();
+
+		foreach ( $image_attrs_raw as $name => $value ) {
+			// Skip src attributes key.
+			if ( 'src' === $name ) {
+				continue;
+			}
+
+			// Skip srcset & sizes attributes when setting is off.
+			if ( $is_disable_responsive && in_array( $name, array( 'srcset', 'sizes' ), true ) ) {
+				continue;
+			}
+
+			// Skip if attributes value is empty.
+			if ( ! strlen( $value ) ) {
+				continue;
+			}
+
+			// Format as JSON if the value is array or object.
+			if ( is_array( $value ) || is_object( $value ) ) {
+				$value = wp_json_encode( $value );
+			}
+
+			// Trim extra space from attributes value.
+			$value = trim( $value );
+
+			// Standalone attributes that act as Booleans (Numerical indexed array keys such as required, disabled, multiple).
+			if ( is_numeric( $name ) ) {
+				$value = et_core_esc_attr( $value, $value );
+
+				if ( ! is_wp_error( $value ) ) {
+					$image_attrs[ $value ] = et_core_esc_previously( $value );
+				}
+			} else {
+				$value = et_core_esc_attr( $name, $value );
+
+				if ( ! is_wp_error( $value ) ) {
+					$image_attrs[ $name ] = esc_attr( $name ) . '="' . et_core_esc_previously( $value ) . '"';
+				}
+			}
+		}
+
+		$html = sprintf(
+			'<img src="%1$s" %2$s />',
+			esc_url( $img_src ),
+			et_core_esc_previously( implode( ' ', $image_attrs ) )
+		);
+
+		if ( ! $is_disable_responsive && ! isset( $image_attrs['srcset'] ) && ! isset( $image_attrs['sizes'] ) ) {
+			$html = et_image_add_srcset_and_sizes( $html, false );
+		}
+
+		if ( ! $echo ) {
+			return $html;
+		}
+
+		echo et_core_intentionally_unescaped( $html, 'html' );
 	}
 }
 
@@ -16401,6 +16760,11 @@ class ET_Builder_Structure_Element extends ET_Builder_Element {
 	public $is_structure_element = true;
 
 	function wrap_settings_option( $option_output, $field, $name = '' ) {
+		// Option template convert array field into string id; return early to prevent error
+		if ( is_string( $field ) ) {
+			return '';
+		}
+
 		$field_type = ! empty( $field['type'] ) ? $field['type'] : '';
 
 		switch( $field_type ) {

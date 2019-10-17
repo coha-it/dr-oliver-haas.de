@@ -1,21 +1,21 @@
 === Divi Supreme Modules ===
 Contributors: divisupreme, kenng87
-Tags: Divi, Divi Module, Divi Contact Form, divi theme, divi builder, Divi Gradient Text, Divi Typing Effect, Divi 3D Image, Divi Image, Divi Text Divider, facebook feed, facebook comments
+Tags: Divi, Divi Module, Divi Page Builder, divi theme, divi builder, Divi Extensions
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.2.2
+Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.6.3
+Stable tag: 1.7.6.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Divi Supreme Modules plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
+Divi Supreme plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
 
 == Description ==
 
-Divi Supreme Modules plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
+Divi Supreme plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
 
-Divi Supreme contains 16 Divi custom modules and more to come soon.
+Divi Supreme contains 17 Free Divi Custom Modules and more to come soon.
 
 - Supreme Divi Gradient Text - By using Divi's built-in background gradient tool, this module allow you to have gradient text without coding.
 - Supreme Divi Flipbox - With 4 types of Flipbox effect to choose from (Flip Left, Flip Right, Flip Up and Flip Down), you can create stunning interactive content that converts. 
@@ -33,20 +33,20 @@ Divi Supreme contains 16 Divi custom modules and more to come soon.
 - Supreme Divi Menu - Display your WordPress menu and design it in whatever way you want. Use it for Footer or Sidebar.
 - Supreme Divi Price List - Create attractive and stunning Price List for your business with easy options. Perfect for menus, catalogs, product lists and any other list of featured items.
 - Supreme Divi Business Hours - This will allow customers to know your service availability time.
-
+- Supreme Divi Icon List - Create an easy-to-manage list of items, with each item highlighted by it's own icon.
 
 Divi Supreme Extentions
 
 - Scheduled Content Visibility - This will extend the Visibility option in the the Section/Row's custom setting to allow you to show or hide the section or row with a specify date/time.  
-- Divi Templates - Designing Divi's footer or 404 page is one of the most challenging thing ever. Without programming background knowledgde, you have to deal with time and the learning process. But with Divi Templates, now you can design your footer or 404 page using Visual Builder and assign them. As easy as that, No coding required. Don't spend time finding those layout global module ID because you don't have to. Just 2 easy steps: Create a Template using Visual Builder, then assign them to footer/404. That's it! Save time = Smarter.
+- Divi Templates - Designing Divi's footer or 404 page is one of the most challenging thing ever. Without programming background knowledgde, you have to deal with time and the learning process. But with Divi Templates, now you can design your custom footer, 404 and Search No Result page using Visual Builder and assign them. As easy as that, No coding required. Don't spend time finding those layout global module ID because you don't have to. Just 2 easy steps: Create a Template using Visual Builder, then assign them to footer/404. That's it! Save time = Smarter.
 - Divi Shortcodes - This will add a shortcode column in the Divi Library. Use that Divi shortcode to display your layout in any Divi module or even your PHP file by using [divi_shortcode id=""].
 
 Many more Divi Modules and Extensions coming soon...
 
-View [Demo for Divi Supreme Modules](https://suprememodules.com/).
+View [Demo for Divi Supreme](https://suprememodules.com/) or [Demo for Divi Supreme Pro](https://divisupreme.com/).
 
-= About Divi Supreme Modules =
-Divi is a great tool for building website, but without proper addons it might take more time and money. Divi's mission is to help users design websites in the easiest, fastest and most streamlined way.
+= About Divi Supreme =
+Divi Supreme is featured on [ElegantThemes](https://www.elegantthemes.com/blog/divi-resources/divi-plugin-highlight-divi-supreme). Divi is a great tool for building website, but without proper addons it might take more time and money. Divi's mission is to help users design websites in the easiest, fastest and most streamlined way.
 
 We support Divi's mission through the development of Divi custom modules that focus on beauty, subtle animations and visitor engagement. Whether you are a developer or a designer. Our goal is to give you the perfect tool that is build for Divi professionals.
 
@@ -79,7 +79,7 @@ We support Divi's mission through the development of Divi custom modules that fo
 
 **Do I need Divi Theme for this to work?**
 
-You must have Divi theme, Extra Theme or the Divi Builder installed in order for this plugin to work.
+You must have Divi theme, Extra Theme or the Divi Builder installed in order for this plugin to work. [Divi by ElegantThemes](https://www.elegantthemes.com/affiliates/idevaffiliate.php?id=34051&tid1=wordpress) (affiliate link).
 
 **Does it work with the Divi Visual Builder?**
 
@@ -90,7 +90,93 @@ Extra Theme >= version 2.1
 Divi Builder >= version 2.1
 PHP version >= 5.6
 
+**Is this plugin free?**
+
+Yes! Divi Supreme is absolutely free. There is no hidden charge. However if you would like to support our developement, we do have a pro version of Divi Supreme that has even more Divi features, modules and extensions.
+
+**What if I update to Pro version?**
+Your existing modules/content will work with pro version. So you won't lose any content/work.
+
+
 == Changelog ==
+= 1.7.6.6 – 12.10.2019 =
+* Fixed: Typing Module Main Text Alignment.
+* Enhanced: Caldera Forms Module padding rendering on both Visual Builder and frontend.
+* Rewrote/Fixed: Caldera Forms Module Title Text CSS selector from h1 to h6.
+
+= 1.7.6.5 – 09.10.2019 =
+* Enhanced: Supreme Button Module Separator Text Styling and Overall rendering on both Visual Builder and Frontend.
+
+= 1.7.6.4 – 08.10.2019 =
+* Added: Responsive Options to Divi Supreme Button Module’s Alignment.
+* Enhanced: Divi Supreme Button Module render method on both Visual Builder and Frontend.
+* Fixed: Remove Separator Text on Visual Builder.
+* Fixed: Text (Dark/Light) on Supreme Button Module.
+
+= 1.7.6.3 - 06.10.2019 =
+* Enhanced: Icon List Module hover padding method on frontend.
+
+= 1.7.6.2 - 04.10.2019 =
+* Fixed: Visual Builder Error when using Divi Icon List Module due to spilt.
+
+= 1.7.6.1 - 04.10.2019 =
+* Fixed: Styles Reset when using Divi Icon List Module in visual builder.
+
+= 1.7.6 - 04.10.2019 =
+* Added: Divi Icon List Module.
+
+= 1.7.5 - 27.09.2019 =
+* Enhanced: HTML special characters are allowed now.
+* Renamed: Typing Text to Main Text.
+* Moved: Typing Cursor Color option to Typing Styles.
+
+= 1.7.4 - 02.09.2019 =
+* Fixed: Caldera Forms undefined props.
+
+= 1.7.3 - 02.09.2019 =
+* Fixed: Caldera Forms select background color not rendering.
+* Enhanced: Divi template output.
+
+= 1.7.2 - 22.08.2019 =
+* Fixed: Facebook Comments Module not rendering in Visual Builder due empty URL.
+
+= 1.7.1 - 17.08.2019 =
+* Added: “Remove All Data on Uninstall” (Related to Divi Supreme Settings) Option in the Divi Supreme Settings page.
+* Added: Search No Result template to Divi Templates.
+* Fixed: Footer not showing up on 404 page when using Show on 404 Page Option.
+* Fixed: Unnecessary empty HTML p and br Tag on Footer.
+* Fixed: Footer not showing up on search no result page.
+* Enhanced: Echo method for Divi Template Posts.
+* Enhanced: 404 template.
+* Enhanced: Divi Supreme Settings Page.
+
+= 1.7 - 13.08.2019 =
+* Fixed: template_include wrong output causes site to break.
+
+= 1.6.9 - 13.08.2019 =
+* Fixed: Blank pages when using version 1.6.8.
+
+= 1.6.8 - 13.08.2019 =
+* Fixed: WordPress default login url slug when using 404 - Using template_include for custom 404 template.
+
+= 1.6.7 - 13.08.2019 =
+* Fixed: Divi footer template for 404 page.
+* Enhanced: 404 redirect template.
+* Added: Divi Templates - Show or Hide Custom Footer for 404 page.
+
+= 1.6.6 - 04.08.2019 =
+* Fixed: Divi templates assigned to footer when using post/page blank template.
+* Added: Show or Hide Custom Footer on Blank Template option in Divi Templates.
+
+= 1.6.5 - 24.07.2019 =
+* Fixed: var_dump output when using Caldera Forms module.
+* Fixed: Divi Supreme Flipbox item text alignment on Visual Builder – Default should be left.
+* Enhanced: Divi Supreme Flipbox conditional rules for icon and image on Visual Builder.
+
+= 1.6.4 - 16.07.2019 =
+* Fixed: Remove et_pb_post css class on divi templates that causes white space on the bottom. 
+* Changed: Activation plugin name to Divi Supreme.
+
 = 1.6.3 - 19.06.2019 =
 * Added: Divi Business Hours Module.
 * Fixed: Price List module echoing out class name on the frontend.

@@ -21,8 +21,8 @@
 				 * Это необходимо, чтоб напомнить пользователю обновить конфигурацию компонентов плагина,
 				 * иначе вновь активированные компоненты не будет зайдествованы в работе плагина.
 				 *
-				 * @param Wbcr_Factory409_Plugin $plugin
-				 * @param Wbcr_FactoryPages410_ImpressiveThemplate $obj
+				 * @param Wbcr_Factory421_Plugin $plugin
+				 * @param Wbcr_FactoryPages421_ImpressiveThemplate $obj
 				 * @return bool
 				 */
 				add_action('wbcr/factory/pages/impressive/print_all_notices', function ($plugin, $obj) use ($notice) {
@@ -50,8 +50,8 @@
 				 * Это необходимо, чтоб напомнить пользователю обновить конфигурацию компонентов плагина,
 				 * иначе вновь активированные компоненты не будет зайдествованы в работе плагина.
 				 *
-				 * @param Wbcr_Factory409_Plugin $plugin
-				 * @param Wbcr_FactoryPages410_ImpressiveThemplate $obj
+				 * @param Wbcr_Factory421_Plugin $plugin
+				 * @param Wbcr_FactoryPages421_ImpressiveThemplate $obj
 				 * @return bool
 				 */
 				add_action('wbcr/factory/pages/impressive/print_all_notices', function ($plugin, $obj) use ($notice) {
@@ -71,7 +71,7 @@
 	 */
 	add_action('admin_enqueue_scripts', function ($page_id) {
 
-		if( !WbcrFactoryClearfy206_Helpers::strContains($page_id, WCL_Plugin::app()->getPluginName()) ) {
+		if( !WbcrFactoryClearfy213_Helpers::strContains($page_id, WCL_Plugin::app()->getPluginName()) ) {
 			return;
 		}
 

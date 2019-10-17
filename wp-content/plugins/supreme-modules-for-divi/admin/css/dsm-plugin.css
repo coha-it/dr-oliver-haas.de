@@ -13,21 +13,32 @@
 .dsm-section-subtitle h3 {
     margin: 0;
 }
-#dsm_general th {
+
+.dsm-settings-panel th {
     white-space: nowrap;
 }
-#dsm_general .form-table {
+
+.dsm-settings-panel .form-table {
     padding: 23px 15px;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    box-shadow: 0 5px 30px rgba(0,0,0,.1);
+    border-radius: 3px;
     background: #fff;
-    margin-top: 2em;
     border-collapse: initial;
 }
 
-#dsm_general h2 {
-    padding: 9px 0 4px 0;
+.dsm-settings-panel h2 {
+	padding: 9px 0 4px 0;
     font-size: 1.3em;
+    display: none;
+}
+.dsm-settings-panel .postbox-container {
+    margin-top: .5em;
+}
+
+.dsm-settings-panel .postbox-container .postbox {
+    box-shadow: 0 5px 30px rgba(0,0,0,.1);
+    border-radius: 3px;
+    border: none;
 }
 
 .dsm-settings-checkbox fieldset label {
@@ -88,7 +99,7 @@
     border-radius: 50%;
 }
 
-#dsm_general p.submit .button-primary {
+.dsm-settings-panel  p.submit .button-primary {
     color: #fff;
     border-color: #25db92;
     border-radius: 50px;
@@ -104,8 +115,8 @@
     transition: color 300ms ease 0ms, color 300ms ease 0ms, background-color 300ms ease 0ms, background-color 300ms ease 0ms, border 300ms ease 0ms, border 300ms ease 0ms, border-radius 300ms ease 0ms, border-radius 300ms ease 0ms;
 }
 
-#dsm_general p.submit .button-primary:hover,
-#dsm_general p.submit .button-primary:focus {
+.dsm-settings-panel  p.submit .button-primary:hover,
+.dsm-settings-panel  p.submit .button-primary:focus {
     background: #fff;
     color: #30323d;
     border-color: #fff;
@@ -115,7 +126,15 @@
 #dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_top_header .dsm-remove-default-footer-meta-box-options,
 #dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-remove-default-footer-meta-box-options,
 #dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-conditional-meta-box-options,
-#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-css-classes-meta-box-options {
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-css-classes-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-footer-show-on-blank-template-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_404 .dsm-footer-show-on-404-template-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_search_no_result .dsm-remove-default-footer-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_search_no_result .dsm-conditional-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_search_no_result .dsm-css-classes-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_search_no_result .dsm-footer-show-on-blank-template-meta-box-options,
+#dsm_header_footer_meta_box .dsm-header-footer-meta-box.dsm_search_no_result .dsm-footer-show-on-404-template-meta-box-options
+ {
     display: none;
 }
 
