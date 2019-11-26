@@ -33,8 +33,8 @@ add_action( 'wbcr/factory/pages/impressive/header', function ( $plugin_name ) {
 
 /**
  * @param                                          $form
- * @param Wbcr_Factory421_Plugin                   $plugin
- * @param Wbcr_FactoryPages421_ImpressiveThemplate $obj
+ * @param Wbcr_Factory422_Plugin                   $plugin
+ * @param Wbcr_FactoryPages422_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_multisite_before_save( $form, $plugin, $obj ) {
 	if ( $plugin->getPluginName() !== WCL_Plugin::app()->getPluginName() ) {
@@ -74,7 +74,7 @@ add_action( 'admin_enqueue_scripts', function () {
 	wp_enqueue_style( 'wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/css/install-addons.css', [], WCL_Plugin::app()->getPluginVersion() );
 	wp_enqueue_script( 'wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/js/install-addons.js', [
 		'jquery',
-		'wbcr-factory-clearfy-213-global'
+		'wbcr-factory-clearfy-214-global'
 	], WCL_Plugin::app()->getPluginVersion() );
 } );
 
@@ -83,30 +83,30 @@ add_action( 'admin_enqueue_scripts', function () {
  * Уведомление будет показано на всех страницах Clearfy и его компонентах.
  *
  * @param WCL_Plugin                               $plugin
- * @param Wbcr_FactoryPages421_ImpressiveThemplate $obj
+ * @param Wbcr_FactoryPages422_ImpressiveThemplate $obj
  */
-/*function wbcr_clearfy_print_notice_rewrite_rules( $plugin, $obj ) {
+function wbcr_clearfy_print_notice_rewrite_rules( $plugin, $obj ) {
 	if ( WCL_Plugin::app()->getPopulateOption( 'need_rewrite_rules' ) ) {
 		$obj->printWarningNotice( sprintf( '<span class="wbcr-clr-need-rewrite-rules-message">' . __( 'When you deactivate some components, permanent links may work incorrectly. If this happens, please, <a href="%s">update the permalinks</a>, so you could complete the deactivation.', 'clearfy' ), admin_url( 'options-permalink.php' ) ) . '</span>' );
 	}
 }
 
-add_action( 'wbcr/factory/pages/impressive/print_all_notices', 'wbcr_clearfy_print_notice_rewrite_rules', 10, 2 );*/
+add_action( 'wbcr/factory/pages/impressive/print_all_notices', 'wbcr_clearfy_print_notice_rewrite_rules', 10, 2 );
 
 /**
  * Удалем уведомление Clearfy о том, что нужно перезаписать постоянные ссылоки.s
  */
-/*function wbcr_clearfy_flush_rewrite_rules() {
+function wbcr_clearfy_flush_rewrite_rules() {
 	WCL_Plugin::app()->deletePopulateOption( 'need_rewrite_rules', 1 );
 }
 
-add_action( 'flush_rewrite_rules_hard', 'wbcr_clearfy_flush_rewrite_rules' );*/
+add_action( 'flush_rewrite_rules_hard', 'wbcr_clearfy_flush_rewrite_rules' );
 
 /**
  * Обновить постоынные ссылки, после выполнения быстрых настроек
  *
  * @param WHM_Plugin                               $plugin
- * @param Wbcr_FactoryPages421_ImpressiveThemplate $obj
+ * @param Wbcr_FactoryPages422_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_after_form_save( $plugin, $obj ) {
 	if ( ! WCL_Plugin::app()->currentUserCan() ) {
@@ -128,7 +128,7 @@ add_action( 'wbcr/factory/pages/impressive/after_form_save', 'wbcr_clearfy_after
  *
  * @param array                  $widgets
  * @param string                 $position
- * @param Wbcr_Factory421_Plugin $plugin
+ * @param Wbcr_Factory422_Plugin $plugin
  */
 
 add_filter( 'wbcr/factory/pages/impressive/widgets', function ( $widgets, $position, $plugin ) {
@@ -155,6 +155,7 @@ add_filter( 'wbcr/factory/pages/impressive/widgets', function ( $widgets, $posit
 			return $widgets;
 		} else {
 			if ( $position == 'right' ) {
+				unset( $widgets['business_suggetion'] );
 				unset( $widgets['info_widget'] );
 				unset( $widgets['rating_widget'] );
 			}

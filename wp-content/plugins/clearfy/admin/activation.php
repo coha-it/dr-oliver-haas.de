@@ -4,7 +4,7 @@
  *
  * @author        Webcraftic <wordpress.webraftic@gmail.com>
  * @copyright (c) 09.09.2017, Webcraftic
- * @see           Factory421_Activator
+ * @see           Factory422_Activator
  * @version       1.0
  */
 
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_Activation extends Wbcr_Factory421_Activator {
+class WCL_Activation extends Wbcr_Factory422_Activator {
 
 	/**
 	 * Runs activation actions.
@@ -60,9 +60,6 @@ class WCL_Activation extends Wbcr_Factory421_Activator {
 			WCL_Plugin::app()->deactivateComponent( 'cyrlitera' );
 		}
 
-		//$package_plugin = WCL_Package::instance();
-		//$package_plugin->active();
-
 		/**
 		 * @since 1.4.1
 		 */
@@ -74,24 +71,20 @@ class WCL_Activation extends Wbcr_Factory421_Activator {
 	 *
 	 * @since 1.0.0
 	 */
-	/*public function deactivate() {
-		if ( wp_next_scheduled( 'wbcr_clearfy_license_autosync' ) ) {
-			wp_clear_scheduled_hook( 'wbcr_clearfy_license_autosync' );
-		}
-
-		$dependent = 'clearfy_package/clearfy-package.php';
+	public function deactivate() {
+		/*$dependent = 'clearfy_package/clearfy-package.php';
 
 		require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		if ( is_plugin_active( $dependent ) ) {
 			add_action( 'update_option_active_plugins', [ $this, 'deactivateDependent' ] );
 		}
-		add_action( 'update_site_option_active_sitewide_plugins', [ $this, 'deactivateDependent' ] );
+		add_action( 'update_site_option_active_sitewide_plugins', [ $this, 'deactivateDependent' ] );*/
 
 		/**
 		 * @since 1.4.1
 		 */
-		//do_action( 'wbcr/clearfy/deactivated' );
-	//}*/
+		do_action( 'wbcr/clearfy/deactivated' );
+	}
 
 	/**
 	 * Deactivate clearfy package

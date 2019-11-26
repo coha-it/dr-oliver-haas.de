@@ -36,6 +36,7 @@ class WP_Mailto_Links_Validate{
 		$this->page_name    			= WPMT()->settings->get_page_name();
 		$this->page_title   			= WPMT()->settings->get_page_title();
 		$this->final_outout_buffer_hook = WPMT()->settings->get_final_outout_buffer_hook();
+		$this->at_identifier            = WPMT()->settings->get_at_identifier();
 	}
 
 	/**
@@ -83,6 +84,10 @@ class WP_Mailto_Links_Validate{
         $filtered_body = $this->filter_content( $filtered_body, $protect_using );
 
         $filtered_content = $filtered_head . $htmlSplit[1] . $filtered_body;
+
+        //Revalidate filtered emails that should not bbe encoded
+        $filtered_content = $this->temp_encode_at_symbol( $filtered_content, true );
+
         return $filtered_content;
     }
 
@@ -156,6 +161,9 @@ class WP_Mailto_Links_Validate{
 
                 break;
         }
+
+        //Revalidate filtered emails that should not bbe encoded
+        $filtered = $this->temp_encode_at_symbol( $filtered, true );
 
         return $filtered;
     }
@@ -298,7 +306,7 @@ class WP_Mailto_Links_Validate{
         foreach( $soft_attributes as $ident => $regex ){
 
             $array = array();
-            preg_match( $regex, $content, $array ) ;
+            preg_match_all( $regex, $content, $array ) ;
 
             foreach( $array as $single ){
                 $content = str_replace( $single, $this->filter_plain_emails( $single, null, $protection_method, false ), $content );
@@ -318,15 +326,24 @@ class WP_Mailto_Links_Validate{
      */
     public function filter_soft_dom_attributes( $content, $protection_method ){
 
+        $no_script_tags = (bool) WPMT()->settings->get_setting( 'no_script_tags', true, 'filter_body' );
+
         if( class_exists( 'DOMDocument' ) ){
             $dom = new DOMDocument();
             @$dom->loadHTML($content);
     
             //Soft-encode scripts
             $script = $dom->getElementsByTagName('script');
-            foreach($script as $item){
-                $content = str_replace( $item->nodeValue, $this->filter_plain_emails( $item->nodeValue, null, $protection_method, false ), $content );
+            if( ! $no_script_tags ){
+                foreach($script as $item){
+                    $content = str_replace( $item->nodeValue, $this->filter_plain_emails( $item->nodeValue, null, $protection_method, false ), $content );
+                }
+            } else {
+                foreach($script as $item){
+                    $content = str_replace( $item->nodeValue, $this->temp_encode_at_symbol( $item->nodeValue ), $content );
+                }
             }
+            
         }
         
         return $content;
@@ -339,6 +356,14 @@ class WP_Mailto_Links_Validate{
 	 * ###
 	 * ######################
 	 */
+
+     public function temp_encode_at_symbol( $content, $decode = false ){
+         if( $decode ){
+            return str_replace( $this->at_identifier, '@', $content );
+         }
+
+        return str_replace( '@', $this->at_identifier, $content );
+     }
 
       /**
      * ASCII method
@@ -404,6 +429,9 @@ class WP_Mailto_Links_Validate{
         $element_id = 'wpmt-' . mt_rand( 0, 1000000 ) . '-' . mt_rand( 0, 1000000 );
         $string = '\'' . $value . '\'';
 
+        //Validate escape sequences
+        $string = preg_replace('/\s+/S', " ", $string);
+
         // break string into array of characters, we can't use string_split because its php5 only
         $split = preg_split( '||', $string );
         $out = '<span id="'. $element_id . '"></span>'
@@ -411,7 +439,7 @@ class WP_Mailto_Links_Validate{
 
               foreach( $split as $c ) {
                 // preg split will return empty first and last characters, check for them and ignore
-                if( ! empty( $c ) ) {
+                if( ! empty( $c ) || $c === '0' ) {
                   $out .= '%' . dechex( ord( $c ) );
                 }
               }

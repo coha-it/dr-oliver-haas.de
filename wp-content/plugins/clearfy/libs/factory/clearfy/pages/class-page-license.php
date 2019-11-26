@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author        Alex Kovalev <alex.kovalevv@gmail.com>, Github: https://github.com/alexkovalevv
  * @since         2.0.7
  */
-class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase {
+class Wbcr_FactoryClearfy214_LicensePage extends Wbcr_FactoryClearfy214_PageBase {
 
 	/**
 	 * {@inheritdoc}
@@ -80,7 +80,7 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_421\Premium\Provider
+	 * @var \WBCR\Factory_422\Premium\Provider
 	 */
 	protected $premium;
 
@@ -98,7 +98,7 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 
 	/**
 	 * @since 2.0.7
-	 * @var \WBCR\Factory_421\Premium\Interfaces\License
+	 * @var \WBCR\Factory_422\Premium\Interfaces\License
 	 */
 	protected $premium_license;
 
@@ -107,9 +107,9 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 
 	/**
 	 * {@inheritdoc}
-	 * @param Wbcr_Factory421_Plugin $plugin
+	 * @param Wbcr_Factory422_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory421_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
 		$this->plugin = $plugin;
 
 		parent::__construct( $plugin );
@@ -134,8 +134,8 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
 
-		$this->styles->add( FACTORY_CLEARFY_213_URL . '/assets/css/license-manager.css' );
-		$this->scripts->add( FACTORY_CLEARFY_213_URL . '/assets/js/license-manager.js' );
+		$this->styles->add( FACTORY_CLEARFY_214_URL . '/assets/css/license-manager.css' );
+		$this->scripts->add( FACTORY_CLEARFY_214_URL . '/assets/js/license-manager.js' );
 	}
 
 	/**
@@ -144,7 +144,7 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 	 * @since 2.0.7
 	 */
 	public function ajax_handler() {
-		wbcr_factory_clearfy_213_check_license( $this->plugin );
+		wbcr_factory_clearfy_214_check_license( $this->plugin );
 	}
 
 	/**
@@ -153,7 +153,7 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 	public function showPageContent() {
 		?>
         <div id="wcl-license-wrapper"
-             data-loader="<?php echo FACTORY_CLEARFY_213_URL . '/assets/img/loader.gif'; ?>"
+             data-loader="<?php echo FACTORY_CLEARFY_214_URL . '/assets/img/loader.gif'; ?>"
              data-plugin-name="<?php echo esc_attr( $this->plugin_name ); ?>"
              data-nonce="<?php echo wp_create_nonce( "clearfy_activate_license_for_{$this->plugin_name}" ) ?>">
 			<?php $this->show_license_form(); ?>
@@ -250,16 +250,16 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 	public function show_license_form( $notice = false ) {
 		?>
         <div id="license-manager"
-             class="factory-bootstrap-422 onp-page-wrap <?= $this->get_license_type() ?>-license-manager-content">
+             class="factory-bootstrap-423 onp-page-wrap <?= $this->get_license_type() ?>-license-manager-content">
             <div>
-                <h3><?php printf( __( 'Activate %s', 'wbcr_factory_clearfy_213' ), $this->plan_name ) ?></h3>
+                <h3><?php printf( __( 'Activate %s', 'wbcr_factory_clearfy_214' ), $this->plan_name ) ?></h3>
 				<?php echo $this->get_plan_description() ?>
             </div>
             <br>
 			<?php if ( is_wp_error( $notice ) ) : ?>
                 <div class="license-message <?= $this->get_license_type() ?>-license-message">
                     <div class="alert <?php echo esc_attr( $notice->get_error_code() ); ?>">
-                        <h4 class="alert-heading"><?php _e( $notice->get_error_message(), 'wbcr_factory_clearfy_213' ) ?></h4>
+                        <h4 class="alert-heading"><?php _e( $notice->get_error_message(), 'wbcr_factory_clearfy_214' ) ?></h4>
                     </div>
                 </div>
 			<?php endif; ?>
@@ -269,20 +269,20 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
                         <a href="<?php echo $this->plugin->get_support()->get_pricing_url( true, 'license_page' ); ?>"
                            class="purchase-premium" target="_blank" rel="noopener">
                             <span class="btn btn-gold btn-inner-wrap">
-                            <?php printf( __( 'Upgrade to Premium for $%s', 'wbcr_factory_clearfy_213' ), $this->premium->get_price() ) ?>
+                            <?php _e( 'Upgrade to Premium', 'wbcr_factory_clearfy_214' ) ?>
                             </span>
                         </a>
-                        <p><?php printf( __( 'Your current license for %1$s:', 'wbcr_factory_clearfy_213' ), $this->plugin->getPluginTitle() ) ?></p>
+                        <p><?php printf( __( 'Your current license for %1$s:', 'wbcr_factory_clearfy_214' ), $this->plugin->getPluginTitle() ) ?></p>
 					<?php endif; ?>
                     <div class="license-details-block <?= $this->get_license_type() ?>-details-block">
 						<?php if ( $this->is_premium ): ?>
                             <a data-action="deactivate" href="#"
                                class="btn btn-default btn-small license-delete-button wcl-control-btn">
-								<?php _e( 'Delete Key', 'wbcr_factory_clearfy_213' ) ?>
+								<?php _e( 'Delete Key', 'wbcr_factory_clearfy_214' ) ?>
                             </a>
                             <a data-action="sync" href="#"
                                class="btn btn-default btn-small license-synchronization-button wcl-control-btn">
-								<?php _e( 'Synchronization', 'wbcr_factory_clearfy_213' ) ?>
+								<?php _e( 'Synchronization', 'wbcr_factory_clearfy_214' ) ?>
                             </a>
 						<?php endif; ?>
                         <h3>
@@ -300,17 +300,17 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
                             </div>
 						<?php endif; ?>
                         <div class="license-key-description">
-                            <p><?php _e( 'Public License is a GPLv2 compatible license allowing you to change and use this version of the plugin for free. Please keep in mind this license covers only free edition of the plugin. Premium versions are distributed with other type of a license.', 'wbcr_factory_clearfy_213' ) ?>
+                            <p><?php _e( 'Public License is a GPLv2 compatible license allowing you to change and use this version of the plugin for free. Please keep in mind this license covers only free edition of the plugin. Premium versions are distributed with other type of a license.', 'wbcr_factory_clearfy_214' ) ?>
                             </p>
 							<?php if ( $this->is_premium && $this->premium_has_subscription ): ?>
                                 <p class="activate-trial-hint">
-									<?php _e( 'You use a paid subscription for the plugin updates. In case you don’t want to receive paid updates, please, click <a data-action="unsubscribe" class="wcl-control-btn" href="#">cancel subscription</a>', 'wbcr_factory_clearfy_213' ) ?>
+									<?php _e( 'You use a paid subscription for the plugin updates. In case you don’t want to receive paid updates, please, click <a data-action="unsubscribe" class="wcl-control-btn" href="#">cancel subscription</a>', 'wbcr_factory_clearfy_214' ) ?>
                                 </p>
 							<?php endif; ?>
 
 							<?php if ( $this->get_license_type() == 'trial' ): ?>
                                 <p class="activate-error-hint">
-									<?php printf( __( 'Your license has expired, please extend the license to get updates and support.', 'wbcr_factory_clearfy_213' ), '' ) ?>
+									<?php printf( __( 'Your license has expired, please extend the license to get updates and support.', 'wbcr_factory_clearfy_214' ), '' ) ?>
                                 </p>
 							<?php endif; ?>
                         </div>
@@ -318,19 +318,19 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
                             <tr>
                                 <!--<td class="license-param license-param-domain">
 										<span class="license-value"><?php echo esc_attr( $_SERVER['SERVER_NAME'] ); ?></span>
-										<span class="license-value-name"><?php _e( 'domain', 'wbcr_factory_clearfy_213' ) ?></span>
+										<span class="license-value-name"><?php _e( 'domain', 'wbcr_factory_clearfy_214' ) ?></span>
 									</td>-->
                                 <td class="license-param license-param-days">
                                     <span class="license-value"><?= $this->get_plan() ?></span>
-                                    <span class="license-value-name"><?php _e( 'plan', 'wbcr_factory_clearfy_213' ) ?></span>
+                                    <span class="license-value-name"><?php _e( 'plan', 'wbcr_factory_clearfy_214' ) ?></span>
                                 </td>
 								<?php if ( $this->is_premium ) : ?>
                                     <td class="license-param license-param-sites">
                                         <span class="license-value">
                                             <?php echo esc_attr( $this->premium_license->get_count_active_sites() ); ?>
-                                            <?php _e( 'of', 'wbcr_factory_clearfy_213' ) ?>
+                                            <?php _e( 'of', 'wbcr_factory_clearfy_214' ) ?>
                                             <?php echo esc_attr( $this->premium_license->get_sites_quota() ); ?></span>
-                                        <span class="license-value-name"><?php _e( 'active sites', 'wbcr_factory_clearfy_213' ) ?></span>
+                                        <span class="license-value-name"><?php _e( 'active sites', 'wbcr_factory_clearfy_214' ) ?></span>
                                     </td>
 								<?php endif; ?>
                                 <td class="license-param license-param-version">
@@ -340,8 +340,8 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 								<?php if ( $this->is_premium ): ?>
                                     <td class="license-param license-param-days">
 										<?php if ( $this->get_license_type() == 'trial' ): ?>
-                                            <span class="license-value"><?php _e( 'EXPIRED!', 'wbcr_factory_clearfy_213' ) ?></span>
-                                            <span class="license-value-name"><?php _e( 'please update the key', 'wbcr_factory_clearfy_213' ) ?></span>
+                                            <span class="license-value"><?php _e( 'EXPIRED!', 'wbcr_factory_clearfy_214' ) ?></span>
+                                            <span class="license-value-name"><?php _e( 'please update the key', 'wbcr_factory_clearfy_214' ) ?></span>
 										<?php else: ?>
                                             <span class="license-value">
 													<?php
@@ -351,9 +351,9 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
 														echo $this->get_expiration_days();
 													}
 													?>
-                                                <small> <?php _e( 'day(s)', 'wbcr_factory_clearfy_213' ) ?></small>
+                                                <small> <?php _e( 'day(s)', 'wbcr_factory_clearfy_214' ) ?></small>
                                              </span>
-                                            <span class="license-value-name"><?php _e( 'remained', 'wbcr_factory_clearfy_213' ) ?></span>
+                                            <span class="license-value-name"><?php _e( 'remained', 'wbcr_factory_clearfy_214' ) ?></span>
 										<?php endif; ?>
                                     </td>
 								<?php endif; ?>
@@ -364,24 +364,24 @@ class Wbcr_FactoryClearfy213_LicensePage extends Wbcr_FactoryClearfy213_PageBase
                 <div class="license-input">
                     <form action="" method="post">
 						<?php if ( $this->is_premium ): ?>
-                    <p><?php _e( 'Have a key to activate the premium version? Paste it here:', 'wbcr_factory_clearfy_213' ) ?><p>
+                    <p><?php _e( 'Have a key to activate the premium version? Paste it here:', 'wbcr_factory_clearfy_214' ) ?><p>
 					<?php else: ?>
-                        <p><?php _e( 'Have a key to activate the plugin? Paste it here:', 'wbcr_factory_clearfy_213' ) ?>
+                        <p><?php _e( 'Have a key to activate the plugin? Paste it here:', 'wbcr_factory_clearfy_214' ) ?>
                         <p>
 							<?php endif; ?>
                             <button data-action="activate" class="btn btn-default wcl-control-btn" type="button" id="license-submit">
-								<?php _e( 'Submit Key', 'wbcr_factory_clearfy_213' ) ?>
+								<?php _e( 'Submit Key', 'wbcr_factory_clearfy_214' ) ?>
                             </button>
                         <div class="license-key-wrap">
                             <input type="text" id="license-key" name="licensekey" value="" class="form-control"/>
                         </div>
 						<?php if ( $this->is_premium ): ?>
                             <p style="margin-top: 10px;">
-								<?php printf( __( '<a href="%s" target="_blank" rel="noopener">Lean more</a> about the premium version and get the license key to activate it now!', 'wbcr_factory_clearfy_213' ), $this->plugin->get_support()->get_pricing_url( true, 'license_page' ) ); ?>
+								<?php printf( __( '<a href="%s" target="_blank" rel="noopener">Lean more</a> about the premium version and get the license key to activate it now!', 'wbcr_factory_clearfy_214' ), $this->plugin->get_support()->get_pricing_url( true, 'license_page' ) ); ?>
                             </p>
 						<?php else: ?>
                             <p style="margin-top: 10px;">
-								<?php printf( __( 'Can’t find your key? Go to <a href="%s" target="_blank" rel="noopener">this page</a> and login using the e-mail address associated with your purchase.', 'wbcr_factory_clearfy_213' ), $this->plugin->get_support()->get_contacts_url( true, 'license_page' ) ) ?>
+								<?php printf( __( 'Can’t find your key? Go to <a href="%s" target="_blank" rel="noopener">this page</a> and login using the e-mail address associated with your purchase.', 'wbcr_factory_clearfy_214' ), $this->plugin->get_support()->get_contacts_url( true, 'license_page' ) ) ?>
                             </p>
 						<?php endif; ?>
                     </form>

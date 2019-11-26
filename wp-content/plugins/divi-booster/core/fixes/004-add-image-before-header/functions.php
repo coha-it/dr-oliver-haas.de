@@ -47,11 +47,10 @@ function db004_user_css($plugin) { ?>
 @media only screen and ( max-width:980px ) {
 	#wtfdivi004-page-start-img { display:none !important; }
 }
-<?php if (!is_divi24()) { ?>
-.et_boxed_layout #wtfdivi004-page-start-img { 
+
+body:not(.dbdb_divi_2_4_up) .et_boxed_layout #wtfdivi004-page-start-img { 
 	width: 100% !important; 
 }
-<?php } ?>
 
 /* Divi 3.0 visual editor compatibility */
 .et-fb #page-container { overflow: visible; }

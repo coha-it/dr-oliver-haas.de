@@ -2,6 +2,11 @@
 
 // Hook - user jquery
 function db_user_jquery() { ?>
+
+	<?php 
+	do_action('db_user_js'); 
+	?>
+	
 	jQuery(function($){
 		<?php do_action('db_user_jquery'); ?>
 	});

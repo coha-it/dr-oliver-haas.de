@@ -3,8 +3,8 @@ Contributors: danmossop
 Donate link: 
 Tags: divi theme, elegant themes
 Requires at least: 3.0
-Tested up to: 5.1.1
-Stable tag: 2.8.8
+Tested up to: 5.3
+Stable tag: 3.1.2
 
 Enhancements to the Divi Theme by Elegant Themes, including bug fixes and extra configuration options.
 
@@ -52,7 +52,94 @@ To follow...
 
 == Changelog ==
 
-= 2.8.8 =
+= 3.1.2 =
+* Changed update URL
+
+= 3.1.1 =
+* Fixed main menu separators not inheriting color of menu items
+* Updated second slider button to take advantage of Divi's CSS caching
+* Fixed site title and tagline not properly activating
+
+= 3.1.0 =
+* Open images in lightbox now works on Divi 4.0 templates
+
+= 3.0.9 =
+* Fixed social media follow networks feature not loading
+
+= 3.0.8 =
+* Improvements to Post Title module show tags feature
+
+= 3.0.7 =
+* Fixed unnecessary loading of socicon library
+* Added option to display post tags in Post Title module meta
+
+= 3.0.6 =
+* Added approx 300 new social networks to the social media follow module
+
+= 3.0.5 =
+* Fixed js error in anchor link feature when Google targetText hash present in URL
+* Fixed gallery module options not being applied when image border set
+
+= 3.0.4 =
+* Added new social icons to header / footer social icons feature
+* Fixed double slash in module options load path
+
+= 3.0.3 =
+* Updated fix for header menu width / magnifying glass issue to work with latest Divi
+
+= 3.0.2 =
+* Fixed function redeclaration error in slider background when WPML active
+
+= 3.0.1 =
+* Fixed title and tagline CSS not applied when WPML active
+
+= 3.0.0 =
+* Added WPML translation support for top header text and footer html
+
+= 2.9.9 =
+* Fixed remove box layout shadow setting not applied to image above header
+* Fixed mobile content width setting applied twice on posts
+* Fixed slide height CSS being applied to gallery slider layout
+* Improved transition effect when opening linked images in lightbox
+
+= 2.9.8 =
+* Added option to set portfolio project id order by id
+
+= 2.9.7 =
+* Improved site title / tagline feature's fixed header tagline fade out
+* Fixed menu links not filling space left by centered inline logo on delayed header scroll
+* Added filters for site title / tagline header tags
+
+= 2.9.6 =
+* Added layout options to site title / tagline feature
+
+= 2.9.5 =
+* Added check for main plugin class to handle missing class file
+* Added SVG support notice to custom icon feature
+* Moved accordion module options to Accordion Settings > Design > Toggle
+* Code improvements to site title / tagline feature
+* Fixed SVG icons not showing in blurb module
+
+= 2.9.4 =
+* Improvements to gallery image size settings
+
+= 2.9.3 =
+* Fixed slides not showing when background url enabled in latest Divi
+
+= 2.9.2 =
+* Fixed slides not showing when second button enabled in latest Divi
+
+= 2.9.1 =
+* Fixed custom button icons not positioned correctly on IE when using SVGs
+* Fixed custom icons displaying incorrectly in backend builder icon listings
+* Fixed option to disable youtube related videos not working with some video URLs
+* Fixed custom icons displaying incorrectly in some modules in visual builder
+
+= 2.9 =
+* Added option to set mobile menu button color
+* Top header text feature now triggers display of the top header if not otherwise shown
+* Fixed null error in custom icons feature
+* Fixed "indexOf is not a function" javascript error 
 * Minor improvements to settings page CSS
 * Fixed "Vertically center the header links" setting affecting the centered header menu
 * Updated top header text feature to process shortcodes
@@ -62,85 +149,53 @@ To follow...
 * Fixed second slider button mis-aligned on mobile
 * Fixed "Enable Divi Builder by default" preventing backend visual builder from loading
 * Added "Email Optin Settings > Design > Layout > Inline Form" option to replace previous signup inline form feature
-
-= 2.8.7 =
 * Updated "Open linked images in a lightbox" setting to work on pages and moved to "Site-wide Settings > Links"
 * Fixed error in plugin action links when Jetpack running
-
-= 2.8.6 =
 * Fixed Divi portability content displaying at end of some admin pages
 * Fixed "Open linked images in a lightbox" feature affecting gallery module
 * Fixed icon not showing on additional slide buttons
 * Fixed JSMin library 'mbstring.func_overload' deprecated warning in PHP 7.2 compatibility checkers
 * Fixed whitelisted field deprecation notices in debug log
 * Updated custom footer option so that it isn't hidden by Divi Den Pro
-
-= 2.8.5 =
 * Updated custom footer HTML option for better SEO and browser support
-
-= 2.8.4 =
 * Fixed person module email icon not showing when Email Address Encoder plugin used 
 * Fixed "Hide header links and search" option hiding logo on centered inline header
 * Added option randomize projects in portfolio modules 
 * Added option to set accordion initial state (default / all open / all closed) on a per-module basis
 * Added option to set accordion closeable on a per-module basis
 * Fixed CSS Manager not displaying non-logged in user CSS
-
-= 2.8.3 =
 * Added option to limit YouTube related videos to same channel in video module
 * Fixed social icons displaying incorrectly prior to first settings save
 * Updated menu separators to better handle mega menus and menu item spacing adjustments
 * Now tries to purge WP caches on settings save to ensure changes show up immediately
 * Updated customizer social media icons - now has 250+ icons and only loads icon css when actually needed
-
-= 2.8.2 =
 * Added fallback text to person module links for screen readers
 * Open social media icon links in new tab now works in Extra
 * Fixed menu separators not positioned correctly on default header format
-
-= 2.8.1 =
 * Fixed issue with undefined et_get_option function in menu separator feature.
 
-= 2.8.0 =
+= 2.8 =
 * Fixed "Visual Builder > Move publish buttons to left" option not working in latest Divi versions
 * Main menu separators now inherit the color of the menu items
 * Fixed customizer option not working until booster settings first saved
 * Fixed module options interfering with global sections in the visual builder
-
-= 2.7.9 =
 * Fixed slider second button URL field not shown in latest Divi
-
-= 2.7.8 =
 * Added class to Divi Booster added custom icons for easier identification by other plugins
 * Fixed custom icons not showing when Divi Icon King active
 * Added filter link to icon picker when Divi Icon King active
-
-= 2.7.7 =
 * Improved handling of URLs in second slider button
 * Added option to stop map module excerpts from unnecessarily loading maps scripts
-
-= 2.7.6 =
 * Removed a commented link to a third-party site that was triggering an error in Wordfence
-
-= 2.7.5 =
 * Fixed second slide button not showing when additional CSS classes applied
-
-= 2.7.4 =
 * Fixed missing argument error when page layout option enabled in Divi 3.10
-
-= 2.7.3 =
 * Fixed submit buttons hidden on full-screen Divi Builder windows
 * Fixed extra icons on custom hover icon when used with image module
 * Added option to set a target URL for the header image
-
-= 2.7.2 =
 * Updated full screen divi builder feature to work with new layouts section
 * Fixed slider height option not showing in some older versions of Divi
 * Improvements to header on settings page
 * Fixed second slide button no showing in latest Divi
 * Fixed slide background link not working in latest Divi
-
-= 2.7.1 =
 * Added additional error checking to htaccess editing code
 
 = 2.7 =

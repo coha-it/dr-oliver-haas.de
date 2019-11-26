@@ -169,6 +169,7 @@ class Divi_Accessibility_Admin {
 			'screen_reader_text'           => 1,
 			'skip_navigation_link'         => 1,
 			'aria_hidden_icons'            => 1,
+			'aria_mobile_menu'            => 1,
 			'fix_duplicate_menu_ids'       => 1,
 			'tota11y'                      => 0,
 			'developer_mode'               => 0,
@@ -337,6 +338,20 @@ class Divi_Accessibility_Admin {
 			)
 		);
 
+		// Aria support for mobile menu.
+		add_settings_field(
+			$this->da11y . '_aria_mobile_menu',
+			'Aria support for mobile menu',
+			array( $this, 'divi_accessibility_checkbox_cb' ),
+			$this->da11y,
+			$general_section,
+			array(
+				'name'          => 'aria_mobile_menu',
+				'label_for'     => $this->da11y . '_aria_mobile_menu',
+				'label_text'    => 'Apply Aria attributes to the mobile (burger) menu to make it accessible.',
+			)
+		);
+
 		// Fix duplicate menu ids.
 		add_settings_field(
 			$this->da11y . '_fix_duplicate_menu_ids',
@@ -469,6 +484,9 @@ class Divi_Accessibility_Admin {
 
 		if ( isset( $this->settings[ $name ] ) ) {
 			$checked = $this->settings[ $name ];
+		}
+		else {
+			$checked = 0;
 		}
 
 		?>

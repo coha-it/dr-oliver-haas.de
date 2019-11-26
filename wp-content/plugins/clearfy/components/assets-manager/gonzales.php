@@ -4,11 +4,11 @@
  * Plugin URI: https://wordpress.org/plugins/gonzales/
  * Description: Increase the speed of the pages by disabling unused scripts (.JS) and styles (.CSS). Make your website REACTIVE!
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 2.0.1
+ * Version: 2.0.3
  * Text Domain: gonzales
  * Domain Path: /languages/
  * Author URI: https://webcraftic.com
- * Framework Version: FACTORY_421_VERSION
+ * Framework Version: FACTORY_422_VERSION
  */
 
 // Exit if accessed directly
@@ -47,7 +47,7 @@ $wgnz_plugin_info = array(
 
 	// PLUGIN SUPPORT
 	'support_details'      => array(
-		'url'       => 'https://webcraftic.com',
+		'url'       => 'https://clearfy.pro',
 		'pages_map' => array(
 			'support'  => 'support',           // {site}/support
 			'docs'     => 'docs'               // {site}/docs
@@ -64,15 +64,15 @@ $wgnz_plugin_info = array(
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_422', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_419', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_421', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_213', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_103', 'admin')
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_423', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_420', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_422', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_214', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_104', 'admin')
 	)
 );
 
-$wgnz_compatibility = new Wbcr_Factory421_Requirements( __FILE__, array_merge( $wgnz_plugin_info, array(
+$wgnz_compatibility = new Wbcr_Factory422_Requirements( __FILE__, array_merge( $wgnz_plugin_info, array(
 	'plugin_already_activate'          => defined( 'WGZ_PLUGIN_ACTIVE' ),
 	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',

@@ -6,9 +6,9 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 	public $vb_support = 'on';
 
 	protected $module_credits = array(
-		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
-		'author_uri' => 'https://suprememodules.com/',
+		'module_uri' => 'https://divisupreme.com/',
+		'author'     => 'Divi Supreme',
+		'author_uri' => 'https://divisupreme.com/',
 	);
 
 	public function init() {

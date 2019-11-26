@@ -1,11 +1,11 @@
-=== Divi Supreme Modules ===
+=== Supreme Modules for Divi ===
 Contributors: divisupreme, kenng87
 Tags: Divi, Divi Module, Divi Page Builder, divi theme, divi builder, Divi Extensions
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.2.3
+Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.7.6.6
+Stable tag: 1.8
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,8 +97,36 @@ Yes! Divi Supreme is absolutely free. There is no hidden charge. However if you 
 **What if I update to Pro version?**
 Your existing modules/content will work with pro version. So you won't lose any content/work.
 
+**What's the differences between Divi Supreme Free and Divi Supreme Pro version?**
+This is a common question that we get asked here every now and then which is why we decided to create this detailed post to outline the key differences between Divi Supreme Free and Divi Supreme Pro. [Read here](https://divisupreme.com/blog/divi-supreme-free-vs-divi-supreme-pro-what-are-the-differences/).
+
 
 == Changelog ==
+= 1.8 – 25.11.2019 =
+* Hotfix: Flipbox Module on Firefox Mac OS.
+
+= 1.7.82 – 20.11.2019 =
+* Removed & Fixed: Enhance the row for Caldera Forms Module which causes extra padding when using conditional fields.
+
+= 1.7.81 – 20.11.2019 =
+* Fixed: Flipbox Height issue from recent update.
+
+= 1.7.8 – 20.11.2019 =
+* Removed: Text Alignment on Flipbox Parent Module.
+* Fixed: Flipbox Flicking Animation.
+* Fixed: Flipbox Responsive Height on Visual Builder.
+
+= 1.7.71 – 30.10.2019 =
+* Removed: Local development coding in public version.
+* Enhanced: Sanitize, escape, and validate POST calls.
+* Renamed: Plugin/Readme Name.
+
+= 1.7.7 – 18.10.2019 =
+* Fixed: Flipbox Module stacking on top of each other on Divi 4 in Visual Builder.
+* Enhanced: Flipbox Module icon and image rendering in Visual Builder.
+* Added: Image Option to Icon List Module.
+* Fixed: Icon List Module Hover Icon not showing in Visual Builder.
+
 = 1.7.6.6 – 12.10.2019 =
 * Fixed: Typing Module Main Text Alignment.
 * Enhanced: Caldera Forms Module padding rendering on both Visual Builder and frontend.

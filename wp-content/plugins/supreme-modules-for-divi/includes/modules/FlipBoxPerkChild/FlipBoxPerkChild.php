@@ -10,9 +10,9 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 	public $child_title_fallback_var = 'subtitle';
 
 	protected $module_credits = array(
-		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
-		'author_uri' => 'https://suprememodules.com/',
+		'module_uri' => 'https://divisupreme.com/',
+		'author'     => 'Divi Supreme',
+		'author_uri' => 'https://divisupreme.com/',
 	);
 
 	public function init() {

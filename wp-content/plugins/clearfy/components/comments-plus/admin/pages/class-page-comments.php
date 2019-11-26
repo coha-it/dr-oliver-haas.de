@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WbcrCmp_CommentsPage extends Wbcr_FactoryClearfy213_PageBase {
+class WbcrCmp_CommentsPage extends Wbcr_FactoryClearfy214_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -52,9 +52,9 @@ class WbcrCmp_CommentsPage extends Wbcr_FactoryClearfy213_PageBase {
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
-	 * @param \Wbcr_Factory421_Plugin $plugin
+	 * @param \Wbcr_Factory422_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory421_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
 		$this->menu_title                  = __( 'Disable comments', 'comments-plus' );
 		$this->page_menu_short_description = __( 'Manage site comments', 'comments-plus' );
 

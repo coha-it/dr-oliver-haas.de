@@ -45,6 +45,7 @@ class WP_Mailto_Links_Settings{
 		$this->settings_key        		= 'wp-mailto-links';
 		$this->version_key        		= 'wp-mailto-links-version';
 		$this->image_secret_key     	= 'wp-mailto-links-img-key';
+		$this->at_identifier     		= '##wpmtAddIdent##';
 		$this->previous_version        	= null;
 		$this->hook_priorities        	= array(
 			'buffer_final_output' => 1000,
@@ -64,8 +65,10 @@ class WP_Mailto_Links_Settings{
 		//Regex
 		$this->email_regex 			= '([_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,}))';
 		$this->soft_attribute_regex = array(
-			'woocommerce_variation_attribute_tag' => '/data-product_variations="([^"]*)"/i',
-			'jetpack_carousel_image_attribute_tag' => '/data-image-meta="([^"]*)"/i',
+			'woocommerce_variation_attribute_tag' 				=> '/data-product_variations="([^"]*)"/i',
+			'jetpack_carousel_image_attribute_tag' 				=> '/data-image-meta="([^"]*)"/i',
+			'jetpack_carousel_image_attribute_description_tag' 	=> '/data-image-description="([^"]*)"/i',
+			'html_placeholder_tag' 								=> '/placeholder="([^"]*)"/i',
 		);
 
 		//Load data
@@ -187,6 +190,11 @@ class WP_Mailto_Links_Settings{
 						'advanced' 	  => true,
 						'label' => WPMT()->helpers->translate( 'mailto links without CSS direction', 'wpmt-settings-filter_hook-label' ),
 						'description' => WPMT()->helpers->translate( 'Check this option if your site does not support CSS directions.', 'wpmt-settings-filter_hook-tip' )
+					),
+					'no_script_tags' => array(
+						'advanced' 	  => true,
+						'label' => WPMT()->helpers->translate( 'no script tags', 'wpmt-settings-filter_hook-label' ),
+						'description' => WPMT()->helpers->translate( 'Check this option if you face issues with encoded script tags. This will deactivate protection for script tags.', 'wpmt-settings-filter_hook-tip' )
 					),
 				 ),
 				'required'    => false,
@@ -614,6 +622,15 @@ class WP_Mailto_Links_Settings{
 	 */
 	public function get_final_outout_buffer_hook(){
 		return apply_filters( 'wpmt/settings/final_outout_buffer_hook', $this->final_outout_buffer_hook );
+	}
+
+	/**
+	 * Return the @ symbol identifier
+	 *
+	 * @return string - the @ symbol identifier
+	 */
+	public function get_at_identifier(){
+		return apply_filters( 'wpmt/settings/at_identifier', $this->at_identifier );
 	}
 
 	/**

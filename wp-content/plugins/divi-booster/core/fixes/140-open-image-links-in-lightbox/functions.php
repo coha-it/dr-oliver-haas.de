@@ -1,29 +1,30 @@
 <?php
 if (!defined('ABSPATH')) { exit(); } // No direct access
 
-function db140_user_js($plugin) { 
-	?>
-	jQuery(function($) {
+// Add to wp_footer as doesn't work when set in wp_footer.js hook for some reason
+add_action('wp_footer', 'db140_configure_image_links_to_open_in_lightbox'); 
 
-		// Get all links and turn into a magnific popup instance
-		$('.entry-content a').filter(function(){
-		
-			// Get links to images
-			if(/\.(?:jpg|jpeg|gif|png|bmp)$/i.test($(this).attr('href'))){
-				return true;
+function db140_configure_image_links_to_open_in_lightbox($plugin) { 
+	?>
+	<script>
+	jQuery(function($) {
+			var $links = $('.entry-content a, .et_pb_post_content a').filter(db_is_image_link).not(db_is_gallery_image_link);
+			$links.filter(db_has_child_img).addClass('et_pb_lightbox_image'); 
+			$links.not(db_has_child_img).magnificPopup({type:'image'});
+			
+			function db_has_child_img() {
+				return ($(this).children('img').length);
 			}
-			return false;
 			
-		}).filter(function(){
-			
-			// Avoid affecting linked images in gallery module
-			if ($(this).parent().hasClass("et_pb_gallery_image")) {
-				return false;
+			function db_is_image_link() {
+				return (/\.(?:jpg|jpeg|gif|png|bmp)$/i.test($(this).attr('href')));
 			}
-			return true;
 			
-		}).magnificPopup({type:'image'});
-	});
+			function db_is_gallery_image_link() {
+				return ($(this).parent().hasClass("et_pb_gallery_image")); 
+			}
+		}
+	);
+	</script>
 	<?php 
 }
-add_action('wp_footer.js', 'db140_user_js');

@@ -14,22 +14,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( defined( 'FACTORY_CLEARFY_213_LOADED' ) ) {
+if ( defined( 'FACTORY_CLEARFY_214_LOADED' ) ) {
 	return;
 }
 
-define( 'FACTORY_CLEARFY_213_LOADED', true );
+define( 'FACTORY_CLEARFY_214_LOADED', true );
 
-define( 'FACTORY_CLEARFY_213', '2.1.3' );
+define( 'FACTORY_CLEARFY_214', '2.1.4' );
 
-define( 'FACTORY_CLEARFY_213_DIR', dirname( __FILE__ ) );
-define( 'FACTORY_CLEARFY_213_URL', plugins_url( null, __FILE__ ) );
+define( 'FACTORY_CLEARFY_214_DIR', dirname( __FILE__ ) );
+define( 'FACTORY_CLEARFY_214_URL', plugins_url( null, __FILE__ ) );
 
-load_plugin_textdomain( 'wbcr_factory_clearfy_213', false, dirname( plugin_basename( __FILE__ ) ) . '/langs' );
+load_plugin_textdomain( 'wbcr_factory_clearfy_214', false, dirname( plugin_basename( __FILE__ ) ) . '/langs' );
 
-require( FACTORY_CLEARFY_213_DIR . '/includes/ajax-handlers.php' );
-require( FACTORY_CLEARFY_213_DIR . '/includes/class-helpers.php' );
-require( FACTORY_CLEARFY_213_DIR . '/includes/class-configurate.php' );
+require( FACTORY_CLEARFY_214_DIR . '/includes/ajax-handlers.php' );
+require( FACTORY_CLEARFY_214_DIR . '/includes/class-helpers.php' );
+require( FACTORY_CLEARFY_214_DIR . '/includes/class-configurate.php' );
 
 // module provides function only for the admin area
 if ( is_admin() ) {
@@ -38,12 +38,12 @@ if ( is_admin() ) {
 	 * на все страницы админпанели.
 	 */
 	add_action( 'admin_enqueue_scripts', function () {
-		wp_enqueue_script( 'wbcr-factory-clearfy-213-global', FACTORY_CLEARFY_213_URL . '/assets/js/globals.js', [ 'jquery' ], FACTORY_CLEARFY_213 );
+		wp_enqueue_script( 'wbcr-factory-clearfy-214-global', FACTORY_CLEARFY_214_URL . '/assets/js/globals.js', [ 'jquery' ], FACTORY_CLEARFY_214 );
 	} );
 
-	if ( defined( 'FACTORY_PAGES_421_LOADED' ) ) {
-		require( FACTORY_CLEARFY_213_DIR . '/pages/class-pages.php' );
-		require( FACTORY_CLEARFY_213_DIR . '/pages/class-page-more-features.php' );
-		require( FACTORY_CLEARFY_213_DIR . '/pages/class-page-license.php' );
+	if ( defined( 'FACTORY_PAGES_422_LOADED' ) ) {
+		require( FACTORY_CLEARFY_214_DIR . '/pages/class-pages.php' );
+		require( FACTORY_CLEARFY_214_DIR . '/pages/class-page-more-features.php' );
+		require( FACTORY_CLEARFY_214_DIR . '/pages/class-page-license.php' );
 	}
 }

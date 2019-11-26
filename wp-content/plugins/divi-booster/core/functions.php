@@ -1,12 +1,5 @@
 <?php // functions.php
 
-function db_divi_version($version, $comparison) {
-	if (defined('ET_CORE_VERSION') && version_compare(ET_CORE_VERSION, $version, $comparison)) {
-		return true;
-	}
-	return false;
-}
-
 // === Builder detection === //
 
 // Try to detect if in context of a divi builder
@@ -32,22 +25,26 @@ function db_is_divi_builder($builder_type='any') {
 	return false; // Unable to determine builder use
 }
 
-// === Get Divi Booster setting === //
-function divibooster_get_setting($feature, $setting, $default=false) {
-	
-	$option = get_option(BOOSTER_SLUG_OLD, $default);
-	
-	$val = $default;
-	
-	// Retrieve the setting if it exists
-	if (isset($option['fixes'][$feature][$setting])) { 
-		$val = $option['fixes'][$feature][$setting];
+// Get Divi Booster setting 
+if (!function_exists('dbdb_option')) {
+	function dbdb_option($feature, $setting, $default=false) {
+		$option = get_option(BOOSTER_SLUG_OLD, $default);
+		
+		$val = $default;
+		
+		// Retrieve the setting if it exists
+		if (isset($option['fixes'][$feature][$setting])) { 
+			$val = $option['fixes'][$feature][$setting];
+		}
+		
+		$val = apply_filters("divibooster_setting_{$feature}_{$setting}", $val);
+		return $val;
 	}
-	
-	// Filter the setting
-	$val = apply_filters("divibooster_setting_{$feature}_{$setting}", $val);
-	
-	// Return the setting
-	return $val;
 }
 
+if (!function_exists('dbdb_enabled')) {
+	function dbdb_enabled($feature_slug) {
+		$enabled = dbdb_option($feature_slug, 'enabled', false);
+		return apply_filters('dbdb_enabled', $enabled, $feature_slug);
+	}
+}

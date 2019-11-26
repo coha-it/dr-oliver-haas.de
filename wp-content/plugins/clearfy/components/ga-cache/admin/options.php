@@ -117,7 +117,7 @@ function wbcr_ga_get_plugin_options() {
 
 /**
  * @param $form
- * @param $page Wbcr_FactoryPages421_ImpressiveThemplate
+ * @param $page Wbcr_FactoryPages422_ImpressiveThemplate
  *
  * @return mixed
  */

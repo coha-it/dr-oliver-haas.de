@@ -12,37 +12,37 @@ $margin = @floor((1080-$option['imagewidth']*$option['imagescount'])/($option['i
 .et_pb_gallery_grid .et_pb_gallery_image,
 .et_pb_gallery_grid .et_pb_gallery_image.portrait img
 {
-    width: <?php echo htmlentities(@$option['imagewidth']); ?>px !important;
+    width: <?php esc_html_e(@$option['imagewidth']); ?>px !important;
 }
 .et_pb_gallery_grid .et_pb_gallery_image img
 {
-    min-width: <?php echo htmlentities(@$option['imagewidth']); ?>px;
+	/*
+    min-width: <?php esc_html_e(@$option['imagewidth']); ?>px;
+	*/
 }
 
 /* Set the image heights */
 .et_pb_gallery_grid .et_pb_gallery_image,
 .et_pb_gallery_grid .et_pb_gallery_image.landscape img
 {
-    height: <?php echo htmlentities(@$option['imageheight']); ?>px !important;
+    height: <?php esc_html_e(@$option['imageheight']); ?>px !important;
 }
 .et_pb_gallery_grid .et_pb_gallery_image img
 {
-    min-height: <?php echo htmlentities(@$option['imageheight']); ?>px;
+    min-height: <?php esc_html_e(@$option['imageheight']); ?>px;
 }
 
 /* Set the spacing between images */
 .et_pb_gallery_grid .gutter_width { width: <?php echo intval($margin); ?>px !important; }
 .et_pb_gallery_grid .et_pb_gallery_item { margin-bottom:<?php echo intval($margin); ?>px !important; }
 
-<?php if (is_divi24()) { ?>
-.et_pb_gallery_grid .et_pb_gallery_item { clear:none !important; }
-.et_pb_gallery_grid .et_pb_gallery_item:nth-child(<?php echo htmlentities(intval(@$option['imagescount'])); ?>n) { margin-right:0 !important; }
-.et_pb_gallery_grid .et_pb_gallery_item:nth-child(<?php echo htmlentities(intval(@$option['imagescount'])); ?>n+1) { clear:both !important; }
-.et_pb_gallery_grid .et_pb_gallery_item { margin-right:<?php echo intval($margin)-1; ?>px !important; }
-.et_pb_gallery_grid .et_pb_gallery_image img { min-height: 0 !important; }
-.et_pb_gallery_grid .et_pb_gallery_image,
-.et_pb_gallery_grid .et_pb_gallery_image.landscape img
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_item { clear:none !important; }
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_item:nth-child(<?php esc_html_e(intval(@$option['imagescount'])); ?>n) { margin-right:0 !important; }
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_item:nth-child(<?php esc_html_e(intval(@$option['imagescount'])); ?>n+1) { clear:both !important; }
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_item { margin-right:<?php echo intval($margin)-1; ?>px !important; }
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_image img { min-height: 0 !important; }
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_image,
+body.dbdb_divi_2_4_up .et_pb_gallery_grid .et_pb_gallery_image.landscape img
 {
     height: auto !important;
 }
-<?php } ?>

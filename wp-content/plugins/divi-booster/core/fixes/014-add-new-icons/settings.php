@@ -1,6 +1,8 @@
 <?php 
 if (!defined('ABSPATH')) { exit(); } // No direct access
 
+include_once(dirname(__FILE__).'/settings-svg-support-notice.php');
+
 function db014_add_setting($plugin) {  
 	$plugin->setting_start(); 
 	$plugin->techlink('https://divibooster.com/adding-custom-icons-to-divi/'); 
@@ -19,7 +21,8 @@ for($i=0; $i<=$option['urlmax']; $i++) {
 $option["urlmax"]+=(empty($option["url".$option["urlmax"]])?0:1);
 $plugin->imagepicker(__FILE__, "url".$option['urlmax']); 
 ?> 
-<input type="hidden" name="<?php echo $name; ?>[urlmax]" value="<?php echo $option["urlmax"]; ?>"/>  
+<input type="hidden" name="<?php echo $name; ?>[urlmax]" value="<?php echo $option["urlmax"]; ?>"/>
+<?php do_action('db014_setting_after'); ?>  
 </div>
 <?php
 	$plugin->setting_end(); 

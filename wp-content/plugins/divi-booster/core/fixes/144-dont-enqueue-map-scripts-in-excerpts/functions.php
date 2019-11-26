@@ -33,7 +33,7 @@ function db144_map_modules_in_excerpts($query) {
 	if (!$query->is_main_query()) { return false; }
 	
 	// Don't affect Divi > Theme Options > General > Blog Style Mode, which shows full post content in loop
-	if (!function_exists('et_get_option') || et_get_option('divi_blog_style', 'false') === 'on') { return false; }
+	if (dbdb_et_get_option('divi_blog_style', 'false') === 'on') { return false; }
 	
 	return true;
 }

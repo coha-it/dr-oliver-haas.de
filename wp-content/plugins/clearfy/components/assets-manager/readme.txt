@@ -2,8 +2,8 @@
 Tags: dequeue script, dequeue style, pagespeed, speed, unload style, gonzales, assets clean, assets, assets cleanup, page speed optimizer, perfmatters, disable script, disable style, disable jquery, disable jquery-migrate, disable fonts
 Contributors: webcraftic, creativemotion, alexkovalevv
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VDX7JNTQPNPFW
-Requires at least: 4.7
-Tested up to: 5.2
+Requires at least: 4.8
+Tested up to: 5.3
 Requires PHP: 5.4
 Stable tag: trunk
 License: GPLv2
@@ -59,6 +59,12 @@ We invite you to check out a few other related free plugins that our team has al
 2. Assets manager
 
 == Changelog ==
+= 2.0.3 (13.11.2019) =
+* Fixed: Minor bugs. Comment head of mu plugin determined as main.
+
+= 2.0.2 (13.11.2019) =
+* Fixed: Minor bugs. Added an admin notice about great release.
+
 = 2.0.1 (12.10.2019) =
 * Fixed: The bug with save mode.
 * Fixed: Some conditions (entire website) didn't work. It could be due save mode.

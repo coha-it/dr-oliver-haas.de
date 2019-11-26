@@ -4,7 +4,7 @@
  * Updates for altering the table used to store statistics data.
  * Adds new columns and renames existing ones in order to add support for the new social buttons.
  */
-class WGZUpdate010108 extends Wbcr_Factory421_Update {
+class WGZUpdate010108 extends Wbcr_Factory422_Update {
 
 	/**
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
@@ -80,6 +80,7 @@ class WGZUpdate010108 extends Wbcr_Factory421_Update {
 			}
 		}
 
+		//update_option( $this->plugin->getPrefix() . 'backend_assets_states', $settings );
 		update_option( $this->plugin->getPrefix() . 'assets_states', $settings );
 	}
 

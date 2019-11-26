@@ -1,3 +1,13 @@
+/* === General styles === */
+
+.dbdb_no_active_outline:active {
+    outline-style:none;
+    box-shadow:none;
+    border-color:transparent;	
+}
+
+/* === Settings form === */
+
 .wtf-form {
 	width:75%; 
 	float:left;
@@ -45,6 +55,13 @@
 }
 .wtf-setting input[type=checkbox] { margin:8px 6px 10px 6px; }
 
+.wtf-setting .techlink {
+    font-size: 18pt;
+    float: right;
+    line-height: 1.4em;
+    margin-right: 0.4em;
+}
+
 #wtf-sidebar {
 	width:25%; max-width:340px; 
 	padding:0 20px 20px 20px;
@@ -61,6 +78,10 @@
 
 #wtf-settings-page h2 { display:inline; }
 
+.db_subsetting { 
+	margin: 5px 0px 10px 40px;
+}
+
 /* image picker */
 .wtf-imagepicker-thumb { height:29px; vertical-align:top; margin:1px 2px 0; }
 .wtf-imagepicker-thumb[src=""] { display: none; }
@@ -70,8 +91,6 @@
 
 /* selectpicker */
 .wtf-select { display:inline; }
-.wtf-select a { line-height:2.5em; display:inline;text-decoration:none; }
-.wtf-select select { display:none; }
 
 /* responsive images */
 .wtf-responsive { 
@@ -94,10 +113,8 @@
 
 hr { clear: both; }
 
-/* Layout plugin settings heading and license form area */
+/* Layout plugin settings page */
 #wtf-settings-page { padding-bottom: 12px; }
-.wtf-form-license { padding-top:10px; padding-bottom: 12px; }
-#wtfdivi_license_key { max-width: 20em; }
 
 /* Suppress ads and updates from unrelated plugins on Divi Booster settings page */
 .update-nag, .error, .updated, .notice { display:none !important; }
@@ -111,9 +128,6 @@ hr { clear: both; }
 
 /* === Settings header === */
 
-.wtf-form-license { 
-	display: none; 
-}
 #db-header { 
 	width: 100%; 
 	background: rgb(108, 46, 185);  

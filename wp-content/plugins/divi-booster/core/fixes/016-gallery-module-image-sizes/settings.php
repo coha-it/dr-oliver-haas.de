@@ -16,8 +16,8 @@ width.val(Math.min(width.val(),newmax)-1);
 width.val(parseInt(width.val())+1);
 width.change();">
 <?php $plugin->numberpicker(__FILE__, 'imagescount', 4, 1); ?></td></tr>
-<tr><td>Image width:</td><td id="wtfdivi016-width"><?php $plugin->numberpicker(__FILE__, 'imagewidth', 225, 0); ?>px</td></tr>
-<tr><td>Image height:</td><td><?php $plugin->numberpicker(__FILE__, 'imageheight', 169, 0); ?>px</td></tr>
+<tr><td>Image max width:</td><td id="wtfdivi016-width"><?php $plugin->numberpicker(__FILE__, 'imagewidth', 225, 0); ?>px</td></tr>
+<tr><td>Image max height:</td><td><?php $plugin->numberpicker(__FILE__, 'imageheight', 169, 0); ?>px</td></tr>
 </table>
 <script>jQuery("#wtfdivi016-count").change();</script>
 <?php

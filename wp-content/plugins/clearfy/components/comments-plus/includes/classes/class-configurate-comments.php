@@ -12,14 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2017 Webraftic Ltd
  */
-class WbcrCmp_ConfigComments extends Wbcr_FactoryClearfy213_Configurate {
+class WbcrCmp_ConfigComments extends Wbcr_FactoryClearfy214_Configurate {
 
 	private $modified_types = [];
 
 	/**
-	 * @param Wbcr_Factory421_Plugin $plugin
+	 * @param Wbcr_Factory422_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory421_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
 		parent::__construct( $plugin );
 		$this->plugin = $plugin;
 	}

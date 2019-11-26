@@ -131,7 +131,7 @@ function wbcr_dan_get_plugin_options() {
  * с настройками этого плагина, потому что это ухудшает юзабилити.
  *
  * @param array                                    $form   Массив с группой настроек, страницы "Дополнительно" в плагине Clearfy
- * @param Wbcr_FactoryPages421_ImpressiveThemplate $page   Экземпляр страницы
+ * @param Wbcr_FactoryPages422_ImpressiveThemplate $page   Экземпляр страницы
  *
  * @return mixed Отсортированный массив с группой опций
  */
@@ -161,7 +161,7 @@ add_filter( 'wbcr_clr_additionally_form_options', 'wbcr_dan_additionally_form_op
  * @author Alexander Kovalev <alex.kovalevv@gmail.com>
  * @since  1.0
  *
- * @param  @param $html_builder Wbcr_FactoryForms419_Html
+ * @param  @param $html_builder Wbcr_FactoryForms420_Html
  */
 function wbcr_dan_reset_notices_button( $html_builder ) {
 	global $wpdb;

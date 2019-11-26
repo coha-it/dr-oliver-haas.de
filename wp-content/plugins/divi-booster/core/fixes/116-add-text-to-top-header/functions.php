@@ -1,14 +1,11 @@
 <?php
 
-// === Try to add the header via Divi filter to allow dynamic shortcodes, etc === 
-// - Will fall back to js implementation in wp_footer_script.php if not possible 
-// -- (e.g. in Divi pre-3.1 when the et_html_top_header filter did not exist).
-
-add_filter('et_html_top_header', 'db116_add_top_header_text');
+add_filter('et_html_top_header', 'db116_add_top_header_text'); // Use PHP if Divi 3.1+ and top header exists
+add_action('db_user_jquery', 'db116_add_top_header_text_by_jquery'); // jQuery fallback
+add_action('wp_head.css', 'db116_add_top_header_text_css');
+add_filter('divibooster_setting_116-add-text-to-top-header_topheadertext', 'db116_do_shortcodes_in_top_header_text');
 
 function db116_add_top_header_text($html) {
-
-	$text = divibooster_get_setting('116-add-text-to-top-header', 'topheadertext');
 
 	// Add #et-info if missing
 	if (strpos($html, '<div id="et-info"') === false) {
@@ -16,16 +13,36 @@ function db116_add_top_header_text($html) {
 	}
 	
 	// Add the top header text
-	$text_html = '<span id="db-info-text">'.$text.'</span>';
+	$text_html = '<span id="db-info-text">'.db116_header_text().'</span>';
 	$html = str_replace('<div id="et-info">', '<div id="et-info">'.$text_html, $html);
 	
 	return $html;
 
 }
 
-// === Style the top header text ===
+function db116_add_top_header_text_by_jquery() {
+	?>	
+	// Add #et-info element if missing
+	if (!$('#et-info').length) { 
+	
+		// Enable top header and container if not enabled
+		if (!($('#top-header').length)) { 
+			$('#page-container').prepend('<div id="top-header"><div class="container clearfix"></div></div>');
+		}
+	
+		$('#top-header .container').prepend('<div id="et-info"></div>'); 
+	}
+	
+	// Add the top header text (if not already set via PHP)
+	if (!$('#db-info-text').length) {
+		$('#et-info').prepend('<span id="db-info-text">'+<?php echo json_encode(db116_header_text()); ?>+'</span>');
+	}
+	<?php
+}
 
-add_action('wp_head.css', 'db116_add_top_header_text_css');
+function db116_header_text() {
+	return dbdb_option('116-add-text-to-top-header', 'topheadertext', '');
+}
 
 function db116_add_top_header_text_css() {
 	?>
@@ -33,13 +50,6 @@ function db116_add_top_header_text_css() {
 	<?php
 }
 
-// === Do shortcodes within the top header text ===
-
-add_filter('divibooster_setting_116-add-text-to-top-header_topheadertext', 'db116_do_shortcodes_in_top_header_text');
-
 function db116_do_shortcodes_in_top_header_text($text) {
-	
-	$text = do_shortcode($text);
-	
-	return $text;
+	return do_shortcode($text);
 }

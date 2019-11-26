@@ -47,21 +47,20 @@ function dbmo_unautop_slides($content) {
 }
 
 // === Load the module options ===
-
-$MODULE_OPTIONS_DIR = plugin_dir_path(__FILE__).'/module_options/';
+$MODULE_OPTIONS_DIR = dbdb_path('core/module_options/');
 
 // General functionality
 include_once($MODULE_OPTIONS_DIR.'dynamic_content.php');
 
 // Module-specific functionality
-include_once($MODULE_OPTIONS_DIR.'et_pb_accordion.php');
+include_once($MODULE_OPTIONS_DIR.'et_pb_accordion/et_pb_accordion.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_team_member.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_gallery.php');
-include_once($MODULE_OPTIONS_DIR.'et_pb_portfolio.php');
-include_once($MODULE_OPTIONS_DIR.'et_pb_filterable_portfolio.php');
-include_once($MODULE_OPTIONS_DIR.'et_pb_fullwidth_portfolio.php');
+include_once($MODULE_OPTIONS_DIR.'et_pb_portfolio/et_pb_portfolio.php');
+// include_once($MODULE_OPTIONS_DIR.'et_pb_filterable_portfolio.php');
+// include_once($MODULE_OPTIONS_DIR.'et_pb_fullwidth_portfolio.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_signup.php');
-include_once($MODULE_OPTIONS_DIR.'et_pb_slide.php');
+include_once($MODULE_OPTIONS_DIR.'et_pb_slide/et_pb_slide.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_slider.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_fullwidth_slider.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_post_slider.php');
@@ -81,7 +80,7 @@ function db_add_module_field_filter() {
 				if ($obj instanceof ET_Builder_Element) {
 					
 					// Apply field whitelist for Divi pre-3.1
-					if (defined('ET_CORE_VERSION') && version_compare(ET_CORE_VERSION, '3.1', '<')) {
+					if (dbdb_is_divi('3.1', '<')) {
 						$obj->whitelisted_fields = apply_filters("dbmo_{$slug}_whitelisted_fields", $obj->whitelisted_fields); 
 					}
 	
@@ -218,7 +217,7 @@ function divibooster_filter_global_modules($posts) {
 
 // get the classes assigned to the module
 function divibooster_get_classes_from_content($content) {
-	preg_match('#<div class="(et_pb_module [^"]*?)">#', $content, $m);
+	preg_match('#<div class="([^"]*?et_pb_module [^"]*?)">#', $content, $m);
 	$classes = empty($m[1])?array():explode(' ', $m[1]);
 	return $classes;
 }

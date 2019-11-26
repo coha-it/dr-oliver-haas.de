@@ -1,8 +1,23 @@
 <?php
 
-// Hook - visual builder jquery
-function db_vb_jquery() { ?>	
-	<?php do_action('db_vb_jquery'); ?> 
-<?php	
+function db_vb_jquery() { 
+	if (isset($_GET['et_fb']) && $_GET['et_fb'] === '1') {
+		?>
+		<script>
+		
+		<?php 
+		do_action('db_vb_js'); 
+		
+		if (has_action('db_vb_jquery_ready')) {
+			?>
+			jQuery(function($){
+				<?php do_action('db_vb_jquery_ready'); ?> 
+			});
+			<?php	
+		}
+		?>
+		</script>
+		<?php
+	}
 }
-add_action('db_user_jquery', 'db_vb_jquery', 1000); // add after user jquery
+add_action('wp_footer', 'db_vb_jquery');

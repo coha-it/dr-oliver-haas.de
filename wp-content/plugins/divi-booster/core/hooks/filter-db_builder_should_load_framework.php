@@ -23,7 +23,7 @@ add_filter('et_divi_role_editor_page', 'db_apply_et_builder_should_load_framewor
 function db_apply_et_builder_should_load_framework_filter_backwards_compat($page) {
 	
 	// Only use on Divi pre-3.0.99
-	if (!defined('ET_CORE_VERSION') || version_compare(ET_CORE_VERSION, '3.0.99', '>=')) {
+	if (dbdb_is_divi('3.0.99', '>=')) {
 		return $page;
 	}
 	

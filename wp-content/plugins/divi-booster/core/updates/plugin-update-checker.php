@@ -6,6 +6,8 @@
  * Copyright 2014 Janis Elsts
  * Licensed under the GNU GPL license.
  * http://www.gnu.org/licenses/gpl.html
+ *
+ * Modified by Dan Mossop
  */
  
 if ( !class_exists('Divi_Booster_PluginUpdateChecker') ):

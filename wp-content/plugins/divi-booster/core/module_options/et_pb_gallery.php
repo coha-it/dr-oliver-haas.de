@@ -180,46 +180,40 @@ function dbmo_et_pb_gallery_add_fields($fields) {
 // Apply gallery options
 function db_pb_gallery_filter_content($content, $args) {
 	
-	// Check options set
-	//if (empty($args['db_images_per_row'])) { return $content; }
-
-	// Get the class
-	$class = divibooster_get_order_class_from_content('et_pb_gallery', $content);
-	if (!$class) { return $content; }
-	
-	// === Add CSS to the content ===
-	
-	$css = '';
-	
 	// Images per row
 	if (!empty($args['db_images_per_row'])) {
-	
+		
 		$media_queries = array(
 			'db_images_per_row'=>'(min-width: 981px)', 
 			'db_images_per_row_tablet'=>'(min-width: 768px) and (max-width: 980px)', 
 			'db_images_per_row_phone'=>'(max-width: 767px)'
 		);
-		foreach($media_queries as $k=>$mq) {
+		foreach($media_queries as $k=>$media_query) {
 			if (!empty($args[$k]) && ($num = abs(intval($args[$k])))) {
 				
 				$width = 100/$num;
-
-				$css.="
-					@media only screen and {$mq} {
-						.et_pb_column .{$class} .et_pb_gallery_item {
-							margin: 0 !important;
-							width: {$width}% !important;
-							clear: none !important;
-						}
-						.et_pb_column .{$class} .et_pb_gallery_item:nth-of-type({$num}n+1) {
-							clear: both !important; 
-						}
-					}
-				";	
 				
+				dbdb_set_module_style('et_pb_gallery', array(
+					'selector'    => '.et_pb_column %%order_class%% .et_pb_gallery_item',
+					'declaration' => 'margin: 0 !important; width: '.$width.'% !important; clear: none !important;',
+					'media_query' => '@media only screen and '.$media_query
+				));
+				dbdb_set_module_style('et_pb_gallery', array(
+					'selector'    => '.et_pb_column %%order_class%% .et_pb_gallery_item:nth-of-type('.$num.'n+1)',
+					'declaration' => 'clear: both !important;',
+					'media_query' => '@media only screen and '.$media_query
+				));				
 			}
 		}
 	}
+	
+	// Get the order class
+	$class = divibooster_get_order_class_from_content('et_pb_gallery', $content);
+	if (!$class) { 
+		return $content; 
+	}
+	
+	$css = '';
 	
 	// Max width
 	if (!empty($args['db_image_max_width'])) {

@@ -4,7 +4,13 @@
  * Updates for altering the table used to store statistics data.
  * Adds new columns and renames existing ones in order to add support for the new social buttons.
  */
-class WCLUpdate010501 extends Wbcr_Factory421_Update {
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class WCLUpdate010501 extends Wbcr_Factory422_Update {
 
 	public function install() {
 		require_once( WCL_PLUGIN_DIR . '/components/ga-cache/migrations/030002.php' );

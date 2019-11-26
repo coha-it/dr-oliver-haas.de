@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_Plugin extends Wbcr_Factory421_Plugin {
+class WCL_Plugin extends Wbcr_Factory422_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory421_Plugin
+	 * @var Wbcr_Factory422_Plugin
 	 */
 	private static $app;
 
@@ -70,7 +70,7 @@ class WCL_Plugin extends Wbcr_Factory421_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return \Wbcr_Factory421_Plugin|\WCL_Plugin
+	 * @return \Wbcr_Factory422_Plugin|\WCL_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -111,6 +111,10 @@ class WCL_Plugin extends Wbcr_Factory421_Plugin {
 					unset( $load_components[ $component_ID ] );
 				}
 			}
+		}
+
+		if ( is_plugin_active( 'gonzales/gonzales.php' ) ) {
+			unset( $load_components['assets_manager'] );
 		}
 
 		return $load_components;

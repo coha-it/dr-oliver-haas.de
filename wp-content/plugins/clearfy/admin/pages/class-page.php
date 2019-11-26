@@ -7,6 +7,6 @@
  * @version       1.0
  */
 
-class WCL_Page extends Wbcr_FactoryClearfy213_PageBase {
+class WCL_Page extends Wbcr_FactoryClearfy214_PageBase {
 
 }

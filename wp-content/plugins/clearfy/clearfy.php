@@ -4,11 +4,11 @@
  * Plugin URI: https://wordpress.org/plugins/clearfy/
  * Description: Disables unused Wordpress features, improves performance and increases SEO rankings, using Clearfy, which makes WordPress very easy.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.6.0
+ * Version: 1.6.2
  * Text Domain: clearfy
  * Domain Path: /languages/
  * Author URI: http://clearfy.pro
- * Framework Version: FACTORY_421_VERSION
+ * Framework Version: FACTORY_422_VERSION
  */
 
 // Exit if accessed directly
@@ -53,7 +53,7 @@ $plugin_info = array(
 		'slug'               => 'clearfy_package',
 		'plugin_id'          => '2315',
 		'public_key'         => 'pk_70e226af07d37d2b9a69720e0952c',
-		'price'              => 19,
+		'price'              => 35,
 		'has_updates'        => true,
 		'updates_settings' => array(
 			'maybe_rollback'    => true,
@@ -71,12 +71,12 @@ $plugin_info = array(
 	),
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_422', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_419', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_421', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_213', 'all' ),
-		array( 'libs/factory/freemius', 'factory_freemius_109', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_103', 'admin')
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_423', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_420', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_422', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_214', 'all' ),
+		array( 'libs/factory/freemius', 'factory_freemius_110', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_104', 'admin')
 	),
 	'load_plugin_components' => array(
 		'disable_notices' => array(
@@ -116,7 +116,7 @@ $plugin_info = array(
 
 
 
-$clearfy_compatibility = new Wbcr_Factory421_Requirements( __FILE__, array_merge( $plugin_info, array(
+$clearfy_compatibility = new Wbcr_Factory422_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate'          => defined( 'WCL_PLUGIN_ACTIVE' ),
 	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',
@@ -148,7 +148,7 @@ define( 'WBCR_CLEARFY_PLUGIN_ACTIVE', true );
 
 // Plugin version
 define( 'WCL_PLUGIN_VERSION', $clearfy_compatibility->get_plugin_version() );
-define( 'WCL_FRAMEWORK_VER', 'FACTORY_421_VERSION' );
+define( 'WCL_FRAMEWORK_VER', 'FACTORY_422_VERSION' );
 
 define( 'WCL_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WCL_PLUGIN_BASE', plugin_basename( __FILE__ ) );

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WGA_ConfigGACache extends Wbcr_FactoryClearfy213_Configurate {
+class WGA_ConfigGACache extends Wbcr_FactoryClearfy214_Configurate {
 
 
 	public function registerActionsAndFilters() {

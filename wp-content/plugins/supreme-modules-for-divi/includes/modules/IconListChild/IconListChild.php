@@ -10,9 +10,9 @@ class DSM_Icon_List_Child extends ET_Builder_Module {
 	public $child_title_fallback_var = 'subtitle';
 
 	protected $module_credits = array(
-		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
-		'author_uri' => 'https://suprememodules.com/',
+		'module_uri' => 'https://divisupreme.com/',
+		'author'     => 'Divi Supreme',
+		'author_uri' => 'https://divisupreme.com/',
 	);
 
 	public function init() {
@@ -144,7 +144,6 @@ class DSM_Icon_List_Child extends ET_Builder_Module {
 				'toggle_slug'         => 'main_content',
 				'description'         => esc_html__( 'Choose an icon to display with your text.', 'et_builder' ),
 				'depends_show_if'     => 'on',
-				'mobile_options'      => true,
 				'hover'               => 'tabs',
 				'default'	=> 'P',
 				'default_on_front' => 'P',
@@ -213,7 +212,6 @@ class DSM_Icon_List_Child extends ET_Builder_Module {
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'If you would like to make your Icon List a link, input your destination URL here.', 'et_builder' ),
 				'toggle_slug'     => 'link_options',
-				'dynamic_content' => 'url',
 			),
 			'url_new_window' => array(
 				'label'           => esc_html__( 'Title Link Target', 'et_builder' ),

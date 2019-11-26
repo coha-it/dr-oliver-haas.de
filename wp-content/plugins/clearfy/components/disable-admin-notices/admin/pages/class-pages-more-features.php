@@ -22,6 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_MoreFeaturesPage extends Wbcr_FactoryClearfy213_MoreFeaturesPage {
+class WDN_MoreFeaturesPage extends Wbcr_FactoryClearfy214_MoreFeaturesPage {
 
 }

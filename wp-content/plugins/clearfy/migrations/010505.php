@@ -4,7 +4,13 @@
  * Updates for altering the table used to store statistics data.
  * Adds new columns and renames existing ones in order to add support for the new social buttons.
  */
-class WCLUpdate010505 extends Wbcr_Factory421_Update {
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class WCLUpdate010505 extends Wbcr_Factory422_Update {
 
 	public function install() {
 		$this->update_premium();
@@ -34,7 +40,7 @@ class WCLUpdate010505 extends Wbcr_Factory421_Update {
 		 */
 		$this->clean_hide_my_wp_data();
 
-		WbcrFactoryClearfy213_Helpers::flushPageCache();
+		WbcrFactoryClearfy214_Helpers::flushPageCache();
 	}
 
 	/**

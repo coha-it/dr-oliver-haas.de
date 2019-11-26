@@ -44,7 +44,7 @@ if ( ! defined( 'LOADING_DISABLE_ADMIN_NOTICES_AS_ADDON' ) ) {
 	 *
 	 * @return string
 	 */
-	add_filter( 'wbcr_factory_pages_421_imppage_rating_widget_url', function ( $page_url, $plugin_name ) {
+	add_filter( 'wbcr_factory_pages_422_imppage_rating_widget_url', function ( $page_url, $plugin_name ) {
 		if ( $plugin_name == WDN_Plugin::app()->getPluginName() ) {
 			return 'https://goo.gl/68ucHp';
 		}

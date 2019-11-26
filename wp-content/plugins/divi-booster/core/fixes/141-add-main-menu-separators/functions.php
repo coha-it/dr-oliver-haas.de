@@ -11,17 +11,13 @@ function db141_body_class($classes) {
 function db141_user_css($plugin) { 
 	
 	// Get color of menu links
-	if (function_exists('et_get_option')) {
-		$detect_legacy_primary_nav_color = et_get_option('primary_nav_text_color', 'Dark');
-		if ( $detect_legacy_primary_nav_color == 'Light' ) {
-			$legacy_primary_nav_color = '#ffffff';
-		} else {
-			$legacy_primary_nav_color = 'rgba(0,0,0,0.6)';
-		}
-		$menu_link = et_get_option('menu_link', $legacy_primary_nav_color);
+	$detect_legacy_primary_nav_color = dbdb_et_get_option('primary_nav_text_color', 'Dark');
+	if ( $detect_legacy_primary_nav_color == 'Light' ) {
+		$legacy_primary_nav_color = '#ffffff';
 	} else {
-		$menu_link = 'rgba(0,0,0,0.6)';
+		$legacy_primary_nav_color = 'rgba(0,0,0,0.6)';
 	}
+	$menu_link = dbdb_et_get_option('menu_link', $legacy_primary_nav_color);
 	
 	// Output CSS for separators
 	?>

@@ -12,6 +12,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Печатает ошибки совместимости с похожими плагинами
+ */
+add_action( 'wbcr/factory/admin_notices', function ( $notices, $plugin_name ) {
+	if ( $plugin_name != WGZ_Plugin::app()->getPluginName() ) {
+		return $notices;
+	}
+
+	$notice_text = __( 'We released great plugin upgrade! But, some plugin settings can\'t be migrated. Please check the disabled assets in the plugin, if they are configured incorrectly, you will need to fix the settings. Make sure the plugin works for you.', 'gonzales' );
+
+	$notices[] = [
+		'id'              => 'am-great-release-warning',
+		'type'            => 'warning',
+		'dismissible'     => true,
+		'dismiss_expires' => 0,
+		'text'            => '<p><b>' . __( 'Assets manager', 'gonzales' ) . ': </b>' . $notice_text . '</p>'
+	];
+
+	return $notices;
+}, 10, 2 );
+
 if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 
 	/**
@@ -146,10 +167,12 @@ if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 	 *
 	 * @param array                  $widgets
 	 * @param string                 $position
-	 * @param Wbcr_Factory421_Plugin $plugin
+	 * @param Wbcr_Factory422_Plugin $plugin
 	 */
 	add_filter( 'wbcr/factory/pages/impressive/widgets', function ( $widgets, $position, $plugin ) {
 		if ( $plugin->getPluginName() == WGZ_Plugin::app()->getPluginName() ) {
+			unset( $widgets['business_suggetion'] );
+
 			if ( $position == 'right' ) {
 				unset( $widgets['donate_widget'] );
 				unset( $widgets['rating_widget'] );
@@ -167,7 +190,7 @@ if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 	 * @param string $page_id
 	 * @param string $plugin
 	 */
-	add_filter( 'wbcr/clearfy/page_bussines_suggetion_features', function ( $features, $plugin_name, $page_id ) {
+	add_filter( 'wbcr/clearfy/pages/suggetion_features', function ( $features, $plugin_name, $page_id ) {
 
 		if ( ! empty( $plugin_name ) && ( $plugin_name == WGZ_Plugin::app()->getPluginName() ) ) {
 			$upgrade_feature   = [];
@@ -185,7 +208,7 @@ if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 
 	function wbcr_gnz_set_plugin_meta( $links, $file ) {
 		if ( $file == WGZ_PLUGIN_BASE ) {
-			$url     = WbcrFactoryClearfy213_Helpers::getWebcrafticSitePageUrl( WGZ_Plugin::app()->getPluginName(), 'assets-manager', 'plugin_row' );
+			$url     = WbcrFactoryClearfy214_Helpers::getWebcrafticSitePageUrl( WGZ_Plugin::app()->getPluginName(), 'assets-manager', 'plugin_row' );
 			$links[] = '<a href="' . $url . '" style="color: #FF5722;font-weight: bold;" target="_blank">' . __( 'Get premium', 'gonzales' ) . '</a>';
 		}
 
@@ -202,5 +225,5 @@ if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 		return $page_url;
 	}
 
-	add_filter( 'wbcr_factory_pages_421_imppage_rating_widget_url', 'wbcr_gnz_rating_widget_url', 10, 2 );
+	add_filter( 'wbcr_factory_pages_422_imppage_rating_widget_url', 'wbcr_gnz_rating_widget_url', 10, 2 );
 }

@@ -17,7 +17,7 @@
 		 * The id of the page in the admin menu.
 		 *
 		 * Mainly used to navigate between pages.
-		 * @see FactoryPages421_AdminPage
+		 * @see FactoryPages422_AdminPage
 		 *
 		 * @since 1.0.0
 		 * @var string
@@ -79,7 +79,7 @@
 		/**
 		 * Requests assets (js and css) for the page.
 		 *
-		 * @see FactoryPages421_AdminPage
+		 * @see FactoryPages422_AdminPage
 		 *
 		 * @since 1.0.0
 		 * @return void

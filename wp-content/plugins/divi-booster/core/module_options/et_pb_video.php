@@ -29,34 +29,25 @@ function dbmo_et_pb_video_add_fields($fields) {
 }
 
 function db_pb_video_filter_content($content, $args) {
-
-	// Apply custom labels
 	if (!empty($args['db_limit_youtube_related_videos_to_same_channel']) && 
 		$args['db_limit_youtube_related_videos_to_same_channel'] === 'on') {
-		
-		$content = preg_replace(
-			'/('.
-				preg_quote('https://www.youtube.com/embed/', '/').
-				'[A-Za-z0-9]+'.
-				preg_quote('?feature=oembed', '/').
-			')/', 
-			'\\1&rel=0', 
-			$content
-		);
-		
-		// $label_fields = dbmo_et_pb_video_get_label_fields();
-		
-		// foreach($label_fields as $k=>$label) {
-			// if (isset($args[$k])) {
-				// $size = preg_replace('/.*_(full|short)/', '\\1', $k);
-				// $content = str_replace(
-					// 'data-'.$size.'="'.esc_attr($label['default']).'"', 
-					// 'data-'.$size.'="'.esc_attr($args[$k]).'"', 
-					// $content
-				// );
-			// }
-		// }		
+		$content = dbvideo_html_without_youtube_related_videos($content);		
 	}
-
 	return $content;
+}
+
+if (!function_exists('dbvideo_html_without_youtube_related_videos')) {
+	function dbvideo_html_without_youtube_related_videos($old_content) {
+		$regex = preg_quote('https://www.youtube.com/embed/', '/').'[a-z0-9_-]+'.preg_quote('?feature=oembed', '/');
+		$new_content = preg_replace_callback("/$regex/i", 'dbvideo_url_without_youtube_related_videos', $old_content);
+		return apply_filters('dbvideo_html_without_youtube_related_videos', $new_content, $old_content);
+	}
+}
+
+if (!function_exists('dbvideo_url_without_youtube_related_videos')) {
+	function dbvideo_url_without_youtube_related_videos($match) {
+		$old_url = isset($match[0])?$match[0]:'';
+		$new_url = add_query_arg('rel', '0', $old_url);
+		return apply_filters('dbvideo_url_without_youtube_related_videos', $new_url, $match);
+	}
 }

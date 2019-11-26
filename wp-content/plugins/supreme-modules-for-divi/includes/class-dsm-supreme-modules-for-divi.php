@@ -533,7 +533,7 @@ class Dsm_Supreme_Modules_For_Divi {
         }
 
         if ( isset( $_POST['dsm-header-footer-meta-box-options'] ) ) {
-            update_post_meta( $post_id, 'dsm-header-footer-meta-box-options', esc_attr( $_POST['dsm-header-footer-meta-box-options'] ) );
+            update_post_meta( $post_id, 'dsm-header-footer-meta-box-options', sanitize_text_field( $_POST['dsm-header-footer-meta-box-options'] ) );
         }
 
         if ( isset( $_POST['dsm-css-classes-meta-box-options'] ) ) {
@@ -541,23 +541,19 @@ class Dsm_Supreme_Modules_For_Divi {
         }
 
         if ( isset( $_POST['dsm-remove-default-footer-meta-box-options'] ) ) {
-            $dsm_remove_default_footer = $_POST['dsm-remove-default-footer-meta-box-options'];
+            $dsm_remove_default_footer = sanitize_text_field( $_POST['dsm-remove-default-footer-meta-box-options'] );
         }   
         update_post_meta($post_id, 'dsm-remove-default-footer-meta-box-options', $dsm_remove_default_footer);
 
         if ( isset( $_POST['dsm-footer-show-on-blank-template'] ) ) {
-            $dsm_footer_hide_on_blank_template = $_POST['dsm-footer-show-on-blank-template'];
+            $dsm_footer_hide_on_blank_template = sanitize_text_field( $_POST['dsm-footer-show-on-blank-template'] );
         }  
         update_post_meta($post_id, 'dsm-footer-show-on-blank-template', $dsm_footer_hide_on_blank_template);
 
         if ( isset( $_POST['dsm-footer-show-on-404-template'] ) ) {
-            $dsm_footer_show_404_template = $_POST['dsm-footer-show-on-404-template'];
+            $dsm_footer_show_404_template = sanitize_text_field( $_POST['dsm-footer-show-on-404-template'] );
         }  
         update_post_meta($post_id, 'dsm-footer-show-on-404-template', $dsm_footer_show_404_template);
-        /*
-        if ( isset( $_POST['dsm-embed-footer-in-vb'] ) ) {
-            update_post_meta( $post_id, 'dsm-embed-footer-in-vb', sanitize_text_field( $_POST['dsm-embed-footer-in-vb'] ) );
-        }*/
     }
     
     public function dsm_custom_footer() {
@@ -856,7 +852,7 @@ class Dsm_Supreme_Modules_For_Divi {
     	if ( ! wp_verify_nonce( $_POST['et_admin_load_nonce'], 'et_admin_load_nonce' ) ) {
             wp_die();
         }  
-        echo do_shortcode( '[contact-form-7 id="' . $_POST['cf7_library'] . '"]' );
+        echo do_shortcode( '[contact-form-7 id="' . sanitize_text_field( $_POST['cf7_library'] ) . '"]' );
         wp_die();
     }
     public function dsm_wpcf7_add_form_tag_submit() {
@@ -1034,7 +1030,7 @@ class Dsm_Supreme_Modules_For_Divi {
 		
 			add_filter( 'caldera_forms_get_style_includes', 'dsm_filter_caldera_forms_get_style_includes', 10, 1 );
 		}
-        echo do_shortcode( '[caldera_form id="' . $_POST['cf_library'] . '"]' );
+        echo do_shortcode( '[caldera_form id="' . sanitize_text_field( $_POST['cf_library'] ) . '"]' );
         wp_die();
     }
     

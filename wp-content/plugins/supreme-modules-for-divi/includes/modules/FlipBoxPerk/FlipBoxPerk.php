@@ -7,9 +7,9 @@ class DSM_FlipBox_Perk extends ET_Builder_Module {
 	public $child_slug = 'dsm_flipbox_child';
 
 	protected $module_credits = array(
-		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
-		'author_uri' => 'https://suprememodules.com/',
+		'module_uri' => 'https://divisupreme.com/',
+		'author'     => 'Divi Supreme',
+		'author_uri' => 'https://divisupreme.com/',
 	);
 
 	public function init() {
@@ -28,7 +28,7 @@ class DSM_FlipBox_Perk extends ET_Builder_Module {
 	public function get_advanced_fields_config() {
 		return array(
 			'text'       => array(
-				'use_text_orientation' => true,
+				'use_text_orientation' => false,
 				'use_background_layout' => false,
 				'css' => array(
 					'text_shadow' => '%%order_class%%',

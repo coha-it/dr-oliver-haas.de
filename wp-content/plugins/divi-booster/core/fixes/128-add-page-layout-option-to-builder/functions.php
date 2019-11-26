@@ -50,7 +50,7 @@ function divibooster128_user_css() {  ?>
 };
 
 // Only make available in Divi. Would kill extra as et_pb_is_pagebuilder_used() not pluggable.
-if (divibooster_is_divi()) {
+if (dbdb_is_divi()) {
 	
 	// Register the user CSS
 	add_action('wp_head.css', 'divibooster128_user_css');	

@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018, Webcraftic Ltd
  *
  */
-class WbcrFactoryClearfy213_Helpers {
+class WbcrFactoryClearfy214_Helpers {
 
 	/**
 	 * Ссылка по умолчанию (анг)
