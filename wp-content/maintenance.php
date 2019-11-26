@@ -23,9 +23,9 @@ header('Retry-After: 600');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://dr-oliver-haas.de/wp-content/maintenance/assets/styles.css">
-    <script src="https://dr-oliver-haas.de/wp-content/maintenance/assets/timer.js"></script>
+    <link rel="icon" href="http://dr-oliver-haas.de/wp-content/uploads/2019/10/favicon-3.png">
+    <link rel="stylesheet" href="http://dr-oliver-haas.de/wp-content/maintenance/assets/styles.css">
+    <script src="http://dr-oliver-haas.de/wp-content/maintenance/assets/timer.js"></script>
     <title>Geplante Wartungsaufgaben</title>
 </head>
 
@@ -44,10 +44,10 @@ header('Retry-After: 600');
     <!--START_SOCIAL_LINKS_BLOCK-->
     <section class="social-links">
                     <a class="social-links__link" href="https://www.facebook.com/Plesk" target="_blank" title="Facebook">
-                <span class="icon"><img src="https://dr-oliver-haas.de/wp-content/maintenance/assets/images/facebook.svg" alt="Facebook"></span>
+                <span class="icon"><img src="http://dr-oliver-haas.de/wp-content/maintenance/assets/images/facebook.svg" alt="Facebook"></span>
             </a>
                     <a class="social-links__link" href="https://twitter.com/Plesk" target="_blank" title="Twitter">
-                <span class="icon"><img src="https://dr-oliver-haas.de/wp-content/maintenance/assets/images/twitter.svg" alt="Twitter"></span>
+                <span class="icon"><img src="http://dr-oliver-haas.de/wp-content/maintenance/assets/images/twitter.svg" alt="Twitter"></span>
             </a>
             </section>
     <!--END_SOCIAL_LINKS_BLOCK-->
@@ -56,7 +56,7 @@ header('Retry-After: 600');
 
 <footer class="footer">
     <div class="footer__content">
-        Powered by <a href="https://www.plesk.com/" target="_blank"><img class="logo" src="https://dr-oliver-haas.de/wp-content/maintenance/assets/images/plesk-logo.png" alt="Plesk"></a>
+        Powered by <a href="https://www.plesk.com/" target="_blank"><img class="logo" src="http://dr-oliver-haas.de/wp-content/maintenance/assets/images/plesk-logo.png" alt="Plesk"></a>
     </div>
 </footer>
 
