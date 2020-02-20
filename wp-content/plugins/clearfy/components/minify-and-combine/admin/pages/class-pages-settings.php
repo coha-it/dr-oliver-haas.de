@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class WMAC_MinifyAndCombineSettingsPage extends Wbcr_FactoryClearfy214_PageBase {
+class WMAC_MinifyAndCombineSettingsPage extends Wbcr_FactoryClearfy217_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -52,9 +52,9 @@ class WMAC_MinifyAndCombineSettingsPage extends Wbcr_FactoryClearfy214_PageBase 
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
-	 * @param \Wbcr_Factory422_Plugin $plugin
+	 * @param \Wbcr_Factory425_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory425_Plugin $plugin ) {
 		$this->menu_title = __( 'Minify (JS/CSS)', 'minify-and-combine' );
 
 		if ( ! defined( 'LOADING_MINIFY_AND_COMBINE_AS_ADDON' ) ) {

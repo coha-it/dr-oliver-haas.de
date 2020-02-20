@@ -37,7 +37,9 @@ class Dsm_Supreme_Modules_For_Divi_Activator {
         if ( ! get_option( 'dsm_flush_rewrite_rules_flag' ) ) {
             add_option( 'dsm_flush_rewrite_rules_flag', true );
         }
-
+		if ( is_plugin_active('supreme-modules-pro-for-divi/supreme-modules-pro-for-divi.php') ) {
+			return;
+		}
         Dsm_Supreme_Modules_For_Divi_Review::insert_install_date();
 	}
 

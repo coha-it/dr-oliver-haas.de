@@ -372,8 +372,8 @@
 
 /* Errors, Warnings, etc
 ----------------------------------------------------------------------------- */
-
-.wpforms-container .wpforms-error-container {
+.wpforms-container .wpforms-error-container,
+.wpforms-container noscript.wpforms-error-noscript {
 	color: #990000;
 }
 
@@ -989,4 +989,14 @@ div.wpforms-gutenberg-form-selector .wpforms-form textarea:disabled,
 div.wpforms-gutenberg-form-selector .wpforms-form select:disabled,
 div.wpforms-gutenberg-form-selector .wpforms-form button[type=submit]:disabled {
 	cursor: not-allowed;
+}
+
+/* RTL support
+----------------------------------------------------------------------------- */
+
+/* Phone US format */
+body.rtl .wpforms-field-phone input[type=tel] {
+	direction: ltr;
+	unicode-bidi: embed;
+	text-align: right;
 }

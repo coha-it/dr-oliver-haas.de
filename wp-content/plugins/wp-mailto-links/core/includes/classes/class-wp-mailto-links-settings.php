@@ -196,6 +196,11 @@ class WP_Mailto_Links_Settings{
 						'label' => WPMT()->helpers->translate( 'no script tags', 'wpmt-settings-filter_hook-label' ),
 						'description' => WPMT()->helpers->translate( 'Check this option if you face issues with encoded script tags. This will deactivate protection for script tags.', 'wpmt-settings-filter_hook-tip' )
 					),
+					'no_attribute_validation' => array(
+						'advanced' 	  => true,
+						'label' => __( 'html attributes without soft encoding.', 'wp-mailto-links' ),
+						'description' => __( 'Do not soft-filter all html attributes. This might optimizes the performance, but can break the site if other plugins use your email in attribute tags.', 'wp-mailto-links' )
+					),
 				 ),
 				'required'    => false,
 			),
@@ -282,18 +287,6 @@ class WP_Mailto_Links_Settings{
 				'placeholder' => '',
 				'required'    => false,
 				'description' => WPMT()->helpers->translate('This forces every script to be enqueued within the footer.', 'wpmt-settings-footer_scripts-tip')
-			),
-
-			'disable_marketing' => array(
-				'fieldset'    => array( 'slug' => 'main', 'label' => 'Label' ),
-				'id'          => 'disable_marketing',
-				'type'        => 'checkbox',
-				'advanced' 	  => true,
-				'title'       => WPMT()->helpers->translate('Disable Marketing', 'wpmt-settings-disable_marketing'),
-				'label'       => WPMT()->helpers->translate('Disable all marketing notifications', 'wpmt-settings-disable_marketing-label'),
-				'placeholder' => '',
-				'required'    => false,
-				'description' => WPMT()->helpers->translate('If you are not satisfied with our marketing recommendations, check this box.', 'wpmt-settings-disable_marketing-tip')
 			),
 
 			'security_check' => array(

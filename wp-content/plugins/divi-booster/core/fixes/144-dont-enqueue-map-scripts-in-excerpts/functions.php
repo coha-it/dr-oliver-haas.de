@@ -7,14 +7,14 @@ add_action('loop_end', 'db144_loop_end', 100);
 // Suppress google map script loading by map modules
 function db144_loop_start($query) {
 	if (db144_map_modules_in_excerpts($query)) { 
-		add_filter('et_pb_enqueue_google_maps_script', 'db144_return_false');
+		add_filter('et_pb_enqueue_google_maps_script', 'dbdb_return_false');
 	}
 }
 
 // Re-enable map script loading once loop done
 function db144_loop_end($query) {
 	if (db144_map_modules_in_excerpts($query)) { 
-		remove_filter('et_pb_enqueue_google_maps_script', 'db144_return_false');
+		remove_filter('et_pb_enqueue_google_maps_script', 'dbdb_return_false');
 	}
 }
 
@@ -37,5 +37,3 @@ function db144_map_modules_in_excerpts($query) {
 	
 	return true;
 }
-
-function db144_return_false() { return false; }

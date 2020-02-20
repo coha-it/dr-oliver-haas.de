@@ -178,6 +178,7 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 					'main' => '%%order_class%% .et_pb_main_blurb_image',
 				),
 			),
+			'position_fields'       => false,
 		);
 	}
 

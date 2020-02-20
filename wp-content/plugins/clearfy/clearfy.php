@@ -4,11 +4,11 @@
  * Plugin URI: https://wordpress.org/plugins/clearfy/
  * Description: Disables unused Wordpress features, improves performance and increases SEO rankings, using Clearfy, which makes WordPress very easy.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.6.2
+ * Version: 1.6.4
  * Text Domain: clearfy
  * Domain Path: /languages/
  * Author URI: http://clearfy.pro
- * Framework Version: FACTORY_422_VERSION
+ * Framework Version: FACTORY_425_VERSION
  */
 
 // Exit if accessed directly
@@ -25,38 +25,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  * -----------------------------------------------------------------------------
  */
 
-require_once( dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-requirements.php' );
+require_once(dirname(__FILE__) . '/libs/factory/core/includes/class-factory-requirements.php');
 
 // @formatter:off
 $plugin_info = array(
-	'prefix'               => 'wbcr_clearfy_',
-	'plugin_name'          => 'wbcr_clearfy',
-	'plugin_title'         => __( 'Clearfy', 'clearfy' ),
+	'prefix' => 'wbcr_clearfy_',
+	'plugin_name' => 'wbcr_clearfy',
+	'plugin_title' => __('Clearfy', 'clearfy'),
 	// PLUGIN SUPPORT
-	'support_details'      => array(
-		'url'       => 'http://clearfy.pro',
+	'support_details' => array(
+		'url' => 'http://clearfy.pro',
 		'pages_map' => array(
 			'features' => 'premium-features',  // {site}/premium-features
-			'pricing'  => 'pricing',           // {site}/prices
-			'support'  => 'support',           // {site}/support
-			'docs'     => 'docs'               // {site}/docs
+			'pricing' => 'pricing',           // {site}/prices
+			'support' => 'support',           // {site}/support
+			'docs' => 'docs'               // {site}/docs
 		)
 	),
 	//todo: for compatibility with Robin image optimizer
-	'freemius_plugin_id'  => '2315',
+	'freemius_plugin_id' => '2315',
 	'freemius_public_key' => 'pk_70e226af07d37d2b9a69720e0952c',
 
 	// PLUGIN PREMIUM SETTINGS
-	'has_premium'            => true,
-	'license_settings'       => array(
-		'provider'           => 'freemius',
-		'slug'               => 'clearfy_package',
-		'plugin_id'          => '2315',
-		'public_key'         => 'pk_70e226af07d37d2b9a69720e0952c',
-		'price'              => 35,
-		'has_updates'        => true,
+	'has_premium' => true,
+	'license_settings' => array(
+		'provider' => 'freemius',
+		'slug' => 'clearfy_package',
+		'plugin_id' => '2315',
+		'public_key' => 'pk_70e226af07d37d2b9a69720e0952c',
+		'price' => 29,
+		'has_updates' => true,
 		'updates_settings' => array(
-			'maybe_rollback'    => true,
+			'maybe_rollback' => true,
 			'rollback_settings' => array(
 				'prev_stable_version' => '0.0.0'
 			)
@@ -64,19 +64,19 @@ $plugin_info = array(
 	),
 	// PLUGIN ADVERTS
 	'render_adverts' => true,
-	'adverts_settings'    => array(
+	'adverts_settings' => array(
 		'dashboard_widget' => true, // show dashboard widget (default: false)
-		'right_sidebar'    => true, // show adverts sidebar (default: false)
-		'notice'           => true, // show notice message (default: false)
+		'right_sidebar' => true, // show adverts sidebar (default: false)
+		'notice' => true, // show notice message (default: false)
 	),
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_423', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_420', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_422', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_214', 'all' ),
-		array( 'libs/factory/freemius', 'factory_freemius_110', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_104', 'admin')
+		array('libs/factory/bootstrap', 'factory_bootstrap_426', 'admin'),
+		array('libs/factory/forms', 'factory_forms_423', 'admin'),
+		array('libs/factory/pages', 'factory_pages_425', 'admin'),
+		array('libs/factory/clearfy', 'factory_clearfy_217', 'all'),
+		array('libs/factory/freemius', 'factory_freemius_113', 'all'),
+		array('libs/factory/adverts', 'factory_adverts_106', 'admin')
 	),
 	'load_plugin_components' => array(
 		'disable_notices' => array(
@@ -116,19 +116,18 @@ $plugin_info = array(
 
 
 
-$clearfy_compatibility = new Wbcr_Factory422_Requirements( __FILE__, array_merge( $plugin_info, array(
-	'plugin_already_activate'          => defined( 'WCL_PLUGIN_ACTIVE' ),
-	'required_php_version'             => '5.4',
-	'required_wp_version'              => '4.2.0',
+$clearfy_compatibility = new Wbcr_Factory425_Requirements(__FILE__, array_merge($plugin_info, array(
+	'plugin_already_activate' => defined('WCL_PLUGIN_ACTIVE'),
+	'required_php_version' => '5.4',
+	'required_wp_version' => '4.2.0',
 	'required_clearfy_check_component' => false
-) ) );
-
+)));
 
 /**
  * If the plugin is compatible, then it will continue its work, otherwise it will be stopped,
  * and the user will throw a warning.
  */
-if ( ! $clearfy_compatibility->check() ) {
+if( !$clearfy_compatibility->check() ) {
 	return;
 }
 
@@ -141,18 +140,18 @@ if ( ! $clearfy_compatibility->check() ) {
  */
 
 // This plugin is activated
-define( 'WCL_PLUGIN_ACTIVE', true );
+define('WCL_PLUGIN_ACTIVE', true);
 
 // For for compatibility with old plugins
-define( 'WBCR_CLEARFY_PLUGIN_ACTIVE', true );
+define('WBCR_CLEARFY_PLUGIN_ACTIVE', true);
 
 // Plugin version
-define( 'WCL_PLUGIN_VERSION', $clearfy_compatibility->get_plugin_version() );
-define( 'WCL_FRAMEWORK_VER', 'FACTORY_422_VERSION' );
+define('WCL_PLUGIN_VERSION', $clearfy_compatibility->get_plugin_version());
+define('WCL_FRAMEWORK_VER', 'FACTORY_425_VERSION');
 
-define( 'WCL_PLUGIN_DIR', dirname( __FILE__ ) );
-define( 'WCL_PLUGIN_BASE', plugin_basename( __FILE__ ) );
-define( 'WCL_PLUGIN_URL', plugins_url( null, __FILE__ ) );
+define('WCL_PLUGIN_DIR', dirname(__FILE__));
+define('WCL_PLUGIN_BASE', plugin_basename(__FILE__));
+define('WCL_PLUGIN_URL', plugins_url(null, __FILE__));
 
 
 
@@ -162,27 +161,27 @@ define( 'WCL_PLUGIN_URL', plugins_url( null, __FILE__ ) );
  * -----------------------------------------------------------------------------
  */
 try {
-	require_once( WCL_PLUGIN_DIR . '/includes/helpers.php' );
+	require_once(WCL_PLUGIN_DIR . '/includes/helpers.php');
 
 	// creating a plugin via the factory
-	require_once( WCL_PLUGIN_DIR . '/libs/factory/core/boot.php' );
-	require_once( WCL_PLUGIN_DIR . '/includes/class.plugin.php' );
+	require_once(WCL_PLUGIN_DIR . '/libs/factory/core/boot.php');
+	require_once(WCL_PLUGIN_DIR . '/includes/class.plugin.php');
 
-	new WCL_Plugin(  __FILE__, array_merge( $plugin_info, array(
-		'plugin_version'     => WCL_PLUGIN_VERSION,
+	new WCL_Plugin(__FILE__, array_merge($plugin_info, array(
+		'plugin_version' => WCL_PLUGIN_VERSION,
 		'plugin_text_domain' => $clearfy_compatibility->get_text_domain(),
-	) )  );
-
+	)));
 } catch( Exception $e ) {
 	// Plugin wasn't initialized due to an error
-	define( 'WRIO_PLUGIN_THROW_ERROR', true );
+	define('WRIO_PLUGIN_THROW_ERROR', true);
 
-	$clearfy_plugin_error_func = function () use ( $e ) {
-		$error = sprintf( "The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Clearfy', $e->getMessage(), $e->getCode() );
+	$clearfy_plugin_error_func = function () use ($e) {
+		$error = sprintf("The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Clearfy', $e->getMessage(), $e->getCode());
 		echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
 	};
 
-	add_action( 'admin_notices', $clearfy_plugin_error_func );
-	add_action( 'network_admin_notices', $clearfy_plugin_error_func );
+	add_action('admin_notices', $clearfy_plugin_error_func);
+	add_action('network_admin_notices', $clearfy_plugin_error_func);
 }
 // @formatter:on
+

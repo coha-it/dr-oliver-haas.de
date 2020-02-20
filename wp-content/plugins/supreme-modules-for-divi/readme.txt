@@ -1,49 +1,54 @@
-=== Supreme Modules for Divi ===
+=== Supreme Modules Lite - Divi Theme, Extra Theme and Divi Builder ===
 Contributors: divisupreme, kenng87
 Tags: Divi, Divi Module, Divi Page Builder, divi theme, divi builder, Divi Extensions
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.8
+Stable tag: 1.9.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Divi Supreme plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
+Divi Supreme lite plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
 
 == Description ==
 
-Divi Supreme plugin enhances the experience and features found on Divi and extend with custom creative modules to help you build amazing websites.
+Unlike other Divi plugins, the Divi Supreme comes with many free creative and useful yet powerful Divi modules and Divi extensions. Take Divi to the next level and build amazing websites with ease using our simple to implement modules and extensions. Divi Supreme plugin comes with an intuitive interface that blends seamlessly with the Divi theme builder to give you a familiar designing environment with additional elements to work with.
 
-Divi Supreme contains 17 Free Divi Custom Modules and more to come soon.
+Divi Supreme lite contains 18 Free Divi Custom Modules and more to come soon.
 
-- Supreme Divi Gradient Text - By using Divi's built-in background gradient tool, this module allow you to have gradient text without coding.
-- Supreme Divi Flipbox - With 4 types of Flipbox effect to choose from (Flip Left, Flip Right, Flip Up and Flip Down), you can create stunning interactive content that converts. 
-- Supreme Divi Text Divider - This allow you to create an organized and beautiful to read headlines with many border styles to choose from with the text in-between the Dividers.
-- Supreme Divi Image - This allow you to transform the image using 3D transformation. Rotate it like the way you always wanted without coding.
-- Supreme Divi Typing - An Animated Typing Effect.
-- Supreme Divi Button - Allow you to have two buttons with a separator text in between. 10 types of hover animation to choose from and also have image and video lightbox that supports: YouTube, Vimeo and Dailymotion!
-- Supreme Divi Facebook Feed - Create Facebook Page Feed easily without having to embed them again.
-- Supreme Divi Facebook Comments - Create Facebook Page Comments easily without having to embed them again.
-- Supreme Divi Embed Twitter Timeline - Create Twitter Timeline Feed easily without any coding.
-- Supreme Divi Contact Form 7 - Big fan of Contact Form 7 plugin? Now with Supreme Contact Form 7, you can select your contact form from the dropdown list without having to go back and forth switching between Visual Builder and Contact Form 7 setting page copying the shortcode and adding it to the Divi Code Module. Style your Input Fields, Button, Labels, Validation, Error Messages and more!
-- Supreme Divi Caldera Forms - Now with Divi Supreme Caldera Forms module, you can select your contact form from the dropdown list without having to go back and forth switching between Visual Builder and Caldera Forms setting page copying the shortcode and adding it to the Divi Code Module. Style your Input Fields, Button, Labels, Error, Success Messages, Upload file and more!
-- Supreme Divi Embed Google Map - Embed Google Map right into your Divi's site easily without having to worry about anything else.
-- Supreme Divi Text Badges - This will show a badge before or after the text. A great way to show highlighted/important text badge.
-- Supreme Divi Menu - Display your WordPress menu and design it in whatever way you want. Use it for Footer or Sidebar.
-- Supreme Divi Price List - Create attractive and stunning Price List for your business with easy options. Perfect for menus, catalogs, product lists and any other list of featured items.
-- Supreme Divi Business Hours - This will allow customers to know your service availability time.
-- Supreme Divi Icon List - Create an easy-to-manage list of items, with each item highlighted by it's own icon.
+1. Supreme Divi Gradient Text - By using Divi's built-in background gradient tool, this module allow you to have gradient text without coding.
+2. Supreme Divi Flipbox - With 4 types of Flipbox effect to choose from (Flip Left, Flip Right, Flip Up and Flip Down), you can create stunning interactive content that converts. 
+3. Supreme Divi Text Divider - This allow you to create an organized and beautiful to read headlines with many border styles to choose from with the text in-between the Dividers.
+4. Supreme Divi Image - This allow you to transform the image using 3D transformation. Rotate it like the way you always wanted without coding.
+5. Supreme Divi Typing - An Animated Typing Effect.
+6. Supreme Divi Button - Allow you to have two buttons with a separator text in between. 10 types of hover animation to choose from and also have image and video lightbox that supports: YouTube, Vimeo and Dailymotion!
+7. Supreme Divi Facebook Feed - Create Facebook Page Feed easily without having to embed them again.
+8. Supreme Divi Facebook Comments - Create Facebook Page Comments easily without having to embed them again.
+9. Supreme Divi Embed Twitter Timeline - Create Twitter Timeline Feed easily without any coding.
+10. Supreme Divi Contact Form 7 - Big fan of Contact Form 7 plugin? Now with Supreme Contact Form 7, you can select your contact form from the dropdown list without having to go back and forth switching between Visual Builder and Contact Form 7 setting page copying the shortcode and adding it to the Divi Code Module. Style your Input Fields, Button, Labels, Validation, Error Messages and more!
+11. Supreme Divi Caldera Forms - Now with Divi Supreme Caldera Forms module, you can select your contact form from the dropdown list without having to go back and forth switching between Visual Builder and Caldera Forms setting page copying the shortcode and adding it to the Divi Code Module. Style your Input Fields, Button, Labels, Error, Success Messages, Upload file and more!
+12. Supreme Divi Embed Google Map - Embed Google Map right into your Divi's site easily without having to worry about anything else.
+13. Supreme Divi Text Badges - This will show a badge before or after the text. A great way to show highlighted/important text badge.
+14. Supreme Divi Menu - Display your WordPress menu and design it in whatever way you want. Use it for Footer or Sidebar.
+15. Supreme Divi Price List - Create attractive and stunning Price List for your business with easy options. Perfect for menus, catalogs, product lists and any other list of featured items.
+16. Supreme Divi Business Hours - This will allow customers to know your service availability time.
+17. Supreme Divi Icon List - Create an easy-to-manage list of items, with each item highlighted by it's own icon.
+18. Supreme Divi Shapes - Shapes is one of the most important element in Design. So we’ve created this module to make your life easier. Shapes module add life and creativity to your website. Boost your Divi designs, without having to use image files or custom code. Shapes Module comes with 17 types of Shapes and more in the upcoming updates.
+
 
 Divi Supreme Extentions
 
-- Scheduled Content Visibility - This will extend the Visibility option in the the Section/Row's custom setting to allow you to show or hide the section or row with a specify date/time.  
+- Divi Scheduled Element Visibility - This will extend the Visibility option in the the Section/Row's custom setting to allow you to show or hide the section or row with a specify date/time.  
 - Divi Templates - Designing Divi's footer or 404 page is one of the most challenging thing ever. Without programming background knowledgde, you have to deal with time and the learning process. But with Divi Templates, now you can design your custom footer, 404 and Search No Result page using Visual Builder and assign them. As easy as that, No coding required. Don't spend time finding those layout global module ID because you don't have to. Just 2 easy steps: Create a Template using Visual Builder, then assign them to footer/404. That's it! Save time = Smarter.
 - Divi Shortcodes - This will add a shortcode column in the Divi Library. Use that Divi shortcode to display your layout in any Divi module or even your PHP file by using [divi_shortcode id=""].
 
 Many more Divi Modules and Extensions coming soon...
 
-View [Demo for Divi Supreme](https://suprememodules.com/) or [Demo for Divi Supreme Pro](https://divisupreme.com/).
+View [Demo for Divi Supreme](https://suprememodules.com/) or [Demo for Divi Supreme Pro](https://divisupreme.com/features/).
+
+= Divi Supreme Pro =
+[GO Pro](https://divisupreme.com/) Over 30+ Premium Divi Modules and counting to help you speed up your workflow. Packed with everything you need to build amazing website without any effort. Whether you're just starting out with web design or are an accomplished developer with multiple personal and client projects to think about, Divi Supreme Pro will significantly improve the quality of your design work. With 30+ premium Divi modules and Divi extensions to choose from, this plugin is exactly what you need to extend the functionality of your favorite page builder.
 
 = About Divi Supreme =
 Divi Supreme is featured on [ElegantThemes](https://www.elegantthemes.com/blog/divi-resources/divi-plugin-highlight-divi-supreme). Divi is a great tool for building website, but without proper addons it might take more time and money. Divi's mission is to help users design websites in the easiest, fastest and most streamlined way.
@@ -58,7 +63,7 @@ We support Divi's mission through the development of Divi custom modules that fo
 = Minimum Requirements =
 
 * WordPress 4.5 or greater
-* PHP version 5.6 or greater
+* PHP version 7.0 or greater
 * MySQL version 5.0 or greater
 
 = We recommend your host supports: =
@@ -88,7 +93,7 @@ YES! At least Divi 3.1 onwards where they introduced the Divi Developer API.
 Divi Theme >= version 3.1
 Extra Theme >= version 2.1
 Divi Builder >= version 2.1
-PHP version >= 5.6
+PHP version >= 7.0
 
 **Is this plugin free?**
 
@@ -102,6 +107,54 @@ This is a common question that we get asked here every now and then which is why
 
 
 == Changelog ==
+= 1.9.4 – 14.02.2020 =
+* Added: Divi Shapes Module.
+
+= 1.9.3 – 21.01.2020 =
+* Removed: Position fields in child modules due to new Divi 4.2 update that causes unnecessary position output in both Frontend and Visual Builder.
+
+= 1.9.2 – 20.01.2020 =
+* Fixed: Supreme Button Module conflict with Divi's button module margin and padding value.
+
+= 1.9.1 – 20.01.2020 =
+* Fixed: List Style not rendering properly for Menu Module in Blog Post.
+
+= 1.9 – 17.01.2020 =
+* Enhanced: Icon List Module enhancement on Visual Builder.
+
+= 1.8.9 – 17.01.2020 =
+* Added: Alignment and Vertical Alignment to Icon List Module.
+* Fixed: Icon List Module CSS Selector on Visual Builder.
+* Fixed: Icon List Module Margin Bottom on Visual Builder.
+* Enhanced: Facebook API to version 5.0.
+
+= 1.8.8 – 11.01.2020 =
+* Enhanced: Compatibility with Divi Supreme Pro.
+
+= 1.8.7 – 27.12.2019 =
+* Added: youtu.be link support for Video Popup in Button Module(Visual Builder).
+
+= 1.8.6 – 27.12.2019 =
+* Added: youtu.be link support for Video Popup in Button Module.
+
+= 1.8.5 – 12.12.2019 =
+* Renamed: Divi Scheduled Content to Divi Scheduled Element.
+
+= 1.8.4 – 11.12.2019 =
+* Enhanced: Caldera Form Module Grid and Column.
+
+= 1.8.3 – 09.12.2019 =
+* Removed: WordPress local timezone option when using Scheduled Element Extension that causes reload due dynamic time.
+* Renamed: Scheduled Content Extension to Scheduled Element Extension.
+
+= 1.8.2 – 04.12.2019 =
+* Added: Display WordPress local timezone when using Scheduled Content Extension for easy viewing.
+* Rewrote: Scheduled Content Extension.
+* Changed: Scheduled Content TimeZone to WordPress Timezone.
+
+= 1.8.1 – 27.11.2019 =
+* Added: Border and Shadow to Facebook Feed and Facebook Comment Module.
+
 = 1.8 – 25.11.2019 =
 * Hotfix: Flipbox Module on Firefox Mac OS.
 

@@ -7,7 +7,7 @@ class DSM_FacebookSimpleComments extends ET_Builder_Module {
 
 	protected $module_credits = array(
 		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
+		'author'     => 'Divi Supreme',
 		'author_uri' => 'https://suprememodules.com/',
 	);
 
@@ -47,8 +47,23 @@ class DSM_FacebookSimpleComments extends ET_Builder_Module {
 					'main' => '%%order_class%%',
 				),
 			),
-			'borders' => false,
-			'box_shadow' => false,
+			'borders'               => array(
+				'default' => array(
+					'css' => array(
+						'main' => array(
+							'border_radii'  => "%%order_class%%",
+							'border_styles' => "%%order_class%%",
+						),
+					),
+				),
+			),
+			'box_shadow'            => array(
+				'default'   => array(
+					'css'   => array(
+						'main' => '%%order_class%%',
+					),
+				),
+			),
 			'filters' => false,
 		);
 	}

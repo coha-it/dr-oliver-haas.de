@@ -21,7 +21,7 @@ class WCL_ComponentsPage extends WCL_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages422_AdminPage
+	 * @see   FactoryPages425_AdminPage
 	 *
 	 * @var string
 	 */
@@ -54,7 +54,7 @@ class WCL_ComponentsPage extends WCL_Page {
 	 *
 	 * @since 1.0.0
 	 * @return void
-	 * @see   FactoryPages422_AdminPage
+	 * @see   FactoryPages425_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
@@ -65,8 +65,8 @@ class WCL_ComponentsPage extends WCL_Page {
 		/**
 		 * @since 1.4.0
 		 *
-		 * @param Wbcr_Factory422_StyleList  $styles
-		 * @param Wbcr_Factory422_ScriptList $scripts
+		 * @param Wbcr_Factory425_StyleList  $styles
+		 * @param Wbcr_Factory425_ScriptList $scripts
 		 */
 		do_action( 'wbcr/clearfy/components/page_assets', $scripts, $styles );
 	}
@@ -75,10 +75,10 @@ class WCL_ComponentsPage extends WCL_Page {
 	 * We register notifications for some actions
 	 *
 	 * @param                        $notices
-	 * @param Wbcr_Factory422_Plugin $plugin
+	 * @param Wbcr_Factory425_Plugin $plugin
 	 *
 	 * @return array
-	 * @see libs\factory\pages\themplates\FactoryPages422_ImpressiveThemplate
+	 * @see libs\factory\pages\themplates\FactoryPages425_ImpressiveThemplate
 	 */
 	public function getActionNotices( $notices ) {
 		$notices[] = [

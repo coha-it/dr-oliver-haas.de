@@ -7,7 +7,7 @@ class DSM_NavMenu extends ET_Builder_Module {
 
 	protected $module_credits = array(
 		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
+		'author'     => 'Divi Supreme',
 		'author_uri' => 'https://suprememodules.com/',
 	);
 
@@ -414,7 +414,7 @@ class DSM_NavMenu extends ET_Builder_Module {
 
 		if ( 'disc' !== $list_style_type ) {
 			ET_Builder_Element::set_style( $render_slug, array(
-				'selector'    => '%%order_class%% ul.dsm-menu, %%order_class%% ul.dsm-menu .sub-menu',
+				'selector'    => '#et-boc %%order_class%% ul.dsm-menu, %%order_class%% ul.dsm-menu, %%order_class%% ul.dsm-menu .sub-menu',
 				'declaration' => sprintf(
 					'list-style-type: %1$s;',
 					esc_attr( $list_style_type )

@@ -1,9 +1,33 @@
 <?php
 add_action('wp_enqueue_scripts', 'dbdb_icons_socicon_register_css');
+add_action('wp_head', 'dbdb_icons_socicon_inline_css');
 add_filter('dbdb_icons_socicon_data', 'dbdb_icons_socicon_correct_slugs');
 add_filter('dbdb_icons_socicon_data', 'dbdb_icons_socicon_correct_names');
 add_filter('dbdb_icons_socicon_data', 'dbdb_icons_socicon_remove_defunct_networks');
 add_filter('dbdb_icons_socicon_data', 'dbdb_icons_socicon_sort_networks_by_name');
+
+if (!function_exists('dbdb_icons_socicon_inline_css')) {
+	function dbdb_icons_socicon_inline_css() {
+		$font_dir = plugin_dir_url(__FILE__).'socicon/fonts/';
+		?>
+<link rel="preload" href="<?php esc_attr_e($font_dir); ?>Socicon.woff2?87visu" as="font" crossorigin>
+<style>
+@font-face {
+  font-family: 'Socicon';
+  src:  url('<?php esc_attr_e($font_dir); ?>Socicon.eot?87visu');
+  src:  url('<?php esc_attr_e($font_dir); ?>Socicon.eot?87visu#iefix') format('embedded-opentype'),
+	url('<?php esc_attr_e($font_dir); ?>Socicon.woff2?87visu') format('woff2'),
+	url('<?php esc_attr_e($font_dir); ?>Socicon.ttf?87visu') format('truetype'),
+	url('<?php esc_attr_e($font_dir); ?>Socicon.woff?87visu') format('woff'),
+	url('<?php esc_attr_e($font_dir); ?>Socicon.svg?87visu#Socicon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+</style>
+		<?php
+	}
+}
 
 if (!function_exists('dbdb_icons_socicon_register_css')) {
 	function dbdb_icons_socicon_register_css() { 

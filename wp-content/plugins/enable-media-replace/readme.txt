@@ -2,9 +2,9 @@
 Contributors: ShortPixel
 Donate link: https://www.paypal.me/resizeImage
 Tags: replace, attachment, media, files, replace image, replace jpg, change media, replace media, image, file
-Requires at least: 4.2
+Requires at least: 4.9.7
 Tested up to: 5.3
-Requires PHP: 5.4
+Requires PHP: 5.6
 Stable tag: trunk
 
 Easily replace any attached image/file by simply uploading a new file in the Media Library edit view - a real time saver!
@@ -46,6 +46,27 @@ If you want more control over the format used to display the time, you can use t
 * [Regenerate Thumbnails Advanced](https://wordpress.org/plugins/regenerate-thumbnails-advanced/) - Fast, free and simple to use plugin to regenerate the thumbnails for your site after changing a theme (for example). Supported & maintained by [ShortPixel](https://ShortPixel.com)
 
 == Changelog ==
+
+= 3.3.9 =
+
+Release date: 19th February 2020
+* Fix issue with search/replacing non-image attachments and query
+
+= 3.3.8 =
+
+Release date: 18th February 2020
+* Fixes for WP 5.3+ -scaled images system. Will now replace those as well.
+* Updating and replacing images and thumbnails should now work for serialized (and such) metadata.
+  - For Beaver Builder
+* Add extra warning if mimetype is not allowed by WordPress for upload
+* Put Javascript version in wp_register_script
+* Hidden double 'replace media'
+* Replace Image label to Replace Media
+* Removed constant S3_UPLOADS_AUTOENABLE
+* Improved detection of SVG image sizes
+* Fixed - Logger doesn't call wp_upload_dir when not debugging
+* Extra - Javascript tries to resume after external errors.
+* Language – 0 new strings added, 2 updated, 0 fuzzied, and 0 obsoleted
 
 = 3.3.7 =
 

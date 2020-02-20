@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_NoticesPage extends Wbcr_FactoryClearfy214_PageBase {
+class WDN_NoticesPage extends Wbcr_FactoryClearfy217_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -52,9 +52,9 @@ class WDN_NoticesPage extends Wbcr_FactoryClearfy214_PageBase {
 
 
 	/**
-	 * @param Wbcr_Factory422_Plugin $plugin
+	 * @param Wbcr_Factory425_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory425_Plugin $plugin ) {
 		$this->menu_title = __( 'Hide admin notices', 'disable-admin-notices' );
 
 		$this->internal                   = false;
@@ -86,7 +86,7 @@ class WDN_NoticesPage extends Wbcr_FactoryClearfy214_PageBase {
 				'wbcr_dan_code' => 'interal_error'
 			),
 			'type' => 'danger',
-			'message' => __('An error occurred while trying to delete comments. Internal error occured. Please try again later.', 'factory_pages_422')
+			'message' => __('An error occurred while trying to delete comments. Internal error occured. Please try again later.', 'factory_pages_425')
 		);*/
 
 		return $notices;

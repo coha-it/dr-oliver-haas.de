@@ -29,18 +29,16 @@ function db_resolve_dynamic_content($content) {
 	}
 	$et_builder_value = et_builder_parse_dynamic_content($content);
 	
-	// Get the post id
-	global $post;
-	if (empty($post->ID)) {
+	$post_id = dbdb_get_current_post_id();
+	if (!$post_id) {
 		return $content; 
 	}
-	$post_id = $post->ID;
 	
 	// Resolve the content
 	if (!method_exists($et_builder_value, 'resolve')) {
 		return $content;
 	}
-	$content = $et_builder_value->resolve($post->ID);
+	$content = $et_builder_value->resolve($post_id);
 	
 	// Return the content
 	return $content;

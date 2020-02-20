@@ -21,9 +21,9 @@ class WGZ_Assets_Manager_Public {
 	public $collection = [];
 
 	/**
-	 * @param Wbcr_Factory422_Plugin $plugin
+	 * @param Wbcr_Factory425_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory425_Plugin $plugin ) {
 		$this->plugin = $plugin;
 
 		$this->register_hooks();
@@ -876,7 +876,7 @@ class WGZ_Assets_Manager_Public {
 					$s['select_control_classes']  = " js-wam-select--disable";
 					$s['settings_button_classes'] = "";
 
-					if ( $plugin_load_mode && 'enable' !== $plugin_load_mode ) {
+					if ( isset($plugin_load_mode) && 'enable' !== $plugin_load_mode ) {
 						$s['settings_button_classes'] = " js-wam-button--hidden";
 					}
 				} else {
@@ -1075,7 +1075,7 @@ class WGZ_Assets_Manager_Public {
 				'id'          => 'location-page',
 				'title'       => __( 'Custom URL', 'gonzales' ) . $pro_label,
 				'type'        => 'text',
-				'description' => __( 'An URL of the current page where a user who views your website is located.', 'gonzales' ),
+				'description' => __( 'An URL of the current page where a user who views your website is located. If you use the equals operator, paste in field the request url without the query string. For example: "/my-page" or "/my-page/subpage". If you use the "Contains" operator, use the request url part. For example: "page" will match 2 in the pages "/my-page/subpage" and "/my-page".', 'gonzales' ),
 				'disabled'    => ! defined( 'WGZP_PLUGIN_ACTIVE' )
 			],
 			[

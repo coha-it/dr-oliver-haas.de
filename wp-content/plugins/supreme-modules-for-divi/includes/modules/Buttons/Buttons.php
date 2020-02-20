@@ -523,7 +523,7 @@ class DSM_Button extends ET_Builder_Module {
 
 		// Render module output
 		$output = sprintf(
-			'<div class="et_pb_button_module_wrapper et_pb_button_%3$s_wrapper %2$s%4$s%5$s%8$s"%6$s%7$s>
+			'<div class="et_pb_button_module_wrapper dsm_button_%3$s_wrapper %2$s%4$s%5$s%8$s"%6$s%7$s>
 				%1$s
 			</div>',
 			$button_output,

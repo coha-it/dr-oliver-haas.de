@@ -17,7 +17,7 @@
 		 * The id of the page in the admin menu.
 		 *
 		 * Mainly used to navigate between pages.
-		 * @see FactoryPages422_AdminPage
+		 * @see FactoryPages425_AdminPage
 		 *
 		 * @since 1.0.0
 		 * @var string

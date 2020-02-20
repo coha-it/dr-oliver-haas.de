@@ -100,18 +100,11 @@ jQuery(function($){
 	$(document).on('click', '[data-action="deactivate_builder"] .et_pb_prompt_proceed', function() {
 		$('#wp-content-wrap').show();
 	});
-	<?php
-	$is_builder_used = 'on' === get_post_meta( $post->ID, '_et_pb_use_builder', true ) ? true : false;
-	if ($is_builder_used) {
-	?>
-	$('#wp-content-wrap').hide();
-	<?php 
-	} else {
-	?>
-	$('#wp-content-wrap').show();
-	<?php
-	}
-	?>
+	<?php if (dbdb_is_pagebuilder_used($post->ID)) { ?>
+		$('#wp-content-wrap').hide();
+	<?php } else { ?>
+		$('#wp-content-wrap').show();
+	<?php } ?>
 });
 </script>
 <style>

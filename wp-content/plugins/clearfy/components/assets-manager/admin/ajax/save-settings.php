@@ -203,7 +203,7 @@ function wam_save_settings_action() {
 		wbcr_gnz_deploy_mu_plugin();
 
 		// Flush cache for all cache plugins
-		WbcrFactoryClearfy214_Helpers::flushPageCache();
+		WbcrFactoryClearfy217_Helpers::flushPageCache();
 	}
 
 	wp_send_json_success( [

@@ -8,7 +8,7 @@ if (!dbdb_is_divi_2_4_up()) {
 		if (in_array( $post->post_type, array('page', 'project'))) return;
 		if (!post_type_supports($post->post_type, 'editor')) { return; }
 
-		$is_builder_used = 'on' === get_post_meta( $post->ID, '_et_pb_use_builder', true ) ? true : false;
+		$is_builder_used = dbdb_is_pagebuilder_used($post->ID);
 
 		printf( '<a href="#" id="et_pb_toggle_builder" data-builder="%2$s" data-editor="%3$s" class="button button-primary button-large%5$s">%1$s</a><div id="et_pb_main_editor_wrap"%4$s>',
 			( $is_builder_used ? __( 'Use Default Editor', 'Divi' ) : __( 'Use Page Builder', 'Divi' ) ),
@@ -25,7 +25,7 @@ if (!dbdb_is_divi_2_4_up()) {
 		if (!post_type_supports($post->post_type, 'editor')) { return; }
 		?>
 			<p class="et_pb_page_settings" style="display: none;">
-			<input type="hidden" id="et_pb_use_builder" name="et_pb_use_builder" value="<?php echo esc_attr( get_post_meta( $post->ID, '_et_pb_use_builder', true ) ); ?>" />
+			<input type="hidden" id="et_pb_use_builder" name="et_pb_use_builder" value="<?php esc_attr_e(dbdb_is_pagebuilder_used($post->ID)?'on':''); ?>" />
 			<textarea id="et_pb_old_content" name="et_pb_old_content"><?php echo esc_attr( get_post_meta( $post->ID, '_et_pb_old_content', true ) ); ?></textarea>
 			</p>
 			</div>

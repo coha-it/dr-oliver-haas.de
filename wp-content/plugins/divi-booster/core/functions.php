@@ -48,3 +48,19 @@ if (!function_exists('dbdb_enabled')) {
 		return apply_filters('dbdb_enabled', $enabled, $feature_slug);
 	}
 }
+
+if (!function_exists('dbdb_is_pagebuilder_used')) {
+	function dbdb_is_pagebuilder_used($post_id=0) {
+		return (function_exists('et_pb_is_pagebuilder_used') && et_pb_is_pagebuilder_used($post_id));
+	}
+}
+
+if (!function_exists('dbdb_get_current_post_id')) {
+	function dbdb_get_current_post_id() {
+		global $post;
+		if (isset($post) && is_object($post) && property_exists($post, 'ID')) {
+			return $post->ID;
+		}
+		return false;
+	}
+}

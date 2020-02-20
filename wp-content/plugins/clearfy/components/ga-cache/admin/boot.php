@@ -23,13 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 3.0.1
  *
- * @param Wbcr_FactoryPages422_ImpressiveThemplate $page
+ * @param Wbcr_FactoryPages425_ImpressiveThemplate $page
  *
- * @param Wbcr_Factory422_Plugin                   $plugin
+ * @param Wbcr_Factory425_Plugin                   $plugin
  *
  * @return void
  */
-add_action( 'wbcr_factory_422_imppage_after_form_save', function ( $plugin, $page ) {
+add_action( 'wbcr_factory_425_imppage_after_form_save', function ( $plugin, $page ) {
 	if ( WGA_Plugin::app()->getPluginName() != $plugin->getPluginName() ) {
 		return;
 	}

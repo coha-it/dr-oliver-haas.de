@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! defined( 'WDN_PLUGIN_ACTIVE' ) ) {
 	define( 'WDN_PLUGIN_VERSION', '1.1.0' );
+	define( 'WDN_TEXT_DOMAIN', 'disable-admin-notices' );
 	define( 'WDN_PLUGIN_ACTIVE', true );
 
 	// Этот плагин загружен, как аддон для плагина Clearfy

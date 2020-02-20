@@ -3,7 +3,14 @@ if (!defined('ABSPATH')) { exit(); } // No direct access
 
 // Register the icon styles
 function db121_enqueue_scripts() { 
+	$icons = db121_get_icons();
+	if (empty($icons)) { return; }
+	
 	wp_register_style('db121_socicons', plugin_dir_url(__FILE__).'icons.css', array(), BOOSTER_VERSION);
+	
+	// Load the icon styles
+	wp_enqueue_style('db121_socicons'); // Divi-specific socicon CSS
+	wp_enqueue_style('dbdb-icons-socicon'); // Socicon font
 }
 add_action('wp_enqueue_scripts', 'db121_enqueue_scripts');
 
@@ -76,65 +83,82 @@ function db121_customize_register($wp_customize){
 	); 
 }
 
+// === Add Icons to page
 
-add_action('wp_head', 'db121_icon_js');
+add_filter('et_html_top_header', 'db126_add_icons_to_html'); // Divi 3.1+
+add_action('wp_head', 'db121_icon_js'); // JS fallback, footer icons and Extra
+
+function db126_add_icons_to_html($html) {
+	$icons = db121_get_icons();
+	if (empty($icons) || !is_array($icons)) { return $html; }
+	foreach($icons as $k=>$icon) { 
+		if (!empty($icon['id'])) {
+			$html = preg_replace(
+				'/('.preg_quote('<ul class="et-social-icons"', '/').'.*?)('.preg_quote('</ul>', '/').')/s', 
+				'\\1 '.db126_icon_html_divi($icon).'\\2', 
+				$html
+			);
+		}
+	}
+	return $html;
+}
 
 function db121_icon_js() {
-	$networks = db121_get_networks();
-	$option = get_option('wtfdivi');
-	if (empty($option['fixes']['126-customizer-social-icons']['icons'])) { return; }
-
-	$icons = json_decode($option['fixes']['126-customizer-social-icons']['icons'], true); // decode json to php array
-
-	// Exits
-	if (empty($icons) || !is_array($icons)) { return; } // Icons not set
-	if (count($icons) == 1) { return; } // Only have the icon template, no actual icons
-	
-	// Load the icon styles
-	wp_enqueue_style('db121_socicons'); // Divi-specific socicon CSS
-	wp_enqueue_style('dbdb-icons-socicon'); // Socicon font
-	
+	$icons = db121_get_icons();
+	if (empty($icons)) { return; }
 	?>
 	<script>
 	jQuery(function($) {
 		<?php 
-		
 		foreach($icons as $k=>$icon) { 
-			
-			// Get the URL
-			$url = empty($icon['url'])?'':$icon['url'];
-			$scheme = parse_url($url, PHP_URL_SCHEME);
-			$path = parse_url($url, PHP_URL_PATH);
-			$url = (empty($scheme) && !empty($path))?"http://$url":$url; // add the scheme if missing
-			
-			// Get the ID
 			$id = empty($icon['id'])?false:$icon['id'];
-		
-			// Ouput the jQuery to add the icon
 			if ($id) {
-				
-				if ($id === 'custom') { // custom icon
-					?>
-					$('.et-social-icons').append('<li class="et-social-icon"><a href="<?php esc_attr_e($url); ?>" class="icon socicon socicon-custom"><img src="<?php esc_attr_e($icon['img']); ?>"></img></a></li>');
-					$('.et-extra-social-icons').append('<li class="et-extra-social-icon"><a href="<?php esc_attr_e($url); ?>" class="et-extra-icon et-extra-icon-background-hover socicon socicon-custom"><img src="<?php esc_attr_e($icon['img']); ?>"></img></a></li>');
-					<?php 
-				} else { // pre-defined icon
-					$span = isset($networks[$id])?'<span>'.esc_html($networks[$id]).'</span>':'';
-					$icon_class = 'socicon-'.$id;
-					?>
-					if ($('.<?php esc_attr_e($icon_class); ?>').length === 0) {
-						$('.et-social-icons').append('<li class="et-social-icon"><a href="<?php esc_attr_e($url); ?>" class="icon socicon socicon-<?php esc_attr_e($id) ?>"><?php echo $span; ?></a></li>');
-						$('.et-extra-social-icons').append('<li class="et-extra-social-icon"><a href="<?php esc_attr_e($url); ?>" class="et-extra-icon et-extra-icon-background-hover socicon socicon-<?php esc_attr_e($id) ?>"></a></li>');
-					}
-					<?php 
-				}  
+				?>
+				if ($('#top-header .socicon-<?php esc_attr_e($id); ?>').length === 0) {
+					$('#top-header .et-social-icons').append(<?php echo json_encode(db126_icon_html_divi($icon)); ?>);
+					$('#top-header .et-extra-social-icons').append(<?php echo json_encode(db126_icon_html_extra($icon)); ?>);
+				}
+				if ($('#footer-bottom .socicon-<?php esc_attr_e($id); ?>').length === 0) {
+					$('#footer-bottom .et-social-icons').append(<?php echo json_encode(db126_icon_html_divi($icon)); ?>);
+					$('#footer-bottom .et-extra-social-icons').append(<?php echo json_encode(db126_icon_html_extra($icon)); ?>);
+				}
+				<?php 
 			}
-
 		}
 		?>
 	});
 	</script>
 	<?php  
+}
+
+function db121_get_icons() {
+	$option = get_option('wtfdivi');
+	if (empty($option['fixes']['126-customizer-social-icons']['icons'])) { return array(); }
+	$icons = json_decode($option['fixes']['126-customizer-social-icons']['icons'], true); // decode json to php array
+	// Exits
+	if (empty($icons) || !is_array($icons)) { return array(); } // Icons not set
+	if (count($icons) == 1) { return array(); } // Only have the icon template, no actual icons
+	return $icons;
+}
+
+function db126_icon_html_divi($icon) {
+	$id = empty($icon['id'])?false:$icon['id'];
+	$networks = db121_get_networks();
+	$span = isset($networks[$id])?'<span>'.esc_html($networks[$id]).'</span>':'';
+	return '<li class="et-social-icon"><a href="'.esc_attr(db126_get_icon_url($icon)).'" class="icon socicon socicon-'.esc_attr($id).'">'.$span.'</a></li>';
+}
+
+function db126_icon_html_extra($icon) {
+	$id = empty($icon['id'])?false:$icon['id'];
+	return '<li class="et-extra-social-icon"><a href="'.esc_attr(db126_get_icon_url($icon)).'" class="et-extra-icon et-extra-icon-background-hover socicon socicon-'.esc_attr($id).'"></a></li>';
+}
+
+function db126_get_icon_url($icon) {
+	$url = empty($icon['url'])?'':$icon['url'];
+	$scheme = parse_url($url, PHP_URL_SCHEME);
+	$path = parse_url($url, PHP_URL_PATH);
+	$url = (empty($scheme) && !empty($path))?"http://$url":$url; // add the scheme if missing
+	return $url;
 }
 
 // In customizer preview, replace the red circle on icon links with an alert box, so it doesn't look like there has been an error adding the link

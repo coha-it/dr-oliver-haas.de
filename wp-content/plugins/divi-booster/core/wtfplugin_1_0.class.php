@@ -484,7 +484,7 @@ class wtfplugin_1_0 {
 		);
 		if ($alpha) { 
 			$attribs['data-alpha'] = true;
-			$attribs['class'].=' color-picker';
+			$attribs['class'] = $attribs['class'].' color-picker';
 		}
 		echo $this->input($attribs);
 	}

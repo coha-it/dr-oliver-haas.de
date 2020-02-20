@@ -230,9 +230,18 @@ class MC4WP_Debug_Log {
 		$htaccess_file = $dirname . '/.htaccess';
 		$lines = array(
 			'# MC4WP Start',
-			sprintf( '<Files %s>', $filename ),
+			'# Apache 2.2',
+			'<IfModule !authz_core_module>',
+			"<Files $filename>",
 			'deny from all',
 			'</Files>',
+			'</IfModule>',
+			'# Apache 2.4+',
+			'<IfModule authz_core_module>',
+			"<Files $filename>",
+			'Require all denied',
+			'</Files>',
+			'</IfModule>',
 			'# MC4WP End',
 		);
 
@@ -243,7 +252,7 @@ class MC4WP_Debug_Log {
 
 		$htaccess_content = file_get_contents( $htaccess_file );
 		if ( strpos( $htaccess_content, $lines[0] ) === false ) {
-			file_put_contents( $htaccess_file, join( PHP_EOL, $lines ), FILE_APPEND );
+			file_put_contents( $htaccess_file, PHP_EOL . PHP_EOL . join( PHP_EOL, $lines ), FILE_APPEND );
 			return;
 		}
 	}

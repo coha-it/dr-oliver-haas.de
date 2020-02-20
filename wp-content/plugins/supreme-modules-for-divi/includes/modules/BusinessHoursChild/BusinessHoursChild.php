@@ -161,6 +161,7 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 					'main' => '%%order_class%% .dsm-business-hours-image img',
 				),
 			),*/
+			'position_fields'       => false,
 		);
 	}
 

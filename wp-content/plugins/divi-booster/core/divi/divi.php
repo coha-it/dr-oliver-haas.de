@@ -1,5 +1,21 @@
 <?php // Divi / theme functions
 
+if (!function_exists('dbdb_css_selector')) {
+	function dbdb_css_selector($key) {
+		$selectors = array(
+			'page_layout_select_box' => '#et_settings_meta_box select#et_pb_page_layout'
+		);
+		return isset($selectors[$key])?$selectors[$key]:false;
+	}
+}
+
+// Alternative to WP's __return_false() - can be used with remove_filter without affecting other plugins
+if (!function_exists('dbdb_return_false')) {
+	function dbdb_return_false() {
+		return false;
+	}
+}
+
 // Safe wrapper for et_get_option
 if (!function_exists('dbdb_et_get_option')) {
 	function dbdb_et_get_option($option_name, $default_value='') {

@@ -65,7 +65,7 @@ class DSM_Settings {
                 array(
                     'name'  => 'dsm_use_scheduled_content',
                     'class' => 'dsm-settings-checkbox',
-                    'label' => __( 'Enable Scheduled Content on Section & Row', 'dsm-supreme-modules-for-divi' ),
+                    'label' => __( 'Enable Scheduled Element on Section & Row', 'dsm-supreme-modules-for-divi' ),
                     'desc'  => __( '<span class="slider round"></span>', 'dsm-supreme-modules-for-divi' ),
                     'type'  => 'checkbox',
                     'default' => 'off'

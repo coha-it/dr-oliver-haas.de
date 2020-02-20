@@ -692,7 +692,7 @@ class Dsm_Supreme_Modules_For_Divi {
     public function dsm_add_section_setting($fields_unprocessed) {
         $fields = [];
         $fields['dsm_section_schedule_visibility'] = array(
-            'label'            => esc_html__( 'Use Scheduled Content Visibility', 'dsm-supreme-modules-for-divi' ),
+            'label'            => esc_html__( 'Use Scheduled Element', 'dsm-supreme-modules-for-divi' ),
             'type'            => 'yes_no_button',
             'option_category' => 'configuration',
             'options'         => array(
@@ -735,26 +735,39 @@ class Dsm_Supreme_Modules_For_Divi {
     public function output_section( $output, $render_slug, $module ) {
         if ('et_pb_section' !== $render_slug) {
             return $output;
-        } else if ('on' !== $module->props['dsm_section_schedule_visibility']) {
-            return $output;
         } else {
             $dsm_section_schedule_visibility = $module->props['dsm_section_schedule_visibility'];
             $dsm_section_schedule_show_hide = $module->props['dsm_section_schedule_show_hide'];
             $dsm_section_schedule_after_datetime = $module->props['dsm_section_schedule_after_datetime'];
+            $dsm_section_current_wp_date = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ));
+            if ( isset($dsm_section_schedule_visibility) && $dsm_section_schedule_visibility === 'on' ) {
+                if ( is_array( $output ) ) {
+                    return $output;
+                }
 
-            $dsm_section_class_output = '';
-            if ($dsm_section_schedule_visibility == 'on') {
-                $dsm_section_class_output .= ' dsm_schedule_visibility';
+                if ($dsm_section_schedule_show_hide === 'start') {
+                    if ($dsm_section_schedule_after_datetime >= $dsm_section_current_wp_date ) {
+                        return;
+                    } else {
+                        $output;
+                    }
+                } else {
+                    if ($dsm_section_schedule_after_datetime <= $dsm_section_current_wp_date ) {
+                        return;
+                    } else {
+                        $output;
+                    }
+                }
             }
-            $output = str_replace('class="et_pb_section ', 'data-dsm-' . esc_html($dsm_section_schedule_show_hide) . '="' . esc_html($dsm_section_schedule_after_datetime) . '" class="et_pb_section'. $dsm_section_class_output .' ', $output);
-            return $output;
+            
         }
+        return $output;
     }
 
     public function dsm_add_row_setting($fields_unprocessed) {
         $fields = [];
         $fields['dsm_row_schedule_visibility'] = array(
-            'label'            => esc_html__( 'Use Scheduled Content Visibility', 'dsm-supreme-modules-for-divi' ),
+            'label'            => esc_html__( 'Use Scheduled Element', 'dsm-supreme-modules-for-divi' ),
             'type'            => 'yes_no_button',
             'option_category' => 'configuration',
             'options'         => array(
@@ -797,20 +810,33 @@ class Dsm_Supreme_Modules_For_Divi {
     public function output_row( $output, $render_slug, $module ) {
         if ('et_pb_row' !== $render_slug) {
             return $output;
-        } else if ('on' !== $module->props['dsm_row_schedule_visibility']) {
-            return $output;
         } else {
             $dsm_row_schedule_visibility = $module->props['dsm_row_schedule_visibility'];
             $dsm_row_schedule_show_hide = $module->props['dsm_row_schedule_show_hide'];
             $dsm_row_schedule_after_datetime = $module->props['dsm_row_schedule_after_datetime'];
+            $dsm_row_current_wp_date = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ));
+            if ( isset($dsm_row_schedule_visibility) && $dsm_row_schedule_visibility === 'on' ) {
+                if ( is_array( $output ) ) {
+                    return $output;
+                }
 
-            $dsm_row_class_output = '';
-            if ($dsm_row_schedule_visibility == 'on') {
-                $dsm_row_class_output .= ' dsm_schedule_visibility';
+                if ($dsm_row_schedule_show_hide === 'start') {
+                    if ($dsm_row_schedule_after_datetime >= $dsm_row_current_wp_date ) {
+                        return;
+                    } else {
+                        $output;
+                    }
+                } else {
+                    if ($dsm_row_schedule_after_datetime <= $dsm_row_current_wp_date ) {
+                        return;
+                    } else {
+                        $output;
+                    }
+                }
             }
-            $output = str_replace('class="et_pb_row ', 'data-dsm-' . esc_html($dsm_row_schedule_show_hide) . '="' . esc_html($dsm_row_schedule_after_datetime) . '" class="et_pb_row'. $dsm_row_class_output .' ', $output);
-            return $output;
+            
         }
+        return $output;
     }
 
 	/**

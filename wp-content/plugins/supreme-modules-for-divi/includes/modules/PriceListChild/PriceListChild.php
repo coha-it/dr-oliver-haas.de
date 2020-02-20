@@ -104,6 +104,7 @@ class DSM_PriceList_Child extends ET_Builder_Module {
 					'main' => '%%order_class%% .dsm-pricelist-image img',
 				),
 			),
+			'position_fields'       => false,
 		);
 	}
 

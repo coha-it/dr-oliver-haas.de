@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy214_Configurate {
+class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
 
 	public function registerActionsAndFilters() {
 		if ( is_admin() ) {

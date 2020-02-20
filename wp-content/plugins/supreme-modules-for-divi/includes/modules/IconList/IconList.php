@@ -200,6 +200,38 @@ class DSM_Icon_List extends ET_Builder_Module {
 				'responsive'      => true,
 				'hover'           => 'tabs',
 			),
+			'list_alignment' => array(
+				'label'           => esc_html__( 'Alignment', 'dsm-supreme-modules-for-divi' ),
+				'description'     => esc_html__( 'The List can be placed either above, below or in the center of the module.', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'select',
+				'option_category' => 'layout',
+				'options'         => array(
+					'flex-start'    => esc_html__( 'Left', 'dsm-supreme-modules-for-divi' ),
+					'center' => esc_html__( 'Center', 'dsm-supreme-modules-for-divi' ),
+					'flex-end' => esc_html__( 'Right', 'dsm-supreme-modules-for-divi' ),
+				),
+				'default' => 'flex-start',
+				'mobile_options'  => true,
+				'responsive'      => true,
+				'tab_slug' => 'advanced',
+				'toggle_slug'     => 'list',
+			),
+			'list_vertical_alignment' => array(
+				'label'           => esc_html__( 'Vertical Alignment', 'dsm-supreme-modules-for-divi' ),
+				'description'     => esc_html__( 'The List can be placed either above, below or in the center of the module.', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'select',
+				'option_category' => 'layout',
+				'options'         => array(
+					'flex-start'    => esc_html__( 'Top', 'dsm-supreme-modules-for-divi' ),
+					'center' => esc_html__( 'Vertically Centered', 'dsm-supreme-modules-for-divi' ),
+					'flex-end' => esc_html__( 'Bottom', 'dsm-supreme-modules-for-divi' ),
+				),
+				'default' => 'center',
+				'mobile_options'  => true,
+				'responsive'      => true,
+				'tab_slug' => 'advanced',
+				'toggle_slug'     => 'list',
+			),
 			'list_space_between' => array(
 				'label'             => esc_html__( 'Space Between', 'dsm-supreme-modules-for-divi' ),
 				'type'              => 'range',
@@ -349,6 +381,16 @@ class DSM_Icon_List extends ET_Builder_Module {
 		$text_indent_phone       = $this->props['text_indent_phone'];
 		$text_indent_last_edited = $this->props['text_indent_last_edited'];
 
+		$list_alignment = $this->props['list_alignment'];
+		$list_alignment_tablet      = $this->props['list_alignment_tablet'];
+		$list_alignment_phone       = $this->props['list_alignment_phone'];
+		$list_alignment_last_edited = $this->props['list_alignment_last_edited'];
+
+		$list_vertical_alignment = $this->props['list_vertical_alignment'];
+		$list_vertical_alignment_tablet      = $this->props['list_vertical_alignment_tablet'];
+		$list_vertical_alignment_phone       = $this->props['list_vertical_alignment_phone'];
+		$list_vertical_alignment_last_edited = $this->props['list_vertical_alignment_last_edited'];
+
 		$icon_selector = '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child .dsm_icon_list_icon';
 		$text_selector = '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child .dsm_icon_list_icon+.dsm_icon_list_text';
 
@@ -474,6 +516,52 @@ class DSM_Icon_List extends ET_Builder_Module {
 			}
 		}
 
+		$list_alignment_style        = sprintf( 'justify-content: %1$s;', esc_attr( $list_alignment ) );
+		$list_alignment_tablet_style = '' !== $list_alignment_tablet ? sprintf( 'justify-content: %1$s;', esc_attr( $list_alignment_tablet ) ) : '';
+		$list_alignment_tablet_style  = '' !== $list_alignment_phone ? sprintf( 'justify-content: %1$s;', esc_attr( $list_alignment_phone ) ) : '';
+
+		if ( 'flex-start' !== $list_alignment ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child, %%order_class%% .dsm_icon_list_items .dsm_icon_list_child a',
+				'declaration' => $list_alignment_style,
+			) );
+		}
+
+		ET_Builder_Element::set_style( $render_slug, array(
+			'selector'    => '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child, %%order_class%% .dsm_icon_list_items .dsm_icon_list_child a',
+			'declaration' => $list_alignment_tablet_style,
+			'media_query' => ET_Builder_Element::get_media_query( 'max_width_980' ),
+		) );
+
+		ET_Builder_Element::set_style( $render_slug, array(
+			'selector'    => '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child, %%order_class%% .dsm_icon_list_items .dsm_icon_list_child a',
+			'declaration' => $list_alignment_tablet_style,
+			'media_query' => ET_Builder_Element::get_media_query( 'max_width_767' ),
+		) );
+
+		$list_vertical_alignment_style        = sprintf( 'align-items: %1$s;', esc_attr( $list_vertical_alignment ) );
+		$list_vertical_alignment_tablet_style = '' !== $list_vertical_alignment_tablet ? sprintf( 'align-items: %1$s;', esc_attr( $list_vertical_alignment_tablet ) ) : '';
+		$list_vertical_alignment_tablet_style  = '' !== $list_vertical_alignment_phone ? sprintf( 'align-items: %1$s;', esc_attr( $list_vertical_alignment_phone ) ) : '';
+
+		if ( 'center' !== $list_vertical_alignment ) {
+			ET_Builder_Element::set_style( $render_slug, array(
+				'selector'    => '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child, %%order_class%% .dsm_icon_list_items .dsm_icon_list_child a',
+				'declaration' => $list_vertical_alignment_style,
+			) );
+		}
+
+		ET_Builder_Element::set_style( $render_slug, array(
+			'selector'    => '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child, %%order_class%% .dsm_icon_list_items .dsm_icon_list_child a',
+			'declaration' => $list_vertical_alignment_tablet_style,
+			'media_query' => ET_Builder_Element::get_media_query( 'max_width_980' ),
+		) );
+
+		ET_Builder_Element::set_style( $render_slug, array(
+			'selector'    => '%%order_class%% .dsm_icon_list_items .dsm_icon_list_child, %%order_class%% .dsm_icon_list_items .dsm_icon_list_child a',
+			'declaration' => $list_vertical_alignment_tablet_style,
+			'media_query' => ET_Builder_Element::get_media_query( 'max_width_767' ),
+		) );
+	
 		if ( '' !== $list_space_between ) {
 			$list_space_between_responsive_active = et_pb_get_responsive_status( $list_space_between_last_edited );
 	 

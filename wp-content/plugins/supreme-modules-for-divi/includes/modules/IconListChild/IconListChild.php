@@ -453,7 +453,7 @@ class DSM_Icon_List_Child extends ET_Builder_Module {
 			'tag'     => 'span',
 			'content' => '{{font_icon}}',
 			'attrs'   => array(
-				'class' => 'd dsm_icon_list_icon et-pb-icon',
+				'class' => 'dsm_icon_list_icon',
 			),
 		) );
 

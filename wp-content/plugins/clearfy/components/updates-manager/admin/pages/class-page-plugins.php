@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WUPM_PluginsPage extends Wbcr_FactoryClearfy214_PageBase {
+class WUPM_PluginsPage extends Wbcr_FactoryClearfy217_PageBase {
 
 	/**
 	 *{@inheritDoc}
@@ -83,9 +83,9 @@ class WUPM_PluginsPage extends Wbcr_FactoryClearfy214_PageBase {
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
-	 * @param \Wbcr_Factory422_Plugin $plugin
+	 * @param \Wbcr_Factory425_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory422_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory425_Plugin $plugin ) {
 		$this->menu_title = __( 'Plugins', 'webcraftic-updates-manager' );
 
 		parent::__construct( $plugin );
@@ -121,8 +121,8 @@ class WUPM_PluginsPage extends Wbcr_FactoryClearfy214_PageBase {
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
-	 * @param \Wbcr_Factory422_ScriptList $scripts
-	 * @param \Wbcr_Factory422_StyleList  $styles
+	 * @param \Wbcr_Factory425_ScriptList $scripts
+	 * @param \Wbcr_Factory425_StyleList  $styles
 	 */
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
