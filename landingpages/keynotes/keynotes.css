@@ -31,8 +31,8 @@ h1, h2, h3, h4, h5, h6 {
 .date.day {font-size: 1.6em;line-height: .8em;}
 .date.month {}
 
+.image-wrapper, .image-inner {cursor: pointer;}
 .image-wrapper {min-width: 220px;min-height: 220px;display: block;position: relative;}
-
 .image-inner {  background-size: 100%;  width: 100%;  height: 100%;  display: inline-block;  position: absolute;  left: 0;  top: 0;  background-repeat: no-repeat;  background-position: center;  background-size: cover;}
 
 .info-box {padding: 0px 0 0 25px;width: 100%;max-width: 600px;}
@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     border-width: 1px !important;
     border-radius: 0;
-    border-color: inherit;
+    border-color: #9c9c9c !important;
     color: #9c9c9c !important;
     transition: 500ms;
 }

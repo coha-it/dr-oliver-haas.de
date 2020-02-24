@@ -1,5 +1,5 @@
-<!-- <link rel="stylesheet" type="text/css" href="/landingpages/keynotes/keynotes.css"> -->
-<link rel="stylesheet" type="text/css" href="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.css">
+<link rel="stylesheet" type="text/css" href="/landingpages/keynotes/keynotes.css"> 
+<!-- <link rel="stylesheet" type="text/css" href="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.css"> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"></script>
@@ -16,12 +16,12 @@
 				<div class="date year">{{ event.d_y }}</div>
 			</div>
 			<div class="image-wrapper">
-        <div class="image-inner" v-bind:style="getBackground(event)"></div>
+        <a v-bind:href="event.art_url" target="_blank" class="image-inner" v-bind:style="getBackground(event)" rel="noopener noreferrer"></a>
 			</div>
 			<div class="info-box">
-				<h2 class="title">
+				<a v-bind:href="event.art_url" target="_blank" rel="noopener noreferrer"><h2 class="title">
 					{{ event.name }}
-				</h2>
+				</h2></a>
 				<div class="place">
           {{ event.place }}
           <span v-if="event.address" class="address">{{ event.address }}</span>
@@ -37,6 +37,6 @@
 	</ul>
 </div>
 </div>
-<!-- <script src="/landingpages/keynotes/keynotes.js"></script> -->
-<script src="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.js"></script>
+<script src="/landingpages/keynotes/keynotes.js"></script>
+<!-- <script src="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.js"></script> -->
 &nbsp;
