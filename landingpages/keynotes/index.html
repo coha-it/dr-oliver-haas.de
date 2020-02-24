@@ -1,0 +1,42 @@
+<!-- <link rel="stylesheet" type="text/css" href="/landingpages/keynotes/keynotes.css"> -->
+<link rel="stylesheet" type="text/css" href="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.css">
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"></script>
+<div id="app" v-bind:class="wrapperClass">
+<div class="keynotes-outer-wrapper">
+  <div class="follower">
+    <div class="triangle"></div>
+  </div>
+	<ul class="keynotes-inner-wrapper">
+		<li v-for="(event, i) in events" class="keynote" v-bind:style="getListElementStyling(event, i)">
+			<div class="date-wrapper">
+				<div class="date day">{{ event.d_d }}</div>
+				<div class="date month">{{ event.d_m }}</div>
+				<div class="date year">{{ event.d_y }}</div>
+			</div>
+			<div class="image-wrapper">
+        <div class="image-inner" v-bind:style="getBackground(event)"></div>
+			</div>
+			<div class="info-box">
+				<h2 class="title">
+					{{ event.name }}
+				</h2>
+				<div class="place">
+          {{ event.place }}
+          <span v-if="event.address" class="address">{{ event.address }}</span>
+				</div>
+				<div class="description">
+					{{ event.desc }}
+				</div>
+				<div class="button-wrapper">
+					<a v-bind:href="event.art_url" target="_blank" class="keynote-btn et_pb_button et_pb_bg_layout_dark et_pb_bg_layout_light " rel="noopener noreferrer">Zum Event</a>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+</div>
+<!-- <script src="/landingpages/keynotes/keynotes.js"></script> -->
+<script src="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.js"></script>
+&nbsp;
