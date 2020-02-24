@@ -3,7 +3,7 @@
   var h1 = document.getElementsByTagName('h1')[0];
   var h1txt = h1.innerHTML;
 
-  var ntxt = h1txt.replace(/Keynotes /, 'Keynotes <span class="smaller">');
+  var ntxt = h1txt.replace(/Termine /, 'Termine <span class="smaller">');
 
   // if changes
   if (ntxt != h1txt) {
