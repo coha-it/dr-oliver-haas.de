@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
-.main_title { font-family: GeomanistBold !important; font-size: 45px; position: relative; }
+.main_title { font-family: Geomanist !important;font-weight: 700; font-size: 45px; position: relative; }
 .main_title .smaller { font-size: .5em; color: gray; padding: 0 30px; letter-spacing: .1em; }
 .main_title:before {background: #F2C02A;content: "";position: absolute;bottom: 110%;min-width: 50px;width: 12%;height: 10px;}
 
@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .place {display: inline-block;background: #848484;color: #000;padding: 4px 10px;border-radius: 6px;font-size: 12px;line-height: 1.2;font-weight: 600;position: relative;cursor: help;}
 
-.title {font-family: GeomanistBold !important;padding: 5px 0;max-width: 400px;}
+.title {font-family: Geomanist !important; font-weight: 700;padding: 5px 0;max-width: 400px;}
 
 .keynote-button {}
 
