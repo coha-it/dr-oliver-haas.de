@@ -7,7 +7,7 @@ Stylesheet: Main Stylesheet
 
 /* Globals */
 body #et-boc .et_pb_column strong,
-body #et-boc .et_pb_column b {font-family: 'Geomanistbold', 'geomanistbold', 'geomanistregular';font-weight: normal;}
+body #et-boc .et_pb_column b {font-family: Geomanist;font-weight: 900;}
 .et_pb_section {overflow: hidden;}
 
 /* =============== OWL */
