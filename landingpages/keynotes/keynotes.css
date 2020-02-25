@@ -204,7 +204,12 @@ d
   100% {transform: scale(1);}
 }
 
-
 /* Expired */
 .keynote.expired > * { pointer-events: none; opacity: .4; }
 .keynote.expired:before {display: block;position: absolute;top: 5%;right: 0;content: "Expired";color: white;font-weight: 700;font-size: 20px;z-index: 1;transform: rotate(25deg);}
+.expired .follower {height: 100%;}
+.expired .follower .triangle,
+.expired .follower:after {display: none;}
+
+
+
