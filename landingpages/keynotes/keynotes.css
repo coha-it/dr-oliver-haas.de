@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
-.main_title { font-family: Geomanist !important; font-weight: 700; font-size: 45px; position: fixed; top: 0; left: 0; background: #1d1d1d; width: 100%; padding: 50px 30px 0; z-index: 2; }
+.main_title {font-family: Geomanist !important;font-weight: 700;font-size: 45px;position: fixed;top: 0;left: 0;background: #1d1d1d;width: 100%;padding: 50px 30px 0;z-index: 10;}
 .main_title .smaller { font-size: .5em; color: gray; padding: 0 30px; letter-spacing: .1em; }
 .main_title:before {background: #F2C02A; content: ""; position: absolute; top: 35px; min-width: 50px; width: 12%; height: 10px;}
 
@@ -207,4 +207,4 @@ d
 
 /* Expired */
 .keynote.expired > * { pointer-events: none; opacity: .4; }
-.keynote.expired:before { display: block; position: absolute; top: 5%; right: 0; content: "Expired"; color: white; font-weight: 700; font-size: 20px; z-index: 9; transform: rotate(25deg); }
+.keynote.expired:before {display: block;position: absolute;top: 5%;right: 0;content: "Expired";color: white;font-weight: 700;font-size: 20px;z-index: 1;transform: rotate(25deg);}
