@@ -7,9 +7,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
-.main_title { font-family: Geomanist !important;font-weight: 700; font-size: 45px; position: relative; }
+.main_title { font-family: Geomanist !important; font-weight: 700; font-size: 45px; position: fixed; top: 0; left: 0; background: #1d1d1d; width: 100%; padding: 50px 30px 0; z-index: 2; }
 .main_title .smaller { font-size: .5em; color: gray; padding: 0 30px; letter-spacing: .1em; }
-.main_title:before {background: #F2C02A;content: "";position: absolute;bottom: 110%;min-width: 50px;width: 12%;height: 10px;}
+.main_title:before {background: #F2C02A; content: ""; position: absolute; top: 35px; min-width: 50px; width: 12%; height: 10px;}
 
 .container {
     width: 100%;
@@ -196,9 +196,15 @@ d
 /* Animate */
 .keynote {
   animation: zoomIn 450ms cubic-bezier(0.23, 1.04, 0.46, 1.05);
+  position: relative;
 }
 
 @keyframes zoomIn {
   0% {transform: scale(0) translateY(50%) rotate(25deg);}
   100% {transform: scale(1);}
 }
+
+
+/* Expired */
+.keynote.expired > * { pointer-events: none; opacity: .4; }
+.keynote.expired:before { display: block; position: absolute; top: 5%; right: 0; content: "Expired"; color: white; font-weight: 700; font-size: 20px; z-index: 9; transform: rotate(25deg); }

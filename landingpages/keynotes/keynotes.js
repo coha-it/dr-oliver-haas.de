@@ -26,44 +26,47 @@ var app = new Vue({
       'August','September', 'Oktober','November','Dezember'
     ],
     wrapperClass: 'pre',
+    wrappers: [
+      {
+        follower: false,
+        class: 'expired',
+        filter: function (event) {
+          return event.expired == true;
+        }
+      },
+      {
+        follower: true,
+        class: 'available',
+        filter: function (event) {
+          return event.expired == false;
+        }
+      }
+    ]
   },
   mounted () {
     this.callApi();
 
     var _t = this;
     window.addEventListener('load', function () {
+      // Add Post Class
       _t.wrapperClass = 'post'
+
+      // Scroll to First Available
+      var $ = jQuery;
+      $('html, body').stop().animate( {
+        'scrollTop': $('.keynote.available').offset().top - $('.main_title').outerHeight()
+      });
     })
   },
   methods: {
     callApi: function () {
       axios.get(this.url).then(response => (this.events = response['data']))
     },
-    // getDate: function(event) {
-    //   return new Date(event.date);
-    // },
-    // getDay: function(event) {
-    //   var iDay = this.getDate(event).getDay();
-    //   var sDay = iDay.toString();
-    //   return (iDay <= 9) ? "0"+sDay : sDay;
-    // },
-    // getMonth: function(event) {
-    //   var _t = this;
-    //   // return 2;
-    //   return _t.getDate(event).getMonth();
-    //   return _t.aMonthNames[
-    //     _t.getDate(event).getMonth()
-    //   ].substring(0, 3);
-    // },
-    // getYear: function(event) {
-    //   return this.getDate(event).getFullYear();
-    // },
     getBackground: function(event) {
       return 'background-image: url("'+ event.img_url + '")';
     },
     getListElementStyling: function (event, i) {
       var delay = (i+1)*100;
-
       return 'transition-delay: '+delay+';';
     }
   }

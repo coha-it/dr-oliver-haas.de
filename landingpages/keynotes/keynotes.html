@@ -1,15 +1,15 @@
 <link rel="stylesheet" type="text/css" href="/landingpages/keynotes/keynotes.css"> 
-<!-- <link rel="stylesheet" type="text/css" href="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.css"> -->
+<link rel="stylesheet" type="text/css" href="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.css">
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"></script>
 <div id="app" v-bind:class="wrapperClass">
-<div class="keynotes-outer-wrapper">
-  <div class="follower">
+<div v-for="wrapper in wrappers" v-bind:class="wrapper.class" class="keynotes-outer-wrapper">
+  <div v-if="wrapper.follower" class="follower">
     <div class="triangle"></div>
   </div>
 	<ul class="keynotes-inner-wrapper">
-		<li v-for="(event, i) in events" class="keynote" v-bind:style="getListElementStyling(event, i)">
+		<li v-for="(event, i) in events" v-if="wrapper.filter(event)" class="keynote" v-bind:class="wrapper.class" v-bind:style="getListElementStyling(event, i)">
 			<div class="date-wrapper">
 				<div class="date day">{{ event.d_d }}</div>
 				<div class="date month">{{ event.d_m }}</div>
@@ -37,6 +37,6 @@
 	</ul>
 </div>
 </div>
-<script src="/landingpages/keynotes/keynotes.js"></script>
-<!-- <script src="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.js"></script> -->
+<!-- <script src="/landingpages/keynotes/keynotes.js"></script> -->
+<script src="https://dr-oliver-haas.local/landingpages/keynotes/keynotes.js"></script>
 &nbsp;
