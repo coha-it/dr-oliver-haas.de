@@ -40,7 +40,7 @@ Version: 5
 
 h1, h2, h3, h4, h5, h6, #site-logo, .post-title, .widgettitle {
     font-family: Geomanist !important;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 p {
