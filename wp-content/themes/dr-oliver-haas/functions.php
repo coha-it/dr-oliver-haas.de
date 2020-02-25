@@ -18,7 +18,7 @@ function theme_enqueue_styles() {
 // Add Custom CSS and JS
 function add_theme_codes() {
 
-    $version = '5.5.0';
+    $version = '5.5.1';
     // $version = rand(1,99999);
 
     // **** CSS **** //
