@@ -103,6 +103,7 @@ d
   top: 0;
   height: calc(100% - 100px);
   border-left: 2px dashed #5A5A5A;
+  border-color: #868686;
   margin-top: 100px;
 }
 
@@ -207,7 +208,7 @@ d
 /* Expired */
 .keynote.expired > * { pointer-events: none; opacity: .4; }
 .keynote.expired:before {display: block;position: absolute;top: 5%;right: 0;content: "Expired";color: white;font-weight: 700;font-size: 20px;z-index: 1;transform: rotate(25deg);}
-.expired .follower {height: 100%;}
+.expired .follower {height: 100%;border-color: #4a4a4a;}
 .expired .follower .triangle,
 .expired .follower:after {display: none;}
 
