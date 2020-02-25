@@ -1,7 +1,7 @@
 /******************************************************************
 Site Name: MySite.com
 Author: @BenRacicot
-Version: 4.0 // <- wp_enqueue_style's version number
+Version: 4.1 // <- wp_enqueue_style's version number
 Stylesheet: Main Stylesheet
 ******************************************************************/
 
@@ -167,3 +167,6 @@ body .et_header_style_split .mobile_menu_bar {padding-bottom: 0px;}
 .et_pb_module.et_pb_video,
 iframe,
 .lazy-hidden {background-color: transparent;}
+
+/* iFrame Fixes */
+iframe {background: transparent !important;height: auto !important;}
