@@ -31,7 +31,7 @@ class CWS_PageLinksTo {
 	const DISMISSED_NOTICES = 'page_links_dismissed_options';
 	const MESSAGE_ID = 4;
 	const NEWSLETTER_URL = 'https://pages.convertkit.com/8eb23c1339/1ce4614706';
-	const CSS_JS_VERSION = '3.3.2';
+	const CSS_JS_VERSION = '3.3.3';
 
 	/**
 	 * Whether to replace WP links with their specified URLs.
@@ -194,6 +194,7 @@ class CWS_PageLinksTo {
 			if ( self::is_supported_post_type( $type ) ) {
 				$this->register_meta( self::LINK_META_KEY, $type );
 				$this->register_meta( self::TARGET_META_KEY, $type );
+				do_action( 'page_links_to_register_meta_for_post_type', $type );
 			}
 		}
 	}
@@ -345,6 +346,7 @@ class CWS_PageLinksTo {
 					'newTab' => self::supports( 'new_tab' ),
 				],
 			]);
+			do_action( 'page_links_to_enqueue_block_editor_assets' );
 		}
 	}
 

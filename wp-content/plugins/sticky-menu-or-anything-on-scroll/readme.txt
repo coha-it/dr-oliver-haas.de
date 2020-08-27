@@ -1,24 +1,24 @@
-=== Sticky Menu (or Anything!) on Scroll ===
-Contributors: senff, webfactory, wpreset, underconstructionpage
-Tags: sticky header, sticky menu, sticky, header, menu
+=== Sticky Menu, Sticky Header (or anything!) on Scroll ===
+Contributors: webfactory, wpreset, underconstructionpage, googlemapswidget
+Tags: sticky header, sticky menu, sticky, header, sticky widget, floating menu, menu
 Plugin URI: https://wordpress.org/plugins/sticky-menu-or-anything-on-scroll/
 Requires at least: 3.6
-Tested up to: 5.3
-Stable tag: 2.2
+Tested up to: 5.4
+Stable tag: 2.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Sticky Menu (Or Anything) On Scroll lets you choose any element that will be "sticky" at the top once you scroll down.
+Sticky Menu or Sticky Header lets you stick any element at the top of the screen when you scroll, or create a floating menu.
 
 == Description ==
 
-The Sticky Menu (Or Anything) On Scroll plugin for WordPress allows you to **make any element on your pages "sticky"** as soon as it hits the top of the page when you scroll down. Although this is commonly used to keep menus at the top of your page, the plugin allows you to make ANY element sticky (such as a Call To Action box, a logo, etc.)
+The Sticky Menu (or Sticky Header) On Scroll plugin allows you to **make any element on your pages "sticky"** as soon as it hits the top of the page when you scroll down. Although this is commonly used to keep menus at the top of your page to create floating menus, the plugin allows you to make any element sticky. Make a sticky header, stick menu, sticky widget, sticky logo, sticky call to action or a floating menu.
 
 A little bit of basic HTML/CSS knowledge is required. You just need to know how to pick the right selector for the element you want to make sticky, and you need to be sure it's a unique selector. Sometimes a simple selector like "nav", "#main-menu", ".menu-main-menu-1" is enough. Other times you will have to be more detailed and use a more specific selector such as "header > ul:first-child" or "nav.top .menu-header ul.main".
 
 = Features =
 
-* **Any element can stick**: although common use is for navigation menus, the plugin will let you pick any unique element with a name, class or ID to stick at the top of the page once you scroll past it. Use it for a sidebar, Call-to-action box, banner ad, etc.
+* **Any element can stick**: although common use is for navigation menus, or header the plugin will let you pick any unique element with a name, class or ID to stick at the top of the page once you scroll past it. Use it for sticky widget, sticky sidebar, sticky header, sticky menu, sticky header, sticky call-to-action box, sticky banner ad, etc.
 * **Positioning from top**: optionally, you can add any amount of space between the sticky element and the top of the page, so that the element is not always stuck at the "ceiling" of the page.
 * **Enable for certain screen sizes only**: optionally, you can set a minimum and/or maximum screen size where the stickiness should work. This can be handy if you have a responsive site and you don't want your element to be sticky on smaller screens, for example.
 * **Push-up element**: optionally, you can pick any other element lower on the page that will push the sticky element up again (for example a sidebar widget).
@@ -115,8 +115,8 @@ Why don't we use Dynamic Mode all the time then? This has to do with the fact th
 
 Phew!
 
-= I'll need more help please! =
-Please go to the plugin's [support forum on WordPress.org](https://wordpress.org/support/plugin/sticky-menu-or-anything-on-scroll) and post a message (include a link to your site if possible). Repsonse time is usually within a few hours maximum.
+= I need more help please! =
+Please go to the plugin's [support forum on WordPress.org](https://wordpress.org/support/plugin/sticky-menu-or-anything-on-scroll) and post a message (include a link to your site if possible).
 
 
 == Screenshots ==
@@ -126,6 +126,10 @@ Please go to the plugin's [support forum on WordPress.org](https://wordpress.org
 
 
 == Changelog ==
+
+= 2.21 =
+* 2020-06-19
+* security fix - thanks to Antony from Sucuri
 
 = 2.2 =
 * 2020-02-01

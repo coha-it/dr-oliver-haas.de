@@ -52,7 +52,7 @@
     display: none;
 }
 
-.dsm-settings-checkbox .slider {
+.dsm-settings-checkbox .dsm-settings-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -64,7 +64,7 @@
     transition: .4s;
 }
 
-.dsm-settings-checkbox .slider:before {
+.dsm-settings-checkbox .dsm-settings-slider:before {
     position: absolute;
     content: "";
     height: 16px;
@@ -76,27 +76,35 @@
     transition: .4s;
 }
 
-.dsm-settings-checkbox input:checked+.slider {
+.dsm-settings-checkbox input:checked+.dsm-settings-slider {
     background-color: #6b09eb;
 }
 
-.dsm-settings-checkbox input:focus+.slider {
+.dsm-settings-checkbox input:focus+.dsm-settings-slider {
     box-shadow: 0 0 1px #6b09eb;
 }
 
-.dsm-settings-checkbox input:checked+.slider:before {
+.dsm-settings-checkbox input:checked+.dsm-settings-slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
 
 
-.dsm-settings-checkbox .round {
+.dsm-settings-checkbox .dsm-settings-round {
     border-radius: 24px;
 }
 
-.dsm-settings-checkbox .round:before {
+.dsm-settings-checkbox .dsm-settings-round:before {
     border-radius: 50%;
+}
+
+.dsm-settings-panel .setting_subheading {
+    border-bottom: 1px solid #eee;
+    padding: 0 0 1em 0;
+}
+.dsm-settings-panel .setting_subheading_title {
+    margin: 0.5em 0;
 }
 
 .dsm-settings-panel  p.submit .button-primary {

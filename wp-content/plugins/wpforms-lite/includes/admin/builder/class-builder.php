@@ -294,6 +294,13 @@ class WPForms_Builder {
 		);
 
 		wp_enqueue_script(
+			'choicesjs',
+			WPFORMS_PLUGIN_URL . 'assets/js/choices.min.js',
+			array(),
+			'9.0.1'
+		);
+
+		wp_enqueue_script(
 			'listjs',
 			WPFORMS_PLUGIN_URL . 'assets/js/list.min.js',
 			array( 'jquery' ),
@@ -301,9 +308,16 @@ class WPForms_Builder {
 		);
 
 		wp_enqueue_script(
+			'dom-purify',
+			WPFORMS_PLUGIN_URL . 'assets/js/purify.min.js',
+			array(),
+			'2.0.8'
+		);
+
+		wp_enqueue_script(
 			'wpforms-utils',
 			WPFORMS_PLUGIN_URL . 'assets/js/admin-utils.js',
-			array(),
+			array( 'jquery', 'dom-purify' ),
 			WPFORMS_VERSION
 		);
 
@@ -327,6 +341,7 @@ class WPForms_Builder {
 			'ajax_url'                       => admin_url( 'admin-ajax.php' ),
 			'bulk_add_button'                => esc_html__( 'Add New Choices', 'wpforms-lite' ),
 			'bulk_add_show'                  => esc_html__( 'Bulk Add', 'wpforms-lite' ),
+			'are_you_sure_to_close'          => esc_html__( 'Are you sure you want to leave? You have unsaved changes', 'wpforms-lite' ),
 			'bulk_add_hide'                  => esc_html__( 'Hide Bulk Add', 'wpforms-lite' ),
 			'bulk_add_heading'               => esc_html__( 'Add Choices (one per line)', 'wpforms-lite' ),
 			'bulk_add_placeholder'           => esc_html__( "Blue\nRed\nGreen", 'wpforms-lite' ),
@@ -406,7 +421,7 @@ class WPForms_Builder {
 			'payments_entries_off'           => esc_html__( 'Entry storage is currently disabled, but is required to accept payments. Please enable in your form settings.', 'wpforms-lite' ),
 			'payments_on_entries_off'        => esc_html__( 'This form is currently accepting payments. Entry storage is required to accept payments. To disable entry storage, please first disable payments.', 'wpforms-lite' ),
 			'previous'                       => esc_html__( 'Previous', 'wpforms-lite' ),
-			'provider_required_flds'         => esc_html__( 'Your form contains required {provider} settings that have not been configured. Please double-check and configure these settings to complete the connection setup.', 'wpforms-lite' ),
+			'provider_required_flds'         => esc_html__( "In order to complete your form's {provider} integration, please check that the dropdowns for all required (*) List Fields have been filled out.", 'wpforms-lite' ),
 			'rule_create'                    => esc_html__( 'Create new rule', 'wpforms-lite' ),
 			'rule_create_group'              => esc_html__( 'Add new group', 'wpforms-lite' ),
 			'rule_delete'                    => esc_html__( 'Delete rule', 'wpforms-lite' ),
@@ -428,10 +443,14 @@ class WPForms_Builder {
 
 		$strings = apply_filters( 'wpforms_builder_strings', $strings, $this->form );
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		if ( ! empty( $_GET['form_id'] ) ) {
-			$strings['preview_url'] = esc_url( wpforms_get_form_preview_url( $_GET['form_id'] ) );
-			$strings['entries_url'] = esc_url( admin_url( 'admin.php?page=wpforms-entries&view=list&form_id=' . (int) $_GET['form_id'] ) );
+			$form_id = (int) $_GET['form_id'];
+
+			$strings['preview_url'] = esc_url( add_query_arg( 'new_window', 1, wpforms_get_form_preview_url( $form_id ) ) );
+			$strings['entries_url'] = esc_url( admin_url( 'admin.php?page=wpforms-entries&view=list&form_id=' . $form_id ) );
 		}
+		// phpcs:enable
 
 		wp_localize_script(
 			'wpforms-builder',
@@ -450,14 +469,20 @@ class WPForms_Builder {
 	 */
 	public function footer_scripts() {
 
+		$countries        = wpforms_countries();
+		$countries_postal = array_keys( $countries );
+		$countries        = array_values( $countries );
+		sort( $countries_postal );
+		sort( $countries );
+
 		$choices = array(
 			'countries'        => array(
 				'name'    => esc_html__( 'Countries', 'wpforms-lite' ),
-				'choices' => array_values( wpforms_countries() ),
+				'choices' => $countries,
 			),
 			'countries_postal' => array(
 				'name'    => esc_html__( 'Countries Postal Code', 'wpforms-lite' ),
-				'choices' => array_keys( wpforms_countries() ),
+				'choices' => $countries_postal,
 			),
 			'states'           => array(
 				'name'    => esc_html__( 'States', 'wpforms-lite' ),

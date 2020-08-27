@@ -4,11 +4,11 @@ Plugin Name: Divi Booster
 Plugin URI: 
 Description: Bug fixes and enhancements for Elegant Themes' Divi Theme.
 Author: Dan Mossop
-Version: 3.1.6
+Version: 3.2.6
 Author URI: https://divibooster.com
 */	
 
-define('BOOSTER_VERSION', '3.1.6'); 
+define('BOOSTER_VERSION', '3.2.6'); 
 
 if (!function_exists('dbdb_file')) {
 	function dbdb_file() {
@@ -36,7 +36,6 @@ if (!function_exists('dbdb_slug')) {
 
 if (!function_exists('dbdb_update_url')) {
 	function dbdb_update_url() {
-		//return apply_filters('dbdb_update_url', 'https://dansupdates.com/?action=get_metadata&slug='.dbdb_slug());
 		return apply_filters('dbdb_update_url', 'https://d3mraia2v9t5x8.cloudfront.net/updates.json');
 	}
 }
@@ -56,10 +55,6 @@ define('BOOSTER_SLUG_OLD', $slug);
 define('BOOSTER_VERSION_OPTION', 'divibooster_version');
 define('BOOSTER_SETTINGS_PAGE_SLUG', BOOSTER_SLUG_OLD.'_settings');
 define('BOOSTER_NAME', __('Divi Booster', BOOSTER_SLUG));
-
-// Updates
-// define('BOOSTER_PACKAGE_NAME', 'divi-booster');
-// define('BOOSTER_PACKAGE_URL', 'https://dansupdates.com/?action=get_metadata&slug='.BOOSTER_PACKAGE_NAME);
 
 // Error Handling
 define('BOOSTER_OPTION_LAST_ERROR', 'wtfdivi_last_error');
@@ -82,17 +77,16 @@ $sections = array(
 	'general-layout'=>'Layout',
 	'general-links'=>'Links',
 	'general-speed'=>'Site Speed',
-	/*'general-social'=>'Social Media',*/
 	'header'=>'Header',
 	'header-top'=>'Top Header',
 	'header-main'=>'Main Header',
 	'header-mobile'=>'Mobile Header',
 	'posts'=>'Posts',
-	//'pages'=>'Pages',
 	'sidebar'=>'Sidebar',
 	'footer'=>'Footer',
 	'pagebuilder'=>'Divi Builder',
-	'pagebuilder-divi'=>'Standard Builder',
+	'pagebuilder-divi'=>'General',
+	'pagebuilder-classic'=>'Classic Builder',
 	'pagebuilder-visual'=>'Visual Builder',
 	'modules'=>'Modules',
 	'modules-accordion'=>'Accordion',
@@ -107,7 +101,6 @@ $sections = array(
 	'modules-postnav'=>'Post Navigation',
 	'modules-postslider'=>'Post Slider',
 	'modules-pricing'=>'Pricing Table',
-	/*'modules-shop'=>'Shop',*/
 	'modules-subscribe'=>'Signup',
 	'modules-slider'=>'Slider',
 	'modules-text'=>'Text',
@@ -123,6 +116,7 @@ $sections = array(
 	'developer-footer-html'=>'Generated Footer HTML',
 	'developer-htaccess'=>'Generated .htaccess Rules',
 	'deprecated'=>'Deprecated (now available in Divi)',
+	'deprecated-divi4'=>'Divi 4',
 	'deprecated-divi24'=>'Divi 2.4',
 	'deprecated-divi23'=>'Pre Divi 2.4'
 );
@@ -190,6 +184,16 @@ if (class_exists('wtfplugin_1_0')) {
 } else {
 	add_action('admin_notices', 'db_admin_notice_main_class_missing');
 }
+
+// Store and return an instance of the plugin
+function dbdb_plugin($instance=null) {
+	static $plugin;
+	if (!is_null($instance)) { 
+		$plugin = $instance;
+	}
+	return $plugin;
+}
+dbdb_plugin($wtfdivi);
 
 if (!function_exists('db_admin_notice_main_class_missing')) {
 	function db_admin_notice_main_class_missing() {

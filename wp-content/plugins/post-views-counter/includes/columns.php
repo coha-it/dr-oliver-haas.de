@@ -14,11 +14,13 @@ class Post_Views_Counter_Columns {
 		// actions
 		add_action( 'admin_init', array( $this, 'register_new_column' ) );
 		add_action( 'post_submitbox_misc_actions', array( $this, 'submitbox_views' ) );
+		add_action( 'attachment_submitbox_misc_actions', array( $this, 'submitbox_views' ) );
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
+		add_action( 'edit_attachment', array( $this, 'save_post' ), 10 );
 		add_action( 'bulk_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
 		add_action( 'quick_edit_custom_box', array( $this, 'quick_edit_custom_box' ), 10, 2 );
 		add_action( 'wp_ajax_save_bulk_post_views', array( $this, 'save_bulk_post_views' ) );
-		
+
 		// gutenberg
 		add_action( 'plugins_loaded', array( $this, 'init_gutemberg' ) );
 	}
@@ -54,15 +56,19 @@ class Post_Views_Counter_Columns {
 	 */
 	public function gutenberg_rest_api_init() {
 		// get views route
-		register_rest_route( 'post-views-counter', '/update-post-views/', array(
-			'methods'				=> array( 'POST' ),
-			'callback'				=> array( $this, 'gutenberg_update_callback' ),
-			'args'					=> array(
-				'id' => array(
-					'sanitize_callback' => 'absint',
+		register_rest_route(
+			'post-views-counter',
+			'/update-post-views/',
+			array(
+				'methods'	=> array( 'POST' ),
+				'callback'	=> array( $this, 'gutenberg_update_callback' ),
+				'args'		=> array(
+					'id' => array(
+						'sanitize_callback' => 'absint',
+					)
 				)
 			)
-		) );
+		);
 	}
 	
 	/**
@@ -97,10 +103,7 @@ class Post_Views_Counter_Columns {
 
 		global $wpdb;
 
-		$count = apply_filters( 'pvc_update_post_views_count', $post_views, $post_id );
-
-		// insert or update db post views count
-		$wpdb->query( $wpdb->prepare( "INSERT INTO " . $wpdb->prefix . "post_views (id, type, period, count) VALUES (%d, %d, %s, %d) ON DUPLICATE KEY UPDATE count = %d", $post_id, 4, 'total', $count, $count ) );
+		pvc_update_post_views( $post_id, $post_views );
 
 		do_action( 'pvc_after_update_post_views_count', $post_id );
 
@@ -156,9 +159,7 @@ class Post_Views_Counter_Columns {
 	public function submitbox_views() {
 		global $post;
 
-		$post_types = Post_Views_Counter()->options['general']['post_types_count'];
-
-		if ( ! in_array( $post->post_type, (array) $post_types ) )
+		if ( ! in_array( $post->post_type, (array) Post_Views_Counter()->options['general']['post_types_count'] ) )
 			return;
 
 		// break if current user can't edit this post
@@ -209,7 +210,12 @@ class Post_Views_Counter_Columns {
 	 * @param int $post_id
 	 * @param object $post
 	 */
-	public function save_post( $post_id, $post ) {
+	public function save_post( $post_id, $post = null ) {
+		if ( is_null( $post ) )
+			$post_type = get_post_type( $post_id );
+		else
+			$post_type = $post->post_type;
+
 		// break if doing autosave
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return $post_id;
@@ -232,7 +238,7 @@ class Post_Views_Counter_Columns {
 		// break if post views in not one of the selected
 		$post_types = Post_Views_Counter()->options['general']['post_types_count'];
 
-		if ( ! in_array( $post->post_type, (array) $post_types ) )
+		if ( ! in_array( $post_type, (array) $post_types ) )
 			return $post_id;
 
 		// break if views editing is restricted
@@ -245,12 +251,7 @@ class Post_Views_Counter_Columns {
 		if ( ! isset( $_POST['pvc_nonce'] ) || ! wp_verify_nonce( $_POST['pvc_nonce'], 'post_views_count' ) )
 			return $post_id;
 
-		global $wpdb;
-
-		$count = apply_filters( 'pvc_update_post_views_count', $post_views, $post_id );
-
-		// insert or update db post views count
-		$wpdb->query( $wpdb->prepare( "INSERT INTO " . $wpdb->prefix . "post_views (id, type, period, count) VALUES (%d, %d, %s, %d) ON DUPLICATE KEY UPDATE count = %d", $post_id, 4, 'total', $count, $count ) );
+		pvc_update_post_views( $post_id, $post_views );
 
 		do_action( 'pvc_after_update_post_views_count', $post_id );
 	}
@@ -263,12 +264,28 @@ class Post_Views_Counter_Columns {
 
 		if ( ! empty( $post_types ) ) {
 			foreach ( $post_types as $post_type ) {
-				// actions
-				add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'add_new_column_content' ), 10, 2 );
+				if ( $post_type === 'attachment' ) {
+					// actions
+					add_action( 'manage_media_custom_column', array( $this, 'add_new_column_content' ), 10, 2 );
 
-				// filters
-				add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'add_new_column' ) );
-				add_filter( 'manage_edit-' . $post_type . '_sortable_columns', array( $this, 'register_sortable_custom_column' ) );
+					// filters
+					add_filter( 'manage_media_columns', array( $this, 'add_new_column' ) );
+					add_filter( 'manage_upload_sortable_columns', array( $this, 'register_sortable_custom_column' ) );
+				} else {
+					// actions
+					add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'add_new_column_content' ), 10, 2 );
+
+					// filters
+					add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'add_new_column' ) );
+					add_filter( 'manage_edit-' . $post_type . '_sortable_columns', array( $this, 'register_sortable_custom_column' ) );
+
+					if ( class_exists( 'bbPress' ) ) {
+						if ( $post_type === 'forum' )
+							add_filter( 'bbp_admin_forums_column_headers', array( $this, 'add_new_column' ) );
+						elseif ( $post_type === 'topic' )
+							add_filter( 'bbp_admin_topics_column_headers', array( $this, 'add_new_column' ) );
+					}
+				}
 			}
 		}
 	}
@@ -296,10 +313,10 @@ class Post_Views_Counter_Columns {
 		$offset = 0;
 
 		if ( isset( $columns['date'] ) )
-			$offset ++;
+			$offset++;
 
 		if ( isset( $columns['comments'] ) )
-			$offset ++;
+			$offset++;
 
 		if ( $offset > 0 ) {
 			$date = array_slice( $columns, -$offset, $offset, true );

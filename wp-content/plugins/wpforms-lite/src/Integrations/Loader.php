@@ -33,10 +33,12 @@ class Loader {
 	public function __construct() {
 
 		$core_class_names = array(
+			'Elementor\Elementor',
 			'Gutenberg\FormSelector',
 			'SiteHealth\SiteHealth',
 			'WPMailSMTP\Notifications',
 			'WPorg\Translations',
+			'UsageTracking\UsageTracking',
 		);
 
 		$class_names = \apply_filters( 'wpforms_integrations_available', $core_class_names );

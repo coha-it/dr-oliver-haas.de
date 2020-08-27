@@ -639,10 +639,10 @@ class Divi_Booster_PluginUpdateChecker {
 
 		if ( $cachedResult === null ) {
 			//Convert both paths to the canonical form before comparison.
-			$muPluginDir = realpath(WPMU_PLUGIN_DIR);
+			$muPluginDir = strval(realpath(WPMU_PLUGIN_DIR));
 			$pluginPath  = realpath($this->pluginAbsolutePath);
 
-			$cachedResult = (strpos($pluginPath, $muPluginDir) === 0);
+			$cachedResult = empty($muPluginDir)?false:(strpos($pluginPath, $muPluginDir) === 0);
 		}
 
 		return $cachedResult;

@@ -35,8 +35,11 @@ function wpforms_settings_output_field( $args ) {
 	// Custom row classes.
 	$class = ! empty( $args['class'] ) ? wpforms_sanitize_classes( (array) $args['class'], true ) : '';
 
+	// Allow hiding blocks on page load (useful for JS toggles).
+	$display_none = ! empty( $args['is_hidden'] ) ? 'style="display:none;"' : '';
+
 	// Build standard field markup and return.
-	$output = '<div class="wpforms-setting-row wpforms-setting-row-' . sanitize_html_class( $args['type'] ) . ' wpforms-clear ' . $class . '" id="wpforms-setting-row-' . wpforms_sanitize_key( $args['id'] ) . '">';
+	$output = '<div class="wpforms-setting-row wpforms-setting-row-' . sanitize_html_class( $args['type'] ) . ' wpforms-clear ' . $class . '" id="wpforms-setting-row-' . wpforms_sanitize_key( $args['id'] ) . '" ' . $display_none . '>';
 
 	if ( ! empty( $args['name'] ) && empty( $args['no_label'] ) ) {
 		$output .= '<span class="wpforms-setting-label">';
@@ -144,7 +147,7 @@ function wpforms_settings_license_callback( $args ) {
 	}
 
 	$key  = wpforms_setting( 'key', '', 'wpforms_license' );
-	$type = wpforms_setting( 'type', '', 'wpforms_license' );
+	$type = wpforms_get_license_type();
 
 	$output  = '<input type="password" id="wpforms-setting-license-key" value="' . esc_attr( $key ) . '" />';
 	$output .= '<button id="wpforms-setting-license-key-verify" class="wpforms-btn wpforms-btn-md wpforms-btn-orange">' . esc_html__( 'Verify Key', 'wpforms-lite' ) . '</button>';
@@ -253,23 +256,31 @@ function wpforms_settings_select_callback( $args ) {
 	$select_name = $id;
 	$class       = ! empty( $args['choicesjs'] ) ? 'choicesjs-select' : '';
 	$choices     = ! empty( $args['choicesjs'] ) ? true : false;
-	$data        = '';
+	$data        = isset( $args['data'] ) ? (array) $args['data'] : array();
+	$attr        = isset( $args['attr'] ) ? (array) $args['attr'] : array();
 
 	if ( $choices && ! empty( $args['search'] ) ) {
-		$data .= ' data-search="true"';
+		$data['search'] = 'true';
 	}
 
 	if ( ! empty( $args['placeholder'] ) ) {
-		$data .= ' data-placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+		$data['placeholder'] = $args['placeholder'];
 	}
 
 	if ( $choices && ! empty( $args['multiple'] ) ) {
-		$data       .= ' multiple';
+		$attr[]      = 'multiple';
 		$select_name = $id . '[]';
 	}
 
+	foreach ( $data as $name => $val ) {
+		$data[ $name ] = 'data-' . sanitize_html_class( $name ) . '="' . esc_attr( $val ) . '"';
+	}
+
+	$data = implode( ' ', $data );
+	$attr = implode( ' ', array_map( 'sanitize_html_class', $attr ) );
+
 	$output  = $choices ? '<span class="choicesjs-select-wrap">' : '';
-	$output .= '<select id="wpforms-setting-' . $id . '" name="' . $select_name . '" class="' . $class . '"' . $data . '>';
+	$output .= '<select id="wpforms-setting-' . $id . '" name="' . $select_name . '" class="' . $class . '"' . $data . $attr . '>';
 
 	foreach ( $args['options'] as $option => $name ) {
 		if ( empty( $args['selected'] ) ) {

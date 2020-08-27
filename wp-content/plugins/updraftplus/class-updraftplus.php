@@ -98,6 +98,7 @@ class UpdraftPlus {
 		
 		// Create admin page
 		add_action('init', array($this, 'handle_url_actions'));
+		add_action('init', array($this, 'updraftplus_single_site_maintenance_init'));
 		// Run earlier than default - hence earlier than other components
 		// admin_menu runs earlier, and we need it because options.php wants to use $updraftplus_admin before admin_init happens
 		add_action(apply_filters('updraft_admin_menu_hook', 'admin_menu'), array($this, 'admin_menu'), 9);
@@ -604,6 +605,31 @@ class UpdraftPlus {
 		}
 	}
 
+	/**
+	 * This function will check if this is a multisite and if our maintenance mode file is present if so return a service unavailable
+	 *
+	 * @return void
+	 */
+	public function updraftplus_single_site_maintenance_init() {
+		
+		if (!is_multisite()) return;
+		
+		$wp_upload_dir = wp_upload_dir();
+		$subsite_dir = $wp_upload_dir['basedir'].'/';
+		
+		if (!file_exists($subsite_dir.'.maintenance')) return;
+		
+		$timestamp = file_get_contents($subsite_dir.'.maintenance');
+		$time = time();
+
+		if ($time - $timestamp > 3600) {
+			unlink($subsite_dir.'.maintenance');
+			return;
+		}
+		
+		wp_die('<h1>'.__('Under Maintenance', 'updraftplus') .'</h1><p>'.__('Briefly unavailable for scheduled maintenance. Check back in a minute.', 'updraftplus').'</p>');
+	}
+
 	public function get_table_prefix($allow_override = false) {
 		global $wpdb;
 		if (is_multisite() && !defined('MULTISITE')) {
@@ -775,6 +801,22 @@ class UpdraftPlus {
 			$got_wp_version = $wp_version;
 		}
 		return $got_wp_version;
+	}
+
+	/**
+	 * Get the UpdraftPlus version and convert it to the correct format to be used in filenames
+	 *
+	 * @return String - the file version number
+	 */
+	public function get_updraftplus_file_version() {
+		
+		if ($this->use_unminified_scripts()) return '';
+		
+		$version_parts = explode('.', $this->version);
+		$version_parts = array_slice($version_parts, 0, 3);
+		$version = implode('.', $version_parts);
+		
+		return '-'.str_replace('.', '-', $version).'.min';
 	}
 
 	/**
@@ -1410,7 +1452,7 @@ class UpdraftPlus {
 
 			// Some more remains to download - so let's do it
 			// N.B. We use ftell(), which precludes us from using open in append-only ('a') mode - see https://php.net/manual/en/function.fopen.php
-			if (!($fh = fopen($fullpath, 'c'))) {// phpcs:ignore PHPCompatibility.ParameterValues.NewFopenModes.cFound -- Passing "c" as the $mode to fopen() is not supported in PHP 5.2.5 or lower. Found 'c'
+			if (!($fh = fopen($fullpath, 'c+'))) {// phpcs:ignore PHPCompatibility.ParameterValues.NewFopenModes.cplusFound -- Passing "c+" as the $mode to fopen() is not supported in PHP 5.2.5 or lower. Found 'c+'
 				$this->log("Error opening local file: $fullpath");
 				$this->log($file.": ".__("Error", 'updraftplus').": ".__('Error opening local file: Failed to download', 'updraftplus'), 'error');
 				return false;
@@ -1454,7 +1496,7 @@ class UpdraftPlus {
 					} else {
 						$ret = filesize($fullpath);
 						// fseek returns - on success
-						if (false == ($fh = fopen($fullpath, 'c')) || 0 !== fseek($fh, $ret)) {// phpcs:ignore PHPCompatibility.ParameterValues.NewFopenModes.cFound -- Passing "c" as the $mode to fopen() is not supported in PHP 5.2.5 or lower. Found 'c'
+						if (false == ($fh = fopen($fullpath, 'c+')) || 0 !== fseek($fh, $ret)) {// phpcs:ignore PHPCompatibility.ParameterValues.NewFopenModes.cplusFound -- Passing "c+" as the $mode to fopen() is not supported in PHP 5.2.5 or lower. Found 'c+'
 							$this->log("Error opening local file: $fullpath");
 							$this->log($file.": ".__("Error", 'updraftplus').": ".__('Error opening local file: Failed to download', 'updraftplus'), 'error');
 							return false;
@@ -1482,6 +1524,15 @@ class UpdraftPlus {
 			$this->log('Error ('.get_class($e).') - failed to download the file ('.$e->getCode().', '.$e->getMessage().', line '.$e->getLine().' in '.$e->getFile().')');
 			$this->log("$file: ".__('Error - failed to download the file', 'updraftplus').' ('.$e->getCode().', '.$e->getMessage().')', 'error');
 			return false;
+		}
+
+		// April 1st 2020 - Due to a bug during uploads to Dropbox some backups had string "null" appended to the end which caused warnings, this removes the string "null" from these backups
+		if ('dropbox' == $method->get_id()) {
+			fseek($fh, -4, SEEK_END);
+			$data = fgets($fh, 5);
+			if ("null" == $data) {
+				ftruncate($fh, filesize($fullpath) - 4);
+			}
 		}
 
 		fclose($fh);
@@ -3015,9 +3066,10 @@ class UpdraftPlus {
 		}
 	
 		if (!is_string($service) && !is_array($service)) {
-			$all_services = UpdraftPlus_Options::get_updraft_option('updraft_service');
+			$all_services = !empty($options['remote_storage_instances']) ? array_keys($options['remote_storage_instances']) : UpdraftPlus_Options::get_updraft_option('updraft_service');
+			$remote_storage_instances = !empty($options['remote_storage_instances']) ? $options['remote_storage_instances'] : array();
 			if (is_string($all_services))  $all_services = (array) $all_services;
-			$enabled_storage_objects_and_ids = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids($all_services);
+			$enabled_storage_objects_and_ids = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids($all_services, $remote_storage_instances);
 			$service = array_keys($enabled_storage_objects_and_ids);
 		}
 		$service = $this->just_one($service);
@@ -3145,6 +3197,8 @@ class UpdraftPlus {
 		if (is_array($options) && !empty($options['label'])) array_push($initial_jobdata, 'label', $options['label']);
 		
 		if (!empty($options['always_keep'])) array_push($initial_jobdata, 'always_keep', true);
+
+		if (!empty($options['remote_storage_instances'])) array_push($initial_jobdata, 'remote_storage_instances', $options['remote_storage_instances']);
 
 		try {
 			// Use of jobdata_set_multi saves around 200ms
@@ -3464,6 +3518,7 @@ class UpdraftPlus {
 		$this->attachments = apply_filters('updraft_report_attachments', $attachments);
 
 		if (count($this->attachments) > 0) add_action('phpmailer_init', array($this, 'phpmailer_init'));
+		add_action('phpmailer_init', array($this, 'set_sender_email_address'), 9);
 
 		$attach_size = 0;
 		$unlink_files = array();
@@ -3509,6 +3564,7 @@ class UpdraftPlus {
 		foreach ($unlink_files as $file) @unlink($file);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
 		do_action('updraft_report_finished');
+		remove_action('phpmailer_init', array($this, 'set_sender_email_address'), 9);
 		if (count($this->attachments) > 0) remove_action('phpmailer_init', array($this, 'phpmailer_init'));
 
 	}
@@ -3529,7 +3585,22 @@ class UpdraftPlus {
 			}
 		}
 	}
-	
+
+	/**
+	 * Set the email sender to the administration email address
+	 *
+	 * @param Object $phpmailer PHPMailer object
+	 */
+	public function set_sender_email_address($phpmailer) {
+		$sitename = preg_replace('/^www\./i', '', strtolower($_SERVER['SERVER_NAME']));
+		$admin_email = get_bloginfo('admin_email');
+		$admin_email_domain = preg_replace('/^[^@]+@(.+)$/', "$1", $admin_email);
+		if (trim(strtolower($sitename)) === trim(strtolower($admin_email_domain))) {
+			// assuming (non validating) that the email account of the admin email does exist, and the admin email is under the same domain as with the web domain and the domain exists and live as well
+			$phpmailer->setFrom(get_bloginfo('admin_email'), sprintf(__('UpdraftPlus on %s', 'updraftplus'), $sitename), false);
+		}
+	}
+
 	/**
 	 * This function returns 'true' if mod_rewrite could be detected as unavailable; a 'false' result may mean it just couldn't find out the answer
 	 *
@@ -3840,7 +3911,7 @@ class UpdraftPlus {
 	/**
 	 * For detecting another run, and aborting if one was found
 	 *
-	 * @param  String $file - full file path of the file to check
+	 * @param String $file - full file path of the file to check
 	 */
 	public function check_recent_modification($file) {
 		if (file_exists($file)) {
@@ -4006,9 +4077,10 @@ class UpdraftPlus {
 		$backup_array['service_instance_ids'] = array();
 		if ('incremental' != $job_type) $backup_array['always_keep'] = $this->jobdata_get('always_keep', false);
 		$backup_array['files_enumerated_at'] = $this->jobdata_get('files_enumerated_at');
+		$remote_storage_instances = $this->jobdata_get('remote_storage_instances', array());
 		
 		// N.B. Though the saved 'service' option can have various forms (especially if upgrading from (very) old versions), in the jobdata, it is always an array.
-		$storage_objects_and_ids = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids($backup_array['service']);
+		$storage_objects_and_ids = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids($backup_array['service'], $remote_storage_instances);
 		
 		// N.B. On PHP 5.5+, we'd use array_column()
 		foreach ($storage_objects_and_ids as $method => $method_information) {
@@ -4220,6 +4292,33 @@ class UpdraftPlus {
 		$this->backup_dir = $updraft_dir;
 
 		return $updraft_dir;
+	}
+
+	/**
+	 * This function will work out the total size of the passed in backup and return it.
+	 *
+	 * @param array $backup - an array of information about this backup set
+	 *
+	 * @return integer - the total size of the backup in bytes
+	 */
+	public function get_total_backup_size($backup) {
+		
+		$backupable_entities = $this->get_backupable_file_entities(true, true);
+		
+		// Add the database to the entities array ready to loop over
+		$backupable_entities['db'] = '';
+
+		$total_size = 0;
+		foreach ($backup as $ekey => $files) {
+			if (!isset($backupable_entities[$ekey])) continue;
+			if (is_string($files)) $files = array($files);
+			foreach ($files as $findex => $file) {
+				$size_key = (0 == $findex) ? $ekey.'-size' : $ekey.$findex.'-size';
+				$total_size = (false === $total_size || !isset($backup[$size_key]) || !is_numeric($backup[$size_key])) ? false : $total_size + $backup[$size_key];
+			}
+		}
+
+		return $total_size;
 	}
 
 	public function spool_file($fullpath, $encryption = '') {
@@ -4484,12 +4583,16 @@ class UpdraftPlus {
 		$tables_found = array();
 		$db_charsets_found = array();
 
+		$db_scan_timed_out = false;
+		$php_max_input_vars_exceeded = false;
+
 		// TODO: If the backup is the right size/checksum, then we could restore the $line <= 100 in the 'while' condition and not bother scanning the whole thing? Or better: sort the core tables to be first so that this usually terminates early
 
 		$wanted_tables = array('terms', 'term_taxonomy', 'term_relationships', 'commentmeta', 'comments', 'links', 'options', 'postmeta', 'posts', 'users', 'usermeta');
 
 		$migration_warning = false;
 		$processing_create = false;
+		$processing_routine = false;
 		$db_version = $wpdb->db_version();
 
 		// Don't set too high - we want a timely response returned to the browser
@@ -4515,6 +4618,7 @@ class UpdraftPlus {
 			// Comments are what we are interested in
 			if (substr($buffer, 0, 1) == '#') {
 				$processing_create = false;
+				$processing_routine = false;
 				if ('' == $old_siteurl && preg_match('/^\# Backup of: (http(.*))$/', $buffer, $matches)) {
 					$old_siteurl = untrailingslashit($matches[1]);
 					$mess[] = __('Backup of:', 'updraftplus').' '.htmlspecialchars($old_siteurl).((!empty($old_wp_version)) ? ' '.sprintf(__('(version: %s)', 'updraftplus'), $old_wp_version) : '');
@@ -4586,6 +4690,8 @@ class UpdraftPlus {
 						if (version_compare($old_php_version, $current_php_version, '>')) {
 							// $mess[] = sprintf(__('%s version: %s', 'updraftplus'), 'WordPress', $old_wp_version);
 							$warn[] = sprintf(__('The site in this backup was running on a webserver with version %s of %s. ', 'updraftplus'), $old_php_version, 'PHP').' '.sprintf(__('This is significantly newer than the server which you are now restoring onto (version %s).', 'updraftplus'), PHP_VERSION).' '.sprintf(__('You should only proceed if you cannot update the current server and are confident (or willing to risk) that your plugins/themes/etc. are compatible with the older %s version.', 'updraftplus'), 'PHP').' '.sprintf(__('Any support requests to do with %s should be raised with your web hosting company.', 'updraftplus'), 'PHP');
+						} elseif (version_compare($old_php_version, $current_php_version, '<')) {
+							$warn[] = sprintf(__('The site in this backup was running on a webserver with version %s of %s. ', 'updraftplus'), $old_php_version, 'PHP').' '.sprintf(__('This is older than the server which you are now restoring onto (version %s).', 'updraftplus'), PHP_VERSION).' '.sprintf(__('You should only proceed if you have checked and are confident (or willing to risk) that your plugins/themes/etc. are compatible with the new %s version.', 'updraftplus'), 'PHP').' '.sprintf(__('Any support requests to do with %s should be raised with your web hosting company.', 'updraftplus'), 'PHP');
 						}
 					}
 				} elseif ('' == $old_table_prefix && (preg_match('/^\# Table prefix: (\S+)$/', $buffer, $matches) || preg_match('/^-- Table prefix: (\S+)$/i', $buffer, $matches))) {
@@ -4629,7 +4735,10 @@ class UpdraftPlus {
 
 			} elseif (preg_match('#^\s*/\*\!40\d+ SET NAMES (.*)\*\/#i', $buffer, $smatches)) {
 				$db_charsets_found[] = rtrim($smatches[1]);
-			} elseif (preg_match('/^\s*create table \`?([^\`\(]*)\`?\s*\(/i', $buffer, $matches)) {
+			} elseif (!$processing_routine && !$processing_create && preg_match("/^[^'\"]*create[^'\"]*(?:definer\s*=\s*(?:`.{1,17}`@`[^\s]+`|'.{1,17}'@'[^\s]+'))?.+?(?:function(?:\s\s*if\s\s*not\s\s*exists)?|procedure)\s*`([^\r\n]+)`/is", $buffer, $matches)) {
+				// ^\s*create\s\s*(?:or\s\s*replace\s\s*)?.*?(?:aggregate\s\s*function|function|procedure)\s\s*`(.+)`(?:\s\s*if\s\s*not\s\s*exists\s*|\s*)?\(
+				if (!preg_match('/END\s*(?:\*\/)?;;\s*$/is', $buffer) && !preg_match('/\;\s*;;\s*$/is', $buffer) && !preg_match('/\s*(?:\*\/)?;;\s*$/is', $buffer)) $processing_routine = true;
+			} elseif (!$processing_routine && preg_match('/^\s*create table \`?([^\`\(]*)\`?\s*\(/i', $buffer, $matches)) {
 				$table = $matches[1];
 				$tables_found[] = $table;
 				if ($old_table_prefix) {
@@ -4681,11 +4790,15 @@ class UpdraftPlus {
 					$mysql_version_warned = true;
 					$err[] = sprintf(__('Error: %s', 'updraftplus'), sprintf(__('The database backup uses MySQL features not available in the old MySQL version (%s) that this site is running on.', 'updraftplus'), $db_version).' '.__('You must upgrade MySQL to be able to use this database.', 'updraftplus'));
 				}
+			} elseif ($processing_routine) {
+				if ((preg_match('/END\s*(?:\*\/)?;;\s*$/is', $buffer) || preg_match('/\;\s*;;\s*$/is', $buffer) || preg_match('/\s*(?:\*\/)?;;\s*$/is', $buffer)) && !preg_match('/(?:--|#).+?;;\s*$/i', $buffer)) $processing_routine = false;
 			}
 		}
 		if ($is_plain) {
+			if (!feof($dbhandle)) $db_scan_timed_out = true;
 			@fclose($dbhandle);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 		} else {
+			if (!gzeof($dbhandle)) $db_scan_timed_out = true;
 			@gzclose($dbhandle);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 		}
 		if (!empty($db_supported_character_sets)) {
@@ -4845,6 +4958,34 @@ class UpdraftPlus {
 			}
 		}
 
+		$php_max_input_vars = ini_get("max_input_vars"); // phpcs:ignore PHPCompatibility.IniDirectives.NewIniDirectives.max_input_varsFound -- does not exist in PHP 5.2
+		
+		if (false == $php_max_input_vars) {
+			$php_max_input_vars_exceeded = true;
+		} elseif (count($tables_found) >= 0.90 * $php_max_input_vars) {
+			$php_max_input_vars_exceeded = true;
+		}
+
+		$select_restore_tables = '<div class="notice below-h2 updraft-restore-option">';
+		$select_restore_tables .= '<p>'.__('If you do not want to restore all your tables, then choose some to exclude here.', 'updraftplus').'(<a href="#" id="updraftplus_restore_tables_showmoreoptions">...</a>)</p>';
+
+		$select_restore_tables .= '<div class="updraftplus_restore_tables_options_container" style="display:none;">';
+
+		if ($db_scan_timed_out || $php_max_input_vars_exceeded) {
+			if ($db_scan_timed_out) $all_other_table_title = __('The database scan was taking too long and consequently the list of all tables in the database could not be completed. This option will ensure all tables not found will be backed up.', 'updraftplus');
+			if ($php_max_input_vars_exceeded) $all_other_table_title = __('The amount of database tables scanned is near or over the php_max_input_vars value so some tables maybe truncated. This option will ensure all tables not found will be backed up.', 'updraftplus');
+			$select_restore_tables .= '<input class="updraft_restore_table_options" id="updraft_restore_table_udp_all_other_tables" checked="checked" type="checkbox" name="updraft_restore_table_options[]" value="udp_all_other_tables"> ';
+			$select_restore_tables .= '<label for="updraft_restore_table_udp_all_other_tables"  title="'.$all_other_table_title.'">'.__('Include all tables not listed below', 'updraftplus').'</label><br>';
+		}
+
+		foreach ($tables_found as $table) {
+			$select_restore_tables .= '<input class="updraft_restore_table_options" id="updraft_restore_table_'.$table.'" checked="checked" type="checkbox" name="updraft_restore_table_options[]" value="'.$table.'"> ';
+			$select_restore_tables .= '<label for="updraft_restore_table_'.$table.'">'.$table.'</label><br>';
+		}
+		$select_restore_tables .= '</div></div>';
+
+		$info['addui'] = empty($info['addui']) ? $select_restore_tables : $info['addui'].'<br>'.$select_restore_tables;
+
 		// //need to make sure that we reset the file back to .crypt before clean temp files
 		// $db_file = $decrypted_file['fullpath'].'.crypt';
 		// unlink($decrypted_file['fullpath']);
@@ -4935,7 +5076,7 @@ class UpdraftPlus {
 	public static function get_current_clean_url() {
 	
 		// Within an UpdraftCentral context, there should be no prefix on the anchor link
-		if (defined('UPDRAFTCENTRAL_COMMAND') && UPDRAFTCENTRAL_COMMAND) return '';
+		if (defined('UPDRAFTCENTRAL_COMMAND') && UPDRAFTCENTRAL_COMMAND || defined('WP_CLI') && WP_CLI) return '';
 		
 		if (defined('DOING_AJAX') && DOING_AJAX) {
 			$current_url = $_SERVER["HTTP_REFERER"];

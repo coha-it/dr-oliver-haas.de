@@ -50,7 +50,6 @@ function wpforms_admin_styles() {
 		WPFORMS_VERSION
 	);
 }
-
 add_action( 'admin_enqueue_scripts', 'wpforms_admin_styles' );
 
 /**
@@ -91,7 +90,7 @@ function wpforms_admin_scripts() {
 		'choicesjs',
 		WPFORMS_PLUGIN_URL . 'assets/js/choices.min.js',
 		array(),
-		'2.8.10',
+		'9.0.1',
 		false
 	);
 
@@ -188,7 +187,6 @@ function wpforms_admin_scripts() {
 		'upload_image_title'              => esc_html__( 'Upload or Choose Your Image', 'wpforms-lite' ),
 		'upload_image_button'             => esc_html__( 'Use Image', 'wpforms-lite' ),
 		'upgrade_modal'                   => wpforms_get_upgrade_modal_text(),
-		'choicesjs_fields_select'         => esc_html__( 'Select fields', 'wpforms-lite' ),
 		'choicesjs_loading'               => esc_html__( 'Loading...', 'wpforms-lite' ),
 		'choicesjs_no_results'            => esc_html__( 'No results found', 'wpforms-lite' ),
 		'choicesjs_no_choices'            => esc_html__( 'No choices to choose from', 'wpforms-lite' ),
@@ -226,7 +224,7 @@ function wpforms_admin_body_class( $classes ) {
 add_filter( 'admin_body_class', 'wpforms_admin_body_class', 10, 1 );
 
 /**
- * Outputs the WPForms admin header.
+ * Output the WPForms admin header.
  *
  * @since 1.3.9
  */
@@ -388,7 +386,7 @@ function wpforms_check_php_version() {
 		) .
 		'<br><br><em>' .
 		wp_kses(
-			__( '<strong>Please Note:</strong> Support for PHP 5.3 to 5.5 will be discontinued in 2019. After this, if no further action is taken, WPForms functionality will be disabled.', 'wpforms-lite' ),
+			__( '<strong>Please Note:</strong> Support for PHP 5.5 will be discontinued in 2020. After this, if no further action is taken, WPForms functionality will be disabled.', 'wpforms-lite' ),
 			array(
 				'strong' => array(),
 				'em'     => array(),
@@ -404,13 +402,27 @@ add_action( 'admin_init', 'wpforms_check_php_version' );
  *
  * @since 1.4.4
  *
+ * @param string $type Either "pro" or "elite". Default is "pro".
+ *
  * @return string
  */
-function wpforms_get_upgrade_modal_text() {
+function wpforms_get_upgrade_modal_text( $type = 'pro' ) {
+
+	switch ( $type ) {
+		case 'elite':
+			$level = 'WPForms Elite';
+			break;
+		case 'pro':
+		default:
+			$level = 'WPForms Pro';
+	}
 
 	return
 		'<p>' .
-		esc_html__( 'Thanks for your interest in WPForms Pro!', 'wpforms-lite' ) . '<br>' .
+		sprintf( /* translators: %s - license level, WPForms Pro or WPForms Elite. */
+			esc_html__( 'Thanks for your interest in %s!', 'wpforms-lite' ),
+			$level
+		) . '<br>' .
 		sprintf(
 			wp_kses(
 				/* translators: %s - WPForms.com contact page URL. */
@@ -427,19 +439,21 @@ function wpforms_get_upgrade_modal_text() {
 		) .
 		'</p>' .
 		'<p>' .
-		wp_kses(
-			__( 'After purchasing a license,<br>just <strong>enter your license key on the WPForms Settings page</strong>.<br>This will let your site automatically upgrade to WPForms Pro!', 'wpforms-lite' ),
-			array(
-				'strong' => array(),
-				'br'     => array(),
-			)
+		sprintf(
+			wp_kses( /* translators: %s - license level, WPForms Pro or WPForms Elite. */
+				__( 'After purchasing a license,<br>just <strong>enter your license key on the WPForms Settings page</strong>.<br>This will let your site automatically upgrade to %s!', 'wpforms-lite' ),
+				[
+					'strong' => [],
+					'br'     => [],
+				]
+			),
+			$level
 		) . '<br>' .
 		esc_html__( '(Don\'t worry, all your forms and settings will be preserved.)', 'wpforms-lite' ) .
 		'</p>' .
 		'<p>' .
 		sprintf(
-			wp_kses(
-				/* translators: %s - WPForms.com upgrade from Lite to paid docs page URL. */
+			wp_kses( /* translators: %s - WPForms.com upgrade from Lite to paid docs page URL. */
 				__( 'Check out <a href="%s" target="_blank" rel="noopener noreferrer">our documentation</a> for step-by-step instructions.', 'wpforms-lite' ),
 				array(
 					'a' => array(
@@ -465,7 +479,7 @@ function wpforms_get_upgrade_modal_text() {
  */
 function wpforms_admin_hide_wp_version( $text ) {
 
-	// Bail if we're not on a WPForms screen or page.
+	// Reset text if we're not on a WPForms screen or page.
 	if ( wpforms_is_admin_page() ) {
 		return '';
 	}

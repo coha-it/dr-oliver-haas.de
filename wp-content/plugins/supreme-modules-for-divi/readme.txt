@@ -3,9 +3,9 @@ Contributors: divisupreme, kenng87
 Tags: Divi, Divi Module, Divi Page Builder, divi theme, divi builder, Divi Extensions
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.3
+Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 1.9.4
+Stable tag: 2.2.8
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Divi Supreme lite plugin enhances the experience and features found on Divi and 
 
 Unlike other Divi plugins, the Divi Supreme comes with many free creative and useful yet powerful Divi modules and Divi extensions. Take Divi to the next level and build amazing websites with ease using our simple to implement modules and extensions. Divi Supreme plugin comes with an intuitive interface that blends seamlessly with the Divi theme builder to give you a familiar designing environment with additional elements to work with.
 
-Divi Supreme lite contains 18 Free Divi Custom Modules and more to come soon.
+Divi Supreme lite contains 20 Free Divi Custom Modules and more to come soon.
 
 1. Supreme Divi Gradient Text - By using Divi's built-in background gradient tool, this module allow you to have gradient text without coding.
 2. Supreme Divi Flipbox - With 4 types of Flipbox effect to choose from (Flip Left, Flip Right, Flip Up and Flip Down), you can create stunning interactive content that converts. 
@@ -35,6 +35,8 @@ Divi Supreme lite contains 18 Free Divi Custom Modules and more to come soon.
 16. Supreme Divi Business Hours - This will allow customers to know your service availability time.
 17. Supreme Divi Icon List - Create an easy-to-manage list of items, with each item highlighted by it's own icon.
 18. Supreme Divi Shapes - Shapes is one of the most important element in Design. So we’ve created this module to make your life easier. Shapes module add life and creativity to your website. Boost your Divi designs, without having to use image files or custom code. Shapes Module comes with 17 types of Shapes and more in the upcoming updates.
+19. Supreme Divi Before After Image Slider - The before after image slider module allows you to display the before and after versions of an image by simply sliding over them. Users will be able to move a slider to easily compare the two images.
+20. Supreme Divi Lottie - The Supreme Divi Lottie is excellent for adding light and eye-catching animations to your Divi website and increase the conversion and engagement of your customers. This module uses the library of JSON animations from lottefiles.com. The animation library includes thousands of exciting animations made by professional designers from around the world. You can easily pick up an animation that suits your site and your customers and use it in just two clicks.
 
 
 Divi Supreme Extentions
@@ -42,13 +44,15 @@ Divi Supreme Extentions
 - Divi Scheduled Element Visibility - This will extend the Visibility option in the the Section/Row's custom setting to allow you to show or hide the section or row with a specify date/time.  
 - Divi Templates - Designing Divi's footer or 404 page is one of the most challenging thing ever. Without programming background knowledgde, you have to deal with time and the learning process. But with Divi Templates, now you can design your custom footer, 404 and Search No Result page using Visual Builder and assign them. As easy as that, No coding required. Don't spend time finding those layout global module ID because you don't have to. Just 2 easy steps: Create a Template using Visual Builder, then assign them to footer/404. That's it! Save time = Smarter.
 - Divi Shortcodes - This will add a shortcode column in the Divi Library. Use that Divi shortcode to display your layout in any Divi module or even your PHP file by using [divi_shortcode id=""].
+- Divi Easy Theme Builder (Header) - This will allow you to customize the Theme Builder Header with option such as Fixed Header and Shrink On Scroll in the Divi Supreme Plugin Setting Page.  
+
 
 Many more Divi Modules and Extensions coming soon...
 
 View [Demo for Divi Supreme](https://suprememodules.com/) or [Demo for Divi Supreme Pro](https://divisupreme.com/features/).
 
 = Divi Supreme Pro =
-[GO Pro](https://divisupreme.com/) Over 30+ Premium Divi Modules and counting to help you speed up your workflow. Packed with everything you need to build amazing website without any effort. Whether you're just starting out with web design or are an accomplished developer with multiple personal and client projects to think about, Divi Supreme Pro will significantly improve the quality of your design work. With 30+ premium Divi modules and Divi extensions to choose from, this plugin is exactly what you need to extend the functionality of your favorite page builder.
+[GO Pro](https://divisupreme.com/) Over 40+ Premium Divi Modules and counting to help you speed up your workflow. Packed with everything you need to build amazing website without any effort. Whether you're just starting out with web design or are an accomplished developer with multiple personal and client projects to think about, Divi Supreme Pro will significantly improve the quality of your design work. With 40+ premium Divi modules and Divi extensions to choose from, this plugin is exactly what you need to extend the functionality of your favorite page builder.
 
 = About Divi Supreme =
 Divi Supreme is featured on [ElegantThemes](https://www.elegantthemes.com/blog/divi-resources/divi-plugin-highlight-divi-supreme). Divi is a great tool for building website, but without proper addons it might take more time and money. Divi's mission is to help users design websites in the easiest, fastest and most streamlined way.
@@ -107,6 +111,149 @@ This is a common question that we get asked here every now and then which is why
 
 
 == Changelog ==
+= 2.2.8 – 07.07.2020 =
+* Enhanced: Format and follow WordPress Coding Standards for all PHP files in /includes/.
+* Enhanced: PHP error shows up when Divi Theme, Extra Theme or Divi builder plugin is not activated.
+
+= 2.2.7 – 06.07.2020 =
+* Added: Custom Icon for all Divi modules.
+
+= 2.2.6 – 23.06.2020 =
+* Enhanced: Divi Lottie Module white gap.
+
+= 2.2.5 – 14.06.2020 =
+* Enhanced: Admin menu logo with base64 background image instead of img.
+* Removed: Divi Supreme logo img file in plugin.
+* Enhanced: Divi Text Divider Module in Theme Builder where in some cases fonts are not rendering.
+* Enhanced: Divi Typing Effect Module padding/margin importancy.
+
+= 2.2.4 – 04.06.2020 =
+* Enhanced: Minify Easy Theme Builder for Header CSS and JS files.
+* Fixed: Conditional check for Easy Theme Builder for Header when there is no header set in Theme Builder causing frontend JS error.
+
+= 2.2.3 – 22.05.2020 =
+* Enhanced: Format and follow WordPress Coding Standards for all PHP files in /modules/.
+* Enhanced: isset() check for uninstall php.
+
+= 2.2.2 – 18.05.2020 =
+* Enhanced: Divi Easy Theme Builder Header CSS when user "Show Toolbar when viewing site" and "Push Body Down".
+
+= 2.2.1 – 15.05.2020 =
+* Enhanced: Divi Easy Theme Builder enqueue method making sure JS will only load on Visual Builder or Frontend – For better speed enhancement.
+
+= 2.2.0 – 14.05.2020 =
+* Added: Acceptance Checkbox Styling into Validation Error in Divi Contact Form 7 Module.
+* Enhanced: Divi Contact Form 7 Module button margin and padding value.
+
+= 2.1.9 – 13.05.2020 =
+* Fixed: Divi Easy Theme Builder for Header javascript error when using Visual Builder.
+
+= 2.1.8 – 13.05.2020 =
+* Enhanced: Divi Easy Theme Builder for Header on first load CSS transition.
+* Enhanced: Shrink transition Divi Easy Theme Builder for Header.
+
+= 2.1.7 – 08.05.2020 =
+* Fixed: Top Padding in Visual Builder when using Divi Easy Theme Builder Header.
+* Enhanced: Change CSS for Fixed Header to sticky in Visual Builder when using Divi Easy Theme Builder Header to prevent from using javascript.
+* Enhanced: Divi Easy Theme Builder enqueue and dequeue script method in when accessing Divi Visual Builder.
+
+= 2.1.6 – 06.05.2020 =
+* Enhanced: Divi Easy Theme Builder Header auto calculation white gap on the top.
+
+= 2.1.5 – 06.05.2020 =
+* Fixed: Menu dropdown icon showing properly due to padding when using Divi Easy Theme Builder for Header.
+* Enhanced: Public enqueued method.
+
+= 2.1.4 – 06.05.2020 =
+* Added: Divi Easy Theme Builder Header.
+* Enhanced: Divi Supreme setting page.
+* Enhanced: Check through most files with WordPress Coding Standards to ensures code quality and adherence to coding conventions.
+
+= 2.1.3 – 28.04.2020 =
+* Fixed: Divi Flipbox Module overlapping issue in Firefox Browser.
+* Fixed: Divi Flipbox Module flip animation.
+
+= 2.1.2 – 26.04.2020 =
+* Fixed: Divi Text Badges Module border not rendering on main module due to wrong CSS target.
+* Fixed: Divi Flipbox default fonts issue.
+* Fixed: Existing user using Divi Flipbox module.
+* Fixed: Flickering issue on Divi Flipbox module.
+* Fixed: PHP warning and notice showing up when logged in users roles are empty in Divi Scheduled Element Extension.
+* Enhanced: Divi Flipbox title font-size to revert back to Divi's default h4 at 18px.
+* Added: Title, Subtitle and content fonts to Divi Flipbox main module.
+* Enhanced: Divi Lottile Module upload mime type to json instead of image.
+* Enhanced: current_time() to wp_date() in Divi Scheduled Element Extension which is a new WordPress function and works better for compatibility.
+
+= 2.1.1 – 21.04.2020 =
+* Added: Left Spacing to UL in Divi Supreme Menu Module.
+* Enhanced: Divi Menu Module.
+* Added: Hover and Responsive to relative Menu Module Options.
+
+= 2.1.0 – 15.04.2020 =
+* Fixed: Divi Embed Twitter Timeline Module limit tweets unit bug.
+
+= 2.0.9 – 14.04.2020 =
+* Removed: Autoplay in Divi Lottie Module.
+* Added: Divi Lottie Module Viewport Option.
+* Enhanced: Animate Divi Lottie Module only when entering viewport.
+* Enhanced: Animation performance in Divi Lottie Module by pausing animation out of viewport.
+* Enhanced: Divi Lottie Module animation by setting progressiveLoad and setSubframe to false.
+
+= 2.0.8 – 12.04.2020 =
+* Enhanced: Remove possible debug error messages in Divi Before After Image Slider.
+* Enhanced: Check if class DSM_JSON_Handler exist to prevent error when activating plugin in some cases.
+
+= 2.0.7 – 11.04.2020 =
+* Fixed: Unable to upload images to the WordPress Media Uploader due to wp_check_filetype_and_ext.
+
+= 2.0.6 – 11.04.2020 =
+* Added: Allow JSON file through WordPress Media Uploader option in Divi Supreme Plugin Setting.
+
+= 2.0.5 – 11.04.2020 =
+* Added: JSON upload mimes to upload_mimes and wp_check_filetype_and_ext for Divi Lottie Module.
+
+= 2.0.4 – 10.04.2020 =
+* Added: Divi Lottie.
+
+= 2.0.3 – 10.04.2020 =
+* Enhanced: Divi Shapes Module Padding rendering issue.
+* Enhanced: Overall improvements in Divi Shapes Module.
+* Enhanced: Modules PHP files has been formatted.
+
+= 2.0.2 – 09.04.2020 =
+* Enhanced: Divi Business Hours Margin/Padding.
+* Fixed: Divi Shapes Module Margin/Padding rendering issue in Visual Builder.
+
+= 2.0.1 – 09.04.2020 =
+* Fixed: Divi Before After Image Slider module $animation_style var not found.
+
+= 2.0.0 – 08.04.2020 =
+* Enhanced: Divi Before After Image Slider label text with spaces.
+
+= 1.9.9 – 08.04.2020 =
+* Fixed: Divi Before After Image Slider JSON error on frontend.
+
+= 1.9.8 – 08.04.2020 =
+* Fixed: Divi Before After Image Slider not uploaded to WordPress repository.
+
+= 1.9.7 – 08.04.2020 =
+* Added: Divi Before After Image Slider.
+
+= 1.9.6 – 03.03.2020 =
+* Enhanced: Remove plugin version in Facebook API enqueue script method.
+* Added: Tabs option( Timeline, Events and Messenges ) to Divi Facebook Page Feed
+* Enhanced: Facebook ID API and script enqueue method for Divi Facebook Page Feed and Divi Facebook Comment Module.
+* Added: Social Media Tab to Divi Supreme Plugin Page Option.
+* Enhanced: Check through most files with WordPress Coding Standards to ensures code quality and adherence to coding conventions.
+
+= 1.9.5 – 25.02.2020 =
+* Enhanced: Error message showing up when using Divi Supreme Shapes Module.
+* Fixed: Visual Builder module icon not showing for Divi Supreme Shapes Module.
+* Enhanced: Business Hours, Flipbox and Pricelist module to use et_core_sanitized_previously() instead of et_sanitized_previously() function.
+* Added: Sanitized method to _post for Caldera Forms and Contact Form 7 module.
+* Added: Notice message when no contact form selected or plugin is not installed for Caldera Forms and Contact Form 7 module.
+* Enhanced: Caldera Forms and Contact Form 7 module in Visual Builder Mode that causes ajax 400 error when either one of the plugin is not installed.
+
 = 1.9.4 – 14.02.2020 =
 * Added: Divi Shapes Module.
 

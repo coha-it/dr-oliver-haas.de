@@ -5,7 +5,7 @@ Plugin URI: https://wordpress.org/plugins/sticky-menu-or-anything-on-scroll/
 Description: Pick any element on the page, and it will stick when it reaches the top of the page when you scroll down. Handy for navigation menus, but can be used for any element on the page.
 Author: WebFactory Ltd
 Author URI: https://www.webfactoryltd.com/
-Version: 2.2
+Version: 2.21
 */
 
 defined('ABSPATH') or die('INSERT COIN');
@@ -189,6 +189,9 @@ if (!function_exists('sticky_anything_config_page')) {
 				} else {
 					$activeTab = 'main';
 				}
+        if ($activeTab != 'main' && $activeTab != 'advanced' && $activeTab != 'faq') {
+          $activeTab = 'main';
+        }
 			?>
 
 			<h2 class="nav-tab-wrapper">
@@ -613,8 +616,8 @@ if (!function_exists('sticky_anything_styles')) {
     remove_filter('plugins_api_result', 'sticky_plugins_api_result', 10, 3);
 
     $res = sticky_add_plugin_featured('wp-external-links', $res);
-    $res = sticky_add_plugin_featured('wp-force-ssl', $res);
     $res = sticky_add_plugin_featured('eps-301-redirects', $res);
+    $res = sticky_add_plugin_featured('simple-author-box', $res);
 
     return $res;
   } // sticky_plugins_api_result
@@ -652,4 +655,5 @@ add_action('admin_init', 'sticky_anything_admin_init' );
 add_action('admin_enqueue_scripts', 'sticky_anything_styles' );
 add_filter("plugin_action_links_$plugin", 'sticky_anything_settings_link' );
 add_filter('install_plugins_table_api_args_featured', 'sticky_featured_plugins_tab');
+add_filter('install_plugins_table_api_args_recommended', 'sticky_featured_plugins_tab');
 add_action('admin_action_sticky_hide_review_notification', 'sticky_hide_review_notification');

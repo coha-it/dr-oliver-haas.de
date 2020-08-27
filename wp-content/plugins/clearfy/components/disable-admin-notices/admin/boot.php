@@ -36,15 +36,15 @@ if ( ! defined( 'LOADING_DISABLE_ADMIN_NOTICES_AS_ADDON' ) ) {
 	 * Ссылка ведет на страницу рейтинга в репозитори Wordpress.org
 	 * https://wordpress.org/support/plugin/disable-admin-notices/reviews/
 	 *
-	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
-	 * @since  1.0
-	 *
 	 * @param string $page_url
 	 * @param string $plugin_name
 	 *
 	 * @return string
+	 * @since  1.0
+	 *
+	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 */
-	add_filter( 'wbcr_factory_pages_425_imppage_rating_widget_url', function ( $page_url, $plugin_name ) {
+	add_filter( 'wbcr_factory_pages_429_imppage_rating_widget_url', function ( $page_url, $plugin_name ) {
 		if ( $plugin_name == WDN_Plugin::app()->getPluginName() ) {
 			return 'https://goo.gl/68ucHp';
 		}
@@ -92,3 +92,29 @@ if ( ! defined( 'LOADING_DISABLE_ADMIN_NOTICES_AS_ADDON' ) ) {
 		return $options;
 	} );
 }
+
+/**
+ * Print admin notice: "Would you like to send them for spam checking?"
+ *
+ * If user clicked button "Yes, do it", plugin will exec action,
+ * that put all unapproved comments to spam check queue.
+ */
+add_action( 'wbcr/factory/admin_notices', function ( $notices, $plugin_name ) {
+	if ( $plugin_name != WDN_Plugin::app()->getPluginName() ) {
+		return $notices;
+	}
+
+	$page_url = 'https://clearfy.pro/disable-admin-notices/';
+
+	$notice_text = sprintf( __( 'Thanks for using the Disable admin notices plugin! If you need support or all the features of the plugin, please buy the pro version <a class="button" href="%s">Get PRO</a>' ), $page_url );
+
+	$notices[] = [
+		'id'              => 'wdan_get_premium',
+		'type'            => 'success',
+		'dismissible'     => true,
+		'dismiss_expires' => 0,
+		'text'            => '<p><strong>Disable Admin Notices Individually:</strong><br>' . $notice_text . '</p>'
+	];
+
+	return $notices;
+}, 10, 2 );

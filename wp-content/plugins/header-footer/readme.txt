@@ -1,10 +1,11 @@
 === Head, Footer and Post Injections ===
 Tags: header, footer, blog, page, single, post, head, tracking, facebook, og meta tag, open graph, ads, adsense, injections, analytics, amp, pixel
-Requires at least: 3.0
-Tested up to: 5.3.2
-Stable tag: 3.1.6
+Requires at least: 4.0
+Tested up to: 5.4.2
+Stable tag: 3.2.1
 Donate link: http://www.satollo.net/donations
 Contributors: satollo
+Requires PHP: 5.6
 
 Header and Footer plugin let you to add html code to the head and footer sections of your blog... and more!
 
@@ -62,14 +63,14 @@ The specific bbPress injections are going to be removed. Switch to my
 
 This plugin cannot change the menu or the footer layout, those features must be covered by your theme!
 
-Official page: [Header and Footer](http://www.satollo.net/plugins/header-footer).
+Official page: [Header and Footer](https://www.satollo.net/plugins/header-footer).
 
 Other plugins by Stefano Lissa:
 
-* [Hyper Cache](http://www.satollo.net/plugins/hyper-cache)
-* [Newsletter](http://www.thenewsletterplugin.com)
-* [Include Me](http://www.satollo.net/plugins/include-me)
-* [Thumbnails](http://www.satollo.net/plugins/thumbnails)
+* [Hyper Cache](https://www.satollo.net/plugins/hyper-cache)
+* [Newsletter](https://www.thenewsletterplugin.com)
+* [Include Me](https://www.satollo.net/plugins/include-me)
+* [Thumbnails](https://www.satollo.net/plugins/thumbnails)
 * [Ads for bbPress](https://wordpress.org/plugins/ads-bbpress/)
 
 = Translation =
@@ -86,14 +87,18 @@ You can contribute to translate this plugin in your language on [WordPress Trans
 
 FAQs are answered on [Header and Footer](http://www.satollo.net/plugins/header-footer) page.
 
-== Screenshots ==
-
-1. Configuration panel for blog HEAD and footer sections
-2. Configuration panel for post content
-3. Configuration panel for Facebook "og" tags
-4. Configurable snippets of code to be recalled on other configurations (to save time)
 
 == Changelog ==
+
+= 3.2.1 =
+
+* Fixed a PHP notice on admin side when creating a new page
+
+= 3.2.0 =
+
+* Restored controls of per post injection
+* Compatibility check with latest WP
+* Moved to PHP 5.6 syntax
 
 = 3.1.6 =
 

@@ -1,5 +1,4 @@
 <?php
-
 class DSM_SupremeModulesForDivi extends DiviExtension {
 
 	/**
@@ -43,4 +42,4 @@ class DSM_SupremeModulesForDivi extends DiviExtension {
 	}
 }
 
-new DSM_SupremeModulesForDivi;
+new DSM_SupremeModulesForDivi();

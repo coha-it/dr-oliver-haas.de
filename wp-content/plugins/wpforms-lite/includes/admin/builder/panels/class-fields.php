@@ -48,7 +48,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 	}
 
 	/**
-	 * Outputs the Field panel sidebar.
+	 * Output the Field panel sidebar.
 	 *
 	 * @since 1.0.0
 	 */
@@ -88,7 +88,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 	}
 
 	/**
-	 * Outputs the Field panel primary content.
+	 * Output the Field panel primary content.
 	 *
 	 * @since 1.0.0
 	 */
@@ -120,7 +120,12 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 				<div class="wpforms-title-desc">
 					<h2 class="wpforms-form-name"><?php echo esc_html( $this->form->post_title ); ?></h2>
-					<span class="wpforms-form-desc"><?php echo $this->form->post_excerpt; ?></span>
+					<span class="wpforms-form-desc"><?php echo wp_kses( $this->form->post_excerpt, wpforms_builder_preview_get_allowed_tags() ); ?></span>
+				</div>
+
+				<div class="wpforms-no-fields-holder wpforms-hidden">
+					<?php $this->no_fields_options(); ?>
+					<?php $this->no_fields_preview(); ?>
 				</div>
 
 				<div class="wpforms-field-wrap">
@@ -232,7 +237,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 		// Check to make sure the form actually has fields created already.
 		if ( empty( $this->form_data['fields'] ) ) {
-			printf( '<p class="no-fields">%s</p>', esc_html__( 'You don\'t have any fields yet.', 'wpforms-lite' ) );
+			$this->no_fields_options();
 
 			return;
 		}
@@ -243,7 +248,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 			$class = apply_filters( 'wpforms_builder_field_option_class', '', $field );
 
-			printf( '<div class="wpforms-field-option wpforms-field-option-%s %s" id="wpforms-field-option-%d" data-field-id="%d">', esc_attr( $field['type'] ), $class, $field['id'], $field['id'] );
+			printf( '<div class="wpforms-field-option wpforms-field-option-%s %s" id="wpforms-field-option-%d" data-field-id="%d">', sanitize_html_class( $field['type'] ), sanitize_html_class( $class ), (int) $field['id'], (int) $field['id'] );
 
 			printf( '<input type="hidden" name="fields[%d][id]" value="%d" class="wpforms-field-option-hidden-id">', $field['id'], $field['id'] );
 
@@ -264,7 +269,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 		// Check to make sure the form actually has fields created already.
 		if ( empty( $this->form_data['fields'] ) ) {
-			printf( '<p class="no-fields-preview">%s</p>', esc_html__( 'You don\'t have any fields yet. Add some!', 'wpforms-lite' ) );
+			$this->no_fields_preview();
 
 			return;
 		}
@@ -298,6 +303,32 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 
 			echo '</div>';
 		}
+	}
+
+	/**
+	 * No fields options markup.
+	 *
+	 * @since 1.6.0
+	 */
+	public function no_fields_options() {
+
+		printf(
+			'<p class="no-fields">%s</p>',
+			esc_html__( 'You don\'t have any fields yet.', 'wpforms-lite' )
+		);
+	}
+
+	/**
+	 * No fields preview placeholder markup.
+	 *
+	 * @since 1.6.0
+	 */
+	public function no_fields_preview() {
+
+		printf(
+			'<p class="no-fields-preview">%s</p>',
+			esc_html__( 'You don\'t have any fields yet. Add some!', 'wpforms-lite' )
+		);
 	}
 
 	/**
@@ -342,7 +373,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 						<# } else { #>
 							<input class="wpforms-screen-reader-element" type="{{ data.type }}" disabled<# if ( 1 === data.settings.choices[choiceID].default ) { print( ' checked' ); } #>>
 						<# } #>
-						<span class="wpforms-image-choices-label">{{{ data.settings.choices[choiceID].label }}}</span>
+						<span class="wpforms-image-choices-label">{{{ wpf.sanitizeHTML( data.settings.choices[choiceID].label ) }}}</span>
 					</label>
 				</li>
 				<# }) #>
@@ -351,7 +382,7 @@ class WPForms_Builder_Panel_Fields extends WPForms_Builder_Panel {
 			<ul class="primary-input">
 				<# _.each( data.order, function( choiceID, key ) {  #>
 				<li>
-					<input type="{{ data.type }}" disabled<# if ( 1 === data.settings.choices[choiceID].default ) { print( ' checked' ); } #>>{{{ data.settings.choices[choiceID].label }}}
+					<input type="{{ data.type }}" disabled<# if ( 1 === data.settings.choices[choiceID].default ) { print( ' checked' ); } #>>{{{ wpf.sanitizeHTML( data.settings.choices[choiceID].label ) }}}
 				</li>
 				<# }) #>
 			</ul>

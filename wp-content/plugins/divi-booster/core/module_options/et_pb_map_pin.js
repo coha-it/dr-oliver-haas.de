@@ -2,10 +2,11 @@ jQuery(function($){
 
 	setTimeout(function(){
 
-		$this_map_container = $('.et_pb_map_container'); 
-		$this_map_container.find('.et_pb_map_pin[data-initial="open"]').each(function(){
+		$map_containers = $('.et_pb_map_container'); 
+		$map_containers.find('.et_pb_map_pin[data-initial="open"]').each(function(){
 
-			var $this_marker = $(this);
+			var $this_marker = $(this);						
+			var $this_map_container = $this_marker.closest('.et_pb_map_container');
 
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng( parseFloat( $this_marker.attr('data-lat') ) , parseFloat( $this_marker.attr('data-lng') ) ),

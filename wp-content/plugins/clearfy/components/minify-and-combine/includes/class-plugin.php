@@ -13,11 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-class WMAC_Plugin extends Wbcr_Factory425_Plugin {
+class WMAC_Plugin extends Wbcr_Factory429_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory425_Plugin
+	 * @var Wbcr_Factory429_Plugin
 	 */
 	private static $app;
 
@@ -55,7 +55,7 @@ class WMAC_Plugin extends Wbcr_Factory425_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return \Wbcr_Factory425_Plugin|\WCM_Plugin
+	 * @return \Wbcr_Factory429_Plugin|\WCM_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -73,6 +73,7 @@ class WMAC_Plugin extends Wbcr_Factory425_Plugin {
 		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-scripts.php' );
 		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-css-min.php' );
 		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-styles.php' );
+		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-criticalcss.php' );
 		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-main.php' );
 		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-helper.php' );
 

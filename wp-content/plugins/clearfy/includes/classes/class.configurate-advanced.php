@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_ConfigAdvanced extends Wbcr_FactoryClearfy217_Configurate {
+class WCL_ConfigAdvanced extends Wbcr_FactoryClearfy221_Configurate {
 	
 	/**
 	 * @param WCL_Plugin $plugin

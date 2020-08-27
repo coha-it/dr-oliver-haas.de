@@ -114,9 +114,7 @@ class Global_Panel extends FrameWork\Admin_UI
 	/* Set default settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function set_default_settings() {
-		global ${$this->plugin_prefix.'admin_interface'};
-
-		${$this->plugin_prefix.'admin_interface'}->reset_settings( $this->form_fields, $this->option_name, false );
+		$GLOBALS[$this->plugin_prefix.'admin_interface']->reset_settings( $this->form_fields, $this->option_name, false );
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -136,9 +134,7 @@ class Global_Panel extends FrameWork\Admin_UI
 	/* Get settings with function called from Admin Interface */
 	/*-----------------------------------------------------------------------------------*/
 	public function get_settings() {
-		global ${$this->plugin_prefix.'admin_interface'};
-
-		${$this->plugin_prefix.'admin_interface'}->get_settings( $this->form_fields, $this->option_name );
+		$GLOBALS[$this->plugin_prefix.'admin_interface']->get_settings( $this->form_fields, $this->option_name );
 	}
 
 	/**
@@ -182,10 +178,9 @@ class Global_Panel extends FrameWork\Admin_UI
 	/* Call the form from Admin Interface
 	/*-----------------------------------------------------------------------------------*/
 	public function settings_form() {
-		global ${$this->plugin_prefix.'admin_interface'};
 
 		$output = '';
-		$output .= ${$this->plugin_prefix.'admin_interface'}->admin_forms( $this->form_fields, $this->form_key, $this->option_name, $this->form_messages );
+		$output .= $GLOBALS[$this->plugin_prefix.'admin_interface']->admin_forms( $this->form_fields, $this->form_key, $this->option_name, $this->form_messages );
 
 		return $output;
 	}
@@ -335,6 +330,19 @@ class Global_Panel extends FrameWork\Admin_UI
 				'name' => __( 'Skip Images Classes', 'a3-lazy-load' ),
 				'id' 		=> 'a3l_skip_image_with_class',
 				'desc' 		=>  __('Find and enter image class name. If more than 1 then comma seperate.<br>Example: image-class1, image-class2. Supports Wild Cards image*, .*thumbnail', 'a3-lazy-load' ),
+				'type' 		=> 'text',
+				'default'	=> ""
+			),
+			array(
+				'name' 		=> __( 'Horizontal Scroll', 'a3-lazy-load' ),
+                'type' 		=> 'heading',
+				'class'		=> 'a3l_apply_to_load_images_container',
+				'desc'		=> __( 'a3 Lazy Load has built in support for Horizontal Scrolling image galleries BUT you must enter the container classname or ID below for it to apply to that horizontal scroll container. Use your code inspector to get the correct classname or ID, it will have style is <code>overflow-x:scroll</code>', 'a3-lazy-load' )
+           	),
+			array(
+				'name' => __( 'Container Classnames or IDs', 'a3-lazy-load' ),
+				'id' 		=> 'a3l_horizontal_trigger_classnames',
+				'desc' 		=>  __('Prepend Classnames with a dot example <code>.images_holder</code>, Prepend IDs with hash tag example <code>#wrapper</code> and Comma separate if more than one.', 'a3-lazy-load' ),
 				'type' 		=> 'text',
 				'default'	=> ""
 			),
@@ -554,7 +562,7 @@ class Global_Panel extends FrameWork\Admin_UI
 			),
 
 			array(
-				'name' 		=> __( 'Jetpack Site Accelerator (Proton) Compatibility', 'a3-lazy-load' ),
+				'name' 		=> __( 'Jetpack Site Accelerator (Photon) Compatibility', 'a3-lazy-load' ),
 				'class'		=> 'a3l_apply_to_load_container',
                 'type' 		=> 'heading',
                 'id'		=> 'a3l_jetpack_compatibility_box',

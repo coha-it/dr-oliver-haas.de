@@ -54,7 +54,7 @@
 		 * @since 1.1.3 - добавлен
 		 * @since 1.1.4 - является устаревшим
 		 */
-		$menu_items = wbcr_factory_425_apply_filters_deprecated( 'wbcr_clearfy_admin_bar_menu_items', [ $menu_items ], '1.4.0', 'wbcr/clearfy/adminbar_menu_items' );
+		$menu_items = wbcr_factory_429_apply_filters_deprecated( 'wbcr_clearfy_admin_bar_menu_items', [ $menu_items ], '1.4.0', 'wbcr/clearfy/adminbar_menu_items' );
 		
 		/**
 		 * @since 1.1.3 - добавлен

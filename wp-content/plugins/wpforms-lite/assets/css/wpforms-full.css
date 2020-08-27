@@ -487,6 +487,11 @@ div.wpforms-container-full .wpforms-form select {
 	white-space: nowrap;
 }
 
+div.wpforms-container-full .wpforms-form select[multiple] {
+	height: auto;
+	overflow-y: scroll;
+}
+
 div.wpforms-container-full .wpforms-form input[type=submit],
 div.wpforms-container-full .wpforms-form button[type=submit],
 div.wpforms-container-full .wpforms-form .wpforms-page-button {
@@ -530,7 +535,10 @@ div.wpforms-container-full .wpforms-form .wpforms-page-button:disabled {
 
 div.wpforms-container-full .wpforms-form input:focus,
 div.wpforms-container-full .wpforms-form textarea:focus,
-div.wpforms-container-full .wpforms-form select:focus {
+div.wpforms-container-full .wpforms-form select:focus,
+div.wpforms-container-full .wpforms-form .is-focused .choices__inner,
+div.wpforms-container-full .wpforms-form .is-open .choices__inner,
+div.wpforms-container-full .wpforms-form .is-open .choices__list--dropdown {
 	border: 1px solid #999;
 }
 
@@ -840,17 +848,50 @@ div.wpforms-container-full .wpforms-form .wpforms-field-html li > ol {
 ----------------------------------------------------------------------------- */
 
 div.wpforms-container-full .wpforms-field-date-time-date-sep {
-	display:inline-block;
-	padding:0 5px;
+	display: inline-block;
+	padding: 0 5px;
 }
 
 div.wpforms-container-full .wpforms-form .wpforms-field-date-time-date-year,
 div.wpforms-container-full .wpforms-form .wpforms-field-date-time-date-day,
 div.wpforms-container-full .wpforms-form .wpforms-field-date-time-date-month {
-	display:inline-block;
-	width:auto;
+	display: inline-block;
+	width: auto;
 }
 
+div.wpforms-container-full .wpforms-datepicker-wrap {
+	position: relative;
+}
+
+div.wpforms-container-full .wpforms-datepicker-wrap .wpforms-datepicker-clear {
+	position: absolute;
+	background-image: url(../images/times-solid-white.svg);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-color: #cccccc;
+	background-size: 8px;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+	display: block;
+	border-radius: 50%;
+	right: 10px;
+	top: 50%;
+	margin-top: -8px;
+	transition: all 0.3s;
+}
+
+div.wpforms-container-full .wpforms-datepicker-wrap .wpforms-datepicker-clear:hover {
+	background-color: red;
+}
+
+div.wpforms-container-full .wpforms-datepicker-wrap .wpforms-field-small + .wpforms-datepicker-clear {
+	right: calc( 75% + 10px );
+}
+
+div.wpforms-container-full .wpforms-datepicker-wrap .wpforms-field-medium + .wpforms-datepicker-clear {
+	right: calc( 40% + 10px );
+}
 
 /* Custom Captcha field
 ----------------------------------------------------------------------------- */
@@ -1040,6 +1081,11 @@ div.wpforms-field-file-upload .wpforms-file-upload-builder-modern input[type="fi
 
 div.wpforms-container-full .wpforms-form ul.wpforms-image-choices label {
 	cursor: pointer;
+	position: relative;
+}
+
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices label input {
+	top: 50%;
 }
 
 /* Modern style */
@@ -1053,9 +1099,10 @@ div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern img {
 	max-width: 100%;
 }
 
-div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label {
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label:not(.wpforms-error) {
 	background-color: #fff;
 	display: block;
+
 	margin: 0 auto;
 	padding: 0;
 	border: 1px solid #fff;
@@ -1065,8 +1112,8 @@ div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label {
 	text-align: center;
 }
 
-div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label:hover,
-div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label:focus {
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label:not(.wpforms-error):hover,
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-modern label:not(.wpforms-error):focus {
 	border:1px solid #ddd;
 }
 
@@ -1120,7 +1167,7 @@ div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic img {
 	max-width: 100%;
 }
 
-div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label {
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label:not(.wpforms-error) {
 	background-color: #fff;
 	display: block;
 	margin: 0 auto;
@@ -1130,8 +1177,8 @@ div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label 
 	text-align: center;
 }
 
-div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label:hover,
-div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label:focus {
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label:not(.wpforms-error):hover,
+div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic label:not(.wpforms-error):focus {
 	border-color: #ddd;
 }
 
@@ -1140,7 +1187,7 @@ div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic .wpfor
 }
 
 div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic .wpforms-selected label {
-	border-color: #666;
+	border-color: #666 !important;
 }
 
 div.wpforms-container-full .wpforms-form ul.wpforms-image-choices-classic .wpforms-image-choices-label {
@@ -1245,6 +1292,74 @@ div.wpforms-container-full .wpforms-form .wpforms-page-indicator.progress .wpfor
 	position: absolute;
 	left: 0;
 	top: 0;
+}
+
+/* Dropdown field
+----------------------------------------------------------------------------- */
+
+div.wpforms-container-full .wpforms-form .wpforms-field-select select > option {
+	color: inherit;
+}
+
+div.wpforms-container-full .wpforms-form .wpforms-field-select select > option.placeholder,
+div.wpforms-container-full .wpforms-form .wpforms-field-select select > option[disabled] {
+	color: inherit;
+	opacity: 0.5;
+}
+
+/* Classic style */
+div.wpforms-container-full .wpforms-field.wpforms-field-select-style-classic select {
+	padding-left: 6px;
+}
+
+div.wpforms-container-full .wpforms-field.wpforms-field-select-style-classic select[multiple] {
+	padding: 0;
+}
+
+div.wpforms-container-full .wpforms-field.wpforms-field-select-style-classic select[multiple] > option {
+	padding: 10px;
+	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+div.wpforms-container-full .wpforms-field.wpforms-field-select-style-classic select[multiple] > option.placeholder,
+div.wpforms-container-full .wpforms-field.wpforms-field-select-style-classic select[multiple] > option[disabled] {
+	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Modern style */
+div.wpforms-container-full .wpforms-form .choices {
+	font-size: 16px;
+	color: #333;
+}
+
+div.wpforms-container-full .wpforms-form .choices .choices__list--single {
+	font-size: 1em;
+	line-height: normal;
+}
+
+div.wpforms-container-full .wpforms-form .choices .choices__inner {
+	min-height: 38px;
+}
+
+div.wpforms-container-full .wpforms-form .choices input.choices__input {
+	display: inline-block;
+	height: auto;
+	line-height: 1.3;
+}
+
+div.wpforms-container-full .wpforms-form .choices ::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.5;
+}
+
+div.wpforms-container-full .wpforms-form .choices ::-moz-placeholder {
+	color: inherit;
+	opacity: 0.5;
+}
+
+div.wpforms-container-full .wpforms-form .choices :-ms-input-placeholder {
+	color: inherit;
+	opacity: 0.5;
 }
 
 /* Notices
@@ -1435,8 +1550,10 @@ div.wpforms-container-full .wpforms-form .wpforms-limit-text{
 /* Small devices */
 @media only screen and (max-width: 600px) {
 
-	/* Аvoid horizontal scroll on mobiles */
-	div.wpforms-container-full .wpforms-form .wpforms-field {
+	/* Avoid horizontal scroll on mobiles.
+	   Skip for phone and modern multiple select field. Otherwise they (dropdowns) would be cropped.
+	*/
+	div.wpforms-container-full .wpforms-form .wpforms-field:not(.wpforms-field-phone):not(.wpforms-field-select-style-modern) {
 		overflow-x: hidden;
 	}
 	div.wpforms-container-full .wpforms-form .wpforms-field > * {
@@ -1456,7 +1573,7 @@ div.wpforms-container-full .wpforms-form .wpforms-limit-text{
 	div.wpforms-container-full .wpforms-form .wpforms-field-row.wpforms-field-medium,
 	div.wpforms-container-full .wpforms-form input.wpforms-field-small,
 	div.wpforms-container-full .wpforms-form select.wpforms-field-small,
-	div.wpforms-container-full .wpforms-form.wpforms-field-row.wpforms-field-small,
+	div.wpforms-container-full .wpforms-form .wpforms-field-row.wpforms-field-small,
 	div.wpforms-container-full .wpforms-form input.wpforms-field-large,
 	div.wpforms-container-full .wpforms-form select.wpforms-field-large,
 	div.wpforms-container-full .wpforms-form .wpforms-field-row.wpforms-field-large {
@@ -1503,25 +1620,45 @@ div.wpforms-container-full .wpforms-form .wpforms-limit-text{
 	div.wpforms-container-full.inline-fields .wpforms-form .wpforms-submit-container {
 		width: 100%;
 	}
+
+	/* Number Slider field */
+	div.wpforms-container-full .wpforms-form .wpforms-field-number-slider input[type=range] {
+		margin: 20px 0 15px;
+	}
+	div.wpforms-container-full .wpforms-form .wpforms-field-number-slider input[type=range]::-webkit-slider-thumb {
+		width: 30px;
+		height: 30px;
+	}
 }
 
 /* Gutenberg Block
 ----------------------------------------------------------------------------- */
+
+.edit-post-visual-editor .wpforms-gutenberg-form-selector-wrap {
+	align-items: center;
+}
 
 .edit-post-visual-editor .wpforms-gutenberg-form-selector-wrap h3 {
 	width: 100%;
 	margin: 10px 0 5px;
 	font-weight: 700;
 	font-size: 20px;
+	text-align: center;
 }
 
 .edit-post-visual-editor .wpforms-gutenberg-form-selector-wrap img {
-	margin-right: 25px;
-	width: initial;
+	margin-right: 15px;
+	height: 100px;
+	width: auto;
 }
 
 .edit-post-visual-editor .wpforms-gutenberg-form-selector-wrap .components-base-control {
 	width: 100%;
+}
+
+.edit-post-visual-editor .wpforms-gutenberg-form-selector-wrap .components-placeholder__fieldset {
+	justify-content: center;
+	max-width: 400px;
 }
 
 div.wpforms-gutenberg-form-selector .wpforms-form input:disabled,
@@ -1553,3 +1690,4 @@ body.rtl .wpforms-field-phone input[type=tel] {
 	unicode-bidi: embed;
 	text-align: right;
 }
+

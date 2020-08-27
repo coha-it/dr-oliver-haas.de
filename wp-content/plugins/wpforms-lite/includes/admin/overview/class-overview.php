@@ -20,6 +20,7 @@ class WPForms_Overview {
 		// Setup screen options. Needs to be here as admin_init hook it too late.
 		add_action( 'load-toplevel_page_wpforms-overview', array( $this, 'screen_options' ) );
 		add_filter( 'set-screen-option', array( $this, 'screen_options_set' ), 10, 3 );
+		add_filter( 'set_screen_option_wpforms_forms_per_page', [ $this, 'screen_options_set' ], 10, 3 );
 	}
 
 	/**
@@ -78,7 +79,7 @@ class WPForms_Overview {
 	}
 
 	/**
-	 * Forms table per-page screen option value.
+	 * Form table per-page screen option value.
 	 *
 	 * @since 1.0.0
 	 *
@@ -133,6 +134,8 @@ class WPForms_Overview {
 			?>
 
 			<div class="wpforms-admin-content">
+
+				<?php do_action( 'wpforms_admin_overview_before_table' ); ?>
 
 				<form id="wpforms-overview-table" method="get" action="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-overview' ) ); ?>">
 

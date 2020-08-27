@@ -491,7 +491,7 @@ class Util_Ui {
 			echo '</label>' . $postfix . "\n";
 			if ( $pro_feature ) {
 				Util_Ui::pro_wrap_description( $label_or_array['pro_excerpt'],
-					$label_or_array['pro_description'] );
+					$label_or_array['pro_description'], $name . '__' . $key );
 
 				Util_Ui::pro_wrap_maybe_end( $name . '__' . $key );
 			}
@@ -640,10 +640,30 @@ class Util_Ui {
 				'value' => $a['value'],
 				'disabled' => $a['disabled']
 			) );
+		} elseif ( 'none' === $a['control'] ) {
+			esc_html_e( $a['none_label'] );
 		}
 	}
 
+	/**
+	 * Get table classes for tables including pro features.
+	 *
+	 * When on the free version, tables with pro features have additional classes added to help highlight
+	 * the premium feature. If the user is on pro, this class is omitted.
+	 *
+	 * @since 0.14.3
+	 *
+	 * @return string
+	 */
+	public static function table_class() {
+		$table_class[] = 'form-table';
 
+		if ( ! Util_Environment::is_w3tc_pro( Dispatcher::config() ) ) {
+			$table_class[] = 'w3tc-pro-feature';
+		}
+
+		return implode( ' ', $table_class );
+	}
 
 	/**
 	 * Renders <tr> element with controls
@@ -721,6 +741,17 @@ class Util_Ui {
 	 *   description => description shown to the user below
 	 */
 	static public function config_item( $a ) {
+		/*
+		 * Some items we do not want shown in the free edition.
+		 *
+		 * By default, they will show in free, unless 'show_in_free' is specifically passed in as false.
+		 */
+		$is_w3tc_free = ! Util_Environment::is_w3tc_pro( Dispatcher::config() );
+		$show_in_free = ! isset( $a['show_in_free'] ) || (bool) $a['show_in_free'];
+		if ( ! $show_in_free && $is_w3tc_free ) {
+			return;
+		}
+
 		$a = Util_Ui::config_item_preprocess( $a );
 
 		if ( $a['label_class'] == 'w3tc_single_column' ) {
@@ -750,6 +781,26 @@ class Util_Ui {
 
 
 
+	static public function config_item_extension_enabled( $a ) {
+		echo "<tr><th class=''></th>\n<td>\n";
+
+		$c = Dispatcher::config();
+		Util_Ui::checkbox2( array(
+			'name' => 'extension__' . Util_Ui::config_key_to_http_name( $a['extension_id'] ),
+			'value' => $c->is_extension_active_frontend( $a['extension_id'] ),
+			'label' => $a['checkbox_label']
+		) );
+
+		if ( isset( $a['description'] ) ) {
+			echo '<p class="description">' . $a['description'] . '</p>';
+		}
+
+		echo "</td>";
+		echo "</tr>\n";
+	}
+
+
+
 	static public function config_item_pro( $a ) {
 		$a = Util_Ui::config_item_preprocess( $a );
 
@@ -771,7 +822,10 @@ class Util_Ui {
 			echo $a['control_after'];
 		}
 
-		Util_Ui::pro_wrap_description( $a['excerpt'], $a['description'] );
+		if ( isset( $a['description'] ) ) {
+			Util_Ui::pro_wrap_description( $a['excerpt'], $a['description'], $a['control_name'] );
+		}
+
 		Util_Ui::pro_wrap_maybe_end( $a['control_name'] );
 
 		if ( $a['label_class'] != 'w3tc_no_trtd' ) {
@@ -782,7 +836,7 @@ class Util_Ui {
 
 
 
-	static private function config_item_preprocess( $a ) {
+	static public function config_item_preprocess( $a ) {
 		$c = Dispatcher::config();
 
 		if ( !isset( $a['value'] ) || is_null( $a['value'] ) ) {
@@ -889,7 +943,7 @@ class Util_Ui {
 
 
 
-	static public function pro_wrap_description( $excerpt, $description ) {
+	static public function pro_wrap_description( $excerpt, $description, $data_href ) {
 		echo '<p class="description w3tc-gopro-excerpt">' . $excerpt . '</p>';
 
 		if ( !empty( $description ) ) {
@@ -901,7 +955,7 @@ class Util_Ui {
 			);
 
 			echo '<div class="w3tc-gopro-description">' . implode( "\n", $d ) . '</div>';
-			echo '<a href="#" class="w3tc-gopro-more">Show More <span class="dashicons dashicons-arrow-down-alt2"></span></a>';
+			echo '<a href="#" class="w3tc-gopro-more" data-href="w3tc-gopro-more-' . $data_href . '">Show More <span class="dashicons dashicons-arrow-down-alt2"></span></a>';
 		}
 	}
 
@@ -915,7 +969,6 @@ class Util_Ui {
 		?>
 			</div>
 			<div class="w3tc-gopro-action">
-				<i>Pro Feature!</i>
 				<button class="button w3tc-gopro-button button-buy-plugin" data-src="<?php echo esc_attr( $button_data_src ) ?>">
 					Learn more about Pro
 				</button>

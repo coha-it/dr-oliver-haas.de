@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_ConfigPerformance extends Wbcr_FactoryClearfy217_Configurate {
+class WCL_ConfigPerformance extends Wbcr_FactoryClearfy221_Configurate {
 
 	/**
 	 * @param WCL_Plugin $plugin
@@ -214,6 +214,10 @@ class WCL_ConfigPerformance extends Wbcr_FactoryClearfy217_Configurate {
 		$revision_limit = $this->getPopulateOption( 'revision_limit', null );
 		if ( $revision_limit ) {
 			$num = (int) $revision_limit;
+		}
+
+		if ( 'default' == $revision_limit ) {
+			$num = true;
 		}
 
 		if ( $this->getPopulateOption( 'revisions_disable' ) ) {

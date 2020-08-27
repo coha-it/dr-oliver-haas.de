@@ -2,10 +2,10 @@
 
 class DSM_Business_Hours_Child extends ET_Builder_Module {
 
-	public $slug       = 'dsm_business_hours_child';
-	public $vb_support = 'on';
-	public $type       = 'child';
-	public $child_title_var          = 'title';
+	public $slug            = 'dsm_business_hours_child';
+	public $vb_support      = 'on';
+	public $type            = 'child';
+	public $child_title_var = 'title';
 	// If the attribute defined on $this->child_title_var is empty, this attribute will be used instead
 	public $child_title_fallback_var = 'subtitle';
 
@@ -16,19 +16,19 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 	);
 
 	public function init() {
-		$this->name = esc_html__( 'Business Hours Item', 'dsm-supreme-modules-for-divi' );
+		$this->name                        = esc_html__( 'Business Hours Item', 'dsm-supreme-modules-for-divi' );
 		$this->advanced_setting_title_text = esc_html__( 'Business Hours Item', 'dsm-supreme-modules-for-divi' );
-		$this->settings_text = esc_html__( 'Business Hours Item Settings', 'dsm-supreme-modules-for-divi' );
+		$this->settings_text               = esc_html__( 'Business Hours Item Settings', 'dsm-supreme-modules-for-divi' );
 
 		$this->settings_modal_toggles = array(
-			'general'  => array(
+			'general'    => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'dsm-supreme-modules-for-divi' ),
 					'link'         => esc_html__( 'Link', 'dsm-supreme-modules-for-divi' ),
 					'image'        => esc_html__( 'Image', 'dsm-supreme-modules-for-divi' ),
 				),
 			),
-			'advanced' => array(
+			'advanced'   => array(
 				'toggles' => array(
 					'icon_settings' => esc_html__( 'Image', 'dsm-supreme-modules-for-divi' ),
 					'text'          => array(
@@ -54,69 +54,69 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 
 	public function get_advanced_fields_config() {
 		return array(
-			'fonts'      => array(
-				'text' => array(
-					'label'    => esc_html__( '', 'dsm-supreme-modules-for-divi' ),
-					'css'      => array(
+			'fonts'           => array(
+				'text'   => array(
+					'label'             => esc_html__( '', 'dsm-supreme-modules-for-divi' ),
+					'css'               => array(
 						'main' => '%%order_class%% .dsm-business-hours-header',
 					),
-					'font_size' => array(
-						'default'      => '14px',
+					'font_size'         => array(
+						'default' => '14px',
 					),
-					'line_height'    => array(
+					'line_height'       => array(
 						'default' => '1.7em',
 					),
-					'letter_spacing' => array(
+					'letter_spacing'    => array(
 						'default' => '0px',
 					),
 					'hide_header_level' => true,
-					'hide_text_align' => true,
-					'hide_text_shadow' => true,
-					'tab_slug'        => 'advanced',
-					'toggle_slug'     => 'text',
+					'hide_text_align'   => true,
+					'hide_text_shadow'  => true,
+					'tab_slug'          => 'advanced',
+					'toggle_slug'       => 'text',
 				),
 				'header' => array(
-					'label'    => esc_html__( 'Day', 'dsm-supreme-modules-for-divi' ),
-					'css'      => array(
+					'label'             => esc_html__( 'Day', 'dsm-supreme-modules-for-divi' ),
+					'css'               => array(
 						'main' => '%%order_class%% .dsm-business-hours-day',
 					),
-					'font_size' => array(
-						'default'      => '14px',
+					'font_size'         => array(
+						'default' => '14px',
 					),
-					'line_height'    => array(
+					'line_height'       => array(
 						'default' => '1.7em',
 					),
-					'letter_spacing' => array(
+					'letter_spacing'    => array(
 						'default' => '0px',
 					),
 					'hide_header_level' => true,
-					'hide_text_align' => true,
+					'hide_text_align'   => true,
 				),
-				'time' => array(
-					'label'    => esc_html__( 'Time', 'dsm-supreme-modules-for-divi' ),
-					'css'      => array(
+				'time'   => array(
+					'label'           => esc_html__( 'Time', 'dsm-supreme-modules-for-divi' ),
+					'css'             => array(
 						'main' => '%%order_class%% .dsm-business-hours-time',
 					),
-					'font_size' => array(
-						'default'      => '14px',
+					'font_size'       => array(
+						'default' => '14px',
 					),
-					'line_height'    => array(
+					'line_height'     => array(
 						'default' => '1.7em',
 					),
-					'letter_spacing' => array(
+					'letter_spacing'  => array(
 						'default' => '0px',
 					),
 					'hide_text_align' => true,
 				),
 			),
-			'text'                  => array(
-				'use_text_orientation' => false,
+			'text'            => array(
+				'use_text_orientation'  => false,
 				'use_background_layout' => false,
-				'css'              => array(
+				'css'                   => array(
 					'text_shadow' => '%%order_class%% .dsm_business_hours_item_wrapper',
 				),
 			),
-			'borders'               => array(
+			'borders'         => array(
 				'default' => array(),
 				/*
 				'image'   => array(
@@ -131,7 +131,7 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 					'toggle_slug'       => 'icon_settings',
 				),*/
 			),
-			'box_shadow'            => array(
+			'box_shadow'      => array(
 				'default' => array(),
 				/*
 				'image'   => array(
@@ -148,7 +148,7 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 					),
 				),*/
 			),
-			'button' => false,
+			'button'          => false,
 			/*
 			'filters'               => array(
 				'child_filters_target' => array(
@@ -161,7 +161,7 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 					'main' => '%%order_class%% .dsm-business-hours-image img',
 				),
 			),*/
-			'position_fields'       => false,
+			'position_fields' => false,
 		);
 	}
 
@@ -169,23 +169,23 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 		$et_accent_color = et_builder_accent_color();
 
 		return array(
-			'time' => array(
-				'label'           => esc_html__( 'Time', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'text',
-				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'The time of the day', 'dsm-supreme-modules-for-divi' ),
-				'toggle_slug'     => 'main_content',
-				'default' => '9:00 AM - 6:00 PM',
+			'time'  => array(
+				'label'            => esc_html__( 'Time', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'text',
+				'option_category'  => 'basic_option',
+				'description'      => esc_html__( 'The time of the day', 'dsm-supreme-modules-for-divi' ),
+				'toggle_slug'      => 'main_content',
+				'default'          => '9:00 AM - 6:00 PM',
 				'default_on_front' => '9:00 AM - 6:00 PM',
 			),
 			'title' => array(
-				'label'           => esc_html__( 'Day', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'text',
-				'option_category' => 'basic_option',
-				'description'     => esc_html__( 'The day', 'dsm-supreme-modules-for-divi' ),
-				'toggle_slug'     => 'main_content',
-				'default'=> 'Monday',
-				'default_on_front'=> 'Monday',
+				'label'            => esc_html__( 'Day', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'text',
+				'option_category'  => 'basic_option',
+				'description'      => esc_html__( 'The day', 'dsm-supreme-modules-for-divi' ),
+				'toggle_slug'      => 'main_content',
+				'default'          => 'Monday',
+				'default_on_front' => 'Monday',
 			),
 			/*
 			'image' => array(
@@ -252,8 +252,8 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 	}
 
 	public function render( $attrs, $content = null, $render_slug ) {
-		$title                 = $this->props['title'];
-		$time              = $this->props['time'];
+		$title = $this->props['title'];
+		$time  = $this->props['time'];
 		/*
 		$image                 = $this->props['image'];
 		$alt                   = $this->props['alt'];
@@ -265,7 +265,7 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 		$image_max_width_tablet      = $this->props['image_max_width_tablet'];
 		$image_max_width_phone       = $this->props['image_max_width_phone'];
 		$image_max_width_last_edited = $this->props['image_max_width_last_edited'];*/
-		
+
 		/*
 		if ( '' !== $image_max_width_tablet || '' !== $image_max_width_phone || '' !== $image_max_width ) {
 			$image_max_width_responsive_active = et_pb_get_responsive_status( $image_max_width_last_edited );
@@ -311,7 +311,7 @@ class DSM_Business_Hours_Child extends ET_Builder_Module {
 			esc_attr( $generate_css_image_filters )
 		) : '';*/
 
-		$video_background = $this->video_background();
+		$video_background          = $this->video_background();
 		$parallax_image_background = $this->get_parallax_image_background();
 
 		// Render module content

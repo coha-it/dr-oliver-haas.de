@@ -9,16 +9,16 @@
  */
 
 // Exit if accessed directly
-//use WBCR\Factory_Adverts_106\Base;
+//use WBCR\Factory_Adverts_109\Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_Plugin extends Wbcr_Factory425_Plugin {
+class WDN_Plugin extends Wbcr_Factory429_Plugin {
 
 	/**
-	 * @var Wbcr_Factory425_Plugin
+	 * @var Wbcr_Factory429_Plugin
 	 */
 	private static $app;
 	private $plugin_data;
@@ -26,7 +26,7 @@ class WDN_Plugin extends Wbcr_Factory425_Plugin {
 
 	/**
 	 * @param string $plugin_path
-	 * @param array  $data
+	 * @param array $data
 	 *
 	 * @throws Exception
 	 */
@@ -44,35 +44,43 @@ class WDN_Plugin extends Wbcr_Factory425_Plugin {
 	}
 
 	/**
-	 * @return Wbcr_Factory425_Plugin
+	 * @return Wbcr_Factory429_Plugin
 	 */
 	public static function app() {
 		return self::$app;
 	}
 
 	private function registerPages() {
-		if ( $this->as_addon ) {
-			return;
+		self::app()->registerPage( 'WDN_Settings_Page', WDN_PLUGIN_DIR . '/admin/pages/class-pages-settings.php' );
+
+		if ( ! ( $this->premium->is_activate() && $this->premium->is_install_package() ) ) {
+			self::app()->registerPage( 'WDAN_Block_Ad_Redirects', WDN_PLUGIN_DIR . '/admin/pages/class-pages-edit-redirects.php' );
+			self::app()->registerPage( 'WDAN_Edit_Admin_Bar', WDN_PLUGIN_DIR . '/admin/pages/class-pages-edit-admin-bar.php' );
 		}
 
-		self::app()->registerPage( 'WDN_NoticesPage', WDN_PLUGIN_DIR . '/admin/pages/class-pages-notices.php' );
-		self::app()->registerPage( 'WDN_MoreFeaturesPage', WDN_PLUGIN_DIR . '/admin/pages/class-pages-more-features.php' );
+		self::app()->registerPage( 'WDN_LicensePage', WDN_PLUGIN_DIR . '/admin/pages/class-pages-license.php' );
 	}
 
 	private function admin_scripts() {
 		require( WDN_PLUGIN_DIR . '/admin/options.php' );
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			require( WDN_PLUGIN_DIR . '/admin/ajax/hide-notice.php' );
-			require( WDN_PLUGIN_DIR . '/admin/ajax/restore-notice.php' );
+			require_once( WDN_PLUGIN_DIR . '/admin/ajax/hide-notice.php' );
+			require_once( WDN_PLUGIN_DIR . '/admin/ajax/restore-notice.php' );
 		}
 
-		require( WDN_PLUGIN_DIR . '/admin/boot.php' );
-		$this->registerPages();
+		require_once( WDN_PLUGIN_DIR . '/admin/boot.php' );
+		require_once( WDN_PLUGIN_DIR . '/admin/pages/class-pages-edit-admin-bar.php' );
+		require_once( WDN_PLUGIN_DIR . '/admin/pages/class-pages-edit-redirects.php' );
+
+		add_action( 'plugins_loaded', function () {
+			$this->registerPages();
+		}, 30 );
 	}
 
 	private function global_scripts() {
-		require( WDN_PLUGIN_DIR . '/includes/classes/class-configurate-notices.php' );
+		require_once( WDN_PLUGIN_DIR . '/includes/function.php' );
+		require_once( WDN_PLUGIN_DIR . '/includes/classes/class-configurate-notices.php' );
 		new WDN_ConfigHideNotices( self::$app );
 	}
 }

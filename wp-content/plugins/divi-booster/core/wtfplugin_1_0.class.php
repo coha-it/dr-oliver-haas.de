@@ -313,7 +313,7 @@ class wtfplugin_1_0 {
 			$is_subheading = (strpos($sectionslug, '-')==true);
 			?>
 			
-			<h3 class="wtf-section-head <?php esc_attr_e($is_subheading?'wtf-subheading':'wtf-topheading'); ?>">
+			<h3 class="wtf-section-head <?php esc_attr_e($is_subheading?'wtf-subheading':'wtf-topheading'); ?> <?php esc_attr_e("dbdb-settings-section_{$sectionslug}"); ?>">
 				<img src="<?php esc_attr_e($image_dir_url); ?>collapsed.png" 
 					 class="wtf-expanded-icon <?php esc_attr_e($open?'rotated':''); ?>"/>
 				<?php echo $sectionheading; ?>
@@ -324,7 +324,6 @@ class wtfplugin_1_0 {
 			<div class="wtf-setting-group <?php esc_attr_e($is_subheading?'wtf-subheading-group':''); ?> clearfix" 
 				 style="<?php esc_attr_e((!$open and !$is_subheading)?'display:none':''); ?>;">
 				<?php if (has_action("$slug-$sectionslug")) { ?>
-					<hr/>
 					<?php do_action("$slug-$sectionslug", $this); // output settings ?>
 				<?php } ?>
 			</div>
@@ -348,8 +347,13 @@ class wtfplugin_1_0 {
 	
 	function add_setting($hook, $callback) { add_action($this->slug.'-'.$hook, $callback); }
 	
-	function setting_start() { echo '<div class="wtf-setting">'; }
-	function setting_end() { echo '</div><hr/>'; }
+	function setting_start($classes='') { 
+		echo '<div class="wtf-setting '.esc_attr($classes).'">'; 
+	}
+	
+	function setting_end() { 
+		echo '</div>'; 
+	}
 
 	// return the base name and option var for a given settings file
 	function get_setting_bases($file) {
@@ -372,10 +376,12 @@ class wtfplugin_1_0 {
 	
 	// === Settings UI Components === //
 	
-	function techlink($url) { 
-		?>
-		<a href="<?php esc_attr_e($url); ?>" class="techlink dashicons dashicons-info dbdb_no_active_outline" title="Read my post on this fix" target="_blank"></a>
-		<?php
+	function techlink($url=false) { 
+		if ($url) {
+			?>
+			<a href="<?php esc_attr_e($url); ?>" class="techlink dashicons dashicons-info dbdb_no_active_outline" title="Read my post on this fix" target="_blank"></a>
+			<?php
+		}
 	}
 	
 	function hiddenfield($file, $field='') { 

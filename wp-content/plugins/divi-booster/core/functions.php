@@ -29,14 +29,11 @@ function db_is_divi_builder($builder_type='any') {
 if (!function_exists('dbdb_option')) {
 	function dbdb_option($feature, $setting, $default=false) {
 		$option = get_option(BOOSTER_SLUG_OLD, $default);
-		
 		$val = $default;
-		
 		// Retrieve the setting if it exists
 		if (isset($option['fixes'][$feature][$setting])) { 
 			$val = $option['fixes'][$feature][$setting];
 		}
-		
 		$val = apply_filters("divibooster_setting_{$feature}_{$setting}", $val);
 		return $val;
 	}

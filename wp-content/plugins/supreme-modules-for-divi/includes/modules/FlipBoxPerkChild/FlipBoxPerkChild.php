@@ -2,11 +2,10 @@
 
 class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 
-	public $slug       = 'dsm_flipbox_child';
-	public $vb_support = 'on';
-	public $type       = 'child';
+	public $slug                     = 'dsm_flipbox_child';
+	public $vb_support               = 'on';
+	public $type                     = 'child';
 	public $child_title_var          = 'title';
-	// If the attribute defined on $this->child_title_var is empty, this attribute will be used instead
 	public $child_title_fallback_var = 'subtitle';
 
 	protected $module_credits = array(
@@ -16,19 +15,20 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 	);
 
 	public function init() {
-		$this->name = esc_html__( 'Flipbox Item', 'dsm-supreme-modules-for-divi' );
+		$this->name                        = esc_html__( 'Flipbox Item', 'dsm-supreme-modules-for-divi' );
 		$this->advanced_setting_title_text = esc_html__( 'Flipbox Item', 'dsm-supreme-modules-for-divi' );
-		$this->settings_text = esc_html__( 'Flipbox Item Settings', 'dsm-supreme-modules-for-divi' );
+		$this->settings_text               = esc_html__( 'Flipbox Item Settings', 'dsm-supreme-modules-for-divi' );
+		$this->main_css_element            = '%%order_class%%';
 
 		$this->settings_modal_toggles = array(
-			'general'  => array(
+			'general'    => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Text', 'dsm-supreme-modules-for-divi' ),
 					'link'         => esc_html__( 'Link', 'dsm-supreme-modules-for-divi' ),
 					'image'        => esc_html__( 'Image & Icon', 'dsm-supreme-modules-for-divi' ),
 				),
 			),
-			'advanced' => array(
+			'advanced'   => array(
 				'toggles' => array(
 					'icon_settings' => esc_html__( 'Image & Icon', 'dsm-supreme-modules-for-divi' ),
 					'text'          => array(
@@ -54,14 +54,14 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 
 	public function get_advanced_fields_config() {
 		return array(
-			'fonts'      => array(
-				'header' => array(
-					'label'    => esc_html__( 'Title', 'dsm-supreme-modules-for-divi' ),
-					'css'      => array(
+			'fonts'           => array(
+				'header'  => array(
+					'label'          => esc_html__( 'Title', 'dsm-supreme-modules-for-divi' ),
+					'css'            => array(
 						'main' => '%%order_class%% h1.et_pb_module_header, %%order_class%% h2.et_pb_module_header, %%order_class%% h3.et_pb_module_header, %%order_class%% h4.et_pb_module_header, %%order_class%% h5.et_pb_module_header, %%order_class%% h6.et_pb_module_header',
 					),
-					'font_size' => array(
-						'default'      => '26px',
+					'font_size'      => array(
+						'default' => '18px',
 					),
 					'line_height'    => array(
 						'default' => '1em',
@@ -69,29 +69,32 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 					'letter_spacing' => array(
 						'default' => '0px',
 					),
-					'header_level' => array(
+					'header_level'   => array(
 						'default' => 'h4',
 					),
 				),
 				'content' => array(
-					'label'    => esc_html__( 'Body', 'dsm-supreme-modules-for-divi' ),
-					'css'      => array(
+					'label'          => esc_html__( 'Body', 'dsm-supreme-modules-for-divi' ),
+					'css'            => array(
 						'main' => '%%order_class%% .dsm-content',
 					),
-					'font_size' => array(
-						'default'      => '14px',
+					'font_size'      => array(
+						'default' => '14px',
 					),
 					'line_height'    => array(
-						'default' => '1em',
+						'default' => '1.7em',
 					),
 					'letter_spacing' => array(
 						'default' => '0px',
 					),
 				),
 				'subhead' => array(
-					'label'    => esc_html__( 'Subhead', 'dsm-supreme-modules-for-divi' ),
-					'css'      => array(
+					'label'          => esc_html__( 'Subhead', 'dsm-supreme-modules-for-divi' ),
+					'css'            => array(
 						'main' => '%%order_class%% .dsm-subtitle',
+					),
+					'font_size'      => array(
+						'default' => '14px',
 					),
 					'line_height'    => array(
 						'default' => '1em',
@@ -101,28 +104,28 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 					),
 				),
 			),
-			'text'                  => array(
+			'text'            => array(
 				'use_background_layout' => true,
-				'css'              => array(
+				'css'                   => array(
 					'text_shadow' => '%%order_class%% .dsm_flipbox_wrapper',
 				),
-				'options' => array(
+				'options'               => array(
 					'background_layout' => array(
 						'default_on_front' => 'light',
 					),
-					'text_orientation' => array(
+					'text_orientation'  => array(
 						'default_on_front' => 'left',
 					),
 				),
 			),
-			'borders'               => array(
+			'borders'         => array(
 				'default' => array(),
 				'image'   => array(
 					'css'             => array(
 						'main' => array(
-							'border_radii' => "%%order_class%% .dsm_flipbox_child_image .dsm_flipbox_child_image_wrap",
-							'border_styles' => "%%order_class%% .dsm_flipbox_child_image .dsm_flipbox_child_image_wrap",
-						)
+							'border_radii'  => '%%order_class%% .dsm_flipbox_child_image .dsm_flipbox_child_image_wrap',
+							'border_styles' => '%%order_class%% .dsm_flipbox_child_image .dsm_flipbox_child_image_wrap',
+						),
 					),
 					'label_prefix'    => esc_html__( 'Image', 'dsm-supreme-modules-for-divi' ),
 					'tab_slug'        => 'advanced',
@@ -131,30 +134,30 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 					'depends_show_if' => 'off',
 				),
 			),
-			'box_shadow'            => array(
+			'box_shadow'      => array(
 				'default' => array(),
 				'image'   => array(
-					'label'               => esc_html__( 'Image Box Shadow', 'dsm-supreme-modules-for-divi' ),
-					'option_category'     => 'layout',
-					'tab_slug'            => 'advanced',
-					'toggle_slug'         => 'icon_settings',
-					'depends_show_if'     => 'off',
-					'css'                 => array(
-						'main' => '%%order_class%% .dsm_flipbox_child_image .dsm_flipbox_child_image_wrap',
+					'label'             => esc_html__( 'Image Box Shadow', 'dsm-supreme-modules-for-divi' ),
+					'option_category'   => 'layout',
+					'tab_slug'          => 'advanced',
+					'toggle_slug'       => 'icon_settings',
+					'depends_show_if'   => 'off',
+					'css'               => array(
+						'main'        => '%%order_class%% .dsm_flipbox_child_image .dsm_flipbox_child_image_wrap',
 						'show_if_not' => array(
 							'use_icon' => 'on',
 						),
 					),
-					'default_on_fronts'  => array(
+					'default_on_fronts' => array(
 						'color'    => '',
 						'position' => '',
 					),
 				),
 			),
-			'button'                => array(
+			'button'          => array(
 				'button' => array(
-					'label' => esc_html__( 'Button', 'dsm-supreme-modules-for-divi' ),
-					'css' => array(
+					'label'         => esc_html__( 'Button', 'dsm-supreme-modules-for-divi' ),
+					'css'           => array(
 						'plugin_main' => '%%order_class%% .et_pb_button',
 						'alignment'   => '%%order_class%% .et_pb_button_wrapper',
 					),
@@ -166,19 +169,19 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 					),
 				),
 			),
-			'filters'               => array(
+			'filters'         => array(
 				'child_filters_target' => array(
-					'tab_slug' => 'advanced',
-					'toggle_slug' => 'icon_settings',
+					'tab_slug'        => 'advanced',
+					'toggle_slug'     => 'icon_settings',
 					'depends_show_if' => 'off',
 				),
 			),
-			'icon_settings'         => array(
+			'icon_settings'   => array(
 				'css' => array(
 					'main' => '%%order_class%% .et_pb_main_blurb_image',
 				),
 			),
-			'position_fields'       => false,
+			'position_fields' => false,
 		);
 	}
 
@@ -196,30 +199,30 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 		}
 
 		return array(
-			'title' => array(
+			'title'                 => array(
 				'label'           => esc_html__( 'Title', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Text entered here will appear as title.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'     => 'main_content',
 			),
-			'subtitle' => array(
+			'subtitle'              => array(
 				'label'           => esc_html__( 'Sub Title', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Text entered here will appear as subtitle.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'     => 'main_content',
 			),
-			'use_icon' => array(
-				'label'           => esc_html__( 'Use Icon', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'basic_option',
-				'options'         => array(
+			'use_icon'              => array(
+				'label'            => esc_html__( 'Use Icon', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'yes_no_button',
+				'option_category'  => 'basic_option',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
-				'toggle_slug'     => 'image',
-				'affects'         => array(
+				'toggle_slug'      => 'image',
+				'affects'          => array(
 					'border_radii_image',
 					'border_styles_image',
 					'box_shadow_style_image',
@@ -240,36 +243,36 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 					'child_filter_blur',
 					'child_mix_blend_mode',
 				),
-				'description' => esc_html__( 'Here you can choose whether icon set below should be used.', 'dsm-supreme-modules-for-divi' ),
-				'default_on_front'=> 'off',
+				'description'      => esc_html__( 'Here you can choose whether icon set below should be used.', 'dsm-supreme-modules-for-divi' ),
+				'default_on_front' => 'off',
 			),
-			'font_icon' => array(
-				'label'               => esc_html__( 'Icon', 'dsm-supreme-modules-for-divi' ),
-				'type'                => 'select_icon',
-				'option_category'     => 'basic_option',
-				'class'               => array( 'et-pb-font-icon' ),
-				'toggle_slug'         => 'image',
-				'description'         => esc_html__( 'Choose an icon to display with your blurb.', 'dsm-supreme-modules-for-divi' ),
-				'depends_show_if'     => 'on',
+			'font_icon'             => array(
+				'label'           => esc_html__( 'Icon', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'select_icon',
+				'option_category' => 'basic_option',
+				'class'           => array( 'et-pb-font-icon' ),
+				'toggle_slug'     => 'image',
+				'description'     => esc_html__( 'Choose an icon to display with your blurb.', 'dsm-supreme-modules-for-divi' ),
+				'depends_show_if' => 'on',
 			),
-			'icon_color' => array(
-				'default'           => $et_accent_color,
-				'label'             => esc_html__( 'Icon Color', 'dsm-supreme-modules-for-divi' ),
-				'type'              => 'color-alpha',
-				'description'       => esc_html__( 'Here you can define a custom color for your icon.', 'dsm-supreme-modules-for-divi' ),
-				'depends_show_if'   => 'on',
-				'tab_slug'          => 'advanced',
-				'toggle_slug'       => 'icon_settings',
+			'icon_color'            => array(
+				'default'         => $et_accent_color,
+				'label'           => esc_html__( 'Icon Color', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'color-alpha',
+				'description'     => esc_html__( 'Here you can define a custom color for your icon.', 'dsm-supreme-modules-for-divi' ),
+				'depends_show_if' => 'on',
+				'tab_slug'        => 'advanced',
+				'toggle_slug'     => 'icon_settings',
 			),
-			'use_circle' => array(
-				'label'           => esc_html__( 'Circle Icon', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+			'use_circle'            => array(
+				'label'            => esc_html__( 'Circle Icon', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
-				'affects'           => array(
+				'affects'          => array(
 					'use_circle_border',
 					'circle_color',
 				),
@@ -277,9 +280,9 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'toggle_slug'      => 'icon_settings',
 				'description'      => esc_html__( 'Here you can choose whether icon set above should display within a circle.', 'dsm-supreme-modules-for-divi' ),
 				'depends_show_if'  => 'on',
-				'default_on_front'=> 'off',
+				'default_on_front' => 'off',
 			),
-			'circle_color' => array(
+			'circle_color'          => array(
 				'default'         => $et_accent_color,
 				'label'           => esc_html__( 'Circle Color', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'color-alpha',
@@ -288,24 +291,24 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'icon_settings',
 			),
-			'use_circle_border' => array(
-				'label'           => esc_html__( 'Show Circle Border', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'layout',
-				'options'         => array(
+			'use_circle_border'     => array(
+				'label'            => esc_html__( 'Show Circle Border', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'yes_no_button',
+				'option_category'  => 'layout',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
-				'affects'           => array(
+				'affects'          => array(
 					'circle_border_color',
 				),
-				'description' => esc_html__( 'Here you can choose whether if the icon circle border should display.', 'dsm-supreme-modules-for-divi' ),
-				'depends_show_if'   => 'on',
-				'tab_slug'          => 'advanced',
-				'toggle_slug'       => 'icon_settings',
-				'default_on_front'  => 'off',
+				'description'      => esc_html__( 'Here you can choose whether if the icon circle border should display.', 'dsm-supreme-modules-for-divi' ),
+				'depends_show_if'  => 'on',
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon_settings',
+				'default_on_front' => 'off',
 			),
-			'circle_border_color' => array(
+			'circle_border_color'   => array(
 				'default'         => $et_accent_color,
 				'label'           => esc_html__( 'Circle Border Color', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'color-alpha',
@@ -314,7 +317,7 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'icon_settings',
 			),
-			'image' => array(
+			'image'                 => array(
 				'label'              => esc_html__( 'Image', 'dsm-supreme-modules-for-divi' ),
 				'type'               => 'upload',
 				'option_category'    => 'basic_option',
@@ -325,7 +328,7 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'description'        => esc_html__( 'Upload an image to display at the top of your blurb.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'        => 'image',
 			),
-			'alt' => array(
+			'alt'                   => array(
 				'label'           => esc_html__( 'Image Alt Text', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
@@ -334,85 +337,85 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'tab_slug'        => 'custom_css',
 				'toggle_slug'     => 'attributes',
 			),
-			'icon_placement' => array(
-				'label'             => esc_html__( 'Image/Icon Placement', 'dsm-supreme-modules-for-divi' ),
-				'type'              => 'select',
-				'option_category'   => 'layout',
-				'options'           => $image_icon_placement,
-				'tab_slug'          => 'advanced',
-				'toggle_slug'       => 'icon_settings',
-				'description'       => esc_html__( 'Here you can choose where to place the icon.', 'dsm-supreme-modules-for-divi' ),
-				'default_on_front'  => 'top',
+			'icon_placement'        => array(
+				'label'            => esc_html__( 'Image/Icon Placement', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'select',
+				'option_category'  => 'layout',
+				'options'          => $image_icon_placement,
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon_settings',
+				'description'      => esc_html__( 'Here you can choose where to place the icon.', 'dsm-supreme-modules-for-divi' ),
+				'default_on_front' => 'top',
 			),
-			'content' => array(
+			'content'               => array(
 				'label'           => esc_html__( 'Content', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'tiny_mce',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Content entered here will appear inside the module.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'     => 'main_content',
 			),
-			'image_max_width' => array(
-				'label'           => esc_html__( 'Image Width', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'range',
-				'option_category' => 'layout',
-				'tab_slug'        => 'advanced',
-				'toggle_slug'     => 'width',
-				'mobile_options'  => true,
-				'validate_unit'   => true,
-				'depends_show_if' => 'off',
-				'default'         => '100%',
-				'default_unit'    => '%',
-				'default_on_front'=> '',
-				'allow_empty'     => true,
-				'range_settings'  => array(
+			'image_max_width'       => array(
+				'label'            => esc_html__( 'Image Width', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'range',
+				'option_category'  => 'layout',
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'width',
+				'mobile_options'   => true,
+				'validate_unit'    => true,
+				'depends_show_if'  => 'off',
+				'default'          => '100%',
+				'default_unit'     => '%',
+				'default_on_front' => '',
+				'allow_empty'      => true,
+				'range_settings'   => array(
 					'min'  => '0',
 					'max'  => '100',
 					'step' => '1',
 				),
-				'responsive'      => true,
+				'responsive'       => true,
 			),
-			'use_icon_font_size' => array(
-				'label'           => esc_html__( 'Use Icon Font Size', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'font_option',
-				'options'         => array(
+			'use_icon_font_size'    => array(
+				'label'            => esc_html__( 'Use Icon Font Size', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'yes_no_button',
+				'option_category'  => 'font_option',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
-				'affects'     => array(
+				'affects'          => array(
 					'icon_font_size',
 				),
-				'depends_show_if' => 'on',
-				'tab_slug'        => 'advanced',
-				'toggle_slug'     => 'icon_settings',
-				'default_on_front'=> 'off',
+				'depends_show_if'  => 'on',
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon_settings',
+				'default_on_front' => 'off',
 			),
-			'icon_font_size' => array(
-				'label'           => esc_html__( 'Icon Font Size', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'range',
-				'option_category' => 'font_option',
-				'tab_slug'        => 'advanced',
-				'toggle_slug'     => 'icon_settings',
-				'default'         => '96px',
-				'default_unit'    => 'px',
-				'default_on_front'=> '',
-				'range_settings' => array(
+			'icon_font_size'        => array(
+				'label'            => esc_html__( 'Icon Font Size', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'range',
+				'option_category'  => 'font_option',
+				'tab_slug'         => 'advanced',
+				'toggle_slug'      => 'icon_settings',
+				'default'          => '96px',
+				'default_unit'     => 'px',
+				'default_on_front' => '',
+				'range_settings'   => array(
 					'min'  => '1',
 					'max'  => '120',
 					'step' => '1',
 				),
-				'mobile_options'  => true,
-				'depends_show_if' => 'on',
-				'responsive'      => true,
+				'mobile_options'   => true,
+				'depends_show_if'  => 'on',
+				'responsive'       => true,
 			),
-			'button_text' => array(
+			'button_text'           => array(
 				'label'           => esc_html__( 'Button Text', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Input your desired button text, or leave blank for no button.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'     => 'button',
 			),
-			'button_url' => array(
+			'button_url'            => array(
 				'label'           => esc_html__( 'Button URL', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
@@ -420,28 +423,28 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 				'toggle_slug'     => 'button',
 			),
 			'button_url_new_window' => array(
-				'default'         => 'off',
-				'default_on_front'=> true,
-				'label'           => esc_html__( 'Url Opens', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'select',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'default'          => 'off',
+				'default_on_front' => true,
+				'label'            => esc_html__( 'Url Opens', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'select',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'In The Same Window', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'In The New Tab', 'dsm-supreme-modules-for-divi' ),
 				),
-				'toggle_slug'     => 'button',
-				'description'     => esc_html__( 'Choose whether your link opens in a new window or not', 'dsm-supreme-modules-for-divi' ),
+				'toggle_slug'      => 'button',
+				'description'      => esc_html__( 'Choose whether your link opens in a new window or not', 'dsm-supreme-modules-for-divi' ),
 			),
-			'content_orientation' => array(
+			'content_orientation'   => array(
 				'label'           => esc_html__( 'Text Vertical Alignment', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'select',
 				'option_category' => 'layout',
 				'options'         => array(
-					'flex-start'  => esc_html__( 'Top', 'dsm-supreme-modules-for-divi' ),
-					'center'  => esc_html__( 'Center', 'dsm-supreme-modules-for-divi' ),
-					'flex-end' => esc_html__( 'Bottom', 'dsm-supreme-modules-for-divi' ),
+					'flex-start' => esc_html__( 'Top', 'dsm-supreme-modules-for-divi' ),
+					'center'     => esc_html__( 'Center', 'dsm-supreme-modules-for-divi' ),
+					'flex-end'   => esc_html__( 'Bottom', 'dsm-supreme-modules-for-divi' ),
 				),
-				'default' => 'center',
+				'default'         => 'center',
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'text',
 				'description'     => esc_html__( 'This setting determines the vertical alignment of your content. Your content can either be align to the top, vertically centered, or aligned to the bottom.', 'dsm-supreme-modules-for-divi' ),
@@ -450,37 +453,86 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 	}
 
 	public function render( $attrs, $content = null, $render_slug ) {
-		$title                 = $this->props['title'];
-		$subtitle              = $this->props['subtitle'];
-		$button_text           = $this->props['button_text'];
-		$image                 = $this->props['image'];
-		$alt                   = $this->props['alt'];
-		$icon_placement        = $this->props['icon_placement'];
-		$font_icon             = $this->props['font_icon'];
-		$use_icon              = $this->props['use_icon'];
-		$use_circle            = $this->props['use_circle'];
-		$use_circle_border     = $this->props['use_circle_border'];
-		$icon_color            = $this->props['icon_color'];
-		$circle_color          = $this->props['circle_color'];
-		$circle_border_color   = $this->props['circle_border_color'];
-		$use_icon_font_size    = $this->props['use_icon_font_size'];
-		$icon_font_size        = $this->props['icon_font_size'];
-		$icon_font_size_tablet = $this->props['icon_font_size_tablet'];
-		$icon_font_size_phone  = $this->props['icon_font_size_phone'];
+		$title                       = $this->props['title'];
+		$subtitle                    = $this->props['subtitle'];
+		$button_text                 = $this->props['button_text'];
+		$image                       = $this->props['image'];
+		$alt                         = $this->props['alt'];
+		$icon_placement              = $this->props['icon_placement'];
+		$font_icon                   = $this->props['font_icon'];
+		$use_icon                    = $this->props['use_icon'];
+		$use_circle                  = $this->props['use_circle'];
+		$use_circle_border           = $this->props['use_circle_border'];
+		$icon_color                  = $this->props['icon_color'];
+		$circle_color                = $this->props['circle_color'];
+		$circle_border_color         = $this->props['circle_border_color'];
+		$use_icon_font_size          = $this->props['use_icon_font_size'];
+		$icon_font_size              = $this->props['icon_font_size'];
+		$icon_font_size_tablet       = $this->props['icon_font_size_tablet'];
+		$icon_font_size_phone        = $this->props['icon_font_size_phone'];
 		$icon_font_size_last_edited  = $this->props['icon_font_size_last_edited'];
 		$image_max_width             = $this->props['image_max_width'];
 		$image_max_width_tablet      = $this->props['image_max_width_tablet'];
 		$image_max_width_phone       = $this->props['image_max_width_phone'];
 		$image_max_width_last_edited = $this->props['image_max_width_last_edited'];
-		$button_url            = $this->props['button_url'];
-		$button_url_new_window = $this->props['button_url_new_window'];
-		$button_custom         = $this->props['custom_button'];
-		$button_rel            = $this->props['button_rel'];
-		$custom_icon          = $this->props['button_icon'];
-		$content_orientation  = $this->props['content_orientation'];
-		$background_layout     = $this->props['background_layout'];
-		$text_orientation     = $this->props['text_orientation'];
-		$header_level                 = $this->props['header_level'];
+		$button_url                  = $this->props['button_url'];
+		$button_url_new_window       = $this->props['button_url_new_window'];
+		$button_custom               = $this->props['custom_button'];
+		$button_rel                  = $this->props['button_rel'];
+		$custom_icon                 = $this->props['button_icon'];
+		$content_orientation         = $this->props['content_orientation'];
+		$background_layout           = $this->props['background_layout'];
+		$text_orientation            = $this->props['text_orientation'];
+		$header_level                = $this->props['header_level'];
+
+		// A Fix for empty value for contents line-height value for exisitng flipbox module.
+		if ( isset( $this->props['header_line_height'] ) && '' === $this->props['header_line_height'] ) {
+			if ( '' === $this->props['header_line_height'] ) {
+				$this->props['header_line_height'] = '1em';
+			}
+			ET_Builder_Element::set_style(
+				$render_slug,
+				array(
+					'selector'    => '%%order_class%% h1.et_pb_module_header, %%order_class%% h2.et_pb_module_header, %%order_class%% h3.et_pb_module_header, %%order_class%% h4.et_pb_module_header, %%order_class%% h5.et_pb_module_header, %%order_class%% h6.et_pb_module_header',
+					'declaration' => sprintf(
+						'line-height: %1$s;',
+						esc_attr( $this->props['header_line_height'] )
+					),
+				)
+			);
+		}
+
+		if ( isset( $this->props['subhead_line_height'] ) && '' === $this->props['subhead_line_height'] ) {
+			if ( '' === $this->props['subhead_line_height'] ) {
+				$this->props['subhead_line_height'] = '1em';
+			}
+			ET_Builder_Element::set_style(
+				$render_slug,
+				array(
+					'selector'    => '%%order_class%% .dsm-subtitle',
+					'declaration' => sprintf(
+						'line-height: %1$s;',
+						esc_attr( $this->props['subhead_line_height'] )
+					),
+				)
+			);
+		}
+
+		if ( isset( $this->props['content_line_height'] ) && '' === $this->props['content_line_height'] ) {
+			if ( '' === $this->props['content_line_height'] ) {
+				$this->props['content_line_height'] = '1.7em';
+			}
+			ET_Builder_Element::set_style(
+				$render_slug,
+				array(
+					'selector'    => '%%order_class%% .dsm-content',
+					'declaration' => sprintf(
+						'line-height: %1$s;',
+						esc_attr( $this->props['content_line_height'] )
+					),
+				)
+			);
+		}
 
 		$image_pathinfo = pathinfo( $image );
 		$is_image_svg   = isset( $image_pathinfo['extension'] ) ? 'svg' === $image_pathinfo['extension'] : false;
@@ -536,25 +588,30 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 		}
 
 		// Render button
-		$button = $this->render_button( array(
-			'button_classname' => array( 'et_pb_more_button' ),
-			'button_custom'    => $button_custom,
-			'button_rel'       => $button_rel,
-			'button_text'      => $button_text,
-			'button_url'       => $button_url,
-			'custom_icon'      => $custom_icon,
-			'url_new_window'   => $button_url_new_window,
-			'display_button'   => '' !== $button_url && '' !== $button_text,
-		) );
+		$button = $this->render_button(
+			array(
+				'button_classname' => array( 'et_pb_more_button' ),
+				'button_custom'    => $button_custom,
+				'button_rel'       => $button_rel,
+				'button_text'      => $button_text,
+				'button_url'       => $button_url,
+				'custom_icon'      => $custom_icon,
+				'url_new_window'   => $button_url_new_window,
+				'display_button'   => '' !== $button_url && '' !== $button_text,
+			)
+		);
 
-		if ( 'center' !== $content_orientation) {
-			ET_Builder_Element::set_style( $render_slug, array(
-                'selector'    => '%%order_class%%',
-                'declaration' => sprintf(
-                    'align-items: %1$s;',
-                    esc_attr( $content_orientation )
-                ),
-            ) );
+		if ( 'center' !== $content_orientation ) {
+			ET_Builder_Element::set_style(
+				$render_slug,
+				array(
+					'selector'    => '%%order_class%%',
+					'declaration' => sprintf(
+						'align-items: %1$s;',
+						esc_attr( $content_orientation )
+					),
+				)
+			);
 		}
 
 		if ( 'off' === $use_icon ) {
@@ -602,15 +659,16 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 			esc_attr( $generate_css_image_filters )
 		) : '';
 
-		$video_background = $this->video_background();
+		$video_background          = $this->video_background();
 		$parallax_image_background = $this->get_parallax_image_background();
 
-		$this->add_classname( array(
-			"et_pb_bg_layout_{$background_layout}",
-			sprintf( ' dsm_flipbox_icon_position_%1$s', esc_attr( $icon_placement ) ),
-		));
+		$this->add_classname(
+			array(
+				"et_pb_bg_layout_{$background_layout}",
+				sprintf( ' dsm_flipbox_icon_position_%1$s', esc_attr( $icon_placement ) ),
+			)
+		);
 
-		// Render module content
 		$output = sprintf(
 			'%8$s
 			%7$s
@@ -626,7 +684,7 @@ class DSM_FlipBox_Perk_Child extends ET_Builder_Module {
 			$image,
 			'' !== $this->content ? sprintf(
 				'<div class="dsm-content">%1$s</div>',
-				et_sanitized_previously( $this->content )
+				et_core_sanitized_previously( $this->content )
 			) : '',
 			$button,
 			$this->get_text_orientation_classname(),

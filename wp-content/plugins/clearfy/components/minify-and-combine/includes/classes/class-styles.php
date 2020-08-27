@@ -54,6 +54,8 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	private $cssremovables = [];
 	private $include_inline = false;
 	private $inject_min_late = '';
+	private $css_critical_style = '';
+	private $css_critical = [];
 
 	/**
 	 * Reads the page and collects style tags.
@@ -399,7 +401,7 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 * it does so by replacing the longest-matching strings first.
 	 *
 	 * @param string $string
-	 * @param array  $replacements
+	 * @param array $replacements
 	 *
 	 * @return string
 	 */
@@ -616,7 +618,7 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 
 			// remove comments to avoid importing commented-out imports.
 			$thiscss_nocomments = preg_replace( '#/\*.*\*/#Us', '', $thiscss );
-			while( preg_match_all( '#@import +(?:url)?(?:(?:\((["\']?)(?:[^"\')]+)\1\)|(["\'])(?:[^"\']+)\2)(?:[^,;"\']+(?:,[^,;"\']+)*)?)(?:;)#mi', $thiscss_nocomments, $matches ) ) {
+			while ( preg_match_all( '#@import +(?:url)?(?:(?:\((["\']?)(?:[^"\')]+)\1\)|(["\'])(?:[^"\']+)\2)(?:[^,;"\']+(?:,[^,;"\']+)*)?)(?:;)#mi', $thiscss_nocomments, $matches ) ) {
 				foreach ( $matches[0] as $import ) {
 					if ( $this->isremovable( $import, $this->cssremovables ) ) {
 						$thiscss   = str_replace( $import, '', $thiscss );
@@ -816,6 +818,10 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 			}
 		}
 
+		if ( ! empty( $this->css_critical_style ) ) {
+			$this->injectInHtml( "<style type='text/css'>{$this->css_critical_style}</style>", $replaceTag );
+		}
+
 		// Return the modified stylesheet.
 		return $this->content;
 	}
@@ -937,7 +943,10 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 *
 	 * @return bool
 	 */
-	private function canInjectLate( $cssPath, $css ) {
+	private
+	function canInjectLate(
+		$cssPath, $css
+	) {
 		$consider_minified_array = apply_filters( 'wmac_filter_css_consider_minified', false, $cssPath );
 		if ( true !== $this->inject_min_late ) {
 			// late-inject turned off.
@@ -961,12 +970,15 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 * Minifies a single local css file
 	 * and returns its (cached) url.
 	 *
-	 * @param string $filepath   Filepath.
-	 * @param bool   $cache_miss Optional. Force a cache miss. Default false.
+	 * @param string $filepath Filepath.
+	 * @param bool $cache_miss Optional. Force a cache miss. Default false.
 	 *
 	 * @return bool|string Url pointing to the minified css file or false.
 	 */
-	public function minifySingle( $filepath, $cache_miss = false ) {
+	public
+	function minifySingle(
+		$filepath, $cache_miss = false
+	) {
 		$contents = $this->prepareMinifySingle( $filepath );
 
 		if ( empty( $contents ) ) {
@@ -1000,7 +1012,8 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 *
 	 * @return string
 	 */
-	public function getAoCssPreloadOnload() {
+	public
+	function getAoCssPreloadOnload() {
 		$preload_onload = apply_filters( 'wmac_filter_css_preload_onload', "this.onload=null;this.rel='stylesheet'" );
 
 		return $preload_onload;
@@ -1011,7 +1024,8 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 *
 	 * @return string
 	 */
-	public function getAoCssPreloadPolyfill() {
+	public
+	function getAoCssPreloadPolyfill() {
 		$preload_poly = apply_filters( 'wmac_filter_css_preload_polyfill', '<script data-cfasync=\'false\'>!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){function e(){t.media=a}var a=t.media||"all";t.addEventListener?t.addEventListener("load",e):t.attachEvent&&t.attachEvent("onload",e),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(e,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);</script>' );
 
 		return $preload_poly;
@@ -1022,21 +1036,26 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 *
 	 * @return bool
 	 */
-	public function aggregating() {
+	public
+	function aggregating() {
 		return $this->aggregate;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getOptions() {
+	public
+	function getOptions() {
 		return $this->options;
 	}
 
 	/**
 	 * @param $options
 	 */
-	public function replaceOptions( $options ) {
+	public
+	function replaceOptions(
+		$options
+	) {
 		$this->options = $options;
 	}
 
@@ -1044,7 +1063,10 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 * @param $name
 	 * @param $value
 	 */
-	public function setOption( $name, $value ) {
+	public
+	function setOption(
+		$name, $value
+	) {
 		$this->options[ $name ] = $value;
 		$this->$name            = $value;
 	}
@@ -1054,7 +1076,10 @@ class WMAC_PluginStyles extends WMAC_PluginBase {
 	 *
 	 * @return mixed
 	 */
-	public function getOption( $name ) {
+	public
+	function getOption(
+		$name
+	) {
 		return $this->options[ $name ];
 	}
 }

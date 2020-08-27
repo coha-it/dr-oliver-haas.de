@@ -16,6 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author        Alex Kovalev <alex.kovalevv@gmail.com>, Github: https://github.com/alexkovalevv
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WGA_MoreFeaturesPage extends Wbcr_FactoryClearfy217_MoreFeaturesPage {
+class WGA_MoreFeaturesPage extends Wbcr_FactoryClearfy221_MoreFeaturesPage {
 
 }

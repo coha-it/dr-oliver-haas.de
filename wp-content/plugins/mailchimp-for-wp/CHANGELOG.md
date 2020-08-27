@@ -1,9 +1,40 @@
 Changelog
 =========
 
+#### 4.8 - Jul 9, 2020
+
+- Plugin now requires PHP 5.3 or higher.
+- Prefix overlay classname to prevent styling collissions with other plugins.
+- Form sign-ups can now add tags to both new and existing subscribers.
+- Update JavaScript dependencies.
+- Register script early to work with Gutenberg preview.
+
+
+#### 4.7.8 - Jun 04, 2020
+
+- Add `MC4WP_API_V3::add_template` method.
+- Minor code hardening to ensure a default form is always set.
+- Update JS dependencies to their latest versions.
+- Fix icon for Gutenberg block.
+
+
+#### 4.7.7 - Apr 28, 2020
+
+- Update JS dependencies to their latest versions.
+- API client `add_list_member` method now has an additional parameter to skip merge field validation.
+- Simplify code for updating an existing form.
+
+
+#### 4.7.6 - Apr 9, 2020
+
+- Update JS dependencies to their latest versions.
+- Check if className is of type string, fixes a console warning when clicking inside a SVG element.
+- Minor improvements to the AMP implementation to address harmless validation warnings.
+
+
 #### 4.7.5 - Feb 10, 2020
 
-- Add AMP compatibility to sign-up forms.
+- Add AMP compatibility to sign-up forms, thanks to Claudiu Lodromanean. This uses the [official AMP plugin for WordPress](https://amp-wp.org).
 - Add settings key to WPML config so settings can easily by copied over to translated versions of a form.
 - Optimize size & performance of JavaScript code, resulting in a file that is 40% smaller.
 - Update CodeMirror to its latest version.

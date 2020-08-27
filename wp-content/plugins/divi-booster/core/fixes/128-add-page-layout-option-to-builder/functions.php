@@ -86,44 +86,43 @@ if (dbdb_is_divi()) {
 		$current_post_type = get_post_type($_GET['post']);
 	}
 	
-	// If the current post type is supported
 	if (in_array($current_post_type, $supported_post_types)) {
 		
 		// Register the admin / CSS
 		add_action('admin_head', 'divibooster128_admin_css');
 		add_action('admin_head', 'divibooster128_admin_js');
-	}
 	
-	// Override et_pb_is_pagebuilder_used() to make page.php think pagebuilder not used
-	if (!function_exists('et_pb_is_pagebuilder_used')) {
-		
-		function et_pb_is_pagebuilder_used( $page_id = 0 ) {
+		// Override et_pb_is_pagebuilder_used() to make page.php think pagebuilder not used
+		if (!function_exists('et_pb_is_pagebuilder_used')) {
 			
-			if ( 0 === $page_id && function_exists('et_core_page_resource_get_the_ID')) {
-				$page_id = et_core_page_resource_get_the_ID();
-			}
-			
-			try {
-				// Get the function caller
-				$bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-				$caller = array_shift($bt);
+			function et_pb_is_pagebuilder_used( $page_id = 0 ) {
 				
-				// If called from within page.php template, 
-				if (isset($caller['file']) and basename($caller['file'])==='page.php') {
-					
-					$layout = dbdb128_get_page_layout($page_id);
-					
-					// and we are using a sidebar
-					if ($layout!=='et_full_width_page') {
-						
-						// pretend that this isn't pagebuilder
-						return false;
-					}
+				if ( 0 === $page_id && function_exists('et_core_page_resource_get_the_ID')) {
+					$page_id = et_core_page_resource_get_the_ID();
 				}
-			} catch (Exception $e) {}
-			
-			// Otherwise, return normal result
-			return ('on' === get_post_meta($page_id, '_et_pb_use_builder', true));
+				
+				try {
+					// Get the function caller
+					$bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+					$caller = array_shift($bt);
+					
+					// If called from within page.php template, 
+					if (isset($caller['file']) and basename($caller['file'])==='page.php') {
+						
+						$layout = dbdb128_get_page_layout($page_id);
+						
+						// and we are using a sidebar
+						if ($layout!=='et_full_width_page') {
+							
+							// pretend that this isn't pagebuilder
+							return false;
+						}
+					}
+				} catch (Exception $e) {}
+				
+				// Otherwise, return normal result
+				return ('on' === get_post_meta($page_id, '_et_pb_use_builder', true));
+			}
 		}
 	}
 }

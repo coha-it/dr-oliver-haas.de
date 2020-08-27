@@ -15,13 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
+class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 
 	public function registerActionsAndFilters() {
 		if ( is_admin() ) {
 			$hide_notices_type = $this->getPopulateOption( 'hide_admin_notices' );
 
-			if ( $hide_notices_type != 'not_hide' ) {
+			if ( 'not_hide' !== $hide_notices_type && 'compact_panel' !== $hide_notices_type ) {
 				add_action( 'admin_print_scripts', [ $this, 'catchNotices' ], 999 );
 
 				if ( empty( $hide_notices_type ) || $hide_notices_type == 'only_selected' ) {
@@ -112,37 +112,37 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
 			return;
 		}
 		?>
-        <!-- Disable admin notices plugin (Clearfy tools) -->
-        <style>
-            .wbcr-dan-hide-notices {
-                position: initial;
-                padding: 5px 5px 0;
-                background: transparent;
-            }
+		<!-- Disable admin notices plugin (Clearfy tools) -->
+		<style>
+			.wbcr-dan-hide-notices {
+				position: initial;
+				padding: 5px 5px 0;
+				background: transparent;
+			}
 
-            .wbcr-dan-hide-notices > div {
-                margin: 0 !important;
-            }
+			.wbcr-dan-hide-notices > div {
+				margin: 0 !important;
+			}
 
-            .wbcr-dan-hide-notice-link {
-                display: block;
-                text-align: right;
-                margin: 5px 0 5px 5px;
-                font-weight: bold;
-                color: #F44336;
-            }
+			.wbcr-dan-hide-notice-link {
+				display: block;
+				text-align: right;
+				margin: 5px 0 5px 5px;
+				font-weight: bold;
+				color: #F44336;
+			}
 
-            .is-dismissible .wbcr-dan-hide-notice-link {
-                margin-right: -30px;
-            }
+			.is-dismissible .wbcr-dan-hide-notice-link {
+				margin-right: -30px;
+			}
 
-            .wbcr-dan-hide-notice-link:active, .wbcr-dan-hide-notice-link:focus {
-                box-shadow: none;
-                outline: none;
-            }
-        </style>
-        <!-- Disable admin notices plugin (Clearfy tools) -->
-        <script>
+			.wbcr-dan-hide-notice-link:active, .wbcr-dan-hide-notice-link:focus {
+				box-shadow: none;
+				outline: none;
+			}
+		</style>
+		<!-- Disable admin notices plugin (Clearfy tools) -->
+		<script>
 			jQuery(document).ready(function($) {
 				$(document).on('click', '.wbcr-dan-hide-notice-link', function() {
 					var self = $(this),
@@ -194,7 +194,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
 					return false;
 				});
 			});
-        </script>
+		</script>
 		<?php
 		foreach ( $wbcr_dan_plugin_all_notices as $val ) {
 			echo $val;
@@ -262,6 +262,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
 							$uniq_id2    = md5( $class_name . ':' . $method_name );
 						}
 					}
+
 					//838339d1a188e17fec838c2df3058603
 					//838339d1a188e17fec838c2df3058603
 					if ( ! empty( $get_hidden_notices ) ) {
@@ -364,8 +365,8 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
 						if ( is_object( $class ) ) {
 							$class_name = get_class( $class );
 
-							#Fix for Learn dash && Woocommerce membership
-							if ( $class_name == 'Learndash_Admin_Menus_Tabs' || $class_name == 'WC_Memberships_Admin' ) {
+							#Fix for Learn dash && Woocommerce membership && YITH WooCommerce Gift Cards
+							if ( $class_name == 'Learndash_Admin_Menus_Tabs' || $class_name == 'WC_Memberships_Admin' || $class_name == 'YIT_Plugin_Panel_WooCommerce' ) {
 								continue;
 							}
 						}
@@ -389,9 +390,9 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy217_Configurate {
 	/**
 	 * Get excerpt from string
 	 *
-	 * @param String  $str         String to get an excerpt from
-	 * @param Integer $startPos    Position int string to start excerpt from
-	 * @param Integer $maxLength   Maximum length the excerpt may be
+	 * @param String $str String to get an excerpt from
+	 * @param Integer $startPos Position int string to start excerpt from
+	 * @param Integer $maxLength Maximum length the excerpt may be
 	 *
 	 * @return String excerpt
 	 */

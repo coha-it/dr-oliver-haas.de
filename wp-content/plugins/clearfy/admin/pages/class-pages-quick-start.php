@@ -17,7 +17,7 @@
 		 * The id of the page in the admin menu.
 		 *
 		 * Mainly used to navigate between pages.
-		 * @see FactoryPages425_AdminPage
+		 * @see FactoryPages429_AdminPage
 		 *
 		 * @since 1.0.0
 		 * @var string
@@ -63,7 +63,7 @@
 		 */
 		public function __construct(WCL_Plugin $plugin)
 		{
-			$this->menu_title = __('Clearfy menu', 'clearfy');
+			$this->menu_title = __('Clearfy', 'clearfy');
 			$this->page_menu_short_description = __('One-click settings', 'clearfy');
 			
 			parent::__construct($plugin);
@@ -79,7 +79,7 @@
 		/**
 		 * Requests assets (js and css) for the page.
 		 *
-		 * @see FactoryPages425_AdminPage
+		 * @see FactoryPages429_AdminPage
 		 *
 		 * @since 1.0.0
 		 * @return void

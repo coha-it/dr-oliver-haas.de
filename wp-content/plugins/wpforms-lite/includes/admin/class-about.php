@@ -124,7 +124,7 @@ class WPForms_About {
 			) ||
 			wpforms_debug()
 		) {
-			$vs_tab_name = sprintf( /* translators: %1$s - current license type, %2$s - suggested license type. */
+			$vs_tab_name = sprintf( /* translators: %1$s - current license type; %2$s - suggested license type. */
 				esc_html__( '%1$s vs %2$s', 'wpforms-lite' ),
 				ucfirst( $license ),
 				$this->get_next_license( $license )
@@ -265,7 +265,7 @@ class WPForms_About {
 					<?php
 					printf(
 						wp_kses(
-							/* translators: %1$s - WPBeginner URL, %2$s - OptinMonster URL, %3$s - MonsterInsights URL, %4$s - RafflePress URL. */
+						/* translators: %1$s - WPBeginner URL; %2$s - OptinMonster URL; %3$s - MonsterInsights URL; %4$s - RafflePress URL. */
 							__( 'WPForms is brought to you by the same team that’s behind the largest WordPress resource site, <a href="%1$s" target="_blank" rel="noopener noreferrer">WPBeginner</a>, the most popular lead-generation software, <a href="%2$s" target="_blank" rel="noopener noreferrer">OptinMonster</a>, the best WordPress analytics plugin, <a href="%3$s" target="_blank" rel="noopener noreferrer">MonsterInsights</a>, and the most powerful WordPress contest plugin, <a href="%4$s" target="_blank" rel="noopener noreferrer">RafflePress</a>.', 'wpforms-lite' ),
 							array(
 								'a' => array(
@@ -339,7 +339,7 @@ class WPForms_About {
 									<strong>
 										<?php
 										printf(
-											/* translators: %s - addon status label. */
+										/* translators: %s - addon status label. */
 											esc_html__( 'Status: %s', 'wpforms-lite' ),
 											'<span class="status-label ' . esc_attr( $plugin_data['status_class'] ) . '">' . wp_kses_post( $plugin_data['status_text'] ) . '</span>'
 										);
@@ -481,7 +481,7 @@ class WPForms_About {
 			</div>
 
 			<div class="wpforms-admin-about-section-first-form-video">
-				<iframe src="https://www.youtube-nocookie.com/embed/yDyvSGV7tP4?rel=0" width="540" height="304" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				<iframe src="https://www.youtube-nocookie.com/embed/o2nE1P74WxQ?rel=0" width="540" height="304" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 			</div>
 
 		</div>
@@ -510,7 +510,7 @@ class WPForms_About {
 						<?php
 						printf(
 							wp_kses(
-								/* translators: %s - stars. */
+							/* translators: %s - stars. */
 								__( 'We know that you will truly love WPForms. It has over <strong>5000+ five star ratings</strong> (%s) and is active on over 1 million websites.', 'wpforms-lite' ),
 								array(
 									'strong' => array(),
@@ -548,7 +548,7 @@ class WPForms_About {
 								</li>
 								<li>
 									<i class="fa fa-check" aria-hidden="true"></i>
-									<?php esc_html_e( 'Create payment forms with Stripe and PayPal.', 'wpforms-lite' ); ?>
+									<?php esc_html_e( 'Create payment forms with Stripe, PayPal, and Authorize.Net.', 'wpforms-lite' ); ?>
 								</li>
 							</ul>
 						</div>
@@ -587,7 +587,7 @@ class WPForms_About {
 						} else {
 							echo '<a href="https://wpforms.com/pricing?utm_source=WordPress&utm_medium=wpforms-about-page&utm_campaign=gettingstarted" target="_blank" rel="noopener noreferrer">';
 						}
-							 esc_html_e( 'Get WPForms Pro Today and Unlock all the Powerful Features', 'wpforms-lite' );
+						esc_html_e( 'Get WPForms Pro Today and Unlock all the Powerful Features', 'wpforms-lite' );
 						?>
 						</a>
 					</h3>
@@ -763,6 +763,11 @@ class WPForms_About {
 						if ( empty( $current ) || empty( $next ) ) {
 							continue;
 						}
+
+						$current_status = $current['status'];
+						if ( $current['text'] !== $next['text'] && $current_status === 'full' ) {
+							$current_status = 'partial';
+						}
 						?>
 						<tr class="wpforms-admin-columns">
 							<td class="wpforms-admin-column-33">
@@ -770,7 +775,7 @@ class WPForms_About {
 							</td>
 							<td class="wpforms-admin-column-33">
 								<?php if ( is_array( $current ) ) : ?>
-									<p class="features-<?php echo esc_attr( $current['status'] ); ?>">
+									<p class="features-<?php echo esc_attr( $current_status ); ?>">
 										<?php echo wp_kses_post( implode( '<br>', $current['text'] ) ); ?>
 									</p>
 								<?php endif; ?>
@@ -801,10 +806,10 @@ class WPForms_About {
 					} else {
 						echo '<a href="https://wpforms.com/pricing?utm_source=WordPress&utm_medium=wpforms-about-page&utm_campaign=gettingstarted" target="_blank" rel="noopener noreferrer">';
 					}
-						printf( /* translators: %s - next license level. */
-							esc_html__( 'Get WPForms %s Today and Unlock all the Powerful Features', 'wpforms-lite' ),
-							esc_html( $next_license )
-						);
+					printf( /* translators: %s - next license level. */
+						esc_html__( 'Get WPForms %s Today and Unlock all the Powerful Features', 'wpforms-lite' ),
+						esc_html( $next_license )
+					);
 					?>
 					</a>
 				</h3>
@@ -864,7 +869,7 @@ class WPForms_About {
 				'url'  => 'https://downloads.wordpress.org/plugin/optinmonster.zip',
 			),
 
-			'wp-mail-smtp/wp_mail_smtp.php'         => array(
+			'wp-mail-smtp/wp_mail_smtp.php' => array(
 				'icon' => $images_url . 'plugin-smtp.png',
 				'name' => esc_html__( 'WP Mail SMTP', 'wpforms-lite' ),
 				'desc' => esc_html__( 'Make sure your website\'s emails reach the inbox. Our goal is to make email deliverability easy and reliable. Trusted by over 1 million websites.', 'wpforms-lite' ),
@@ -879,7 +884,7 @@ class WPForms_About {
 				),
 			),
 
-			'rafflepress/rafflepress.php'           => array(
+			'rafflepress/rafflepress.php' => array(
 				'icon' => $images_url . 'plugin-rp.png',
 				'name' => esc_html__( 'RafflePress', 'wpforms-lite' ),
 				'desc' => esc_html__( 'Turn your visitors into brand ambassadors! Easily grow your email list, website traffic, and social media followers with powerful viral giveaways & contests.', 'wpforms-lite' ),
@@ -908,344 +913,428 @@ class WPForms_About {
 	 */
 	protected function get_license_data( $feature, $license ) {
 
-		$data = array(
-			'entries'      => array(
-				'lite'  => array(
+		$data = [
+			'entries'      => [
+				'lite'  => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Entries via Email Only', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic' => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Complete Entry Management inside WordPress', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'  => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Complete Entry Management inside WordPress', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Complete Entry Management inside WordPress', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-			),
-			'fields'       => array(
-				'lite'  => array(
+					],
+				],
+			],
+			'fields'       => [
+				'lite'  => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Standard Fields Only', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Name, Email, Single Line Text, Paragraph Text, Dropdown, Multiple Choice, Checkboxes, and Numbers', 'wpforms-lite' ),
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic' => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Access to all Standard and Fancy Fields', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Address, Phone, Website URL, Date/Time, Password, File Upload, HTML, Pagebreaks, Section Dividers, Ratings, and Hidden Field', 'wpforms-lite' ),
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'  => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Access to all Standard and Fancy Fields', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Address, Phone, Website URL, Date/Time, Password, File Upload, HTML, Pagebreaks, Section Dividers, Ratings, and Hidden Field', 'wpforms-lite' ),
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Access to all Standard and Fancy Fields', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Address, Phone, Website URL, Date/Time, Password, File Upload, HTML, Pagebreaks, Section Dividers, Ratings, and Hidden Field', 'wpforms-lite' ),
-					),
-				),
-			),
-			'conditionals' => array(
-				'lite'  => array(
+					],
+				],
+			],
+			'conditionals' => [
+				'lite'  => [
 					'status' => 'none',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Not available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic' => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Powerful Form Logic for Building Smart Forms', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'  => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Powerful Form Logic for Building Smart Forms', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Powerful Form Logic for Building Smart Forms', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-			),
-			'templates'    => array(
-				'lite'  => array(
+					],
+				],
+			],
+			'templates'    => [
+				'lite'  => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Basic Form Templates', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic' => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Basic Form Templates', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'  => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Basic Form Templates', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'All Form Templates including Bonus 150+ pre-made form templates.', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-			),
-			'marketing'    => array(
-				'lite'  => array(
+					],
+				],
+			],
+			'marketing'    => [
+				'lite'     => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Limited Marketing Integration', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Constant Contact only', 'wpforms-lite' ),
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic'    => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Limited Marketing Integration', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Constant Contact only', 'wpforms-lite' ),
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'     => [
 					'status' => 'partial',
-					'text'   => array(
-						'<strong>' . esc_html__( '6 Email Marketing Integrations', 'wpforms-lite' ) . '</strong>',
+					'text'   => [
+						'<strong>' . esc_html__( 'Additional Marketing Integrations', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip', 'wpforms-lite' ),
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'      => [
 					'status' => 'full',
-					'text'   => array(
-						'<strong>' . esc_html__( 'All Marketing Integrations', 'wpforms-lite' ) . '</strong>',
-						esc_html__( 'Constant Contact, MailChimp, AWeber, GetResponse, Campaign Monitor, and Drip.', 'wpforms-lite' ),
+					'text'   => [
+						'<strong>' . esc_html__( 'Additional Marketing Integrations', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip.', 'wpforms-lite' ),
 						'',
 						wp_kses(
 							__( '<strong>Bonus:</strong> 500+ integrations with Zapier.', 'wpforms-lite' ),
-							array(
-								'strong' => array(),
-							)
+							[
+								'strong' => [],
+							]
 						),
-					),
-				),
-			),
-			'payments'     => array(
-				'lite'  => array(
-					'status' => 'none',
-					'text'   => array(
-						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
-					'status' => 'none',
-					'text'   => array(
-						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'  => array(
-					'status' => 'none',
-					'text'   => array(
-						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'elite'    => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
+						'<strong>' . esc_html__( 'All Marketing Integrations', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'ActiveCampaign, Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip.', 'wpforms-lite' ),
+						'',
+						wp_kses(
+							__( '<strong>Bonus:</strong> 500+ integrations with Zapier.', 'wpforms-lite' ),
+							[
+								'strong' => [],
+							]
+						),
+					],
+				],
+				'ultimate' => [
+					'status' => 'full',
+					'text'   => [
+						'<strong>' . esc_html__( 'All Marketing Integrations', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'ActiveCampaign, Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip.', 'wpforms-lite' ),
+						'',
+						wp_kses(
+							__( '<strong>Bonus:</strong> 500+ integrations with Zapier.', 'wpforms-lite' ),
+							[
+								'strong' => [],
+							]
+						),
+					],
+				],
+				'agency'   => [
+					'status' => 'full',
+					'text'   => [
+						'<strong>' . esc_html__( 'All Marketing Integrations', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'ActiveCampaign, Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip.', 'wpforms-lite' ),
+						'',
+						wp_kses(
+							__( '<strong>Bonus:</strong> 500+ integrations with Zapier.', 'wpforms-lite' ),
+							[
+								'strong' => [],
+							]
+						),
+					],
+				],
+			],
+			'payments'     => [
+				'lite'     => [
+					'status' => 'none',
+					'text'   => [
+						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
+					],
+				],
+				'basic'    => [
+					'status' => 'none',
+					'text'   => [
+						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
+					],
+				],
+				'plus'     => [
+					'status' => 'none',
+					'text'   => [
+						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
+					],
+				],
+				'pro'      => [
+					'status' => 'full',
+					'text'   => [
 						'<strong>' . esc_html__( 'Create Payment Forms', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Accept payments using Stripe (credit card) and PayPal', 'wpforms-lite' ),
-					),
-				),
-			),
-			'surveys'      => array(
-				'lite'  => array(
-					'status' => 'none',
-					'text'   => array(
-						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
-					'status' => 'none',
-					'text'   => array(
-						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'  => array(
-					'status' => 'none',
-					'text'   => array(
-						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'elite'    => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
+						'<strong>' . esc_html__( 'Create Payment Forms', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Accept payments using Stripe, PayPal, and Authorize.Net', 'wpforms-lite' ),
+					],
+				],
+				'agency'   => [
+					'status' => 'full',
+					'text'   => [
+						'<strong>' . esc_html__( 'Create Payment Forms', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Accept payments using Stripe, PayPal, and Authorize.Net', 'wpforms-lite' ),
+					],
+				],
+				'ultimate' => [
+					'status' => 'full',
+					'text'   => [
+						'<strong>' . esc_html__( 'Create Payment Forms', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Accept payments using Stripe, PayPal, and Authorize.Net', 'wpforms-lite' ),
+					],
+				],
+			],
+			'surveys'      => [
+				'lite'  => [
+					'status' => 'none',
+					'text'   => [
+						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
+					],
+				],
+				'basic' => [
+					'status' => 'none',
+					'text'   => [
+						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
+					],
+				],
+				'plus'  => [
+					'status' => 'none',
+					'text'   => [
+						'<strong>' . esc_html__( 'Not Available', 'wpforms-lite' ) . '</strong>',
+					],
+				],
+				'pro'   => [
+					'status' => 'full',
+					'text'   => [
 						'<strong>' . esc_html__( 'Create interactive Surveys and Polls with beautiful reports', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-			),
-			'advanced'     => array(
-				'lite'  => array(
+					],
+				],
+			],
+			'advanced'     => [
+				'lite'  => [
 					'status' => 'none',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'No Advanced Features', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic' => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Limited Advanced Features', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'  => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Limited Advanced Features', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'All Advanced Features', 'wpforms-lite' ) . '</strong>',
 						esc_html__( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation, Custom CAPTCHA, Offline Forms, Signature Forms', 'wpforms-lite' ),
-					),
-				),
-			),
-			'addons'       => array(
-				'lite'  => array(
+					],
+				],
+			],
+			'addons'       => [
+				'lite'     => [
 					'status' => 'none',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'No Addons Included', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic' => array(
+					],
+				],
+				'basic'    => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Custom Captcha Addon included', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'  => array(
+					],
+				],
+				'plus'     => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Email Marketing Addons included', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'   => array(
+					],
+				],
+				'pro'      => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
+						'<strong>' . esc_html__( 'Pro Addons Included', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (21 total)', 'wpforms-lite' ),
+					],
+				],
+				'elite'    => [
+					'status' => 'full',
+					'text'   => [
 						'<strong>' . esc_html__( 'All Addons Included', 'wpforms-lite' ) . '</strong>',
-						esc_html__( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (17 total)', 'wpforms-lite' ),
-					),
-				),
-			),
-			'support'      => array(
-				'lite'     => array(
+						esc_html__( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (23 total)', 'wpforms-lite' ),
+					],
+				],
+				'ultimate' => [
+					'status' => 'full',
+					'text'   => [
+						'<strong>' . esc_html__( 'All Addons Included', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (23 total)', 'wpforms-lite' ),
+					],
+				],
+				'agency'   => [
+					'status' => 'full',
+					'text'   => [
+						'<strong>' . esc_html__( 'All Addons Included', 'wpforms-lite' ) . '</strong>',
+						esc_html__( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (23 total)', 'wpforms-lite' ),
+					],
+				],
+			],
+			'support'      => [
+				'lite'     => [
 					'status' => 'none',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Limited Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'basic'    => array(
+					],
+				],
+				'basic'    => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Standard Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'     => array(
+					],
+				],
+				'plus'     => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Standard Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'      => array(
+					],
+				],
+				'pro'      => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Priority Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'elite'    => array(
+					],
+				],
+				'elite'    => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Premium Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'ultimate' => array(
+					],
+				],
+				'ultimate' => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Premium Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'agency'   => array(
+					],
+				],
+				'agency'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Premium Support', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-			),
-			'sites'        => array(
-				'basic'    => array(
+					],
+				],
+			],
+			'sites'        => [
+				'basic'    => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( '1 Site', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'plus'     => array(
+					],
+				],
+				'plus'     => [
 					'status' => 'partial',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( '3 Sites', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'pro'      => array(
+					],
+				],
+				'pro'      => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( '5 Sites', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'elite'    => array(
+					],
+				],
+				'elite'    => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Unlimited Sites', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'ultimate' => array(
+					],
+				],
+				'ultimate' => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Unlimited Sites', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-				'agency'   => array(
+					],
+				],
+				'agency'   => [
 					'status' => 'full',
-					'text'   => array(
+					'text'   => [
 						'<strong>' . esc_html__( 'Unlimited Sites', 'wpforms-lite' ) . '</strong>',
-					),
-				),
-			),
-		);
+					],
+				],
+			],
+		];
 
 		// Wrong feature?
 		if ( ! isset( $data[ $feature ] ) ) {
@@ -1278,13 +1367,13 @@ class WPForms_About {
 	 */
 	protected function get_license_type() {
 
-		$type = wpforms_setting( 'type', '', 'wpforms_license' );
+		$type = wpforms_get_license_type();
 
-		if ( empty( $type ) || ! wpforms()->pro ) {
+		if ( empty( $type ) ) {
 			$type = 'lite';
 		}
 
-		return strtolower( $type );
+		return $type;
 	}
 }
 

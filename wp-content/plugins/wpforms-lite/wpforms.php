@@ -5,9 +5,9 @@
  * Description: Beginner friendly WordPress contact form plugin. Use our Drag & Drop form builder to create your WordPress forms.
  * Author:      WPForms
  * Author URI:  https://wpforms.com
- * Version:     1.5.8.2
+ * Version:     1.6.1
  * Text Domain: wpforms-lite
- * Domain Path: languages
+ * Domain Path: assets/languages
  *
  * WPForms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin version.
 if ( ! defined( 'WPFORMS_VERSION' ) ) {
-	define( 'WPFORMS_VERSION', '1.5.8.2' );
+	define( 'WPFORMS_VERSION', '1.6.1' );
 }
 
 // Plugin Folder Path.
@@ -139,8 +139,8 @@ if ( function_exists( 'wpforms' ) ) {
 	return;
 }
 
-// We require PHP 5.4 for the whole plugin to work.
-if ( version_compare( phpversion(), '5.4', '<' ) ) {
+// We require PHP 5.5+ for the whole plugin to work.
+if ( version_compare( phpversion(), '5.5', '<' ) ) {
 
 	if ( ! function_exists( 'wpforms_php52_notice' ) ) {
 		/**
@@ -155,8 +155,8 @@ if ( version_compare( phpversion(), '5.4', '<' ) ) {
 					<?php
 					printf(
 						wp_kses(
-							/* translators: %1$s - WPBeginner URL for recommended WordPress hosting. */
-							__( 'Your site is running an <strong>insecure version</strong> of PHP that is no longer supported. Please contact your web hosting provider to update your PHP version or switch to a <a href="%1$s" target="_blank" rel="noopener noreferrer">recommended WordPress hosting company</a>.', 'wpforms-lite' ),
+							/* translators: %s - WPBeginner URL for recommended WordPress hosting. */
+							__( 'Your site is running an <strong>insecure version</strong> of PHP that is no longer supported. Please contact your web hosting provider to update your PHP version or switch to a <a href="%s" target="_blank" rel="noopener noreferrer">recommended WordPress hosting company</a>.', 'wpforms-lite' ),
 							array(
 								'a'      => array(
 									'href'   => array(),
@@ -173,8 +173,8 @@ if ( version_compare( phpversion(), '5.4', '<' ) ) {
 					<?php
 					printf(
 						wp_kses(
-							/* translators: %1$s - WPForms.com URL for documentation with more details. */
-							__( '<strong>Note:</strong> WPForms plugin is disabled on your site until you fix the issue. <a href="%1$s" target="_blank" rel="noopener noreferrer">Read more for additional information.</a>', 'wpforms-lite' ),
+							/* translators: %s - WPForms.com URL for documentation with more details. */
+							__( '<strong>Note:</strong> WPForms plugin is disabled on your site until you fix the issue. <a href="%s" target="_blank" rel="noopener noreferrer">Read more for additional information.</a>', 'wpforms-lite' ),
 							array(
 								'a'      => array(
 									'href'   => array(),

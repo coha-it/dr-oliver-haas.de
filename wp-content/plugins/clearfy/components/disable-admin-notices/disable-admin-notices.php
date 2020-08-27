@@ -4,11 +4,11 @@
  * Plugin URI: https://webcraftic.com
  * Description: Disable admin notices plugin gives you the option to hide updates warnings and inline notices in the admin panel.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.1.1
+ * Version: 1.2.1
  * Text Domain: disable-admin-notices
  * Domain Path: /languages/
  * Author URI: https://webcraftic.com
- * Framework Version: FACTORY_425_VERSION
+ * Framework Version: FACTORY_429_VERSION
  */
 
 /**
@@ -41,43 +41,61 @@ require_once( dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-r
 
 // @formatter:off
 $wdan_plugin_info = array(
-	'prefix'         => 'wbcr_dan_',
-	'plugin_name'    => 'wbcr_dan',
-	'plugin_title'   => __( 'Webcraftic disable admin notices', 'disable-admin-notices' ),
+	'prefix'               => 'wbcr_dan_',
+	'plugin_name'          => 'wbcr_dan',
+	'plugin_title'         => __( 'Webcraftic disable admin notices', 'disable-admin-notices' ),
 
 	// PLUGIN SUPPORT
 	'support_details'      => array(
-		'url'       => 'https://webcraftic.com',
+		'url'       => 'https://clearfy.pro/',
 		'pages_map' => array(
-			'support'  => 'support', // {site}/support
-			'docs'     => 'docs'     // {site}/docs
+			'support' => 'support', // {site}/support
+			'docs'    => 'docs',     // {site}/docs,
+			'pricing' => 'disable-admin-notices'
 		)
 	),
-
+	// PLUGIN PREMIUM SETTINGS
+	'has_premium'          => true,
+	'license_settings'     => array(
+		'provider'         => 'freemius',
+		'slug'             => 'disable-admin-notices-premium',
+		'plugin_id'        => '6456',
+		'public_key'       => 'pk_0570ec3c1b4100b9c9a0cbfe80f9f',
+		'price'            => 29,
+		'has_updates'      => true,
+		'updates_settings' => array(
+			'maybe_rollback'    => true,
+			'rollback_settings' => array(
+				'prev_stable_version' => '0.0.0'
+			)
+		)
+	),
 	// PLUGIN ADVERTS
-	'render_adverts' => true,
-	'adverts_settings'    => array(
-		'dashboard_widget' => true, // show dashboard widget (default: false)
+	'render_adverts'       => true,
+	'adverts_settings'     => array(
+		'dashboard_widget' => false, // show dashboard widget (default: false)
 		'right_sidebar'    => true, // show adverts sidebar (default: false)
-		'notice'           => true, // show notice message (default: false)
+		'notice'           => false, // show notice message (default: false)
 	),
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_426', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_423', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_425', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_217', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_106', 'admin')
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_430', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_427', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_429', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_221', 'all' ),
+		array( 'libs/factory/freemius', 'factory_freemius_117', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_109', 'admin' )
 	)
 );
 
-$wdan_compatibility = new Wbcr_Factory425_Requirements( __FILE__, array_merge( $wdan_plugin_info, array(
+$wdan_compatibility = new Wbcr_Factory429_Requirements( __FILE__, array_merge( $wdan_plugin_info, array(
 	'plugin_already_activate'          => defined( 'WDN_PLUGIN_ACTIVE' ),
 	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',
 	'required_clearfy_check_component' => false
 ) ) );
+
 
 
 /**
@@ -102,7 +120,6 @@ define( 'WDN_PLUGIN_VERSION', $wdan_compatibility->get_plugin_version() );
 define( 'WDN_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WDN_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 define( 'WDN_PLUGIN_URL', plugins_url( null, __FILE__ ) );
-
 
 
 

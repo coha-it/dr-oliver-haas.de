@@ -71,7 +71,7 @@ class DBDB_ContactForm_EmailBlacklist {
 	}
 	
 	protected function emailblacklist_toggle_selector() {
-		return '.et-fb-tabs__panel--general .et-fb-form__toggle-opened[data-name="'.esc_attr($this->emailblacklist_toggle_slug()).'"]';
+		return '.et-fb-tabs__panel--general .et-fb-form__toggle-opened[data-name="'.esc_attr($this->toggleSlug()).'"]';
 	}
 
 	protected function use_email_blacklist($props) {
@@ -109,14 +109,14 @@ class DBDB_ContactForm_EmailBlacklist {
 					'off' => esc_html__('No', 'et_builder'),
 				),
 				'default_on_front'  => 'off',
-				'toggle_slug'       => $this->emailblacklist_toggle_slug(),
+				'toggle_slug'       => $this->toggleSlug(),
 				'description'       => esc_html__('Turn the email blacklist on or off using this button.', 'divi_booster'),
 			),
 			$this->email_blacklist_key => array(
 				'label'             => esc_html__('Email Blacklist', 'divi_booster'),
 				'type'              => 'textarea',
 				'option_category'   => 'configuration',
-				'toggle_slug'       => $this->emailblacklist_toggle_slug(),
+				'toggle_slug'       => $this->toggleSlug(),
 				'description'       => esc_html__('When the sender\'s email address contains any of these strings, it will be rejected. One string per line. It will match inside words, so "example.com" will match "test@example.com", "mail@example.com" and "mail@anotherexample.com".', 'divi_booster'),
 				'show_if' => array(
 					$this->use_email_blacklist_key => 'on',
@@ -125,7 +125,7 @@ class DBDB_ContactForm_EmailBlacklist {
 		);
 	}
 
-	public function emailblacklist_toggle_slug() {
+	public function toggleSlug() {
 		return dbdb_theme_version('4.0', '>=')?'spam':'elements';
 	}
 	

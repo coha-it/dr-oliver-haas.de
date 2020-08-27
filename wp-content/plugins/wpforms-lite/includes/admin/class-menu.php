@@ -19,7 +19,7 @@ class WPForms_Admin_Menu {
 		add_action( 'admin_head', array( $this, 'hide_wpforms_submenu_items' ) );
 
 		// Plugins page settings link.
-		add_filter( 'plugin_action_links_' . plugin_basename( WPFORMS_PLUGIN_DIR . 'wpforms.php' ), array( $this, 'settings_link' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( WPFORMS_PLUGIN_DIR . 'wpforms.php' ), array( $this, 'settings_link' ), 10 );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class WPForms_Admin_Menu {
 			'wpforms-overview',
 			array( $this, 'admin_page' ),
 			'data:image/svg+xml;base64,' . base64_encode( '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="#9ea3a8" d="M643 911v128h-252v-128h252zm0-255v127h-252v-127h252zm758 511v128h-341v-128h341zm0-256v128h-672v-128h672zm0-255v127h-672v-127h672zm135 860v-1240q0-8-6-14t-14-6h-32l-378 256-210-171-210 171-378-256h-32q-8 0-14 6t-6 14v1240q0 8 6 14t14 6h1240q8 0 14-6t6-14zm-855-1110l185-150h-406zm430 0l221-150h-406zm553-130v1240q0 62-43 105t-105 43h-1240q-62 0-105-43t-43-105v-1240q0-62 43-105t105-43h1240q62 0 105 43t43 105z"/></svg>' ),
-			apply_filters( 'wpforms_menu_position', '57.7' )
+			apply_filters( 'wpforms_menu_position', '58.9' )
 		);
 
 		// All Forms sub menu item.
@@ -232,22 +232,36 @@ class WPForms_Admin_Menu {
 	 */
 	public function settings_link( $links ) {
 
-		$admin_link = add_query_arg(
-			array(
-				'page' => 'wpforms-settings',
+		$custom['settings'] = sprintf(
+			'<a href="%s" aria-label="%s">%s</a>',
+			esc_url(
+				add_query_arg(
+					array(
+						'page' => 'wpforms-settings',
+					),
+					admin_url( 'admin.php' )
+				)
 			),
-			admin_url( 'admin.php' )
-		);
-
-		$setting_link = sprintf(
-			'<a href="%s">%s</a>',
-			esc_url( $admin_link ),
+			esc_attr__( 'Go to WPForms Settings page', 'wpforms-lite' ),
 			esc_html__( 'Settings', 'wpforms-lite' )
 		);
 
-		array_unshift( $links, $setting_link );
+		$custom['support'] = sprintf(
+			'<a href="%1$s" aria-label="%2$s" style="font-weight:bold;">%3$s</a>',
+			esc_url(
+				add_query_arg(
+					array(
+						'page' => 'wpforms-about',
+						'view' => 'versus',
+					),
+					admin_url( 'admin.php' )
+				)
+			),
+			esc_attr__( 'Go to WPForms Lite vs Pro comparison page', 'wpforms-lite' ),
+			esc_html__( 'Premium Support', 'wpforms-lite' )
+		);
 
-		return $links;
+		return array_merge( $custom, (array) $links );
 	}
 }
 

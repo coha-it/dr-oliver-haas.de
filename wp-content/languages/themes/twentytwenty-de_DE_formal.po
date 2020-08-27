@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Themes - Twenty Twenty package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-11-20 17:45:35+0000\n"
+"PO-Revision-Date: 2020-06-20 11:03:06+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/2.4.0-alpha\n"
+"X-Generator: GlotPress/3.0.0-alpha\n"
 "Language: de\n"
 "Project-Id-Version: Themes - Twenty Twenty\n"
 
@@ -18,6 +18,10 @@ msgstr "Unser Standard-Theme für 2020 ist so konzipiert, dass es die Flexibilit
 #. Theme Name of the theme
 msgid "Twenty Twenty"
 msgstr "Twenty Twenty"
+
+#: classes/class-twentytwenty-customize.php:246
+msgid "Show author bio"
+msgstr "Autor-Biografie anzeigen"
 
 #: template-parts/entry-author-bio.php:29
 msgid "View Archive <span aria-hidden=\"true\">&rarr;</span>"
@@ -41,7 +45,7 @@ msgstr "Weiterlesen"
 msgid "Default"
 msgstr "Standard"
 
-#: classes/class-twentytwenty-customize.php:331
+#: classes/class-twentytwenty-customize.php:352
 msgid "Overlay Background Color"
 msgstr "Overlay-Hintergrundfarbe"
 
@@ -49,7 +53,7 @@ msgstr "Overlay-Hintergrundfarbe"
 msgid "Custom"
 msgstr "Individuell"
 
-#: classes/class-twentytwenty-customize.php:262
+#: classes/class-twentytwenty-customize.php:283
 msgid "Settings for the \"Cover Template\" page template. Add a featured image to use as background."
 msgstr "Einstellungen für das Seitentemplate „Cover-Template“. Fügen Sie ein Beitragsbild als Hintergrund hinzu."
 
@@ -57,7 +61,7 @@ msgstr "Einstellungen für das Seitentemplate „Cover-Template“. Fügen Sie e
 msgid "Join the Club"
 msgstr "Mitglied werden"
 
-#: inc/template-tags.php:387
+#: inc/template-tags.php:393
 msgctxt "A string that is output before one or more categories"
 msgid "In"
 msgstr "In"
@@ -70,13 +74,9 @@ msgstr "Werke und Tage"
 msgid "From Signac to Matisse"
 msgstr "Von Signac bis Matisse"
 
-#: classes/class-twentytwenty-customize.php:353
+#: classes/class-twentytwenty-customize.php:374
 msgid "Overlay Text Color"
 msgstr "Overlay-Textfarbe"
-
-#: inc/starter-content.php:129
-msgid "”Cyborgs, as the philosopher Donna Haraway established, are not reverent. They do not remember the cosmos.”"
-msgstr "„Cyborgs, wie die Philosophin Donna Haraway feststellte, sind nicht ehrfürchtig. Sie erinnern sich nicht an den Kosmos.“"
 
 #: inc/starter-content.php:147
 msgid "Members get access to exclusive exhibits and sales. Our memberships cost $99.99 and are billed annually."
@@ -118,21 +118,25 @@ msgstr "1. Oktober – 1. Dezember"
 msgid "Primary Color"
 msgstr "Akzentfarbe"
 
-#: classes/class-twentytwenty-customize.php:374
+#: classes/class-twentytwenty-customize.php:395
 msgid "Overlay Opacity"
 msgstr "Deckkraft für den Overlay-Effekt"
 
-#: classes/class-twentytwenty-customize.php:354
+#: classes/class-twentytwenty-customize.php:375
 msgid "The color used for the text in the overlay."
 msgstr "Die für den Text im Overlay benutzte Farbe."
 
-#: classes/class-twentytwenty-customize.php:332
+#: classes/class-twentytwenty-customize.php:353
 msgid "The color used for the overlay. Defaults to the accent color."
 msgstr "Die für das Overlay genutzte Farbe. Standard ist die Akzentfarbe."
 
 #: classes/class-twentytwenty-customize.php:183
 msgid "Apply a custom color for links, buttons, featured images."
 msgstr "Wählen Sie für Links, Buttons und Beitragsbilder eine eigene Farbe."
+
+#: inc/starter-content.php:129
+msgid "&#8220;Cyborgs, as the philosopher Donna Haraway established, are not reverent. They do not remember the cosmos.&#8221;"
+msgstr "&#8222;Cyborgs, wie die Philosophin Donna Haraway feststellte, sind nicht ehrfürchtig. Sie erinnern sich nicht an den Kosmos.&#8220;"
 
 #: searchform.php:24 template-parts/modal-search.php:20
 msgid "Search for:"
@@ -142,17 +146,17 @@ msgstr "Suche nach:"
 msgid "search again"
 msgstr "erneut suchen"
 
-#. translators: %s: HTML character for up arrow
+#. translators: %s: HTML character for up arrow.
 #: footer.php:49
 msgid "Up %s"
 msgstr "Hoch %s"
 
-#. translators: %s: HTML character for up arrow
+#. translators: %s: HTML character for up arrow.
 #: footer.php:43
 msgid "To the top %s"
 msgstr "Nach oben %s"
 
-#. translators: Copyright date format, see https://secure.php.net/date
+#. translators: Copyright date format, see https://www.php.net/date
 #: footer.php:25
 msgctxt "copyright date format"
 msgid "Y"
@@ -162,14 +166,14 @@ msgstr "Y"
 msgid "404 not found"
 msgstr "404 - Datei nicht gefunden"
 
-#. translators: %s: Number of search results
+#. translators: %s: Number of search results.
 #: index.php:39
 msgid "We found %s result for your search."
 msgid_plural "We found %s results for your search."
 msgstr[0] "Es gibt %s Treffer für Ihre Suche."
 msgstr[1] "Es gibt %s Treffer für Ihre Suche."
 
-#: template-parts/content.php:48 template-parts/content-cover.php:138
+#: template-parts/content-cover.php:138 template-parts/content.php:48
 msgid "Pages:"
 msgstr "Seiten:"
 
@@ -181,15 +185,15 @@ msgstr "Social-Links-Menü"
 msgid "Comments are closed."
 msgstr "Kommentare sind geschlossen."
 
-#: functions.php:496
+#: functions.php:497
 msgid "Secondary"
 msgstr "Sekundär"
 
-#: functions.php:258
+#: functions.php:261
 msgid "Footer Menu"
 msgstr "Footer-Menü"
 
-#: template-parts/content.php:48 template-parts/content-cover.php:138
+#: template-parts/content-cover.php:138 template-parts/content.php:48
 msgid "Page"
 msgstr "Seite"
 
@@ -202,7 +206,7 @@ msgstr "Footer"
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr "<span class=\"screen-reader-text\">%s</span> bearbeiten"
 
-#: inc/starter-content.php:176 inc/starter-content.php:186 functions.php:491
+#: inc/starter-content.php:176 inc/starter-content.php:186 functions.php:492
 msgid "Primary"
 msgstr "Primär"
 
@@ -214,7 +218,7 @@ msgstr "Kommentare"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#. Translators: 1 = comment date, 2 = comment time
+#. translators: 1: Comment date, 2: Comment time.
 #: classes/class-twentytwenty-walker-comment.php:69
 msgid "%1$s at %2$s"
 msgstr "%1$s um %2$s"
@@ -247,82 +251,82 @@ msgstr "Erweitert"
 msgid "Close Menu"
 msgstr "Menü schließen"
 
-#: functions.php:542
+#: functions.php:543
 msgctxt "Short name of the large font size in the block editor."
 msgid "L"
 msgstr "L"
 
-#: functions.php:541
+#: functions.php:542
 msgctxt "Name of the large font size in the block editor"
 msgid "Large"
 msgstr "Groß"
 
-#: functions.php:536
+#: functions.php:537
 msgctxt "Short name of the regular font size in the block editor."
 msgid "M"
 msgstr "M"
 
-#: functions.php:535
+#: functions.php:536
 msgctxt "Name of the regular font size in the block editor"
 msgid "Regular"
 msgstr "Normal"
 
-#: functions.php:530
+#: functions.php:531
 msgctxt "Short name of the small font size in the block editor."
 msgid "S"
 msgstr "S"
 
-#: functions.php:529
+#: functions.php:530
 msgctxt "Name of the small font size in the block editor"
 msgid "Small"
 msgstr "Klein"
 
-#: functions.php:514
+#: functions.php:515
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: functions.php:501
+#: functions.php:502
 msgid "Subtle Background"
 msgstr "Dezenter Hintergrund"
 
-#: functions.php:486
+#: functions.php:487
 msgid "Accent Color"
 msgstr "Akzentfarbe"
 
-#: functions.php:377
+#: functions.php:380
 msgid "Widgets in this area will be displayed in the second column in the footer."
 msgstr "Widgets in diesem Bereich werden in der zweiten Spalte des Footers angezeigt."
 
-#: functions.php:365
+#: functions.php:368
 msgid "Widgets in this area will be displayed in the first column in the footer."
 msgstr "Widgets in diesem Bereich werden in der ersten Spalte des Footers angezeigt."
 
-#: functions.php:338
+#: functions.php:341
 msgid "Skip to the content"
 msgstr "Direkt zum Inhalt wechseln"
 
-#: functions.php:259
+#: functions.php:262
 msgid "Social Menu"
 msgstr "Social-Media-Menü"
 
-#: functions.php:257
+#: functions.php:260
 msgid "Mobile Menu"
 msgstr "Mobile-Menü"
 
-#: functions.php:256
+#: functions.php:259
 msgid "Desktop Expanded Menu"
 msgstr "Erweitertes Desktop-Menü"
 
-#: classes/class-twentytwenty-customize.php:284
+#: classes/class-twentytwenty-customize.php:305
 msgid "Fixed Background Image"
 msgstr "Fixiertes Hintergrundbild"
 
 #. Template Name of the theme
-#: classes/class-twentytwenty-customize.php:260
+#: classes/class-twentytwenty-customize.php:281
 msgid "Cover Template"
 msgstr "Cover-Template"
 
-#: classes/class-twentytwenty-customize.php:246
+#: classes/class-twentytwenty-customize.php:267
 msgid "On archive pages, posts show:"
 msgstr "Zeige auf Archivseiten, Beiträgen:"
 
@@ -354,7 +358,7 @@ msgstr "Die Seite konnte nicht gefunden werden"
 msgid "Search:"
 msgstr "Suchen:"
 
-#: inc/template-tags.php:401
+#: inc/template-tags.php:407
 msgid "Tags"
 msgstr "Schlagwörter"
 
@@ -366,19 +370,19 @@ msgstr "Horizontal"
 msgid "Menu"
 msgstr "Menü"
 
-#: functions.php:375
+#: functions.php:378
 msgid "Footer #2"
 msgstr "Footer #2"
 
-#: functions.php:363
+#: functions.php:366
 msgid "Footer #1"
 msgstr "Footer #1"
 
-#: classes/class-twentytwenty-customize.php:249
+#: classes/class-twentytwenty-customize.php:270
 msgid "Summary"
 msgstr "Zusammenfassung"
 
-#: classes/class-twentytwenty-customize.php:285
+#: classes/class-twentytwenty-customize.php:306
 msgid "Creates a parallax effect when the visitor scrolls."
 msgstr "Erstellt einen Parallex-Effekt, wenn der Besucher die Seite scrollt."
 
@@ -390,12 +394,12 @@ msgstr "sagt:"
 msgid "By Post Author"
 msgstr "Vom Beitragsautor"
 
-#. translators: %d: ID of a post
-#: classes/class-twentytwenty-walker-page.php:82
+#. translators: %d: ID of a post.
+#: classes/class-twentytwenty-walker-page.php:70
 msgid "#%d (no title)"
 msgstr "#%d (kein Titel)"
 
-#: classes/class-twentytwenty-walker-page.php:134 inc/template-tags.php:545
+#: classes/class-twentytwenty-walker-page.php:107 inc/template-tags.php:555
 msgid "Show sub menu"
 msgstr "Untermenü anzeigen"
 
@@ -411,16 +415,16 @@ msgstr "Ältere Kommentare"
 msgid "Powered by WordPress"
 msgstr "Powered by WordPress"
 
-#: functions.php:255
+#: functions.php:258
 msgid "Desktop Horizontal Menu"
 msgstr "Horizontales Desktop-Menü"
 
-#: functions.php:547
+#: functions.php:548
 msgctxt "Name of the larger font size in the block editor"
 msgid "Larger"
 msgstr "Größer"
 
-#: functions.php:548
+#: functions.php:549
 msgctxt "Short name of the larger font size in the block editor."
 msgid "XL"
 msgstr "XL"
@@ -433,20 +437,20 @@ msgstr "Weiterlesen"
 msgid "Search"
 msgstr "Suche"
 
-#: inc/template-tags.php:341
+#: inc/template-tags.php:347
 msgid "Post author"
 msgstr "Beitragsautor"
 
-#: inc/template-tags.php:365
+#: inc/template-tags.php:371
 msgid "Post date"
 msgstr "Beitragsdatum"
 
-#: template-parts/entry-header.php:36 template-parts/content-cover.php:70
-#: inc/template-tags.php:383
+#: inc/template-tags.php:389 template-parts/entry-header.php:36
+#: template-parts/content-cover.php:70
 msgid "Categories"
 msgstr "Kategorien"
 
-#: inc/template-tags.php:439
+#: inc/template-tags.php:445
 msgid "Sticky post"
 msgstr "Beitrag oben halten"
 
@@ -459,8 +463,8 @@ msgstr "Suche &hellip;"
 msgid "Scroll Down"
 msgstr "Nach unten scrollen"
 
-#. translators: %s: Author name
-#: template-parts/entry-author-bio.php:20 inc/template-tags.php:348
+#. translators: %s: Author name.
+#: inc/template-tags.php:354 template-parts/entry-author-bio.php:20
 msgid "By %s"
 msgstr "Von %s"
 
@@ -485,13 +489,13 @@ msgctxt "submit button"
 msgid "Search"
 msgstr "Suchen"
 
-#. translators: %s: post title
+#. translators: %s: Post title.
 #: comments.php:37
 msgctxt "comments title"
 msgid "One reply on &ldquo;%s&rdquo;"
 msgstr "Eine Antwort auf „%s“"
 
-#. translators: 1: number of comments, 2: post title
+#. translators: 1: Number of comments, 2: Post title.
 #: comments.php:41
 msgctxt "comments title"
 msgid "%1$s reply on &ldquo;%2$s&rdquo;"
@@ -507,7 +511,7 @@ msgstr "Schreiben Sie einen Kommentar"
 msgid "Show search in header"
 msgstr "Suchfeld im Header anzeigen"
 
-#: classes/class-twentytwenty-customize.php:248
+#: classes/class-twentytwenty-customize.php:269
 msgid "Full text"
 msgstr "Vollständigen Text"
 
@@ -515,7 +519,7 @@ msgstr "Vollständigen Text"
 msgid "Full Width Template"
 msgstr "Template für weite Breite"
 
-#: classes/class-twentytwenty-customize.php:375
+#: classes/class-twentytwenty-customize.php:396
 msgid "Make sure that the contrast is high enough so that the text is readable."
 msgstr "Achten Sie darauf, den Kontrast so hoch einzustellen, dass der Text gut lesbar bleibt."
 

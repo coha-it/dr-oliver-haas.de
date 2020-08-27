@@ -1,3 +1,43 @@
+= 3.2.6 =
+* Added option to stop search box overlapping logo on mobile
+* Changed gallery row spacing and image width defaults to better match standard gallery
+* Fixed custom icons not working with blurb module circle background
+* Left-positioned custom icons now resizable using blurb icon font size setting 
+* Deprecated option for making left-placed icons bigger
+
+= 3.2.5 =
+* Fixed customizer social icons not working in slide-in menu
+* Fixed custom icons not working in blurb module when different hover icon set
+
+= 3.2.4 =
+* Renamed gallery Image Max Width / Height options to Image Area Height / Width
+* Fixed page layout option prevents editing of theme builder global header in Divi library
+
+= 3.2.3 =
+* Reorganized settings page "Divi Builder" section
+
+= 3.2.2 =
+* Updated enable builder by default to work with block editor
+
+= 3.2.1 =
+* Added option to change the html tag when showing site title in header
+* Fixed custom icons not showing in latest visual builder
+
+= 3.2.0 =
+* Fixed open images in lightbox not working in map module pin details
+
+= 3.1.9 =
+* Various gallery image size improvements
+
+= 3.1.8 =
+* Fixed show map details not working correctly when multiple maps in page
+
+= 3.1.7 =
+* Fixed strpos non-string needle deprecation notice in update checker
+* Fixed hiding secondary menu items on mobile not working when same menu used as primary and secondary
+* Custom icons now support Divi Breadcrumbs Module
+* Fixed gallery image scaling applying to all galleries on same page
+
 = 3.1.6 =
 * Fixed top header hidden by social icon feature in some cases
 

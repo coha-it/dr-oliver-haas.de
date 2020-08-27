@@ -122,6 +122,10 @@ function db121_icon_js() {
 					$('#footer-bottom .et-social-icons').append(<?php echo json_encode(db126_icon_html_divi($icon)); ?>);
 					$('#footer-bottom .et-extra-social-icons').append(<?php echo json_encode(db126_icon_html_extra($icon)); ?>);
 				}
+				if ($('.et_slide_in_menu_container .socicon-<?php esc_attr_e($id); ?>').length === 0) {
+					$('.et_slide_in_menu_container .et-social-icons').append(<?php echo json_encode(db126_icon_html_divi($icon)); ?>);
+					$('.et_slide_in_menu_container .et-extra-social-icons').append(<?php echo json_encode(db126_icon_html_extra($icon)); ?>);
+				}
 				<?php 
 			}
 		}

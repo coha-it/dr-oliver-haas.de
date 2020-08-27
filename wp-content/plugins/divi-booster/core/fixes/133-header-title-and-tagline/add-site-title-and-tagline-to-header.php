@@ -83,7 +83,8 @@ if (!function_exists('db133_site_tagline')) {
 
 if (!function_exists('db133_site_title_tag')) {
 	function db133_site_title_tag() {
-		return apply_filters('db133_site_title_tag', 'h1');
+		$tag = dbdb_option('133-header-title-and-tagline', 'titleHeaderLevel', 'h1');
+		return apply_filters('db133_site_title_tag', $tag);
 	}
 }
 

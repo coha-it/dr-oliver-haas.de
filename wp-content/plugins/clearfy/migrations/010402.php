@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCLUpdate010402 extends Wbcr_Factory425_Update {
+class WCLUpdate010402 extends Wbcr_Factory429_Update {
 
 	public function install() {
 		/**

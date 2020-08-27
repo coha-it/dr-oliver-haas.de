@@ -6,17 +6,17 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 	public $vb_support = 'on';
 
 	protected $module_credits = array(
-		'module_uri' => 'https://suprememodules.com/',
-		'author'     => 'Supreme Modules',
-		'author_uri' => 'https://suprememodules.com/',
+		'module_uri' => 'https://divisupreme.com/',
+		'author'     => 'Divi Supreme',
+		'author_uri' => 'https://divisupreme.com/',
 	);
 
 	public function init() {
-		$this->name = esc_html__( 'Supreme Embed Twitter Timeline ', 'dsm-supreme-modules-for-divi' );
-		$this->icon             = '';
+		$this->name      = esc_html__( 'Supreme Embed Twitter Timeline ', 'dsm-supreme-modules-for-divi' );
+		$this->icon_path = plugin_dir_path( __FILE__ ) . 'icon.svg';
 		// Toggle settings
-		$this->settings_modal_toggles  = array(
-			'general'  => array(
+		$this->settings_modal_toggles = array(
+			'general' => array(
 				'toggles' => array(
 					'main_content' => esc_html__( 'Twitter Timeline Settings', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -26,8 +26,8 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 
 	public function get_advanced_fields_config() {
 		return array(
-			'text' => false,
-			'fonts' => false,
+			'text'       => false,
+			'fonts'      => false,
 			'background' => array(
 				'css'     => array(
 					'main' => '%%order_class%%',
@@ -39,7 +39,7 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				),
 			),
 			'max_width'  => array(
-				'css'     => array(
+				'css' => array(
 					'main' => '%%order_class%%',
 				),
 			),
@@ -48,19 +48,19 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 
 	public function get_fields() {
 		return array(
-			'twitter_username' => array(
-				'label'           => esc_html__( 'Twitter Username', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'text',
-				'option_category' => 'basic_option',
-				'toggle_slug'     => 'main_content',
+			'twitter_username'  => array(
+				'label'            => esc_html__( 'Twitter Username', 'dsm-supreme-modules-for-divi' ),
+				'type'             => 'text',
+				'option_category'  => 'basic_option',
+				'toggle_slug'      => 'main_content',
 				'default_on_front' => 'TwitterDev',
-				'description'     => esc_html__( 'Enter the Twitter Username without the hashtag @', 'dsm-supreme-modules-for-divi' ),
+				'description'      => esc_html__( 'Enter the Twitter Username without the hashtag @', 'dsm-supreme-modules-for-divi' ),
 			),
-			'limit_tweet' => array(
+			'limit_tweet'       => array(
 				'label'            => esc_html__( 'Limit Tweets', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -68,33 +68,34 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				'description'      => esc_html__( 'Limiting the number of Tweets displayed.', 'dsm-supreme-modules-for-divi' ),
 				'default_on_front' => 'off',
 			),
-			'tweet_number' => array(
-				'label'             => esc_html__( 'Number of Tweets', 'dsm-supreme-modules-for-divi' ),
-				'type'              => 'range',
-				'option_category'   => 'layout',
+			'tweet_number'      => array(
+				'label'           => esc_html__( 'Number of Tweets', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'range',
+				'option_category' => 'layout',
 				'toggle_slug'     => 'main_content',
-				'default_unit'      => '',
-				'default'           => '3',
+				'validate_unit'   => false,
+				'unitless'        => true,
+				'default'         => '3',
 				'range_settings'  => array(
 					'min'  => '1',
 					'max'  => '20',
 					'step' => '1',
 				),
-				'show_if' => array(
+				'show_if'         => array(
 					'limit_tweet' => 'on',
 				),
 			),
-			'theme' => array(
-				'label'           => esc_html__( 'Theme', 'et_builder' ),
-				'type'            => 'select',
-				'option_category' => 'configuration',
-				'options'         => array(
+			'theme'             => array(
+				'label'            => esc_html__( 'Theme', 'et_builder' ),
+				'type'             => 'select',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'light' => esc_html__( 'Light', 'et_builder' ),
 					'dark'  => esc_html__( 'Dark', 'et_builder' ),
 				),
 				'default_on_front' => 'Dark',
-				'toggle_slug'     => 'main_content',
-				'description'     => esc_html__( 'Here you can choose whether the Twitter Widget will appear in light or dark theme.', 'et_builder' ),
+				'toggle_slug'      => 'main_content',
+				'description'      => esc_html__( 'Here you can choose whether the Twitter Widget will appear in light or dark theme.', 'et_builder' ),
 			),
 			/*
 			'link_color' => array(
@@ -105,11 +106,11 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				'default_on_front' => '#1b95e0',
 			),
 			*/
-			'header' => array(
+			'header'            => array(
 				'label'            => esc_html__( 'Show Header', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -117,11 +118,11 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				'description'      => esc_html__( 'Hides the timeline header. Implementing sites must add their own Twitter attribution, link to the source timeline, and comply with other Twitter display requirements.', 'dsm-supreme-modules-for-divi' ),
 				'default_on_front' => 'on',
 			),
-			'footer' => array(
+			'footer'            => array(
 				'label'            => esc_html__( 'Show Footer', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -129,11 +130,11 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				'description'      => esc_html__( 'Hides the timeline footer and Tweet composer link, if included in the timeline widget type.', 'dsm-supreme-modules-for-divi' ),
 				'default_on_front' => 'on',
 			),
-			'borders' => array(
+			'borders'           => array(
 				'label'            => esc_html__( 'Show Border', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -141,11 +142,11 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				'description'      => esc_html__( 'Removes all borders within the widget including borders surrounding the widget area and separating Tweets.', 'dsm-supreme-modules-for-divi' ),
 				'default_on_front' => 'on',
 			),
-			'scrollbar' => array(
+			'scrollbar'         => array(
 				'label'            => esc_html__( 'Show Scrollbar', 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -155,9 +156,9 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 			),
 			'remove_background' => array(
 				'label'            => esc_html__( "Remove Widget's Background color", 'dsm-supreme-modules-for-divi' ),
-				'type'            => 'yes_no_button',
-				'option_category' => 'configuration',
-				'options'         => array(
+				'type'             => 'yes_no_button',
+				'option_category'  => 'configuration',
+				'options'          => array(
 					'off' => esc_html__( 'No', 'dsm-supreme-modules-for-divi' ),
 					'on'  => esc_html__( 'Yes', 'dsm-supreme-modules-for-divi' ),
 				),
@@ -165,14 +166,14 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 				'description'      => esc_html__( 'Removes the widget’s background color.', 'dsm-supreme-modules-for-divi' ),
 				'default_on_front' => 'off',
 			),
-			'height' => array(
-				'label'             => esc_html__( 'Height', 'dsm-supreme-modules-for-divi' ),
-				'type'              => 'range',
-				'option_category'   => 'layout',
-				'tab_slug'          => 'advanced',
+			'height'            => array(
+				'label'           => esc_html__( 'Height', 'dsm-supreme-modules-for-divi' ),
+				'type'            => 'range',
+				'option_category' => 'layout',
+				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'width',
-				'default_unit'      => '',
-				'default'           => '800px',
+				'default_unit'    => '',
+				'default'         => '800px',
 				'range_settings'  => array(
 					'min'  => '200',
 					'max'  => '1000',
@@ -184,18 +185,18 @@ class DSM_TwitterEmbeddedTimeline extends ET_Builder_Module {
 
 	public function render( $attrs, $content = null, $render_slug ) {
 		$twitter_username = $this->props['twitter_username'];
-		$limit_tweet = $this->props['limit_tweet'];
-		$tweet_number = floatval($this->props['tweet_number']);
-		$theme = $this->props['theme'];
-		$header = $this->props['header'];
-		$footer = $this->props['footer'];
-		$borders = $this->props['borders'];
-		$scrollbar = $this->props['scrollbar'];
-		$height = floatval($this->props['height']);
+		$limit_tweet      = $this->props['limit_tweet'];
+		$tweet_number     = floatval( $this->props['tweet_number'] );
+		$theme            = $this->props['theme'];
+		$header           = $this->props['header'];
+		$footer           = $this->props['footer'];
+		$borders          = $this->props['borders'];
+		$scrollbar        = $this->props['scrollbar'];
+		$height           = floatval( $this->props['height'] );
 		//$link_color = $this->props['link_color'];
 		$remove_background = $this->props['remove_background'];
 
-		wp_enqueue_script('dsm-twitter-embed');
+		wp_enqueue_script( 'dsm-twitter-embed' );
 
 		// Render module content
 		$output = sprintf(

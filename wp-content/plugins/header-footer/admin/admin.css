@@ -1,5 +1,5 @@
 
-.wrap, .form-table, .form-table td, .form-table th, .form-table td p, .form-wrap label {
+.form-table, .form-table td, .form-table th, .form-table td p, .form-wrap label {
     font-size: 12px;
 }
 
@@ -81,19 +81,6 @@ h3 {
     }
 }
 
-.tab a {
-    text-decoration: none;
-}
-
-.tab a.active {
-    font-weight: normal;
-}
-.tab a:focus {
-    outline: none;
-    border: 0;
-    box-shadow: none;
-}
-
 .rules {
     margin-top: 15px;
 }
@@ -132,4 +119,14 @@ h3 {
     font-size: 12px;
     text-transform: uppercase;
     display: block;
+}
+
+a.readmore {
+    display: inline-block;
+    background-color: #007cba;
+    padding: 3px 10px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    line-height: normal;
 }

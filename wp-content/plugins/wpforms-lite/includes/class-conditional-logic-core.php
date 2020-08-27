@@ -76,7 +76,7 @@ class WPForms_Conditional_Logic_Core {
 	}
 
 	/**
-	 * Outputs footer scripts inside the form builder.
+	 * Output footer scripts inside the form builder.
 	 *
 	 * @since 1.3.8
 	 */
@@ -546,6 +546,7 @@ class WPForms_Conditional_Logic_Core {
 	 * Check if a form passes the conditional logic rules that are provided.
 	 *
 	 * @since 1.3.8
+	 * @since 1.6.1 Added multiple select support.
 	 *
 	 * @param array $fields       List of fields with data and settings.
 	 * @param array $form_data    Form data and settings.
@@ -584,7 +585,7 @@ class WPForms_Conditional_Logic_Core {
 					if ( in_array( $fields[ $rule_field ]['type'], array( 'text', 'textarea', 'email', 'url', 'number', 'hidden', 'rating', 'number-slider', 'net_promoter_score' ), true ) ) {
 
 						// Text based fields.
-						$left  = strtolower( trim( $fields[ $rule_field ]['value'] ) );
+						$left  = strtolower( trim( wpforms_decode_string( $fields[ $rule_field ]['value'] ) ) );
 						$right = strtolower( trim( $rule_value ) );
 
 						switch ( $rule_operator ) {
@@ -646,7 +647,7 @@ class WPForms_Conditional_Logic_Core {
 							// it ourselves.
 							$provided_id = array();
 
-							if ( 'checkbox' === $fields[ $rule_field ]['type'] ) {
+							if ( in_array( $fields[ $rule_field ]['type'], array( 'checkbox', 'select' ), true ) ) {
 								$values = explode( "\n", $fields[ $rule_field ]['value'] );
 							} else {
 								$values = (array) $fields[ $rule_field ]['value'];
@@ -654,7 +655,13 @@ class WPForms_Conditional_Logic_Core {
 
 							foreach ( $form_data['fields'][ $rule_field ]['choices'] as $key => $choice ) {
 
-								$choice = array_map( 'sanitize_text_field', $choice );
+								$choice = array_map( 'wpforms_decode_string', $choice );
+
+								if ( in_array( $fields[ $rule_field ]['type'], [ 'radio', 'checkbox', 'select' ], true ) ) {
+									// Remove newlines from the choice (label or value) before comparing.
+									// Newlines can be pasted with a long text to the choice label (or value) in the form builder.
+									$choice = array_map( 'sanitize_text_field', $choice );
+								}
 
 								foreach ( $values as $value ) {
 									$value = wpforms_decode_string( $value );
@@ -681,10 +688,10 @@ class WPForms_Conditional_Logic_Core {
 								$pass_rule = ! in_array( $right, $left );
 								break;
 							case 'e':
-								$pass_rule = ( false === $left[0] );
+								$pass_rule = empty( $left[0] );
 								break;
 							case '!e':
-								$pass_rule = ( false !== $left[0] );
+								$pass_rule = ! empty( $left[0] );
 								break;
 							default:
 								$pass_rule = apply_filters( 'wpforms_process_conditional_logic', false, $rule_operator, $left, $right );

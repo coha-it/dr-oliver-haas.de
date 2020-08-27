@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -29,18 +28,15 @@ class Dsm_Supreme_Modules_For_Divi_Activator {
 	 *
 	 * @since    1.0.0
 	 */
-
-
-
 	public static function activate() {
 		flush_rewrite_rules();
-        if ( ! get_option( 'dsm_flush_rewrite_rules_flag' ) ) {
-            add_option( 'dsm_flush_rewrite_rules_flag', true );
-        }
-		if ( is_plugin_active('supreme-modules-pro-for-divi/supreme-modules-pro-for-divi.php') ) {
+		if ( ! get_option( 'dsm_flush_rewrite_rules_flag' ) ) {
+			add_option( 'dsm_flush_rewrite_rules_flag', true );
+		}
+		if ( is_plugin_active( 'supreme-modules-pro-for-divi/supreme-modules-pro-for-divi.php' ) ) {
 			return;
 		}
-        Dsm_Supreme_Modules_For_Divi_Review::insert_install_date();
+		Dsm_Supreme_Modules_For_Divi_Review::insert_install_date();
 	}
 
 }

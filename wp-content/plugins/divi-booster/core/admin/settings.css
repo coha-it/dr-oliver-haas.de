@@ -46,6 +46,16 @@
 	-o-transform:rotate(90deg);
 	transform:rotate(90deg);
 }
+
+.wtf-setting {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 0.75em;
+    padding-top: 1em;
+}
+.wtf-setting:first-child {
+	border-top: 1px solid #ddd;
+}
+
 .wtf-setting-group {
 	padding:0;
 	margin:0;

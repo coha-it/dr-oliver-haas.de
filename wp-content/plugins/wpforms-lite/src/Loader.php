@@ -35,7 +35,51 @@ class Loader {
 	 */
 	protected function populate_classes() {
 
+		$this->populate_admin();
+		$this->populate_migrations();
 		$this->populate_capabilities();
+		$this->populate_tasks();
+	}
+
+	/**
+	 * Populate Admin related classes.
+	 *
+	 * @since 1.6.0
+	 */
+	private function populate_admin() {
+
+		array_push(
+			$this->classes,
+			[
+				'name' => 'Admin\AdminBarMenu',
+			],
+			[
+				'name' => 'Admin\Notifications',
+				'id'   => 'notifications',
+			],
+			[
+				'name' => 'Admin\Entries\Edit',
+				'id'   => 'entries_edit',
+				'hook' => 'admin_init',
+			],
+			[
+				'name' => 'Admin\Entries\Export\Export',
+				'hook' => 'admin_init',
+			]
+		);
+	}
+
+	/**
+	 * Populate migration classes.
+	 *
+	 * @since 1.5.9
+	 */
+	private function populate_migrations() {
+
+		$this->classes[] = [
+			'name' => 'Migrations',
+			'hook' => 'plugins_loaded',
+		];
 	}
 
 	/**
@@ -58,6 +102,29 @@ class Loader {
 			[
 				'name'      => 'Admin\Settings\Access',
 				'condition' => is_admin(),
+			]
+		);
+	}
+
+	/**
+	 * Populate tasks related classes.
+	 *
+	 * @since 1.5.9
+	 */
+	private function populate_tasks() {
+
+		array_push(
+			$this->classes,
+			[
+				'name' => 'Tasks\Tasks',
+				'id'   => 'tasks',
+				'hook' => 'init',
+			],
+			[
+				'name' => 'Tasks\Meta',
+				'id'   => 'tasks_meta',
+				'hook' => false,
+				'run'  => false,
 			]
 		);
 	}

@@ -4,7 +4,7 @@
  *
  * @author        Webcraftic <wordpress.webraftic@gmail.com>
  * @copyright (c) 09.09.2017, Webcraftic
- * @see           Factory425_Activator
+ * @see           Factory429_Activator
  * @version       1.0
  */
 
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_Activation extends Wbcr_Factory425_Activator {
+class WCL_Activation extends Wbcr_Factory429_Activator {
 
 	/**
 	 * Runs activation actions.

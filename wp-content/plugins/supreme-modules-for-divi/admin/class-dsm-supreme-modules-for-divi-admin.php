@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -44,13 +43,13 @@ class Dsm_Supreme_Modules_For_Divi_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -73,8 +72,7 @@ class Dsm_Supreme_Modules_For_Divi_Admin {
 		 * class.
 		 */
 
-		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dsm-supreme-modules-for-divi-admin.css', array(), $this->version, 'all' );
-		wp_enqueue_style('dsm-plugin', plugin_dir_url( __FILE__ ) . 'css/dsm-plugin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'dsm-plugin', plugin_dir_url( __FILE__ ) . 'css/dsm-plugin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,8 +94,6 @@ class Dsm_Supreme_Modules_For_Divi_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dsm-supreme-modules-for-divi-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

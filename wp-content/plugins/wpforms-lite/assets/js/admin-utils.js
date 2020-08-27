@@ -155,7 +155,7 @@ var wpf = {
 				fields         = formData.fields,
 				fieldOrder     = [],
 				fieldsOrdered  = [],
-				fieldBlacklist = ['html','divider','pagebreak'];
+				fieldBlacklist = [ 'html', 'pagebreak' ];
 
 			if (!fields) {
 				return false;
@@ -632,6 +632,27 @@ var wpf = {
 		}
 
 		return false;
+	},
+
+	/**
+	 * Sanitize HTML.
+	 * Uses: `https://github.com/cure53/DOMPurify`
+	 *
+	 * @since 1.5.9
+	 *
+	 * @param {string} string HTML to sanitize.
+	 *
+	 * @returns {string} Sanitized HTML.
+	 */
+	sanitizeHTML: function( string ) {
+
+		var purify = window.DOMPurify;
+
+		if ( typeof purify === 'undefined' ) {
+			return string;
+		}
+
+		return purify.sanitize( string, {SAFE_FOR_JQUERY: true} );
 	},
 };
 

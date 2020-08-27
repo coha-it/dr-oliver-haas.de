@@ -154,16 +154,16 @@
 			$( '.choicesjs-select' ).each( function() {
 				var $this = $( this ),
 					args  = { searchEnabled: false };
+
 				if ( $this.attr( 'multiple' ) ) {
-					args.searchEnabled = true;
+					args.searchEnabled    = true;
 					args.removeItemButton = true;
 				}
-				if ( $this.data( 'placeholder' ) ) {
-					args.placeholderValue = $this.data( 'placeholder' );
-				}
+
 				if ( $this.data( 'sorting' ) === 'off' ) {
 					args.shouldSort = false;
 				}
+
 				if ( $this.data( 'search' ) ) {
 					args.searchEnabled = true;
 				}
@@ -174,8 +174,42 @@
 				args.noChoicesText = wpforms_admin.choicesjs_no_choices;
 				args.itemSelectText = wpforms_admin.choicesjs_item_select;
 
-				new Choices( $this[0], args );
-			});
+				// Function to run once Choices initialises.
+				// We need to reproduce a behaviour like on public-facing area for "Edit Entry" page.
+				args.callbackOnInit = function() {
+
+					var self      = this,
+						$element  = $( self.passedElement.element ),
+						$input    = $( self.input.element ),
+						sizeClass = $element.data( 'size-class' );
+
+					// Add CSS-class for size.
+					if ( sizeClass ) {
+						$( self.containerOuter.element ).addClass( sizeClass );
+					}
+
+					/**
+					 * If a multiple select has selected choices - hide a placeholder input.
+					 * We use a custom styles like a `.screen-reader-text` for it,
+					 * because it avoid an issue with closing a dropdown.
+					 */
+					if ( $element.prop( 'multiple' ) ) {
+
+						// On init event.
+						if ( self.getValue( true ).length ) {
+							$input.addClass( self.config.classNames.input + '--hidden' );
+						}
+
+						// On change event.
+						$element.on( 'change', function() {
+
+							self.getValue( true ).length ? $input.addClass( self.config.classNames.input + '--hidden' ) : $input.removeClass( self.config.classNames.input + '--hidden' );
+						} );
+					}
+				};
+
+				$this.data( 'choicesjs', new Choices( $this[0], args ) );
+			} );
 		},
 
 		/**
@@ -322,10 +356,10 @@
 				event.preventDefault();
 
 				// Handle cookie.
-				if ( wpCookies.get( 'wpforms_entry_hide_empty' ) === 'true') {
+				if ( wpCookies.get( 'wpforms_entry_hide_empty' ) === 'true' ) {
 
 					// User was hiding empty fields, so now display them.
-					wpCookies.remove('wpforms_entry_hide_empty');
+					wpCookies.remove( 'wpforms_entry_hide_empty' );
 					$( this ).text( wpforms_admin.entry_empty_fields_hide );
 				} else {
 
@@ -334,7 +368,7 @@
 					$( this ).text( wpforms_admin.entry_empty_fields_show );
 				}
 
-				$( '.wpforms-entry-field.empty' ).toggle();
+				$( '.wpforms-entry-field.empty, .wpforms-edit-entry-field.empty' ).toggle();
 			});
 
 			// Display notes editor.
@@ -646,7 +680,6 @@
 						choices       = new Choices( $select[0], {
 							shouldSort: false,
 							removeItemButton: true,
-							placeholderValue: wpforms_admin.choicesjs_fields_select + '...',
 							loadingText: wpforms_admin.choicesjs_loading,
 							noResultsText: wpforms_admin.choicesjs_no_results,
 							noChoicesText: wpforms_admin.choicesjs_no_choices,
@@ -659,15 +692,17 @@
 
 					$( '.jconfirm-content-pane, .jconfirm-box' ).css( 'overflow','visible' );
 
-					choices.passedElement.addEventListener( 'change', function() {
-						choices.hideDropdown();
+					choices.passedElement.element.addEventListener( 'change', function() {
+
+						// Without `true` parameter dropdown will be hidden together with modal window when `Enter` is pressed.
+						choices.hideDropdown( true );
 					}, false );
 				},
 				buttons: {
 					confirm: {
 						text: wpforms_admin.save_refresh,
 						btnClass: 'btn-confirm',
-						keys: ['enter'],
+						keys: [ 'enter' ],
 						action: function() {
 							this.$content.find( 'form' ).submit();
 						}
@@ -696,7 +731,7 @@
 
 				event.preventDefault();
 
-				var video = '<div class="video-container"><iframe width="1280" height="720" src="https://www.youtube-nocookie.com/embed/yDyvSGV7tP4?rel=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe></div>';
+				var video = '<div class="video-container"><iframe width="1280" height="720" src="https://www.youtube-nocookie.com/embed/o2nE1P74WxQ?rel=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe></div>';
 
 				$.dialog({
 					title: false,
@@ -1035,13 +1070,21 @@
 			});
 
 			// Integration individual display toggling.
-			$( document ).on( 'click', '.wpforms-settings-provider:not(.focus-out) .wpforms-settings-provider-header', function( event ) {
+			$( document ).on( 'click', '.wpforms-settings-provider:not(.focus-out) .wpforms-settings-provider-header:not(.disabled)', function( event ) {
 
 				event.preventDefault();
 
-				$( this ).parent().find( '.wpforms-settings-provider-accounts' ).slideToggle();
-				$( this ).parent().find( '.wpforms-settings-provider-logo i' ).toggleClass( 'fa-chevron-right fa-chevron-down' );
-			});
+				var $this = $( this );
+
+				$this
+					.addClass( 'disabled' )
+					.parent()
+					.find( '.wpforms-settings-provider-accounts' )
+					.slideToggle( '', function() {
+						$this.removeClass( 'disabled' );
+						$this.parent().find( '.wpforms-settings-provider-logo i' ).toggleClass( 'fa-chevron-right fa-chevron-down' );
+					} );
+			} );
 
 			// Integration accounts display toggling.
 			$( document ).on( 'click', '.wpforms-settings-provider-accounts-toggle a', function( event ) {
@@ -1302,7 +1345,7 @@
 				buttonLabel = $btn.text(),
 				$provider   = $btn.closest( '.wpforms-settings-provider' ),
 				data        = {
-					action  : 'wpforms_settings_provider_add',
+					action  : 'wpforms_settings_provider_add_' + $btn.data( 'provider' ),
 					data    : $btn.closest( 'form' ).serialize(),
 					provider: $btn.data( 'provider' ),
 					nonce   : wpforms_admin.nonce
@@ -1353,7 +1396,7 @@
 			var $this = $( el ),
 				$provider = $this.parents('.wpforms-settings-provider'),
 				data = {
-					action  : 'wpforms_settings_provider_disconnect',
+					action  : 'wpforms_settings_provider_disconnect_' + $this.data( 'provider' ),
 					provider: $this.data( 'provider' ),
 					key     : $this.data( 'key'),
 					nonce   : wpforms_admin.nonce
@@ -1810,7 +1853,7 @@
 				return;
 			}
 
-			var	$overlap       = $( '#wpforms-overview, #wpforms-entries-list' ),
+			var	$overlap       = $( '#wpforms-overview, #wpforms-entries-list, #wpforms-tools.wpforms-tools-tab-action-scheduler' ),
 				wpfooterTop    = $wpfooter.offset().top,
 				wpfooterBottom = wpfooterTop + $wpfooter.height(),
 				overlapBottom  = $overlap.length > 0 ? $overlap.offset().top + $overlap.height() + 85 : 0;

@@ -4,7 +4,7 @@
   Plugin Name: Head, Footer and Post Injections
   Plugin URI: http://www.satollo.net/plugins/header-footer
   Description: Header and Footer lets to add html/javascript code to the head and footer and posts of your blog. Some examples are provided on the <a href="http://www.satollo.net/plugins/header-footer">official page</a>.
-  Version: 3.1.6
+  Version: 3.2.1
   Author: Stefano Lissa
   Author URI: http://www.satollo.net
   Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -30,12 +30,10 @@
 
 defined('ABSPATH') || exit;
 
-$hefo_options = get_option('hefo', array());
+$hefo_options = get_option('hefo', []);
 
 $hefo_is_mobile = false;
-if (defined('IS_PHONE') && IS_PHONE) {
-    $hefo_is_mobile = true;
-} else if (isset($_SERVER['HTTP_USER_AGENT']) && isset($hefo_options['mobile_user_agents_parsed'])) {
+if (isset($_SERVER['HTTP_USER_AGENT']) && isset($hefo_options['mobile_user_agents_parsed'])) {
     $hefo_is_mobile = preg_match('/' . $hefo_options['mobile_user_agents_parsed'] . '/', strtolower($_SERVER['HTTP_USER_AGENT']));
 }
 
@@ -62,9 +60,9 @@ if (isset($hefo_options['disable_css_id'])) {
 register_activation_hook(__FILE__, function () {
     $options = get_option('hefo');
     if (!is_array($options)) {
-        $options = array();
+        $options = [];
     }
-    $options = array_merge(array('after' => '', 'before' => '', 'head' => '', 'body' => '', 'head_home' => '', 'footer' => ''), $options);
+    $options = array_merge(['after' => '', 'before' => '', 'head' => '', 'body' => '', 'head_home' => '', 'footer' => ''], $options);
     for ($i = 1; $i <= 5; $i++) {
         $options['snippet_' . $i] = '';
         $options['generic_' . $i] = '';
@@ -88,8 +86,9 @@ $hefo_generic_block = array();
 
 function hefo_template_redirect() {
     global $hefo_body_block, $hefo_generic_block, $hefo_options, $hefo_is_mobile;
-    
-    if (function_exists('is_amp_endpoint') && is_amp_endpoint()) return;
+
+    if (function_exists('is_amp_endpoint') && is_amp_endpoint())
+        return;
 
     if ($hefo_is_mobile && isset($hefo_options['mobile_body_enabled'])) {
         $hefo_body_block = hefo_execute_option('mobile_body');
@@ -216,21 +215,23 @@ function hefo_the_content($content) {
         $type = 'page_';
     }
 
-    if ($hefo_is_mobile && isset($hefo_options['mobile_' . $type . 'before_enabled'])) {
-        $before = hefo_execute_option('mobile_' . $type . 'before');
-    } else {
-        $before = hefo_execute_option($type . 'before');
+    if (!get_post_meta($post->ID, 'hefo_before', true)) {
+        if ($hefo_is_mobile && isset($hefo_options['mobile_' . $type . 'before_enabled'])) {
+            $before = hefo_execute_option('mobile_' . $type . 'before');
+        } else {
+            $before = hefo_execute_option($type . 'before');
+        }
     }
 
-    if ($hefo_is_mobile && isset($hefo_options['mobile_' . $type . 'after_enabled'])) {
-        $after = hefo_execute_option('mobile_' . $type . 'after');
-    } else {
-        $after = hefo_execute_option($type . 'after');
+    if (!get_post_meta($post->ID, 'hefo_after', true)) {
+        if ($hefo_is_mobile && isset($hefo_options['mobile_' . $type . 'after_enabled'])) {
+            $after = hefo_execute_option('mobile_' . $type . 'after');
+        } else {
+            $after = hefo_execute_option($type . 'after');
+        }
     }
 
     // Rules
-
-
 
     for ($i = 1; $i <= 5; $i++) {
         if (empty($hefo_options['inner_tag_' . $i])) {
