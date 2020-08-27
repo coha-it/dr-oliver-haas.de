@@ -94,6 +94,10 @@ body #et-boc .et_pb_column b {font-family: Geomanist;font-weight: 900;}
     height: calc(100% + 1px);
     width: calc(100% + 1px);
 }
+iframe.lazy-loaded[src*="player.vimeo"]:not([src*='autoplay']) {
+    opacity: 0;
+}
+
 
 /* Text Shadow */
 .customTextShadow {
