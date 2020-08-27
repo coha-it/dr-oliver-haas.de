@@ -103,14 +103,7 @@ d
 
 
 
-.follower {
-position: absolute;
-left: -10px;
-top: 0;
-height: calc(100% - 100px);
-border-left: 2px dashed #5A5A5A;
-margin-top: 100px;
-}
+.follower {position: absolute;left: -10px;top: 0;height: calc(100% - 100px);border-left: 2px dashed #5A5A5A;border-color: #8c8c8c;margin-top: 100px;}
 
 .triangle {
 border-color: white transparent transparent;
@@ -213,7 +206,7 @@ position: relative;
 /* Expired */
 .keynote.expired > * { pointer-events: none; opacity: .4; }
 .keynote.expired:before {display: block;position: absolute;top: 5%;right: 0;content: "Expired";color: white;font-weight: 700;font-size: 20px;z-index: 1;transform: rotate(25deg);}
-.expired .follower {height: 100%;}
+.expired .follower {height: 100%;border-color: #444444;}
 .expired .follower .triangle,
 .expired .follower:after {display: none;}
 
