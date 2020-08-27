@@ -11,7 +11,7 @@
 		exit;
 	}
 
-	class WCL_ConfigSecurity extends Wbcr_FactoryClearfy221_Configurate {
+	class WCL_ConfigSecurity extends Wbcr_FactoryClearfy224_Configurate {
 
 		/**
 		 * @param WCL_Plugin $plugin

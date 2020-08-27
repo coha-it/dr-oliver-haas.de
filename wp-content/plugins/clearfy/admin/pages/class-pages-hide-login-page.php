@@ -17,7 +17,7 @@
 		 * The id of the page in the admin menu.
 		 *
 		 * Mainly used to navigate between pages.
-		 * @see FactoryPages429_AdminPage
+		 * @see FactoryPages432_AdminPage
 		 *
 		 * @since 1.0.0
 		 * @var string
@@ -78,7 +78,7 @@
 			?>
 			<script>
 				jQuery(document).ready(function($) {
-					$.wbcr_factory_clearfy_221.hooks.add('clearfy/components/updated', function(button, component_name) {
+					$.wbcr_factory_clearfy_224.hooks.add('clearfy/components/updated', function(button, component_name) {
 						if( component_name.plugin_action == 'install' ) {
 							button.removeClass('wbcr-factory-purchase-premium');
 							button.addClass('wbcr-factory-activate-premium');
@@ -91,7 +91,7 @@
 					});
 				});
 			</script>
-			<div class="wbcr-factory-clearfy-221-multisite-suggetion">
+			<div class="wbcr-factory-clearfy-224-multisite-suggetion">
 				<div class="wbcr-factory-inner-contanier">
 					<h3><?php _e('Install Hide login page component', 'clearfy') ?></h3>
 

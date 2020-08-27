@@ -52,16 +52,16 @@
 
 				$this.addClass('disabled').text(button_i18n.loading);
 
-				$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/pre_update', [$this, data]);
+				$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/pre_update', [$this, data]);
 
 				self.sendRequest(data, function(response) {
 					if( !response || !response.success ) {
 
 						if( response.data && response.data.error_message ) {
-							$.wbcr_factory_clearfy_221.app.showNotice(response.data.error_message, 'danger');
+							$.wbcr_factory_clearfy_224.app.showNotice(response.data.error_message, 'danger');
 						}
 
-						$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/update_error', [
+						$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/update_error', [
 							$this,
 							data,
 							response.data.error_message,
@@ -77,7 +77,7 @@
 						if( storage == 'freemius' ) {
 							if( response.data.update_notice ) {
 								if( !$('.wbcr-clr-update-package').length ) {
-									$.wbcr_factory_clearfy_221.app.showNotice(response.data.update_notice);
+									$.wbcr_factory_clearfy_224.app.showNotice(response.data.update_notice);
 								}
 							} else {
 								if( $('.wbcr-clr-update-package').length ) {
@@ -96,7 +96,7 @@
 								$this.removeClass('button-default').addClass('button-primary');
 							}
 
-							$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/installed', [
+							$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/installed', [
 								$this,
 								data,
 								response
@@ -146,7 +146,7 @@
 								$this.closest('.plugin-card').find('.delete-now').remove();
 							}
 
-							$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/pre_activate', [
+							$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/pre_activate', [
 								$this,
 								data,
 								response
@@ -193,7 +193,7 @@
 								$this.closest('.wbcr-hide-after-action').remove();
 							}
 
-							$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/deactivated', [
+							$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/deactivated', [
 								$this,
 								data,
 								response
@@ -216,7 +216,7 @@
 								$this.remove();
 							}
 
-							$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/deleted', [$this, data, response]);
+							$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/deleted', [$this, data, response]);
 						}
 					} else {
 						if( plugin_action == 'install' ) {
@@ -227,10 +227,10 @@
 					$this.text(button_i18n[plugin_action]);
 
 					if( response.data.need_rewrite_rules && !$('.wbcr-clr-need-rewrite-rules-message').length ) {
-						$.wbcr_factory_clearfy_221.app.showNotice(response.data.need_rewrite_rules, 'warning');
+						$.wbcr_factory_clearfy_224.app.showNotice(response.data.need_rewrite_rules, 'warning');
 					}
 
-					$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/updated', [$this, data, response]);
+					$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/updated', [$this, data, response]);
 				});
 
 				return false;
@@ -253,7 +253,7 @@
 				self.sendRequest(data, function(response) {
 					if( !response || !response.success ) {
 						if( response.data && response.data.error_message ) {
-							$.wbcr_factory_clearfy_221.app.showNotice(response.data.error_message, 'danger');
+							$.wbcr_factory_clearfy_224.app.showNotice(response.data.error_message, 'danger');
 						}
 						return;
 					}
@@ -316,17 +316,17 @@
 					self.setComponentDeactivate(componentButton);
 
 					if( response.data && response.data.error_message ) {
-						$.wbcr_factory_clearfy_221.app.showNotice(response.data.error_message, 'danger');
+						$.wbcr_factory_clearfy_224.app.showNotice(response.data.error_message, 'danger');
 					}
 
-					$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/activated_error', [sendData.plugin]);
+					$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/activated_error', [sendData.plugin]);
 					return;
 				}
 
 				componentButton.removeClass('button-primary').text(button_i18n['deactivate']);
 				self.setComponentActivate(componentButton);
 
-				$.wbcr_factory_clearfy_221.hooks.run('clearfy/components/activated', [sendData.plugin]);
+				$.wbcr_factory_clearfy_224.hooks.run('clearfy/components/activated', [sendData.plugin]);
 			});
 		},
 
@@ -345,7 +345,7 @@
 					console.log(xhr.responseText);
 					console.log(thrownError);
 
-					$.wbcr_factory_clearfy_221.app.showNotice('Error: [' + thrownError + '] Status: [' + xhr.status + '] Error massage: [' + xhr.responseText + ']', 'danger');
+					$.wbcr_factory_clearfy_224.app.showNotice('Error: [' + thrownError + '] Status: [' + xhr.status + '] Error massage: [' + xhr.responseText + ']', 'danger');
 				}
 			});
 		}

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - UpdraftPlus WordPress Backup Plugin - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-11-23 10:04:47+0000\n"
+"PO-Revision-Date: 2020-07-31 06:29:53+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -908,6 +908,12 @@ msgstr "Extensions"
 msgid "Advanced Tools"
 msgstr "Erweiterte Werkzeuge"
 
+#: admin.php:970 templates/wp-admin/settings/backupnow-modal.php:40
+#: updraftplus/admin.php:970
+#: updraftplus/templates/wp-admin/settings/backupnow-modal.php:40
+msgid "Include your files in the backup"
+msgstr "Ihre Dateien zur Sicherung hinzufügen"
+
 #: class-updraftplus.php:3335 updraftplus/class-updraftplus.php:3335
 msgid "To complete your migration/clone, you should now log in to the remote site and restore the backup set."
 msgstr "Um die Migration/Klonen fertigzustellen, sollten Sie sich jetzt auf der Remote-Website anmelden und das Backup-Set wiederherstellen."
@@ -1015,19 +1021,6 @@ msgstr "Alle auswählen"
 msgid "Backup sets removed:"
 msgstr "Gelöschte Backup-Sets:"
 
-#. Plugin Name of the plugin
-msgid "UpdraftPlus - Backup/Restore"
-msgstr "UpdraftPlus - Backup/Restore"
-
-#. Author of the plugin
-msgid "UpdraftPlus.Com, DavidAnderson"
-msgstr "UpdraftPlus.Com, DavidAnderson"
-
-#. Plugin URI of the plugin
-#. Author URI of the plugin
-msgid "https://updraftplus.com"
-msgstr "https://updraftplus.com"
-
 #: restorer.php:3519 restorer.php:3609 updraftplus/restorer.php:3519
 #: updraftplus/restorer.php:3609
 msgid "Table prefix has changed: changing %s table field(s) accordingly:"
@@ -1122,10 +1115,6 @@ msgstr "Sie sollten %s aktivieren, damit individualisierte Permalinks (z.B. %s) 
 #: updraftplus.php:157 updraftplus/updraftplus.php:157
 msgid "You do not have UpdraftPlus completely installed - please de-install and install it again. Most likely, WordPress malfunctioned when copying the plugin files."
 msgstr "Ihre UpdraftPlus-Installation ist unvollständig - bitte deinstallieren und installieren Sie es erneut. Vermutlich gab es eine WordPress-Fehlfunktion während des Kopierens der Plugin-Dateien."
-
-#. Description of the plugin
-msgid "Backup and restore: take backups locally, or backup to Amazon S3, Dropbox, Google Drive, Rackspace, (S)FTP, WebDAV & email, on automatic schedules."
-msgstr "Sichern und Wiederherstellen: Machen Sie lokale Sicherungen oder speichern Sie bei Amazon S3, Dropbox, Google Drive, Rackspace oder via (S)FTP, WebDAV und E-Mail; und das über automatische Zeitpläne."
 
 #: admin.php:982 admin.php:3120
 #: templates/wp-admin/settings/updraftcentral-connect.php:50
@@ -1976,6 +1965,32 @@ msgstr "Es wurde kein Aktualisierungs-Token von Google empfangen. Das liegt meis
 #: methods/ftp.php:392 updraftplus/methods/ftp.php:392
 msgid "Almost all FTP servers will want passive mode; but if you need active mode, then uncheck this."
 msgstr "Fast alle FTP-Server werden den passiven Modus voraussetzen, wenn Sie jedoch den aktiven Modus benötigen, wählen Sie das ab."
+
+#: methods/updraftvault.php:337 methods/updraftvault.php:378
+#: updraftplus/methods/updraftvault.php:337
+#: updraftplus/methods/updraftvault.php:378
+msgid "Read the %s FAQs here."
+msgstr "Lesen Sie die %s FAQ hier."
+
+#: methods/s3.php:446 updraftplus/methods/s3.php:446
+msgid "error: file %s was shortened unexpectedly"
+msgstr "Fehler: Datei %s wurde unerwartet gekürzt"
+
+#: methods/googledrive.php:1303 updraftplus/methods/googledrive.php:1303
+msgid "download: failed: file not found"
+msgstr "Download: fehlgeschlagen: Datei nicht gefunden"
+
+#: methods/updraftvault.php:496 updraftplus/methods/updraftvault.php:496
+msgid "Error: you have insufficient storage quota available (%s) to upload this archive (%s)."
+msgstr "Fehler: Sie haben nicht genügend Speicherplatz frei (%s), um dieses Archiv hochzuladen (%s)."
+
+#: methods/s3.php:472 updraftplus/methods/s3.php:472
+msgid "upload (%s): re-assembly failed (see log for more details)"
+msgstr "Upload (%s): wieder zusammensetzen fehlgeschlagen (siehe Log für weitere Details)"
+
+#: methods/s3.php:456 updraftplus/methods/s3.php:456
+msgid "chunk %s: upload failed"
+msgstr "Teil %s: Hochladen fehlgeschlagen"
 
 #: class-updraftplus.php:1946 updraftplus/class-updraftplus.php:1946
 msgid "Plugins"
@@ -4536,10 +4551,6 @@ msgstr "Beginn der Sicherung anfordern ..."
 msgid "Download error: the server sent us a response which we did not understand."
 msgstr "Download-Fehler: Der Server sendete eine Antwort, die wir nicht verstehen."
 
-#: admin.php:834 updraftplus/admin.php:834
-msgid "Download to your computer"
-msgstr "Auf ihren Computer herunterladen"
-
 #: admin.php:833 updraftplus/admin.php:833
 msgid "Delete from your web server"
 msgstr "Vom Webserver löschen"
@@ -4730,3 +4741,7 @@ msgstr "Beachten Sie, dass Mail-Server für gewöhnlich Größenbeschränkungen,
 #: updraftplus/templates/wp-admin/notices/thanks-for-using-main-dash.php:12
 msgid "For personal support, the ability to copy sites, more storage destinations, encrypted backups for security, multiple backup destinations, better reporting, no adverts and plenty more, take a look at the premium version of UpdraftPlus - the world's most popular backup plugin."
 msgstr "Für persönlichen Support, die Möglichkeit Websites zu kopieren, weitere Speicherziele, verschlüsselte Sicherungen für mehr Sicherheit, mehrere Sicherungsziele, bessere Benachrichtigungen, keine Werbung und vieles mehr, werfen Sie einen Blick auf die Premium-Version von UpdraftPlus – dem weltweit beliebtesten Backup-Plugin."
+
+#: admin.php:834 updraftplus/admin.php:834
+msgid "Download to your computer"
+msgstr "Auf Ihren Computer herunterladen"

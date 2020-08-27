@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Clearfy_221;
+namespace WBCR\Factory_Clearfy_224;
 
 /**
  * Class Search options

@@ -14,7 +14,7 @@ if( !defined('ABSPATH') ) {
 }
 
 /**
- * Class Wbcr_FactoryPages429_ImpressiveThemplate
+ * Class Wbcr_FactoryPages432_ImpressiveThemplate
  *
  * @method string getInfoWidget() - get widget content information
  * @method string getRatingWidget(array $args = []) - get widget content rating
@@ -22,7 +22,7 @@ if( !defined('ABSPATH') ) {
  * @method string getBusinessSuggetionWidget()
  * @method string getSupportWidget
  */
-class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThemplate {
+class Wbcr_FactoryClearfy224_PageBase extends Wbcr_FactoryPages432_ImpressiveThemplate {
 
 	/**
 	 * {@inheritDoc}
@@ -57,9 +57,9 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 	public $show_search_options_form = true;
 
 	/**
-	 * @param Wbcr_Factory429_Plugin $plugin
+	 * @param Wbcr_Factory432_Plugin $plugin
 	 */
-	public function __construct(Wbcr_Factory429_Plugin $plugin)
+	public function __construct(Wbcr_Factory432_Plugin $plugin)
 	{
 		parent::__construct($plugin);
 
@@ -95,18 +95,18 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 	/**
 	 * Requests assets (js and css) for the page.
 	 *
-	 * @param Wbcr_Factory429_ScriptList $scripts
-	 * @param Wbcr_Factory429_StyleList $styles
+	 * @param Wbcr_Factory432_ScriptList $scripts
+	 * @param Wbcr_Factory432_StyleList $styles
 	 *
 	 * @return void
-	 * @see Wbcr_FactoryPages429_AdminPage
+	 * @see Wbcr_FactoryPages432_AdminPage
 	 *
 	 */
 	public function assets($scripts, $styles)
 	{
 		parent::assets($scripts, $styles);
 
-		$this->styles->add(FACTORY_CLEARFY_221_URL . '/assets/css/clearfy-base.css');
+		$this->styles->add(FACTORY_CLEARFY_224_URL . '/assets/css/clearfy-base.css');
 
 		// todo: вынести все общие скрипты и стили фреймворка, продумать совместимость с другими плагинами
 		if( defined('WCL_PLUGIN_URL') ) {
@@ -115,10 +115,10 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 
 		// Script for search form on plugin options
 		if( $this->show_search_options_form && "options" === $this->type ) {
-			$this->styles->add(FACTORY_CLEARFY_221_URL . '/assets/css/libs/autocomplete.css');
+			$this->styles->add(FACTORY_CLEARFY_224_URL . '/assets/css/libs/autocomplete.css');
 
-			$this->scripts->add(FACTORY_CLEARFY_221_URL . '/assets/js/libs/jquery.autocomplete.min.js');
-			$this->scripts->add(FACTORY_CLEARFY_221_URL . '/assets/js/search-options.js');
+			$this->scripts->add(FACTORY_CLEARFY_224_URL . '/assets/js/libs/jquery.autocomplete.min.js');
+			$this->scripts->add(FACTORY_CLEARFY_224_URL . '/assets/js/search-options.js');
 		}
 
 		/**
@@ -131,7 +131,7 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 	}
 
 	/**
-	 * @return Wbcr_Factory429_Request
+	 * @return Wbcr_Factory432_Request
 	 */
 	public function request()
 	{
@@ -227,7 +227,7 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 		/**
 		 * @since 4.0.9 - является устаревшим
 		 */
-		$widgets = wbcr_factory_429_apply_filters_deprecated('wbcr_factory_pages_429_imppage_get_widgets', [
+		$widgets = wbcr_factory_432_apply_filters_deprecated('wbcr_factory_pages_432_imppage_get_widgets', [
 			$widgets,
 			$position,
 			$this->plugin,
@@ -256,24 +256,24 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 		$purchase_url = $this->plugin->get_support()->get_pricing_url(true, 'right_sidebar_ads');
 
 		$default_features = [
-			'4_premium' => __('4 premium components now;', 'wbcr_factory_clearfy_221'),
-			'40_premium' => __('40 new premium components within a year for the single price;', 'wbcr_factory_clearfy_221'),
-			'multisite_support' => __('Multisite support;', 'wbcr_factory_clearfy_221'),
-			'advance_settings' => __('Advanced settings;', 'wbcr_factory_clearfy_221'),
-			'no_ads' => __('No ads;', 'wbcr_factory_clearfy_221'),
-			'perfect_support' => __('Perfect support.', 'wbcr_factory_clearfy_221')
+			'4_premium' => __('4 premium components now;', 'wbcr_factory_clearfy_224'),
+			'40_premium' => __('40 new premium components within a year for the single price;', 'wbcr_factory_clearfy_224'),
+			'multisite_support' => __('Multisite support;', 'wbcr_factory_clearfy_224'),
+			'advance_settings' => __('Advanced settings;', 'wbcr_factory_clearfy_224'),
+			'no_ads' => __('No ads;', 'wbcr_factory_clearfy_224'),
+			'perfect_support' => __('Perfect support.', 'wbcr_factory_clearfy_224')
 		];
 
 		/**
 		 * @since 2.0.8 - added
 		 */
-		$suggetion_title = __('MORE IN CLEARFY <span>BUSINESS</span>', 'wbcr_factory_clearfy_221');
+		$suggetion_title = __('MORE IN CLEARFY <span>BUSINESS</span>', 'wbcr_factory_clearfy_224');
 		$suggetion_title = apply_filters('wbcr/clearfy/pages/suggetion_title', $suggetion_title, $plugin_name, $this->id);
 
 		/**
 		 * @since 2.0.8 - deprecated
 		 */
-		$suggetion_features = wbcr_factory_429_apply_filters_deprecated('wbcr/clearfy/page_bussines_suggetion_features', [
+		$suggetion_features = wbcr_factory_432_apply_filters_deprecated('wbcr/clearfy/page_bussines_suggetion_features', [
 			$default_features,
 			$this->plugin->getPluginName(),
 			$this->id
@@ -289,7 +289,7 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 			$suggetion_features = $default_features;
 		}
 		?>
-		<div class="wbcr-factory-sidebar-widget wbcr-factory-clearfy-221-pro-suggettion">
+		<div class="wbcr-factory-sidebar-widget wbcr-factory-clearfy-224-pro-suggettion">
 			<h3><?php echo $suggetion_title; ?></h3>
 			<ul>
 				<?php if( !empty($suggetion_features) ): ?>
@@ -300,7 +300,7 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 			</ul>
 			<a href="<?php echo $purchase_url ?>" class="wbcr-factory-purchase-premium" target="_blank"
 			   rel="noopener">
-				<?php printf(__('Upgrade for $%s', 'wbcr_factory_clearfy_221'), $upgrade_price) ?>
+				<?php printf(__('Upgrade for $%s', 'wbcr_factory_clearfy_224'), $upgrade_price) ?>
 			</a>
 		</div>
 		<?php
@@ -322,25 +322,25 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAQAAABKmM6bAAAAUUlEQVQIHU3BsQ1AQABA0X/komIrnQHYwyhqQ1hBo9KZRKL9CBfeAwy2ri42JA4mPQ9rJ6OVt0BisFM3Po7qbEliru7m/FkY+TN64ZVxEzh4ndrMN7+Z+jXCAAAAAElFTkSuQmCC"
 							     alt=""/>
 						</span>
-					- <?php _e('A neutral setting that can not harm your site, but you must be sure that you need to use it.', 'wbcr_factory_clearfy_221'); ?>
+					- <?php _e('A neutral setting that can not harm your site, but you must be sure that you need to use it.', 'wbcr_factory_clearfy_224'); ?>
 				</li>
 				<li>
 						<span class="wbcr-factory-hint-icon-simple wbcr-factory-simple-grey">
 							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAQAAABKmM6bAAAAUUlEQVQIHU3BsQ1AQABA0X/komIrnQHYwyhqQ1hBo9KZRKL9CBfeAwy2ri42JA4mPQ9rJ6OVt0BisFM3Po7qbEliru7m/FkY+TN64ZVxEzh4ndrMN7+Z+jXCAAAAAElFTkSuQmCC"
 							     alt=""/>
 						</span>
-					- <?php _e('When set this option, you must be careful. Plugins and themes may depend on this function. You must be sure that you can disable this feature for the site.', 'wbcr_factory_clearfy_221'); ?>
+					- <?php _e('When set this option, you must be careful. Plugins and themes may depend on this function. You must be sure that you can disable this feature for the site.', 'wbcr_factory_clearfy_224'); ?>
 				</li>
 				<li>
 						<span class="wbcr-factory-hint-icon-simple wbcr-factory-simple-green">
 							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAQAAABKmM6bAAAAUUlEQVQIHU3BsQ1AQABA0X/komIrnQHYwyhqQ1hBo9KZRKL9CBfeAwy2ri42JA4mPQ9rJ6OVt0BisFM3Po7qbEliru7m/FkY+TN64ZVxEzh4ndrMN7+Z+jXCAAAAAElFTkSuQmCC"
 							     alt=""/>
 						</span>
-					- <?php _e('Absolutely safe setting, We recommend to use.', 'wbcr_factory_clearfy_221'); ?>
+					- <?php _e('Absolutely safe setting, We recommend to use.', 'wbcr_factory_clearfy_224'); ?>
 				</li>
 			</ul>
 			----------<br>
-			<p><?php _e('Hover to the icon to get help for the feature you selected.', 'wbcr_factory_clearfy_221'); ?></p>
+			<p><?php _e('Hover to the icon to get help for the feature you selected.', 'wbcr_factory_clearfy_224'); ?></p>
 		</div>
 		<?php
 	}
@@ -362,19 +362,19 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 			$page_url = $args[0];
 		}
 
-		$page_url = apply_filters('wbcr_factory_pages_429_imppage_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId());
+		$page_url = apply_filters('wbcr_factory_pages_432_imppage_rating_widget_url', $page_url, $this->plugin->getPluginName(), $this->getResultId());
 
 		?>
 		<div class="wbcr-factory-sidebar-widget">
 			<p>
-				<strong><?php _e('Do you want the plugin to improved and update?', 'wbcr_factory_clearfy_221'); ?></strong>
+				<strong><?php _e('Do you want the plugin to improved and update?', 'wbcr_factory_clearfy_224'); ?></strong>
 			</p>
-			<p><?php _e('Help the author, leave a review on wordpress.org. Thanks to feedback, I will know that the plugin is really useful to you and is needed.', 'wbcr_factory_clearfy_221'); ?></p>
-			<p><?php _e('And also write your ideas on how to extend or improve the plugin.', 'wbcr_factory_clearfy_221'); ?></p>
+			<p><?php _e('Help the author, leave a review on wordpress.org. Thanks to feedback, I will know that the plugin is really useful to you and is needed.', 'wbcr_factory_clearfy_224'); ?></p>
+			<p><?php _e('And also write your ideas on how to extend or improve the plugin.', 'wbcr_factory_clearfy_224'); ?></p>
 			<p>
 				<i class="wbcr-factory-icon-5stars"></i>
 				<a href="<?= $page_url ?>" title="Go rate us" target="_blank">
-					<strong><?php _e('Go rate us and push ideas', 'wbcr_factory_clearfy_221'); ?></strong>
+					<strong><?php _e('Go rate us and push ideas', 'wbcr_factory_clearfy_224'); ?></strong>
 				</a>
 			</p>
 		</div>
@@ -392,7 +392,7 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 		?>
 		<div class="wbcr-factory-sidebar-widget">
 			<p>
-				<strong><?php _e('Donation for plugin development', 'wbcr_factory_clearfy_221'); ?></strong>
+				<strong><?php _e('Donation for plugin development', 'wbcr_factory_clearfy_224'); ?></strong>
 			</p>
 			<?php if( get_locale() !== 'ru_RU' ): ?>
 				<form id="wbcr-factory-paypal-donation-form" action="https://www.paypal.com/cgi-bin/webscr"
@@ -400,7 +400,7 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 					<input type="hidden" name="cmd" value="_s-xclick">
 					<input type="hidden" name="hosted_button_id" value="VDX7JNTQPNPFW">
 					<div class="wbcr-factory-donation-price">5$</div>
-					<input type="image" src="<?= FACTORY_PAGES_429_URL ?>/templates/assets/img/paypal-donate.png"
+					<input type="image" src="<?= FACTORY_PAGES_432_URL ?>/templates/assets/img/paypal-donate.png"
 					       border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
 				</form>
 			<?php else: ?>
@@ -452,13 +452,13 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 	 */
 	public function register_options_to_search()
 	{
-		require_once FACTORY_CLEARFY_221_DIR . '/includes/class-search-options.php';
+		require_once FACTORY_CLEARFY_224_DIR . '/includes/class-search-options.php';
 
 		$options = $this->getPageOptions();
 		$page_url = $this->getBaseUrl();
 		$page_id = $this->getResultId();
 
-		\WBCR\Factory_Clearfy_221\Search_Options::register_options($options, $page_url, $page_id);
+		\WBCR\Factory_Clearfy_224\Search_Options::register_options($options, $page_url, $page_id);
 	}
 
 	/**
@@ -472,11 +472,11 @@ class Wbcr_FactoryClearfy221_PageBase extends Wbcr_FactoryPages429_ImpressiveThe
 			return;
 		}
 		?>
-		<div id="wbcr-factory-clearfy-221__search_options_form" class="wbcr-factory-clearfy-221__autocomplete-wrap">
-			<label for="autocomplete" class="wbcr-factory-clearfy-221__autocomplete-label">
-				<?php _e('Can\'t find the settings you need? Use the search by the plugin options:', 'wbcr_factory_clearfy_221'); ?>
+		<div id="wbcr-factory-clearfy-224__search_options_form" class="wbcr-factory-clearfy-224__autocomplete-wrap">
+			<label for="autocomplete" class="wbcr-factory-clearfy-224__autocomplete-label">
+				<?php _e('Can\'t find the settings you need? Use the search by the plugin options:', 'wbcr_factory_clearfy_224'); ?>
 			</label>
-			<input type="text" name="country" id="wbcr-factory-clearfy-221__autocomplete"/>
+			<input type="text" name="country" id="wbcr-factory-clearfy-224__autocomplete"/>
 
 		</div>
 		<?php

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCLUpdate010505 extends Wbcr_Factory429_Update {
+class WCLUpdate010505 extends Wbcr_Factory432_Update {
 
 	public function install() {
 		$this->update_premium();
@@ -40,7 +40,7 @@ class WCLUpdate010505 extends Wbcr_Factory429_Update {
 		 */
 		$this->clean_hide_my_wp_data();
 
-		WbcrFactoryClearfy221_Helpers::flushPageCache();
+		WbcrFactoryClearfy224_Helpers::flushPageCache();
 	}
 
 	/**

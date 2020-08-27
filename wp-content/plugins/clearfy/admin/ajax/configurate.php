@@ -57,7 +57,7 @@
 		}
 
 		if( !$flush_redirect ) {
-			WbcrFactoryClearfy221_Helpers::flushPageCache();
+			WbcrFactoryClearfy224_Helpers::flushPageCache();
 		}
 
 		do_action('wbcr_clearfy_configurated_quick_mode', $mode_name);

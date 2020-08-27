@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class WHTM_SettingsPage extends Wbcr_FactoryClearfy221_PageBase {
+class WHTM_SettingsPage extends Wbcr_FactoryClearfy224_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -52,9 +52,9 @@ class WHTM_SettingsPage extends Wbcr_FactoryClearfy221_PageBase {
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
-	 * @param \Wbcr_Factory429_Plugin $plugin
+	 * @param \Wbcr_Factory432_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory429_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
 		// Заголовок страницы
 		$this->menu_title = __( 'HTML Minify', 'html-minify' );
 

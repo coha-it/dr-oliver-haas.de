@@ -21,7 +21,7 @@ class WCL_ComponentsPage extends WCL_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages429_AdminPage
+	 * @see   FactoryPages432_AdminPage
 	 *
 	 * @var string
 	 */
@@ -55,7 +55,7 @@ class WCL_ComponentsPage extends WCL_Page {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages429_AdminPage
+	 * @see   FactoryPages432_AdminPage
 	 *
 	 */
 	public function assets($scripts, $styles)
@@ -65,8 +65,8 @@ class WCL_ComponentsPage extends WCL_Page {
 		$this->styles->add(WCL_PLUGIN_URL . '/admin/assets/css/components.css');
 
 		/**
-		 * @param Wbcr_Factory429_StyleList $styles
-		 * @param Wbcr_Factory429_ScriptList $scripts
+		 * @param Wbcr_Factory432_StyleList $styles
+		 * @param Wbcr_Factory432_ScriptList $scripts
 		 * @since 1.4.0
 		 *
 		 */
@@ -77,10 +77,10 @@ class WCL_ComponentsPage extends WCL_Page {
 	 * We register notifications for some actions
 	 *
 	 * @param                        $notices
-	 * @param Wbcr_Factory429_Plugin $plugin
+	 * @param Wbcr_Factory432_Plugin $plugin
 	 *
 	 * @return array
-	 * @see libs\factory\pages\themplates\FactoryPages429_ImpressiveThemplate
+	 * @see libs\factory\pages\themplates\FactoryPages432_ImpressiveThemplate
 	 */
 	public function getActionNotices($notices)
 	{

@@ -4,11 +4,11 @@
  * Plugin URI: https://webcraftic.com
  * Description: Disable admin notices plugin gives you the option to hide updates warnings and inline notices in the admin panel.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.2.1
+ * Version: 1.2.2
  * Text Domain: disable-admin-notices
  * Domain Path: /languages/
  * Author URI: https://webcraftic.com
- * Framework Version: FACTORY_429_VERSION
+ * Framework Version: FACTORY_432_VERSION
  */
 
 /**
@@ -80,16 +80,16 @@ $wdan_plugin_info = array(
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_430', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_427', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_429', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_221', 'all' ),
-		array( 'libs/factory/freemius', 'factory_freemius_117', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_109', 'admin' )
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_433', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_430', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_432', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_224', 'all' ),
+		array( 'libs/factory/freemius', 'factory_freemius_120', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_112', 'admin' )
 	)
 );
 
-$wdan_compatibility = new Wbcr_Factory429_Requirements( __FILE__, array_merge( $wdan_plugin_info, array(
+$wdan_compatibility = new Wbcr_Factory432_Requirements( __FILE__, array_merge( $wdan_plugin_info, array(
 	'plugin_already_activate'          => defined( 'WDN_PLUGIN_ACTIVE' ),
 	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',
@@ -130,6 +130,7 @@ define( 'WDN_PLUGIN_URL', plugins_url( null, __FILE__ ) );
  */
 
 require_once( WDN_PLUGIN_DIR . '/libs/factory/core/boot.php' );
+require_once( WDN_PLUGIN_DIR . '/includes/functions.php' );
 require_once( WDN_PLUGIN_DIR . '/includes/class-plugin.php' );
 
 try {

@@ -87,13 +87,13 @@
 							 * Хук выполняет проивольную функцию, после того как получен ajax ответ о том, что в
 							 * результате конфигурации произошла ошибка Реализация системы фильтров и хуков в файле
 							 * libs/clearfy/admin/assests/js/global.js Пример регистрации хука
-							 * $.wbcr_factory_clearfy_221.hooks.add('wbcr/factory_clearfy_221/updated',
+							 * $.wbcr_factory_clearfy_224.hooks.add('wbcr/factory_clearfy_224/updated',
 							 * function(noticeId) {});
 							 * @param {string} modeName - имя режима конфигурации
 							 * @param {object} data
 							 */
 
-							$.wbcr_factory_clearfy_221.hooks.run('clearfy/quick_start/configurated_error', [
+							$.wbcr_factory_clearfy_224.hooks.run('clearfy/quick_start/configurated_error', [
 								modeName,
 								data
 							]);
@@ -110,12 +110,12 @@
 						 * Хук выполняет проивольную функцию, после того как получен ajax ответ об успешном выполнении
 						 * конфигурации Реализация системы фильтров и хуков в файле
 						 * libs/clearfy/admin/assests/js/global.js Пример регистрации хука
-						 * $.wbcr_factory_clearfy_221.hooks.add('wbcr/factory_clearfy_221/updated', function(noticeId)
+						 * $.wbcr_factory_clearfy_224.hooks.add('wbcr/factory_clearfy_224/updated', function(noticeId)
 						 * {});
 						 * @param {string} modeName - имя режима конфигурации
 						 * @param {object} data
 						 */
-						$.wbcr_factory_clearfy_221.hooks.run('clearfy/quick_start/configurated', [modeName, data]);
+						$.wbcr_factory_clearfy_224.hooks.run('clearfy/quick_start/configurated', [modeName, data]);
 
 						if( modeName != 'reset' ) {
 							switcher.addClass('wbcr-clearfy-active');
@@ -183,12 +183,12 @@
 					$this = $(this);
 
 				if( !settings ) {
-					$.wbcr_factory_clearfy_221.app.showNotice('Import options is empty!', 'danger');
+					$.wbcr_factory_clearfy_224.app.showNotice('Import options is empty!', 'danger');
 					return false;
 				}
 
 				if( void 0 == wbcr_clearfy_ajax || !wbcr_clearfy_ajax.import_options_nonce ) {
-					$.wbcr_factory_clearfy_221.app.showNotice('Unknown Javascript error, most likely the wbcr_clearfy_ajax variable does not exist!', 'danger');
+					$.wbcr_factory_clearfy_224.app.showNotice('Unknown Javascript error, most likely the wbcr_clearfy_ajax variable does not exist!', 'danger');
 					return false;
 				}
 
@@ -203,7 +203,7 @@
 
 					if( response.data.update_notice ) {
 						if( !$('.wbcr-clr-update-package').length ) {
-							$.wbcr_factory_clearfy_221.app.showNotice(response.data.update_notice);
+							$.wbcr_factory_clearfy_224.app.showNotice(response.data.update_notice);
 						}
 					} else {
 						if( $('.wbcr-clr-update-package').length ) {
@@ -240,15 +240,15 @@
 						console.log(data);
 
 						if( data ) {
-							noticeId = $.wbcr_factory_clearfy_221.app.showNotice(data.error_message, 'danger');
+							noticeId = $.wbcr_factory_clearfy_224.app.showNotice(data.error_message, 'danger');
 						} else {
 							if( void 0 != wbcr_clearfy_ajax ) {
-								noticeId = $.wbcr_factory_clearfy_221.app.showNotice(wbcr_clearfy_ajax.i18n.unknown_error, 'danger');
+								noticeId = $.wbcr_factory_clearfy_224.app.showNotice(wbcr_clearfy_ajax.i18n.unknown_error, 'danger');
 							}
 						}
 
 						setTimeout(function() {
-							$.wbcr_factory_clearfy_221.app.hideNotice(noticeId);
+							$.wbcr_factory_clearfy_224.app.hideNotice(noticeId);
 						}, 5000);
 						return;
 					}
@@ -257,10 +257,10 @@
 
 					if( !request_data.flush_redirect ) {
 						if( void 0 != wbcr_clearfy_ajax ) {
-							noticeId = $.wbcr_factory_clearfy_221.app.showNotice(wbcr_clearfy_ajax.i18n.success_update_settings, 'success');
+							noticeId = $.wbcr_factory_clearfy_224.app.showNotice(wbcr_clearfy_ajax.i18n.success_update_settings, 'success');
 
 							setTimeout(function() {
-								$.wbcr_factory_clearfy_221.app.hideNotice(noticeId);
+								$.wbcr_factory_clearfy_224.app.hideNotice(noticeId);
 							}, 5000);
 						}
 						return;
@@ -275,7 +275,7 @@
 					console.log(xhr.responseText);
 					console.log(thrownError);
 
-					var noticeId = $.wbcr_factory_clearfy_221.app.showNotice('Error: [' + thrownError + '] Status: [' + xhr.status + '] Error massage: [' + xhr.responseText + ']', 'danger');
+					var noticeId = $.wbcr_factory_clearfy_224.app.showNotice('Error: [' + thrownError + '] Status: [' + xhr.status + '] Error massage: [' + xhr.responseText + ']', 'danger');
 				}
 			});
 		}

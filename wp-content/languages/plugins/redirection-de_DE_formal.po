@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Plugins - Redirection - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-03-06 08:59:06+0000\n"
+"PO-Revision-Date: 2020-07-21 16:57:53+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/3.0.0-alpha\n"
+"X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: de\n"
 "Project-Id-Version: Plugins - Redirection - Stable (latest release)\n"
 
@@ -558,11 +558,6 @@ msgstr "Einzigartiges Token, das RSS-Klienten Zugang zum Umleitung-Log-Feed gew√
 msgid "Use groups to organise your redirects. Groups are assigned to a module, which affects how the redirects in that group work. If you are unsure then stick to the WordPress module."
 msgstr "Benutzen Sie Gruppen, um Ihre Umleitungen zu ordnen. Gruppen werden einem Modul zugeordnet, dies beeinflusst, wie die Umleitungen in der jeweiligen Gruppe funktionieren. Falls Sie unsicher sind, bleiben Sie beim WordPress-Modul."
 
-#. Plugin Name of the plugin
-#: redirection-strings.php:249
-msgid "Redirection"
-msgstr "Umleitungen"
-
 #: redirection-strings.php:104
 msgid "Error (404)"
 msgstr "Fehler (404)"
@@ -615,3 +610,8 @@ msgstr "Redirections"
 #: redirection-strings.php:453
 msgid "Plugin Support"
 msgstr "Plugin-Support"
+
+#. Plugin Name of the plugin
+#: redirection-strings.php:249
+msgid "Redirection"
+msgstr "Redirection"

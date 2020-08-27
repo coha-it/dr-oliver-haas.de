@@ -26,4 +26,5 @@ function db_remove_pre_get_portfolio_projects_reverse($content) {
 
 function db_reverse_portfolio_module_projects($query) {	
 	$query->set('order', 'ASC');
+	do_action('dbdb_portfolio_projectOrder_reverse_preGetPosts', $query);
 }

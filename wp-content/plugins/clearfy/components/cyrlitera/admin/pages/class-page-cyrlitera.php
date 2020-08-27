@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WCTR_CyrliteraPage extends Wbcr_FactoryClearfy221_PageBase {
+class WCTR_CyrliteraPage extends Wbcr_FactoryClearfy224_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -59,9 +59,9 @@ class WCTR_CyrliteraPage extends Wbcr_FactoryClearfy221_PageBase {
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
-	 * @param \Wbcr_Factory429_Plugin $plugin
+	 * @param \Wbcr_Factory432_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory429_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
 		$this->menu_title = __( 'Cyrlitera', 'cyrlitera' );
 
 		if ( ! defined( 'LOADING_CYRLITERA_AS_ADDON' ) ) {
@@ -202,7 +202,7 @@ class WCTR_CyrliteraPage extends Wbcr_FactoryClearfy221_PageBase {
 	}
 
 	/**
-	 * @param $html_builder Wbcr_FactoryForms427_Html
+	 * @param $html_builder Wbcr_FactoryForms430_Html
 	 */
 	public function rollbackButton( $html_builder ) {
 		$form_name = $html_builder->getFormName();

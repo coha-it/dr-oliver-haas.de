@@ -1,3 +1,13 @@
+= 3.2.8 =
+* Improved detection of map load when showing map details open by default
+* Portfolio project order setting now works when Post Types Order plugin active
+
+= 3.2.7 =
+* Updated mobile content width setting to work with the Project CPT
+* Fixed default units on Gallery image area height option to be percentages
+* Now uses full-size images in gallery when image area height set to avoid cropped thumbnails
+* Fixed Images per Row preset not applied
+
 = 3.2.6 =
 * Added option to stop search box overlapping logo on mobile
 * Changed gallery row spacing and image width defaults to better match standard gallery

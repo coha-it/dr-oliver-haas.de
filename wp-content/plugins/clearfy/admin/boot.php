@@ -33,8 +33,8 @@ add_action('wbcr/factory/pages/impressive/header', function ($plugin_name) {
 
 /**
  * @param                                          $form
- * @param Wbcr_Factory429_Plugin $plugin
- * @param Wbcr_FactoryPages429_ImpressiveThemplate $obj
+ * @param Wbcr_Factory432_Plugin $plugin
+ * @param Wbcr_FactoryPages432_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_multisite_before_save($form, $plugin, $obj)
 {
@@ -76,7 +76,7 @@ add_action('admin_enqueue_scripts', function () {
 	wp_enqueue_style('wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/css/install-addons.css', [], WCL_Plugin::app()->getPluginVersion());
 	wp_enqueue_script('wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/js/install-addons.js', [
 		'jquery',
-		'wbcr-factory-clearfy-221-global'
+		'wbcr-factory-clearfy-224-global'
 	], WCL_Plugin::app()->getPluginVersion());
 });
 
@@ -85,7 +85,7 @@ add_action('admin_enqueue_scripts', function () {
  * Уведомление будет показано на всех страницах Clearfy и его компонентах.
  *
  * @param WCL_Plugin $plugin
- * @param Wbcr_FactoryPages429_ImpressiveThemplate $obj
+ * @param Wbcr_FactoryPages432_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_print_notice_rewrite_rules($plugin, $obj)
 {
@@ -110,7 +110,7 @@ add_action('flush_rewrite_rules_hard', 'wbcr_clearfy_flush_rewrite_rules');
  * Обновить постоынные ссылки, после выполнения быстрых настроек
  *
  * @param WHM_Plugin $plugin
- * @param Wbcr_FactoryPages429_ImpressiveThemplate $obj
+ * @param Wbcr_FactoryPages432_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_after_form_save($plugin, $obj)
 {
@@ -133,7 +133,7 @@ add_action('wbcr/factory/pages/impressive/after_form_save', 'wbcr_clearfy_after_
  *
  * @param array $widgets
  * @param string $position
- * @param Wbcr_Factory429_Plugin $plugin
+ * @param Wbcr_Factory432_Plugin $plugin
  */
 
 add_filter('wbcr/factory/pages/impressive/widgets', function ($widgets, $position, $plugin) {

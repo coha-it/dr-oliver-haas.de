@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_Settings_Page extends Wbcr_FactoryClearfy221_PageBase {
+class WDN_Settings_Page extends Wbcr_FactoryClearfy224_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -66,9 +66,9 @@ class WDN_Settings_Page extends Wbcr_FactoryClearfy221_PageBase {
 
 
 	/**
-	 * @param Wbcr_Factory429_Plugin $plugin
+	 * @param Wbcr_Factory432_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory429_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
 		$this->menu_title                  = __( 'Hide admin notices', 'disable-admin-notices' );
 		$this->page_menu_short_description = __( 'General settings', 'disable-admin-notices' );
 
@@ -88,11 +88,11 @@ class WDN_Settings_Page extends Wbcr_FactoryClearfy221_PageBase {
 	/**
 	 * Requests assets (js and css) for the page.
 	 *
-	 * @param Wbcr_Factory429_ScriptList $scripts
-	 * @param Wbcr_Factory429_StyleList $styles
+	 * @param Wbcr_Factory432_ScriptList $scripts
+	 * @param Wbcr_Factory432_StyleList $styles
 	 *
 	 * @return void
-	 * @see Wbcr_FactoryPages429_AdminPage
+	 * @see Wbcr_FactoryPages432_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
@@ -121,7 +121,7 @@ class WDN_Settings_Page extends Wbcr_FactoryClearfy221_PageBase {
 				'wbcr_dan_code' => 'interal_error'
 			),
 			'type' => 'danger',
-			'message' => __('An error occurred while trying to delete comments. Internal error occured. Please try again later.', 'factory_pages_429')
+			'message' => __('An error occurred while trying to delete comments. Internal error occured. Please try again later.', 'factory_pages_432')
 		);*/
 
 		return $notices;

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
+class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 
 	public function registerActionsAndFilters() {
 		if ( is_admin() ) {
@@ -114,32 +114,32 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 		?>
 		<!-- Disable admin notices plugin (Clearfy tools) -->
 		<style>
-			.wbcr-dan-hide-notices {
-				position: initial;
-				padding: 5px 5px 0;
-				background: transparent;
-			}
+            .wbcr-dan-hide-notices {
+                position: initial;
+                padding: 5px 5px 0;
+                background: transparent;
+            }
 
-			.wbcr-dan-hide-notices > div {
-				margin: 0 !important;
-			}
+            .wbcr-dan-hide-notices > div {
+                margin: 0 !important;
+            }
 
-			.wbcr-dan-hide-notice-link {
-				display: block;
-				text-align: right;
-				margin: 5px 0 5px 5px;
-				font-weight: bold;
-				color: #F44336;
-			}
+            .wbcr-dan-hide-notice-link {
+                display: block;
+                text-align: right;
+                margin: 5px 0 5px 5px;
+                font-weight: bold;
+                color: #F44336;
+            }
 
-			.is-dismissible .wbcr-dan-hide-notice-link {
-				margin-right: -30px;
-			}
+            .is-dismissible .wbcr-dan-hide-notice-link {
+                margin-right: -30px;
+            }
 
-			.wbcr-dan-hide-notice-link:active, .wbcr-dan-hide-notice-link:focus {
-				box-shadow: none;
-				outline: none;
-			}
+            .wbcr-dan-hide-notice-link:active, .wbcr-dan-hide-notice-link:focus {
+                box-shadow: none;
+                outline: none;
+            }
 		</style>
 		<!-- Disable admin notices plugin (Clearfy tools) -->
 		<script>
@@ -205,15 +205,12 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 		global $wbcr_dan_plugin_all_notices;
 
 		try {
-			if ( is_multisite() && is_network_admin() ) {
-				$wp_filter_admin_notices = &$this->getWPFilter( 'network_admin_notices' );
-			} else {
-				$wp_filter_admin_notices = &$this->getWPFilter( 'admin_notices' );
-			}
-			//todo: Доработать all admin notices
+			$wp_filter_admin_notices     = &wdan_get_wp_filter( 'admin_notices' );
+			$wp_filter_all_admin_notices = &wdan_get_wp_filter( 'all_admin_notices' );
 
+			$wp_filter_notices = $this->array_merge( $wp_filter_admin_notices, $wp_filter_all_admin_notices );
 		} catch( Exception $e ) {
-			$wp_filter_admin_notices = null;
+			$wp_filter_notices = null;
 		}
 
 		$hide_notices_type = $this->getPopulateOption( 'hide_admin_notices' );
@@ -222,7 +219,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 			$get_hidden_notices = get_user_meta( get_current_user_id(), WDN_Plugin::app()->getOptionName( 'hidden_notices' ), true );
 
 			$content = [];
-			foreach ( (array) $wp_filter_admin_notices as $filters ) {
+			foreach ( (array) $wp_filter_notices as $filters ) {
 				foreach ( $filters as $callback_name => $callback ) {
 
 					if ( 'usof_hide_admin_notices_start' == $callback_name || 'usof_hide_admin_notices_end' == $callback_name ) {
@@ -251,7 +248,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 					}
 
 					$salt     = is_multisite() ? get_current_blog_id() : '';
-					$uniq_id1 = md5( $cont . $salt );
+					$uniq_id1 = md5( strip_tags( str_replace( [ "\t", "\r", "\n", " " ], "", $cont ) ) . $salt );
 					$uniq_id2 = md5( $callback_name . $salt );
 
 					if ( is_array( $callback['function'] ) && sizeof( $callback['function'] ) == 2 ) {
@@ -263,10 +260,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 						}
 					}
 
-					//838339d1a188e17fec838c2df3058603
-					//838339d1a188e17fec838c2df3058603
 					if ( ! empty( $get_hidden_notices ) ) {
-
 						$skip_notice = true;
 						foreach ( (array) $get_hidden_notices as $key => $notice ) {
 							$splited_notice_id = explode( '_', $key );
@@ -305,85 +299,19 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 			$wbcr_dan_plugin_all_notices = $content;
 		}
 
-		try {
-			$wp_filter_user_admin_notices = &$this->getWPFilter( 'user_admin_notices' );
-		} catch( Exception $e ) {
-			$wp_filter_user_admin_notices = null;
-		}
+		wdan_clear_all_notices( 'user_admin_notices' );
+		wdan_clear_all_notices( 'network_admin_notices' );
+		wdan_clear_all_notices( 'admin_notices', [
+			'Learndash_Admin_Menus_Tabs',
+			'WC_Memberships_Admin',
+			'YIT_Plugin_Panel_WooCommerce'
+		], [ 'et_pb_export_layouts_interface' ] );
 
-		try {
-			$wp_filter_network_admin_notices = &$this->getWPFilter( 'network_admin_notices' );
-		} catch( Exception $e ) {
-			$wp_filter_network_admin_notices = null;
-		}
-
-		if ( is_user_admin() && $wp_filter_user_admin_notices !== null ) {
-			$wp_filter_user_admin_notices = null;
-		} else if ( is_network_admin() && $wp_filter_network_admin_notices !== null ) {
-			//unset($wp_filter['network_admin_notices']);
-			foreach ( $wp_filter_network_admin_notices as $f_key => $f ) {
-				foreach ( $f as $c_name => $clback ) {
-					if ( is_array( $clback['function'] ) && sizeof( $clback['function'] ) == 2 ) {
-						$class = $clback['function'][0];
-						if ( is_object( $class ) ) {
-							$class_name = get_class( $class );
-						}
-					}
-
-					unset( $wp_filter_network_admin_notices[ $f_key ][ $c_name ] );
-				}
-			}
-		} else if ( $wp_filter_admin_notices !== null ) {
-			foreach ( $wp_filter_admin_notices as $f_key => $f ) {
-				foreach ( $f as $c_name => $clback ) {
-					if ( is_array( $clback['function'] ) && sizeof( $clback['function'] ) == 2 ) {
-						$class = $clback['function'][0];
-						if ( is_object( $class ) ) {
-							$class_name = get_class( $class );
-						}
-					}
-
-					unset( $wp_filter_admin_notices[ $f_key ][ $c_name ] );
-				}
-			}
-
-			unset( $f_key );
-			unset( $f );
-		}
-
-		try {
-			$wp_filter_all_admin_notices = &$this->getWPfilter( 'all_admin_notices' );
-		} catch( Exception $e ) {
-			$wp_filter_all_admin_notices = null;
-		}
-
-		if ( $wp_filter_all_admin_notices !== null ) {
-			foreach ( $wp_filter_all_admin_notices as $f_key => $f ) {
-				foreach ( $f as $c_name => $clback ) {
-					if ( is_array( $clback['function'] ) && sizeof( $clback['function'] ) == 2 ) {
-						$class = $clback['function'][0];
-						if ( is_object( $class ) ) {
-							$class_name = get_class( $class );
-
-							#Fix for Learn dash && Woocommerce membership && YITH WooCommerce Gift Cards
-							if ( $class_name == 'Learndash_Admin_Menus_Tabs' || $class_name == 'WC_Memberships_Admin' || $class_name == 'YIT_Plugin_Panel_WooCommerce' ) {
-								continue;
-							}
-						}
-					}
-
-					#Fix for Divi theme
-					if ( $c_name == 'et_pb_export_layouts_interface' ) {
-						continue;
-					}
-
-					unset( $wp_filter_all_admin_notices[ $f_key ][ $c_name ] );
-				}
-			}
-
-			unset( $f_key );
-			unset( $f );
-		}
+		wdan_clear_all_notices( 'all_admin_notices', [
+			'Learndash_Admin_Menus_Tabs',
+			'WC_Memberships_Admin',
+			'YIT_Plugin_Panel_WooCommerce'
+		], [ 'et_pb_export_layouts_interface' ] );
 	}
 
 
@@ -409,27 +337,17 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy221_Configurate {
 		return $excerpt;
 	}
 
-	/**
-	 * Access to global variable $wp_filter in WP core.
-	 * Migration from WP 4.2 to 4.9
-	 *
-	 * @see https://codex.wordpress.org/Version_4.7 WP 4.7 changelog (WP_Hook)
-	 *
-	 * @param $key string filter name
-	 *
-	 * @return array $wp_filter callbacks array by link
-	 * @throws Exception if key not exists
-	 */
-	private function &getWPFilter( $key ) {
-		global $wp_version, $wp_filter;
+	private function array_merge( array $arr1, array $arr2 ) {
+		if ( ! empty( $arr2 ) ) {
+			foreach ( $arr2 as $key => $value ) {
+				if ( ! isset( $arr1[ $key ] ) ) {
+					$arr1[ $key ] = $value;
+				} else if ( is_array( $arr1[ $key ] ) ) {
+					$arr1[ $key ] = $arr1[ $key ] + $value;
+				}
+			}
+		}
 
-		if ( ! isset( $wp_filter[ $key ] ) ) {
-			throw new Exception( 'key not exists' );
-		}
-		if ( version_compare( $wp_version, '4.7.0', '>=' ) ) {
-			return $wp_filter[ $key ]->callbacks;
-		} else {
-			return $wp_filter[ $key ];
-		}
+		return $arr1;
 	}
 }

@@ -93,6 +93,7 @@ function dbmo_et_pb_gallery_add_fields($fields) {
 				'option_category' => 'layout',
 				'description' => 'Define the height of the area of the box containing the image (as % of box width). '.divibooster_module_options_credit(),
 				'default' => '',
+				'default_unit' => '%',
 				'mobile_options'  => true,
 				'tab_slug'        => 'advanced',
 				'toggle_slug'        => 'layout'
@@ -197,7 +198,16 @@ function db_pb_gallery_add_booster_version($props, $attrs, $render_slug) {
 
 // Apply gallery options
 function db_pb_gallery_filter_content($content, $args) {
-
+	
+	// Handle presets
+	if (class_exists('ET_Builder_Global_Presets_Settings') && is_callable('ET_Builder_Global_Presets_Settings::instance')) {
+		$preset = ET_Builder_Global_Presets_Settings::instance();
+		if (is_callable(array($preset, 'get_module_presets_settings'))) {
+			$defaults = $preset->get_module_presets_settings('et_pb_gallery', $args);
+			$args = wp_parse_args($args, $defaults);
+		}
+	}
+	
 	// Images per row
 	if (!empty($args['db_images_per_row'])) {
 		
@@ -347,6 +357,21 @@ function db_pb_gallery_filter_content($content, $args) {
 	}
 	
 	if (!empty($css)) { $content.="<style>$css</style>"; }
+	
+	// Disable image cropping when image area / scaling modified
+	if (!empty($args['db_image_max_height'])) {
+		$content.= <<<END
+		<script>jQuery(function($){
+			var items = $(".{$class} .et_pb_grid_item");
+			items.each(function() {
+				var href = $(this).find('a').attr('href');
+				$(this).find('a > img').attr('src', href).attr('srcset', '').attr('sizes', '');
+			});
+			
+		});
+		</script>
+END;
+	}
 	
 	return $content;
 }

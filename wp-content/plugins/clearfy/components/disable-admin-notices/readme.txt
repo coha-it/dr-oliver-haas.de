@@ -54,6 +54,10 @@ If you want to help with the translation, please contact me through this site or
 3. Notifications panel (optional)
 
 == Changelog ==
+= 1.2.2 (09.08.2020) =
+* Fixed: It was impossible to hide the notice with an offer to buy a pro version.
+* Updated: Improved the accuracy of filters when hiding notifications.
+
 = 1.2.0 (16.07.2020) =
 * Fixed: Minor bugs
 

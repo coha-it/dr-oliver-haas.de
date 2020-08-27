@@ -8,7 +8,7 @@
  * Text Domain: html-minify
  * Domain Path: /languages/
  * Author URI: https://webcraftic.com
- * Framework Version: FACTORY_429_VERSION
+ * Framework Version: FACTORY_432_VERSION
  */
 
 /*
@@ -59,15 +59,15 @@ $whtml_plugin_info = array(
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_430', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_427', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_429', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_221', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_109', 'admin')
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_433', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_430', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_432', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_224', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_112', 'admin')
 	)
 );
 
-$whtml_compatibility = new Wbcr_Factory429_Requirements( __FILE__, array_merge( $whtml_plugin_info, array(
+$whtml_compatibility = new Wbcr_Factory432_Requirements( __FILE__, array_merge( $whtml_plugin_info, array(
 	'plugin_already_activate'          => defined( 'WHTM_PLUGIN_ACTIVE' ),
 	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',

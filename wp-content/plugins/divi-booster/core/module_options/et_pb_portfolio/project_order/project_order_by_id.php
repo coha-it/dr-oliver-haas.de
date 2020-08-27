@@ -73,5 +73,6 @@ class DBDB_portfolio_by_id {
 	function set_query_order($query) {	
 		$query->set('post__in', $this->projects->ids());
 		$query->set('orderby', 'post__in');
+		do_action('dbdb_portfolio_projectOrder_byId_preGetPosts', $query);
 	}
 }

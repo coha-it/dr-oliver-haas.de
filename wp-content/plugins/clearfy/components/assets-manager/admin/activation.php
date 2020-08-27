@@ -5,7 +5,7 @@
  *
  * @author        Alex Kovalev <alex.kovalevv@gmail.com>, Github: https://github.com/alexkovalevv
  * @copyright (c) 09.03.2018, Webcraftic
- * @see           Wbcr_Factory429_Activator
+ * @see           Wbcr_Factory432_Activator
  * @version       1.0
  */
 
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WGNZ_Activation extends Wbcr_Factory429_Activator {
+class WGNZ_Activation extends Wbcr_Factory432_Activator {
 
 	/**
 	 * Runs activation actions.

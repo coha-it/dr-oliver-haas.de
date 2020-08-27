@@ -17,6 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WGZ_MoreFeaturesPage extends Wbcr_FactoryClearfy221_MoreFeaturesPage {
+class WGZ_MoreFeaturesPage extends Wbcr_FactoryClearfy224_MoreFeaturesPage {
 
 }

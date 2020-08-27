@@ -19,7 +19,7 @@ class WCL_TitanSecurityPage extends WCL_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages429_AdminPage
+	 * @see   FactoryPages432_AdminPage
 	 *
 	 * @var string
 	 */
@@ -83,7 +83,7 @@ class WCL_TitanSecurityPage extends WCL_Page {
 		?>
 		<script>
 			jQuery(document).ready(function($) {
-				$.wbcr_factory_clearfy_221.hooks.add('clearfy/components/updated', function(button, component_name) {
+				$.wbcr_factory_clearfy_224.hooks.add('clearfy/components/updated', function(button, component_name) {
 					if( component_name.plugin_action == 'install' ) {
 						button.removeClass('wbcr-factory-purchase-premium');
 						button.addClass('wbcr-factory-activate-premium');
@@ -96,7 +96,7 @@ class WCL_TitanSecurityPage extends WCL_Page {
 				});
 			});
 		</script>
-		<div class="wbcr-factory-clearfy-221-multisite-suggetion">
+		<div class="wbcr-factory-clearfy-224-multisite-suggetion">
 			<div class="wbcr-factory-inner-contanier">
 				<h3>
 					<a href="https://wordpress.org/plugins/anti-spam" target="_blank"><?php _e('Install Firewall and Malware scanner (Titan sucurity) component', 'clearfy') ?></a>

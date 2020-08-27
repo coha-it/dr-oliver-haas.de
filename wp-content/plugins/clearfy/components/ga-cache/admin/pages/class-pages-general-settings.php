@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2018 Webraftic Ltd
  * @version       1.0
  */
-class WGA_CachePage extends Wbcr_FactoryClearfy221_PageBase {
+class WGA_CachePage extends Wbcr_FactoryClearfy224_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -48,9 +48,9 @@ class WGA_CachePage extends Wbcr_FactoryClearfy221_PageBase {
 	public $show_right_sidebar_in_options = true;
 
 	/**
-	 * @param Wbcr_Factory429_Plugin $plugin
+	 * @param Wbcr_Factory432_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory429_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
 		$this->menu_title = __( 'Local Google Analytics', 'simple-google-analytics' );
 
 		if ( ! defined( 'LOADING_GA_CACHE_AS_ADDON' ) ) {

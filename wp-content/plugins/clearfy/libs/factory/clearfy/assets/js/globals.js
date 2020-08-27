@@ -2,8 +2,8 @@
  * Глобальный JS файл, который регистрирует глобальные переменные с общими методами для всех компонентов Clearfy
  * и самого Clearfy.
  *
- * $.wbcr_factory_clearfy_221.app - методы для работы с приложением. Скрыть, показать уведомления.
- * $.wbcr_factory_clearfy_221.hooks - это иммитация хуков и фильтров аналогично тем, что используются в Wordpress
+ * $.wbcr_factory_clearfy_224.app - методы для работы с приложением. Скрыть, показать уведомления.
+ * $.wbcr_factory_clearfy_224.hooks - это иммитация хуков и фильтров аналогично тем, что используются в Wordpress
  *
  * Copyright 2018, Webcraftic, http://webcraftic.com
  * 
@@ -13,11 +13,11 @@
 (function($) {
 	'use strict';
 
-	if( !$.wbcr_factory_clearfy_221 ) {
-		$.wbcr_factory_clearfy_221 = {};
+	if( !$.wbcr_factory_clearfy_224 ) {
+		$.wbcr_factory_clearfy_224 = {};
 	}
 
-	$.wbcr_factory_clearfy_221.app = $.wbcr_factory_clearfy_221.app || {
+	$.wbcr_factory_clearfy_224.app = $.wbcr_factory_clearfy_224.app || {
 		/**
 		 * Создает и показывает уведомление внутри интерфейса Clearfy
 		 *
@@ -63,12 +63,12 @@
 				/**
 				 * Хук выполняет проивольную функцию, после того как уведомление отображено
 				 * Реализация системы фильтров и хуков в файле libs/clearfy/admin/assests/js/global.js
-				 * Пример регистрации хука $.wbcr_factory_clearfy_221.hooks.add('wbcr/factory_clearfy_221/updated',
+				 * Пример регистрации хука $.wbcr_factory_clearfy_224.hooks.add('wbcr/factory_clearfy_224/updated',
 				 * function(noticeId) {});
 				 * @param {string} noticeId - id уведомления
 				 */
-				$.wbcr_factory_clearfy_221.hooks.run('wbcr/factory_clearfy_221/showed_notice', [noticeId]);
-				$.wbcr_factory_clearfy_221.hooks.run('wbcr/clearfy/showed_notice', [noticeId]);
+				$.wbcr_factory_clearfy_224.hooks.run('wbcr/factory_clearfy_224/showed_notice', [noticeId]);
+				$.wbcr_factory_clearfy_224.hooks.run('wbcr/clearfy/showed_notice', [noticeId]);
 			});
 
 			return noticeId;
@@ -93,13 +93,13 @@
 				/**
 				 * Хук выполняет проивольную функцию, после того как уведомление скрыто
 				 * Реализация системы фильтров и хуков в файле libs/clearfy/admin/assests/js/global.js
-				 * Пример регистрации хука $.wbcr_factory_clearfy_221.hooks.add('wbcr/factory_clearfy_221/updated',
+				 * Пример регистрации хука $.wbcr_factory_clearfy_224.hooks.add('wbcr/factory_clearfy_224/updated',
 				 * function(noticeId)
 				 * {});
 				 * @param {string} noticeId - id уведомления
 				 */
-				$.wbcr_factory_clearfy_221.hooks.run('wbcr/factory_clearfy_221/hidded_notice', [noticeId]);
-				$.wbcr_factory_clearfy_221.hooks.run('wbcr/clearfy/hidded_notice', [noticeId]);
+				$.wbcr_factory_clearfy_224.hooks.run('wbcr/factory_clearfy_224/hidded_notice', [noticeId]);
+				$.wbcr_factory_clearfy_224.hooks.run('wbcr/clearfy/hidded_notice', [noticeId]);
 			});
 		},
 
@@ -116,7 +116,7 @@
 
 	};
 
-	$.wbcr_factory_clearfy_221.filters = $.wbcr_factory_clearfy_221.filters || {
+	$.wbcr_factory_clearfy_224.filters = $.wbcr_factory_clearfy_224.filters || {
 
 		/**
 		 * A set of registered filters.
@@ -183,20 +183,20 @@
 		}
 	};
 
-	$.wbcr_factory_clearfy_221.hooks = $.wbcr_factory_clearfy_221.hooks || {
+	$.wbcr_factory_clearfy_224.hooks = $.wbcr_factory_clearfy_224.hooks || {
 
 		/**
 		 * Applies filters to a given input value.
 		 */
 		run: function(filterName, args) {
-			$.wbcr_factory_clearfy_221.filters.run(filterName, args);
+			$.wbcr_factory_clearfy_224.filters.run(filterName, args);
 		},
 
 		/**
 		 * Registers a new filter.
 		 */
 		add: function(filterName, callback, priority) {
-			$.wbcr_factory_clearfy_221.filters.add(filterName, callback, priority);
+			$.wbcr_factory_clearfy_224.filters.add(filterName, callback, priority);
 		}
 	};
 

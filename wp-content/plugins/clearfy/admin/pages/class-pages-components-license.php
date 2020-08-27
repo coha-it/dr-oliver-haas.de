@@ -55,12 +55,12 @@
 		/**
 		 * WCL_LicensePage constructor.
 		 *
-		 * @param \Wbcr_Factory429_Plugin $plugin
+		 * @param \Wbcr_Factory432_Plugin $plugin
 		 *
 		 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 		 *
 		 */
-		public function __construct( Wbcr_Factory429_Plugin $plugin ) {
+		public function __construct( Wbcr_Factory432_Plugin $plugin ) {
 			$this->menu_title                  = __( 'License', 'robin-image-optimizer' );
 			$this->page_menu_short_description = __( 'Product activation', 'robin-image-optimizer' );
 			$this->plan_name                   = __( 'Clearfy Business', 'robin-image-optimizer' );
@@ -73,7 +73,7 @@
 		 *
 		 * @return void
 		 * @since 1.0.0
-		 * @see   FactoryPages429_AdminPage
+		 * @see   FactoryPages432_AdminPage
 		 *
 		 */
 		public function assets( $scripts, $styles ) {
@@ -82,8 +82,8 @@
 			$this->styles->add( WCL_PLUGIN_URL . '/admin/assets/css/components.css' );
 			
 			/**
-			 * @param Wbcr_Factory429_StyleList $styles
-			 * @param Wbcr_Factory429_ScriptList $scripts
+			 * @param Wbcr_Factory432_StyleList $styles
+			 * @param Wbcr_Factory432_ScriptList $scripts
 			 *
 			 * @since 1.4.0
 			 *

@@ -21,9 +21,9 @@ class WGZ_Assets_Manager_Public {
 	public $collection = [];
 
 	/**
-	 * @param Wbcr_Factory429_Plugin $plugin
+	 * @param Wbcr_Factory432_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory429_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
 		$this->plugin = $plugin;
 
 		$this->register_hooks();

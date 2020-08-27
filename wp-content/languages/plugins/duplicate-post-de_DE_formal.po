@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Yoast Duplicate Post - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-06-16 10:50:32+0000\n"
+"PO-Revision-Date: 2020-08-14 08:28:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,58 @@ msgstr ""
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: de\n"
 "Project-Id-Version: Plugins - Yoast Duplicate Post - Stable (latest release)\n"
+
+#: duplicate-post-options.php:775
+msgid "Update notice"
+msgstr "Aktualisierungshinweis"
+
+#. translators: 1: Code start tag, 2: Code closing tag, 3: Link start tag to
+#. the template tag documentation, 4: Link closing tag.
+#: duplicate-post-options.php:725
+msgid "You can also use the template tag %1$sduplicate_post_clone_post_link( $link, $before, $after, $id )%2$s. %3$sMore info on the template tag%4$s."
+msgstr "Sie könen auch das Template-Tag %1$sduplicate_post_clone_post_link( $link, $before, $after, $id )%2$s benutzen. %3$sMehr Informationen zum Template-Tag%4$s."
+
+#. translators: %s: Yoast
+#: duplicate-post-options.php:51 duplicate-post-options.php:95
+msgid "%s Duplicate Post settings"
+msgstr "Einstellungen für %s Duplicate Post"
+
+#. translators: %s: Post title.
+#: duplicate-post-admin.php:466
+msgid "New draft of &#8220;%s&#8221;"
+msgstr "Neuer Entwurf von &#8222;%s&#8220;"
+
+#: duplicate-post-admin.php:461
+msgctxt "verb"
+msgid "Clone"
+msgstr "Duplizieren"
+
+#. translators: $s: link to edit or view the original item
+#: duplicate-post-admin.php:426
+msgid "The original item this was copied from is: <span class=\"duplicate_post_original_item_title_span\">%s</span>"
+msgstr "Das Original-Element, von dem dieses kopiert wurde, ist: <span class=\"duplicate_post_original_item_title_span\">%s</span>"
+
+#: duplicate-post-admin.php:359
+msgid "The original item this was copied from is: <span class=\"duplicate_post_original_item_title_span\"></span>"
+msgstr "Das Original-Element, von dem dieses kopiert wurde, ist: <span class=\"duplicate_post_original_item_title_span\"></span>"
+
+#: duplicate-post-admin.php:355 duplicate-post-admin.php:420
+msgid "Delete reference to original item."
+msgstr "Referenz zum Original-Element löschen."
+
+#: duplicate-post-admin.php:269
+msgid "Email Address"
+msgstr "E-Mail-Adresse"
+
+#. translators: %1$s: Yoast
+#: duplicate-post-admin.php:266
+msgid "If you want to stay up to date about all the exciting developments around Duplicate Post, subscribe to the %1$s newsletter!"
+msgstr "Wenn Sie auf dem aktuellen Stand bezüglich aller aufregenden Entwicklungen rund um Duplicate Post bleiben möchten, abonnieren Sie den %1$s-Newsletter!"
+
+#. translators: %s: Yoast
+#: duplicate-post-admin.php:213
+msgid "First release from %s + accessibility improvements + deprecated filter"
+msgstr "Erste Veröffentlichung von %s + Barrierefreiheitsverbesserungen + Filter als veraltet markiert"
 
 #. translators: %s: Post title.
 #: duplicate-post-admin.php:459
@@ -78,6 +130,11 @@ msgstr "&#8222;%s&#8220; bearbeiten"
 msgid "now works on Edit screen too - check this option to use with Gutenberg enabled"
 msgstr "funktioniert jetzt auch in der Editor-Ansicht. Wählen Sie diese Option aus, wenn Sie Gutenberg aktiviert haben."
 
+#. translators: %1$s: Yoast, %2$s: version number
+#: duplicate-post-admin.php:211
+msgid "What's new in %1$s Duplicate Post version %2$s:"
+msgstr "Dies ist neu in %1$s Duplicate Post Version  %2$s:"
+
 #: duplicate-post-admin.php:512
 msgid "Current user is not allowed to copy posts."
 msgstr "Der angemeldete Benutzer hat nicht die Berechtigung, Beiträge zu duplizieren."
@@ -134,9 +191,21 @@ msgid_plural "%s items copied."
 msgstr[0] "%s Element kopiert."
 msgstr[1] "%s Elemente kopiert."
 
+#: duplicate-post-options.php:648 duplicate-post-options.php:720
+msgid "Whether the links are displayed for custom post types registered by themes or plugins depends on their use of standard WordPress UI elements."
+msgstr "Ob die Links für Individuelle Inhaltstypen, die von Themes oder Plugins registriert wurden, angezeigt werden, hängt davon ab, ob sie Standard-Bedienelemente von WordPress benutzen."
+
+#: duplicate-post-options.php:647
+msgid "Select the post types you want the plugin to be enabled for."
+msgstr "Wählen Sie die Beitrags-Typen, für die Sie das Plugin aktivieren möchten."
+
 #: duplicate-post-options.php:624 duplicate-post-options.php:627
 msgid "Enable for these post types"
 msgstr "Für diese Beitrags-Typen aktivieren"
+
+#: duplicate-post-options.php:617
+msgid "Passwords and contents of password-protected posts may become visible to undesired users and visitors."
+msgstr "Passwörter und Inhalte passwortgeschützter Beiträge können für unerwünschte Benutzer und Besucher sichtbar werden."
 
 #: duplicate-post-options.php:568
 msgid "Show/hide private taxonomies"
@@ -218,13 +287,13 @@ msgstr "Die Kopierfunktion für diesen Beitrags-Typ ist auf der Einstellungs-Sei
 msgid "Dismiss this notice."
 msgstr "Diese Nachricht verbergen."
 
-#. Description of the plugin
-msgid "Clone posts and pages."
-msgstr "Duplizieren Sie Beiträge und Seiten."
-
 #: duplicate-post.php:61
 msgid "Settings"
 msgstr "Einstellungen"
+
+#: duplicate-post-options.php:795
+msgid "Save changes"
+msgstr "Änderungen speichern"
 
 #: duplicate-post-options.php:701
 msgid "Admin bar"

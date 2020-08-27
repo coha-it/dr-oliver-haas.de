@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_Page extends Wbcr_FactoryClearfy221_PageBase {
+class WDN_Page extends Wbcr_FactoryClearfy224_PageBase {
 
 
 }

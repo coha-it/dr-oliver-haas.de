@@ -10,7 +10,9 @@ function db135_user_css($plugin) {
 	#et_search_outer > .container,
 	body.single #main-content > .container,
 	body.page div.et_pb_row,
-	body.page div.et_pb_row.et_pb_row_fullwidth {
+	body.page div.et_pb_row.et_pb_row_fullwidth,
+	body.single-project div.et_pb_row,
+	body.single-project div.et_pb_row.et_pb_row_fullwidth {
        width: <?php echo intval(@$option['mobilewidth']); ?>% !important; 
    }
 }

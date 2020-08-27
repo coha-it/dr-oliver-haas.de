@@ -9,16 +9,16 @@
  */
 
 // Exit if accessed directly
-//use WBCR\Factory_Adverts_109\Base;
+//use WBCR\Factory_Adverts_112\Base;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_Plugin extends Wbcr_Factory429_Plugin {
+class WDN_Plugin extends Wbcr_Factory432_Plugin {
 
 	/**
-	 * @var Wbcr_Factory429_Plugin
+	 * @var Wbcr_Factory432_Plugin
 	 */
 	private static $app;
 	private $plugin_data;
@@ -44,7 +44,7 @@ class WDN_Plugin extends Wbcr_Factory429_Plugin {
 	}
 
 	/**
-	 * @return Wbcr_Factory429_Plugin
+	 * @return Wbcr_Factory432_Plugin
 	 */
 	public static function app() {
 		return self::$app;
@@ -79,7 +79,6 @@ class WDN_Plugin extends Wbcr_Factory429_Plugin {
 	}
 
 	private function global_scripts() {
-		require_once( WDN_PLUGIN_DIR . '/includes/function.php' );
 		require_once( WDN_PLUGIN_DIR . '/includes/classes/class-configurate-notices.php' );
 		new WDN_ConfigHideNotices( self::$app );
 	}

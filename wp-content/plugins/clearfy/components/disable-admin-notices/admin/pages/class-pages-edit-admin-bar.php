@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2019 Webraftic Ltd
  * @version       1.0
  */
-class WDAN_Edit_Admin_Bar extends Wbcr_FactoryClearfy221_PageBase {
+class WDAN_Edit_Admin_Bar extends Wbcr_FactoryClearfy224_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -63,11 +63,11 @@ class WDAN_Edit_Admin_Bar extends Wbcr_FactoryClearfy221_PageBase {
 	/**
 	 * Requests assets (js and css) for the page.
 	 *
-	 * @param Wbcr_Factory429_ScriptList $scripts
-	 * @param Wbcr_Factory429_StyleList $styles
+	 * @param Wbcr_Factory432_ScriptList $scripts
+	 * @param Wbcr_Factory432_StyleList $styles
 	 *
 	 * @return void
-	 * @see Wbcr_FactoryPages429_AdminPage
+	 * @see Wbcr_FactoryPages432_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
