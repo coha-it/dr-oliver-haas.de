@@ -65,7 +65,7 @@
 					confirm: {
 						text: wpforms_builder.ok,
 						btnClass: 'btn-confirm',
-						keys: [ 'enter' ]
+						keys: [ 'enter' ],
 					}
 				}
 			} );

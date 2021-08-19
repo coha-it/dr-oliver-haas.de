@@ -1,24 +1,25 @@
 === Sticky Menu, Sticky Header (or anything!) on Scroll ===
-Contributors: webfactory, wpreset, underconstructionpage, googlemapswidget
+Contributors: WebFactory
 Tags: sticky header, sticky menu, sticky, header, sticky widget, floating menu, menu
-Plugin URI: https://wordpress.org/plugins/sticky-menu-or-anything-on-scroll/
+Plugin URI: https://wpsticky.com/
 Requires at least: 3.6
-Tested up to: 5.4
-Stable tag: 2.21
+Tested up to: 5.5
+Stable tag: 2.25
+Requires PHP: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Sticky Menu or Sticky Header lets you stick any element at the top of the screen when you scroll, or create a floating menu.
+Sticky Menu or Sticky Header lets you stick any element at the top of the screen when you scroll or create a floating sticky menu.
 
 == Description ==
 
-The Sticky Menu (or Sticky Header) On Scroll plugin allows you to **make any element on your pages "sticky"** as soon as it hits the top of the page when you scroll down. Although this is commonly used to keep menus at the top of your page to create floating menus, the plugin allows you to make any element sticky. Make a sticky header, stick menu, sticky widget, sticky logo, sticky call to action or a floating menu.
+The WP Sticky Menu (or Sticky Header) On Scroll plugin allows you to **make any element on your pages "sticky"** as soon as it hits the top of the page when you scroll down. Although this is commonly used to keep menus at the top of your page to create floating menus, the plugin allows you to make any element sticky. Make a sticky header, stick menu, sticky widget, sticky logo, sticky call to action or a floating menu.
 
-A little bit of basic HTML/CSS knowledge is required. You just need to know how to pick the right selector for the element you want to make sticky, and you need to be sure it's a unique selector. Sometimes a simple selector like "nav", "#main-menu", ".menu-main-menu-1" is enough. Other times you will have to be more detailed and use a more specific selector such as "header > ul:first-child" or "nav.top .menu-header ul.main".
+A little bit of basic HTML/CSS knowledge is required. You just need to know how to pick the right selector for the element you want to make sticky, and you need to be sure it's a unique selector. Sometimes a simple selector like "nav", "#main-menu", ".menu-main-menu-1" is enough. Other times you will have to be more detailed and use a more specific selector such as "header > ul:first-child" or "nav.top .menu-header ul.main". If you don't like messing with any code check out out the visual element picker in <a href="https://wpsticky.com/?ref=wp-org-readme">WP Sticky PRO</a>.
 
 = Features =
 
-* **Any element can stick**: although common use is for navigation menus, or header the plugin will let you pick any unique element with a name, class or ID to stick at the top of the page once you scroll past it. Use it for sticky widget, sticky sidebar, sticky header, sticky menu, sticky header, sticky call-to-action box, sticky banner ad, etc.
+* **Any element can stick**: although common use is for navigation menus, or header the plugin will let you pick any unique element with a name, class or ID to stick at the top of the page once you scroll past it. Use it for sticky widget, sticky sidebar, sticky header, sticky menu, sticky header, sticky call-to-action box, sticky banner ad, etc. Need to make <a href="https://wpsticky.com/?ref=wp-org-readme">multiple elements sticky</a>? Check out WP Sticky PRO.
 * **Positioning from top**: optionally, you can add any amount of space between the sticky element and the top of the page, so that the element is not always stuck at the "ceiling" of the page.
 * **Enable for certain screen sizes only**: optionally, you can set a minimum and/or maximum screen size where the stickiness should work. This can be handy if you have a responsive site and you don't want your element to be sticky on smaller screens, for example.
 * **Push-up element**: optionally, you can pick any other element lower on the page that will push the sticky element up again (for example a sidebar widget).
@@ -39,6 +40,9 @@ A little bit of basic HTML/CSS knowledge is required. You just need to know how 
 
 
 == Frequently Asked Questions ==
+
+= Can I make multiple elements sticky?
+Sure, <a href="https://wpsticky.com/?ref=wp-org-readme">WP Sticky PRO</a> has that option. You can make as many elements sticky as you like and configure settings individually for each element.
 
 = I selected a class/ID in the settings screen, but the element doesn't stick when I scroll down. Why not? =
 First, make sure that if you select the element by its class name, it is preceded by a dot (e.g. ".main-menu"), and if you select it by its ID, that it's preceded by a pound/hash/number sign (e.g. "#main-menu"). Also, make sure there is only ONE element on the page with the selector you're using. If there is none, or more than one element that matches your selector, nothing will happen.
@@ -126,6 +130,20 @@ Please go to the plugin's [support forum on WordPress.org](https://wordpress.org
 
 
 == Changelog ==
+
+= 2.25 =
+* 2020-10-16
+* PRO version is here
+* bug fixes and improvements
+
+= 2.23 =
+* 2020-10-01
+* more CSS fixes
+* added promo campaign for WP 301 Redirects
+
+= 2.22 =
+* 2020-09-08
+* improvement for themes with !important rule at margin top and left within sticky element
 
 = 2.21 =
 * 2020-06-19

@@ -15,11 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
+class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy228_Configurate {
 
 	public function registerActionsAndFilters() {
 		if ( is_admin() ) {
-			$hide_notices_type = $this->getPopulateOption( 'hide_admin_notices' );
+			$hide_notices_type = $this->getPopulateOption( 'hide_admin_notices', 'only_selected' );
 
 			if ( 'not_hide' !== $hide_notices_type && 'compact_panel' !== $hide_notices_type ) {
 				add_action( 'admin_print_scripts', [ $this, 'catchNotices' ], 999 );
@@ -30,7 +30,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 
 				if ( ! empty( $hide_notices_type ) ) {
 					add_action( 'admin_bar_menu', [ $this, 'notificationsPanel' ], 999 );
-					add_action( 'admin_enqueue_scripts', [ $this, 'notificationsPanelStyles' ] );
+					add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_styles' ] );
 				}
 			}
 		}
@@ -45,11 +45,12 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 	}
 
 
-	public function notificationsPanelStyles() {
+	public function enqueue_styles() {
+		wp_enqueue_style( 'wbcr-notification-hide-style', WDN_PLUGIN_URL . '/admin/assets/css/general.css', [], $this->plugin->getPluginVersion() );
+
 		if ( ! $this->getPopulateOption( 'show_notices_in_adminbar', false ) && current_user_can( 'manage_network' ) ) {
 			return;
 		}
-
 		wp_enqueue_style( 'wbcr-notification-panel-styles', WDN_PLUGIN_URL . '/admin/assets/css/notifications-panel.css', [], $this->plugin->getPluginVersion() );
 		wp_enqueue_script( 'wbcr-notification-panel-scripts', WDN_PLUGIN_URL . '/admin/assets/js/notifications-panel.js', [], $this->plugin->getPluginVersion() );
 	}
@@ -59,34 +60,49 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 			return;
 		}
 
-		if ( current_user_can( 'manage_options' ) || current_user_can( 'manage_network' ) ) {
-			$titles = [];
+		if ( current_user_can( 'manage_options' ) ) {
+			$notifications_user = get_user_meta( get_current_user_id(), $this->plugin->getOptionName( 'hidden_notices' ), true );
+			$notifications_all  = apply_filters( 'wdan/notifications/all', [] );
 
-			$notifications = get_user_meta( get_current_user_id(), WDN_Plugin::app()->getOptionName( 'hidden_notices' ), true );
+			if ( ! is_array( $notifications_user ) ) {
+				$notifications_user = [];
+			}
 
-			if ( empty( $notifications ) ) {
+			if ( empty( $notifications_user ) && empty( $notifications_all ) ) {
 				return;
 			}
 
-			$cont_notifications = sizeof( $notifications );
+			$cont_notifications = sizeof( $notifications_user ) + sizeof( $notifications_all );
 
 			// Add top menu
 			$wp_admin_bar->add_menu( [
 				'id'     => 'wbcr-han-notify-panel',
 				'parent' => 'top-secondary',
 				'title'  => sprintf( __( 'Notifications %s', 'disable-admin-notices' ), '<span class="wbcr-han-adminbar-counter">' . $cont_notifications . '</span>' ),
-				'href'   => false
+				'href'   => $this->plugin->getPluginPageUrl( 'wdan-notices' )
 			] );
 
-			// loop
-			if ( ! empty( $notifications ) ) {
-				$i = 0;
-				foreach ( $notifications as $notice_id => $message ) {
+			$i = 0;
+
+			// User
+			if ( ! empty( $notifications_user ) ) {
+				$wp_admin_bar->add_menu( [
+					'id'     => 'wbcr-han-notify-panel-group-user',
+					'parent' => 'wbcr-han-notify-panel',
+					'title'  => __( 'Hidden for you', 'disable-admin-notices' ),
+					'href'   => false,
+					'meta'   => [
+						'class' => ''
+					]
+				] );
+
+				foreach ( $notifications_user as $notice_id => $message ) {
+					$message = wp_kses( $message, [] );
 					$message = $this->getExcerpt( stripslashes( $message ), 0, 350 );
 					$message .= '<div class="wbcr-han-panel-restore-notify-line">';
 					$message .= '<a href="#" data-nonce="' . wp_create_nonce( $this->plugin->getPluginName() . '_ajax_restore_notice_nonce' );
 					$message .= '" data-notice-id="' . esc_attr( $notice_id ) . '" class="wbcr-han-panel-restore-notify-link">';
-					$message .= __( 'Restore notice', 'clearfy' ) . ( isset( $titles[ $notice_id ] ) ? ' (' . $titles[ $notice_id ] . ')' : '' );
+					$message .= __( 'Restore notice', 'clearfy' );
 					$message .= '</a></div>';
 
 					$wp_admin_bar->add_menu( [
@@ -102,6 +118,11 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 					$i ++;
 				}
 			}
+
+			if ( $this->plugin->is_premium() && ( current_user_can( 'manage_options' ) || ( is_multisite() && current_user_can( 'manage_network' ) ) ) ) {
+				// All
+				do_action( 'wdn/notifications/panel/all', $wp_admin_bar, $notifications_all, $i );
+			}
 		}
 	}
 
@@ -112,96 +133,68 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 			return;
 		}
 		?>
-		<!-- Disable admin notices plugin (Clearfy tools) -->
-		<style>
-            .wbcr-dan-hide-notices {
-                position: initial;
-                padding: 5px 5px 0;
-                background: transparent;
-            }
+        <!-- Disable admin notices plugin (Clearfy tools) -->
+        <script>
+            jQuery(document).ready(function ($) {
+                $(document).on('click', '.wbcr-dan-hide-notice-link', function () {
+                    var self = $(this),
+                        target = self.data('target'),
+                        noticeID = self.data('notice-id'),
+                        nonce = self.data('nonce'),
+                        noticeHtml = self.closest('.wbcr-dan-hide-links').prev('.wbcr-dan-hide-notices').clone(),
+                        contanierEl = self.closest('.wbcr-dan-hide-links').prev('.wbcr-dan-hide-notices').parent();
 
-            .wbcr-dan-hide-notices > div {
-                margin: 0 !important;
-            }
+                    contanierEl.find('.wbcr-dan-hide-links').remove();
+                    contanierEl.slideUp();
 
-            .wbcr-dan-hide-notice-link {
-                display: block;
-                text-align: right;
-                margin: 5px 0 5px 5px;
-                font-weight: bold;
-                color: #F44336;
-            }
+                    if (!noticeID) {
+                        alert('Undefinded error. Please report the bug to our support forum.');
+                    }
 
-            .is-dismissible .wbcr-dan-hide-notice-link {
-                margin-right: -30px;
-            }
+                    $.ajax(ajaxurl, {
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            action: 'wbcr-dan-hide-notices',
+                            target: target,
+                            security: nonce,
+                            notice_id: noticeID,
+                            notice_html: noticeHtml.html()
+                        },
+                        success: function (response) {
+                            if (!response || !response.success) {
 
-            .wbcr-dan-hide-notice-link:active, .wbcr-dan-hide-notice-link:focus {
-                box-shadow: none;
-                outline: none;
-            }
-		</style>
-		<!-- Disable admin notices plugin (Clearfy tools) -->
-		<script>
-			jQuery(document).ready(function($) {
-				$(document).on('click', '.wbcr-dan-hide-notice-link', function() {
-					var self = $(this),
-						noticeID = self.data('notice-id'),
-						nonce = self.data('nonce'),
-						noticeHtml = self.closest('.wbcr-dan-hide-notices').clone(),
-						contanierEl = self.closest('.wbcr-dan-hide-notices').parent();
+                                if (response.data.error_message) {
+                                    console.log(response.data.error_message);
+                                    self.closest('li').show();
+                                } else {
+                                    console.log(response);
+                                }
 
-					noticeHtml.find('.wbcr-dan-hide-notice-link').remove();
+                                contanierEl.show();
+                                return;
+                            }
 
-					if( !noticeID ) {
-						alert('Undefinded error. Please report the bug to our support forum.');
-					}
-
-					contanierEl.hide();
-
-					$.ajax(ajaxurl, {
-						type: 'post',
-						dataType: 'json',
-						data: {
-							action: 'wbcr-dan-hide-notices',
-							security: nonce,
-							notice_id: noticeID,
-							notice_html: noticeHtml.html()
-						},
-						success: function(response) {
-							if( !response || !response.success ) {
-
-								if( response.data.error_message ) {
-									console.log(response.data.error_message);
-									self.closest('li').show();
-								} else {
-									console.log(response);
-								}
-
-								contanierEl.show();
-								return;
-							}
-
-							contanierEl.remove();
-						},
-						error: function(xhr, ajaxOptions, thrownError) {
-							console.log(xhr.status);
-							console.log(xhr.responseText);
-							console.log(thrownError);
-						}
-					});
-
-					return false;
-				});
-			});
-		</script>
+                            contanierEl.remove();
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
 		<?php
 		foreach ( $wbcr_dan_plugin_all_notices as $val ) {
 			echo $val;
 		}
 	}
 
-	public function catchNotices() {
+	public
+	function catchNotices() {
 		global $wbcr_dan_plugin_all_notices;
 
 		try {
@@ -209,14 +202,15 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 			$wp_filter_all_admin_notices = &wdan_get_wp_filter( 'all_admin_notices' );
 
 			$wp_filter_notices = $this->array_merge( $wp_filter_admin_notices, $wp_filter_all_admin_notices );
-		} catch( Exception $e ) {
+		} catch ( Exception $e ) {
 			$wp_filter_notices = null;
 		}
 
 		$hide_notices_type = $this->getPopulateOption( 'hide_admin_notices' );
 
 		if ( empty( $hide_notices_type ) || $hide_notices_type == 'only_selected' ) {
-			$get_hidden_notices = get_user_meta( get_current_user_id(), WDN_Plugin::app()->getOptionName( 'hidden_notices' ), true );
+			$get_hidden_notices     = get_user_meta( get_current_user_id(), $this->plugin->getOptionName( 'hidden_notices' ), true );
+			$get_hidden_notices_all = apply_filters( 'wdan/notifications/all', [] );
 
 			$content = [];
 			foreach ( (array) $wp_filter_notices as $filters ) {
@@ -259,6 +253,16 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 							$uniq_id2    = md5( $class_name . ':' . $method_name );
 						}
 					}
+					$txt = $cont;
+					$txt = preg_replace( '/<(script|style)([^>]+)?>(.*?)<\/(script|style)>/is', '', $txt );
+					$txt = rtrim( trim( $txt ) );
+					$txt = preg_replace( '/^(<div[^>]+>)(.*?)(<\/div>)$/is', '<p>$2</p>', $txt );
+
+					// All
+					$skip_notice = apply_filters( 'wdn/notifications/catch/all', true, $get_hidden_notices_all, $uniq_id1, $uniq_id2 );
+					if ( ! $skip_notice ) {
+						continue;
+					}
 
 					if ( ! empty( $get_hidden_notices ) ) {
 						$skip_notice = true;
@@ -272,6 +276,7 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 
 							if ( $compare_notice_id_1 == $uniq_id1 || $compare_notice_id_2 == $uniq_id2 ) {
 								$skip_notice = false;
+								break;
 							}
 						}
 
@@ -280,13 +285,25 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 						}
 					}
 
-					$hide_link = '<a href="#" data-nonce="' . wp_create_nonce( $this->plugin->getPluginName() . '_ajax_hide_notices_nonce' ) . '" data-notice-id="' . $uniq_id1 . '_' . $uniq_id2 . '" class="wbcr-dan-hide-notice-link">[' . __( 'Hide notification forever', 'disable-admin-notices' ) . ']</a>';
+					$nonce             = wp_create_nonce( $this->plugin->getPluginName() . '_ajax_hide_notices_nonce' );
+					$hide_link_for_me  = "<button data-target='user' data-nonce='{$nonce}' data-notice-id='{$uniq_id1}_{$uniq_id2}' class='wbcr-dan-hide-notice-link'>" . __( 'Hide  <b>for me</b>', 'disable-admin-notices' ) . "</button>";
+					$hide_link_for_all = "";
 
-					// Fix for Woocommerce membership
-					if ( $cont != '<div class="js-wc-memberships-admin-notice-placeholder"></div>' ) {
-						$cont = preg_replace( '/<(script|style)([^>]+)?>(.*?)<\/(script|style)>/is', '', $cont );
+					if ( $this->plugin->is_premium() && ( current_user_can( 'manage_options' ) || ( is_multisite() && current_user_can( 'manage_network' ) ) ) ) {
+						$hide_link_for_all = "<button data-target='all'  data-nonce='{$nonce}' data-notice-id='{$uniq_id1}_{$uniq_id2}' class='wbcr-dan-hide-notice-link'>" . __( 'Hide  <b>for all</b>', 'disable-admin-notices' ) . "</button>";
+					}
+
+					if ( strpos( $cont, 'redux-connect-message' ) ) {
+						$a = 1;
+					}
+
+					// Fix for Woocommerce membership and Jetpack message
+					if ( $cont != '<div class="js-wc-memberships-admin-notice-placeholder"></div>' && false === strpos( $cont, 'jetpack-jitm-message' ) ) {
+						$cont = preg_replace( '/<(noscript|script|style)([^>]+)?>(.*?)<\/(noscript|script|style)>(<\/(noscript|script|style)>)*/is', '', $cont );
+						$cont = preg_replace( '/<!--(.*?)-->/is', '', $cont );
 						$cont = rtrim( trim( $cont ) );
-						$cont = preg_replace( '/^(<div[^>]+>)(.*?)(<\/div>)$/is', '$1<div class="wbcr-dan-hide-notices">$2' . $hide_link . '</div>$3', $cont );
+						$cont = preg_replace( '/^(<div[^>]+>)(.*?)(<\/div>)$/is',
+							"$1<div class='wbcr-dan-hide-notices'>$2</div><div class='wbcr-dan-hide-links'>{$hide_link_for_me} {$hide_link_for_all}</div>$3", $cont );
 					}
 
 					if ( empty( $cont ) ) {
@@ -324,7 +341,10 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 	 *
 	 * @return String excerpt
 	 */
-	public function getExcerpt( $str, $startPos = 0, $maxLength = 100 ) {
+	public
+	function getExcerpt(
+		$str, $startPos = 0, $maxLength = 100
+	) {
 		if ( strlen( $str ) > $maxLength ) {
 			$excerpt   = substr( $str, $startPos, $maxLength - 3 );
 			$lastSpace = strrpos( $excerpt, ' ' );
@@ -337,7 +357,16 @@ class WDN_ConfigHideNotices extends Wbcr_FactoryClearfy224_Configurate {
 		return $excerpt;
 	}
 
-	private function array_merge( array $arr1, array $arr2 ) {
+	/**
+	 * @param array $arr1
+	 * @param array $arr2
+	 *
+	 * @return array
+	 */
+	protected
+	function array_merge(
+		array $arr1, array $arr2
+	) {
 		if ( ! empty( $arr2 ) ) {
 			foreach ( $arr2 as $key => $value ) {
 				if ( ! isset( $arr1[ $key ] ) ) {

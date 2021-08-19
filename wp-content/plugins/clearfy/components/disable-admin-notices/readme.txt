@@ -1,9 +1,9 @@
-=== Disable admin notices individually  ===
-Tags: hide admin notices, hide updates nags, hide nags, disable notices, disable update nags, disable nags, disable admin notices
+=== Disable Admin Notices individually  ===
+Tags: notices, notification, notifications, upgrade, nag
 Contributors: webcraftic, alexkovalevv, creativemotion
 Donate link: https://clearfy.pro/disable-admin-notices/
 Requires at least: 4.8
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2
@@ -19,8 +19,16 @@ Our team was tired of this, and we developed a small plugin that solves problems
 The Hide admin notices plugin adds “Hide notification forever” link for each admin notice. Click this link and plugin will filter this notice and you will never see it. This method will help you to disable only annoying notices from plugins and themes, but important error notifications will continue to work.
 
 In addition, you can disable all notices globally simply change plugin options. In this case, the plugin hides all admin notices, except of updates notices in the list of installed plug-ins.
+<strong>[Premium]</strong> You can hide the notice for other users who have access to the admin panel, while displaying this notice for yourself. (Multisite only)
 
 And still, that you could see which notices are shows, we made the special item in the top admin bar that will collect all notices in one place. It is disabled by default to freeing space in the admin menu but you can enable it in plugin options.
+<strong>[Premium]</strong> We have also added a Hidden Notices page so that the site administrator can view the entire list of hidden notes and restore some of them, if necessary.
+
+<strong>[Premium]</strong> Compact panel - Instead of notices in the admin panel (no matter how many) a compact panel is displayed, it takes up little space and will not interfere with you. By clicking on the compact panel, you will see all your notes, click again and all your notes are hidden again. This is an easy way to keep track of notes, you won't miss anything, all notes will be available in one click.
+<strong>[Premium]</strong> Block Ad Redericts - This feature will be useful to you to break advertising redirects. Some plugins, when updating or during installation, may redirect you to their page with advertisements or news. If plugins do this too often, it can be a headache for you. Break these redirects with our premium features.
+<strong>[Premium]</strong> Hide admin bar items (menu) - This function allows you to disable annoying menu items in the admin bar. Some plugins take up space in the admin bar to insert their ads. Just get rid of this ad with the premium features of our plugin.
+<strong>[Premium]</strong> Disable plugins updates nags
+<strong>[Premium]</strong> Disable core updates nags
 
 We used some useful functions from plugins <strong>Clearfy – disable unused features</strong>, <strong>WP Hide Plugin Updates and Warnings</strong>, <strong>Hide All Notices</strong>, <strong>WP Nag Hide</strong>, <strong>WP Notification Center</strong>
 
@@ -54,6 +62,13 @@ If you want to help with the translation, please contact me through this site or
 3. Notifications panel (optional)
 
 == Changelog ==
+= 1.2.3 =
+* Fixed: Compatibility with other plugins
+* Fixed: Appearance of the list of hidden notifications in the adminbar
+* [PRO] Added: Added a page with a list of all hidden notifications with the ability to restore.
+* [PRO] Added: Ability to hide notifications for ALL users
+* [PRO] Added: Multisite support
+
 = 1.2.2 (09.08.2020) =
 * Fixed: It was impossible to hide the notice with an offer to buy a pro version.
 * Updated: Improved the accuracy of filters when hiding notifications.

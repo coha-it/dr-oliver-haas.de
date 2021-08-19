@@ -14,13 +14,13 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms430_DivHolder') ) {
+	if( !class_exists('Wbcr_FactoryForms434_DivHolder') ) {
 		/**
 		 * Div Control Holder
 		 *
 		 * @since 1.0.0
 		 */
-		class Wbcr_FactoryForms430_DivHolder extends Wbcr_FactoryForms430_Holder {
+		class Wbcr_FactoryForms434_DivHolder extends Wbcr_FactoryForms434_Holder {
 
 			/**
 			 * A holder type.

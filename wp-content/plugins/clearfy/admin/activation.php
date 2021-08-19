@@ -4,25 +4,26 @@
  *
  * @author        Webcraftic <wordpress.webraftic@gmail.com>
  * @copyright (c) 09.09.2017, Webcraftic
- * @see           Factory432_Activator
+ * @see           Factory437_Activator
  * @version       1.0
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if( !defined('ABSPATH') ) {
 	exit;
 }
 
-class WCL_Activation extends Wbcr_Factory432_Activator {
+class WCL_Activation extends Wbcr_Factory437_Activator {
 
 	/**
 	 * Runs activation actions.
 	 *
 	 * @since 1.0.0
 	 */
-	public function activate() {
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	public function activate()
+	{
+		if( !function_exists('is_plugin_active') ) {
+			require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 		}
 		// Deactivate components for code minification, if alternative plugins are installed
 		// -------------
@@ -35,35 +36,37 @@ class WCL_Activation extends Wbcr_Factory432_Activator {
 		];
 
 		$is_activate_minify_js = true;
-		foreach ( $minify_js_plugins as $m_plugin ) {
+		foreach($minify_js_plugins as $m_plugin) {
 
-			if ( is_plugin_active( $m_plugin ) ) {
+			if( is_plugin_active($m_plugin) ) {
 				$is_activate_minify_js = false;
 			}
 		}
 
-		if ( ! $is_activate_minify_js ) {
-			WCL_Plugin::app()->deactivateComponent( 'minify_and_combine' );
-			WCL_Plugin::app()->deactivateComponent( 'html_minify' );
+		if( !$is_activate_minify_js ) {
+			WCL_Plugin::app()->deactivateComponent('minify_and_combine');
+			WCL_Plugin::app()->deactivateComponent('html_minify');
 		}
 
 		// -------------
 		// Deactivate yoast component features if it is not activated
 		// -------------
 
-		if ( ! defined( 'WPSEO_VERSION' ) ) {
-			WCL_Plugin::app()->deactivateComponent( 'yoast_seo' );
+		if( !defined('WPSEO_VERSION') ) {
+			WCL_Plugin::app()->deactivateComponent('yoast_seo');
 		}
 
 		// Deactivate cyrlitera component for all languages except selected
-		if ( ! in_array( get_locale(), [ 'ru_RU', 'bel', 'kk', 'uk', 'bg', 'bg_BG', 'ka_GE' ] ) ) {
-			WCL_Plugin::app()->deactivateComponent( 'cyrlitera' );
+		if( !in_array(get_locale(), ['ru_RU', 'bel', 'kk', 'uk', 'bg', 'bg_BG', 'ka_GE']) ) {
+			WCL_Plugin::app()->deactivateComponent('cyrlitera');
 		}
+
+		update_option($this->plugin->getOptionName('setup_wizard'), 1);
 
 		/**
 		 * @since 1.4.1
 		 */
-		do_action( 'wbcr/clearfy/activated' );
+		do_action('wbcr/clearfy/activated');
 	}
 
 	/**
@@ -71,7 +74,9 @@ class WCL_Activation extends Wbcr_Factory432_Activator {
 	 *
 	 * @since 1.0.0
 	 */
-	public function deactivate() {
+	public function deactivate()
+	{
+		
 		/*$dependent = 'clearfy_package/clearfy-package.php';
 
 		require_once ABSPATH . '/wp-admin/includes/plugin.php';
@@ -83,7 +88,7 @@ class WCL_Activation extends Wbcr_Factory432_Activator {
 		/**
 		 * @since 1.4.1
 		 */
-		do_action( 'wbcr/clearfy/deactivated' );
+		do_action('wbcr/clearfy/deactivated');
 	}
 
 	/**

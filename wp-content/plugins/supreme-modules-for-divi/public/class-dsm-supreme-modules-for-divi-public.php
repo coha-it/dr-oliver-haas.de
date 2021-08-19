@@ -73,7 +73,7 @@ class Dsm_Supreme_Modules_For_Divi_Public {
 		 */
 		if ( function_exists( 'et_core_is_fb_enabled' ) ) {
 			if ( et_core_is_fb_enabled() ) {
-				wp_enqueue_style( 'dsm-admin', plugin_dir_url( __FILE__ ) . 'css/dsm-et-admin.css', array(), DSM_VERSION, 'all' );
+				wp_enqueue_style( 'dsm-et-admin', plugin_dir_url( __FILE__ ) . 'css/dsm-et-admin.css', array(), DSM_VERSION, 'all' );
 			}
 		}
 		$easy_theme_builder = isset( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_fixed'] ) && 'off' !== get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_fixed'] ? true : false;
@@ -150,7 +150,7 @@ class Dsm_Supreme_Modules_For_Divi_Public {
 		wp_register_script( 'dsm-typed', plugin_dir_url( __FILE__ ) . 'js/typed.min.js', array(), DSM_VERSION, true );
 		wp_register_script( 'dsm-before-after-image', plugin_dir_url( __FILE__ ) . 'js/dsm-before-after-image-slider.js', array( 'jquery' ), DSM_VERSION, true );
 		wp_register_script( 'dsm-lottie', plugin_dir_url( __FILE__ ) . 'js/lottie.min.js', array(), DSM_VERSION, true );
-		wp_register_script( 'dsm-facebook', 'https://connect.facebook.net/' . $facebook_lang . '/sdk.js#xfbml=1&version=v6.0' . $facebook_app_id, array(), null, true );
+		wp_register_script( 'dsm-facebook', 'https://connect.facebook.net/' . $facebook_lang . '/sdk.js#xfbml=1&version=v8.0' . $facebook_app_id, array(), null, true );
 		wp_register_script( 'dsm-twitter-embed', 'https://platform.twitter.com/widgets.js', array(), DSM_VERSION, true );
 	}
 

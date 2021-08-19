@@ -22,9 +22,9 @@
 		exit;
 	}
 
-	if( !class_exists('Wbcr_FactoryForms430_WpEditorControl') ) {
+	if( !class_exists('Wbcr_FactoryForms434_WpEditorControl') ) {
 
-		class Wbcr_FactoryForms430_WpEditorControl extends Wbcr_FactoryForms430_Control {
+		class Wbcr_FactoryForms434_WpEditorControl extends Wbcr_FactoryForms434_Control {
 
 			public $type = 'wp-editor';
 
@@ -42,7 +42,7 @@
 				}
 
 				if( !isset($this->options['tinymce']['content_css']) ) {
-					$this->options['tinymce']['content_css'] = FACTORY_FORMS_430_URL . '/assets/css/editor.css';
+					$this->options['tinymce']['content_css'] = FACTORY_FORMS_434_URL . '/assets/css/editor.css';
 				}
 			}
 

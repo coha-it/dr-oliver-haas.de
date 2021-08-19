@@ -1,5 +1,37 @@
 == Changelog ==
 
+= 1.6.3.1 =
+- Added: Native integration with Divi.
+- Added: Email field Allowlist/Denylist restrictions, see Email field Advanced Options.
+- Added: Form builder Help - contextual help, search docs, and more.
+- Added: Logging, which can be enabled for troubleshooting from WPForms > Tools > Logs.
+- Changed: Nicely notify users in the Form Builder when their WordPress session has expired, and they can't save the form anymore without a page reload.
+- Changed: Better AJAX form submit field error messages handling.
+- Fixed: Custom metabox heading styling due to WordPress core changes.
+- Fixed: Page title smart tag not working in some use cases when using AJAX form submissions.
+- Fixed: Various admin area display issues when the field label is empty.
+- Fixed: Logo Translate plugin integration issues.
+- Fixed: Elementor widget edge case issues.
+- Fixed: Form settings could be visible before the form was created.
+- Fixed: Form builder styling inconsistencies with Dropdown field styles.
+- Fixed: Input mask issues with some mobile browsers, notably Chrome.
+- Fixed: Always display the WPForms admin area in the user's language regardless of the site language.
+- Fixed: Do not load certain JS variables twice on the front end.
+- Fixed: Form title display issue inside the form builder with smaller view ports.
+- Fixed: Elementor widget display issue on frontend when no form has been created.
+
+= 1.6.2.3 =
+- Changed: Added shortcode access to a form embed modal and enhanced modal navigation.
+- Changed: Improved empty states for All Forms and Builder no fields preview panel.
+- Changed: Improved Email Summaries footer text.
+- Fixed: Custom validation messages for the fields appear correctly with Ajax form submission enabled.
+- Fixed: Base style CSS introduces no additional scrollbars now.
+- Fixed: Correct cursor for image choices validation messages.
+- Fixed: Getting the license details from DB works as expected regardless of a context.
+- Fixed: Getting the list of WPForms addons for user license level works as expected regardless of a context.
+- Fixed: Number Slider field increment is checked to be more than zero.
+- Fixed: Modern Dropdown validation works as expected for AJAX forms.
+
 = 1.6.2.2 =
 - Added: Caching friendly anti-spam protection (form tokens).
 - Added: Native integration with Elementor: add to the page and create new forms right inside its builder.

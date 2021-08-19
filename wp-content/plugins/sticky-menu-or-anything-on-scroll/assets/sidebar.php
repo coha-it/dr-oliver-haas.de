@@ -13,3 +13,4 @@ Glad to see Sticky is helping you make things stick 😎<br>Please help other us
 </div>
 
 <p><a href="https://wordpress.org/support/plugin/sticky-menu-or-anything-on-scroll/reviews/#new-post" class="button button-primary" target="_blank">I want to rate &amp; keep Sticky Menu free!</a> &nbsp; <a href="<?php echo $dismiss_url; ?>">I already rated it</a></p>
+

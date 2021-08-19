@@ -4,11 +4,11 @@
  * Plugin URI: https://wordpress.org/plugins/clearfy/
  * Description: Disables unused Wordpress features, improves performance and increases SEO rankings, using Clearfy, which makes WordPress very easy.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.7.0
+ * Version: 1.8.0
  * Text Domain: clearfy
  * Domain Path: /languages/
  * Author URI: http://clearfy.pro
- * Framework Version: FACTORY_432_VERSION
+ * Framework Version: FACTORY_437_VERSION
  */
 
 // Exit if accessed directly
@@ -71,12 +71,12 @@ $plugin_info = array(
 	),
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array('libs/factory/bootstrap', 'factory_bootstrap_433', 'admin'),
-		array('libs/factory/forms', 'factory_forms_430', 'admin'),
-		array('libs/factory/pages', 'factory_pages_432', 'admin'),
-		array('libs/factory/clearfy', 'factory_clearfy_224', 'all'),
-		array('libs/factory/freemius', 'factory_freemius_120', 'all'),
-		array('libs/factory/adverts', 'factory_adverts_112', 'admin')
+		array('libs/factory/bootstrap', 'factory_bootstrap_437', 'admin'),
+		array('libs/factory/forms', 'factory_forms_434', 'admin'),
+		array('libs/factory/pages', 'factory_pages_436', 'admin'),
+		array('libs/factory/clearfy', 'factory_clearfy_228', 'all'),
+		array('libs/factory/freemius', 'factory_freemius_124', 'all'),
+		array('libs/factory/adverts', 'factory_adverts_115', 'admin')
 	),
 	'load_plugin_components' => array(
 		'disable_notices' => array(
@@ -116,10 +116,10 @@ $plugin_info = array(
 
 
 
-$clearfy_compatibility = new Wbcr_Factory432_Requirements(__FILE__, array_merge($plugin_info, array(
+$clearfy_compatibility = new Wbcr_Factory437_Requirements(__FILE__, array_merge($plugin_info, array(
 	'plugin_already_activate' => defined('WCL_PLUGIN_ACTIVE'),
-	'required_php_version' => '5.4',
-	'required_wp_version' => '4.2.0',
+	'required_php_version' => '5.6',
+	'required_wp_version' => '4.9.0',
 	'required_clearfy_check_component' => false
 )));
 
@@ -147,7 +147,7 @@ define('WBCR_CLEARFY_PLUGIN_ACTIVE', true);
 
 // Plugin version
 define('WCL_PLUGIN_VERSION', $clearfy_compatibility->get_plugin_version());
-define('WCL_FRAMEWORK_VER', 'FACTORY_432_VERSION');
+define('WCL_FRAMEWORK_VER', 'FACTORY_437_VERSION');
 
 define('WCL_PLUGIN_DIR', dirname(__FILE__));
 define('WCL_PLUGIN_BASE', plugin_basename(__FILE__));
@@ -184,4 +184,3 @@ try {
 	add_action('network_admin_notices', $clearfy_plugin_error_func);
 }
 // @formatter:on
-

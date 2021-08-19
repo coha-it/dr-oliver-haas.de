@@ -394,7 +394,7 @@ class Education {
 	 */
 	public function settings( $form, $slug ) {
 
-		if ( 'settings' !== $slug ) {
+		if ( empty( $form ) || 'settings' !== $slug ) {
 			return;
 		}
 
@@ -453,7 +453,7 @@ class Education {
 		foreach ( $settings as $setting ) {
 
 			/* translators: %s - addon name. */
-			$modal_name = sprintf( esc_html__( '%s addon', 'wpforms' ), $setting['name'] );
+			$modal_name = sprintf( esc_html__( '%s addon', 'wpforms-lite' ), $setting['name'] );
 			printf(
 				'<a href="#" class="wpforms-panel-sidebar-section wpforms-panel-sidebar-section-%s upgrade-modal" data-name="%s" data-license="%s">',
 				esc_attr( $setting['slug'] ),
@@ -713,10 +713,10 @@ class Education {
 		}
 
 		$translations = array(
-			'upgrade_to_pro' => __( 'Upgrade to Pro.', 'wpforms' ),
-			'dismiss_title'  => __( 'Dismiss this message.', 'wpforms' ),
-			'did_you_know'   => __( 'Did You Know?', 'wpforms' ),
-			'learn_more'     => __( 'Learn More', 'wpforms' ),
+			'upgrade_to_pro' => __( 'Upgrade to Pro.', 'wpforms-lite' ),
+			'dismiss_title'  => __( 'Dismiss this message.', 'wpforms-lite' ),
+			'did_you_know'   => __( 'Did You Know?', 'wpforms-lite' ),
+			'learn_more'     => __( 'Learn More', 'wpforms-lite' ),
 		);
 
 		$learn_more = ( ! empty( $settings['more'] ) ) ? '<a href="' . esc_url( $settings['more'] ) . '" class="learn-more">' . esc_html( $translations['learn_more'] ) . '</a>' : '';

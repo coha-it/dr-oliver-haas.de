@@ -82,13 +82,13 @@ class WHTM_PluginHTML extends WHTM_PluginBase
         // No optimize.
         $this->content = $this->hideNoptimize( $this->content );
 
-        // Preparing options for Minify_HTML.
+        // Preparing options for WHTM_Minify_HTML.
         $options = array( 'keepComments' => $this->keepcomments );
         if ( $this->forcexhtml ) {
             $options['xhtml'] = true;
         }
 
-        $tmp_content = Minify_HTML::minify( $this->content, $options );
+        $tmp_content = WHTM_Minify_HTML::minify( $this->content, $options );
         if ( ! empty( $tmp_content ) ) {
             $this->content = $tmp_content;
             unset( $tmp_content );

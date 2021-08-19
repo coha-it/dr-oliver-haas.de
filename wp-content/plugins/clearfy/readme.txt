@@ -1,7 +1,7 @@
 ﻿=== Clearfy – WordPress optimization plugin and disable ultimate tweaker ===
 Contributors: Creativemotion, webcraftic, alexkovalevv
 Donate link: https://clearfy.pro/pricing/?utm_source=wordpress.org&utm_campaign=wbcr_clearfy&utm_content=repo
-Tags: optimize, performance, pagespeed, critical css, minify css, minify js, minify, remove querystrings, disable rest api, bicycles by falbar, remove rss feeds, remove meta generator, yoast seo remove comments, yoast seo, yoast seo breadcrumbs, disable embeds,remove embeds, remove rsd link, dns-prefetch, remove dns-prefetch, meta generator, rsd link, wlw manifest link, remove wlw manifest link, canonical link, remove canonical link, shortlink link, remove shortlink link, emoji, attachment pages, remove attachment pages, rss feeds, disable rss feeds, rest api, disable rest api, remove rest api, clearfy, archives date, post pagination, archives author, hide login errors, recent comments, tag, rpc, xml, xml rpc, xmlrpc, admin bar, remove querystrings, reduce HTTP requests, disable heartbeat, disable revision, heartbeat, revision, clean, optimize, remove rest-api, remove rest-api, remove jquery migrate, html minify, robots.txt editor, plugin updates, disable plugin updates, disable core updates, core updates, enable automatic updates, disable widgets, disable default widgets, remove html comments
+Tags: optimize, performance, pagespeed, cache, minify css, minify js, minify, remove querystrings, disable rest api, bicycles by falbar, remove rss feeds, remove meta generator, yoast seo remove comments, yoast seo, yoast seo breadcrumbs, disable embeds,remove embeds, remove rsd link, dns-prefetch, remove dns-prefetch, meta generator, rsd link, wlw manifest link, remove wlw manifest link, canonical link, remove canonical link, shortlink link, remove shortlink link, emoji, attachment pages, remove attachment pages, rss feeds, disable rss feeds, rest api, disable rest api, remove rest api, clearfy, archives date, post pagination, archives author, hide login errors, recent comments, tag, rpc, xml, xml rpc, xmlrpc, admin bar, remove querystrings, reduce HTTP requests, disable heartbeat, disable revision, heartbeat, revision, clean, optimize, remove rest-api, remove rest-api, remove jquery migrate, html minify, robots.txt editor, plugin updates, disable plugin updates, disable core updates, core updates, enable automatic updates, disable widgets, disable default widgets, remove html comments
 Requires at least: 4.7
 Tested up to: 5.5
 Requires PHP: 5.6
@@ -43,6 +43,14 @@ In addition, we observed important features:
 Do you want the same or better? **Download Clearfy for free** and see for yourself! Configuring the plugin takes only 5-10 minutes. Just think how long it would be take you to find and configure all optimization scripts, plugins, if you had not the all in one solution Clearfy.
 
 ### More than 50 Clearfy plugin features for WordPress optimization ###
+#### Premium features ####
+* **Page Cache**
+* **Browser Caching**
+* **Mobile Cache**
+* **Widget Cache**
+* **Minify Javascript** – Minifying JavaScript files can reduce payload sizes and script parse time
+* **Defer Javascript** – Eliminate render-blocking JavaScript resources. Consider delivering critical JS inline and deferring all non-critical JS
+
 #### Code cleanup ####
 * **Disable RSS Feeds** — disables RSS if you using WordPress for website only, not for blog.
 * **Disable Rest API** — disables Rest API and removes Rest API links. Use this if you don’t need to manage WordPress with third party solutions.
@@ -211,7 +219,7 @@ Absolutely not. On the contrary, we recommend you to install one of them with Cl
 
 = Do I need acceleration and caching plugins like WP Super Cache, WP Fastest Cache, W3 Total Cache, Autoptimize, WP Rocket? =
 
-Of course you do. Clearfy helps you with better site caching, but it's not a caching plugin.
+Of course you do. Clearfy helps you with better site caching. If you have [Clearfy premium](https://clearfy.pro/pricing/) installed, you will not need additional installation of caching plugins. The page caching function is included in the premium Clearfy package.
 
 = I turned on the option to create robots.txt, but nothing happens. =
 
@@ -239,6 +247,23 @@ Of course! To do this, email us your wishes with address, which you will find in
 
 
 == Changelog ==
+= 1.8.0 (20.10.2020) =
+* Сompatible with premium plugin 1.1.6. Added page caching feature to premium plugin.
+* Fixed: Minor bugs.
+
+= 1.7.4 (16.09.2020) =
+* Fixed: Cannot declare class Minify_HTML (Conflict with WP-Optimize).
+
+= 1.7.3 (7.09.2020) =
+* Fixed: Critical error in the Gutenberg editor
+
+= 1.7.2 (4.09.2020) =
+* Fixed: Error with white screen
+
+= 1.7.1 (4.09.2020) =
+* Added: Setup wizard.
+* Fixed: Minor bugs.
+
 = 1.7.0 =
 * Added: Compatibility with Wordpress 5.5
 

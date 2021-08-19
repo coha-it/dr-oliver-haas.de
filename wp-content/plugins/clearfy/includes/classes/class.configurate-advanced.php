@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_ConfigAdvanced extends Wbcr_FactoryClearfy224_Configurate {
+class WCL_ConfigAdvanced extends Wbcr_FactoryClearfy228_Configurate {
 	
 	/**
 	 * @param WCL_Plugin $plugin
@@ -126,8 +126,7 @@ class WCL_ConfigAdvanced extends Wbcr_FactoryClearfy224_Configurate {
 				}
 				break;
 			case 'on_dashboard_page':
-				global $pagenow;
-				if ( 'index.php' === $pagenow ) {
+				if ( is_admin() ) {
 					wp_deregister_script( 'heartbeat' );
 				}
 				break;

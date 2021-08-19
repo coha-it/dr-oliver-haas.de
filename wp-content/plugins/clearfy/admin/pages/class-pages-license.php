@@ -13,7 +13,7 @@
 	 *
 	 * @copyright (c) 2018 Webraftic Ltd
 	 */
-	class WCL_LicensePage extends Wbcr_FactoryClearfy224_LicensePage {
+	class WCL_LicensePage extends Wbcr_FactoryClearfy228_LicensePage {
 		
 		/**
 		 * {@inheritdoc}
@@ -36,12 +36,12 @@
 		/**
 		 * WCL_LicensePage constructor.
 		 *
-		 * @param \Wbcr_Factory432_Plugin $plugin
+		 * @param \Wbcr_Factory437_Plugin $plugin
 		 *
 		 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 		 *
 		 */
-		public function __construct( Wbcr_Factory432_Plugin $plugin ) {
+		public function __construct( Wbcr_Factory437_Plugin $plugin ) {
 			$this->menu_title                  = __( 'License', 'robin-image-optimizer' );
 			$this->page_menu_short_description = __( 'Product activation', 'robin-image-optimizer' );
 			$this->plan_name                   = __( 'Clearfy Business', 'robin-image-optimizer' );

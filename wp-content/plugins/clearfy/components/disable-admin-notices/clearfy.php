@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WDN_PLUGIN_ACTIVE' ) ) {
-	define( 'WDN_PLUGIN_VERSION', '1.1.2' );
+	define( 'WDN_PLUGIN_VERSION', '1.2.3' );
 	define( 'WDN_TEXT_DOMAIN', 'disable-admin-notices' );
 	define( 'WDN_PLUGIN_ACTIVE', true );
 

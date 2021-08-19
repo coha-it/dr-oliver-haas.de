@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_Update010300 extends Wbcr_Factory432_Update {
+class WCL_Update010300 extends Wbcr_Factory437_Update {
 
 	public function install() {
 		// Deactivate components for code minification, if alternative plugins are installed

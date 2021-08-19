@@ -16,6 +16,7 @@
   left: -10px;
   right: auto;
   z-index: 11;
+  cursor: pointer;
 }
 #WBCR .wdanpro-radio-premium-label .factory-compact_panel:after {
   position: absolute;
@@ -174,4 +175,45 @@
 #WBCR .wdan-button i {
   margin-right: 10px;
 }
-/*# sourceMappingURL=settings.css.map */
+.wdan-hidden-list {
+  padding: 0 15px;
+}
+.wdan-hidden-list-notice {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  border-left-width: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  padding: 1px 12px;
+}
+.wdan-hidden-list-notice div.wdan-notice-p {
+  margin: 0.5em 0;
+  padding: 2px;
+}
+.wdan-hidden-list-notice div.wdan-notice-p div {
+  width: 100%;
+}
+.wdan-hidden-list-table {
+  border: 0;
+}
+.wdan-hidden-list-table tr > td:first-child {
+  padding: 5px 0 5px;
+}
+.wdan-hidden-list-table tr > td:last-child {
+  padding: 0 10px 0;
+  text-align: center;
+}
+.wdan-hidden-list-table .wdan-notices-page-table-head td {
+  font-size: 16px;
+  text-transform: uppercase;
+  padding: 10px !important;
+  font-weight: bold;
+}
+.wdan-hidden-list-table .wdan-hidden-list-notice-action {
+  vertical-align: middle;
+}
+.wdan-hidden-list-table .wdan-page-restore-notice-link-loader {
+  background: url(../img/loader.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;
+}

@@ -17,6 +17,7 @@
     left: -10px;
     right: auto;
     z-index: 11;
+    cursor: pointer;
   }
 
   .wdanpro-radio-premium-label .factory-compact_panel:after {
@@ -208,5 +209,58 @@
 
   .wdan-button i {
     margin-right: 10px
+  }
+
+}
+
+.wdan-hidden-list {
+  padding: 0 15px;
+}
+
+.wdan-hidden-list-notice {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  border-left-width: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  padding: 1px 12px;
+
+  div.wdan-notice-p {
+    margin: 0.5em 0;
+    padding: 2px;
+
+    & div{
+      width: 100%;
+    }
+  }
+}
+
+.wdan-hidden-list-table {
+  border: 0;
+
+  tr > td:first-child {
+    padding: 5px 0 5px;
+  }
+
+  tr > td:last-child {
+    padding: 0 10px 0;
+    text-align: center;
+  }
+
+  .wdan-notices-page-table-head td {
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 10px !important;
+    font-weight: bold;
+  }
+
+  .wdan-hidden-list-notice-action {
+    vertical-align: middle;
+  }
+
+  .wdan-page-restore-notice-link-loader {
+    background: url(../img/loader.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
   }
 }

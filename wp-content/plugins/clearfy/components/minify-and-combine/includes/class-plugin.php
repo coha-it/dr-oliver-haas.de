@@ -13,11 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-class WMAC_Plugin extends Wbcr_Factory432_Plugin {
+class WMAC_Plugin extends Wbcr_Factory437_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory432_Plugin
+	 * @var Wbcr_Factory437_Plugin
 	 */
 	private static $app;
 
@@ -55,7 +55,7 @@ class WMAC_Plugin extends Wbcr_Factory432_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return \Wbcr_Factory432_Plugin|\WCM_Plugin
+	 * @return \Wbcr_Factory437_Plugin|\WCM_Plugin
 	 */
 	public static function app() {
 		return self::$app;

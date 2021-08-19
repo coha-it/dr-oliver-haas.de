@@ -63,15 +63,15 @@ $plugin_info = array(
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_433', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_430', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_432', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_224', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_112', 'admin')
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_437', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_434', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_436', 'admin' ),
+		array( 'libs/factory/clearfy', 'factory_clearfy_228', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_115', 'admin')
 	)
 );
 
-$wga_compatibility = new Wbcr_Factory432_Requirements( __FILE__, array_merge( $plugin_info, array(
+$wga_compatibility = new Wbcr_Factory437_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate'          => defined( 'WGA_PLUGIN_ACTIVE' ),
 	'required_php_version'             => '5.4',
 	'required_wp_version'              => '4.2.0',

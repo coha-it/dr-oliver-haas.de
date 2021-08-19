@@ -167,7 +167,7 @@ if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 	 *
 	 * @param array                  $widgets
 	 * @param string                 $position
-	 * @param Wbcr_Factory432_Plugin $plugin
+	 * @param Wbcr_Factory437_Plugin $plugin
 	 */
 	add_filter( 'wbcr/factory/pages/impressive/widgets', function ( $widgets, $position, $plugin ) {
 		if ( $plugin->getPluginName() == WGZ_Plugin::app()->getPluginName() ) {
@@ -225,5 +225,5 @@ if ( defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
 		return $page_url;
 	}
 
-	add_filter( 'wbcr_factory_pages_432_imppage_rating_widget_url', 'wbcr_gnz_rating_widget_url', 10, 2 );
+	add_filter( 'wbcr_factory_pages_436_imppage_rating_widget_url', 'wbcr_gnz_rating_widget_url', 10, 2 );
 }

@@ -142,7 +142,7 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 				'error_validation'      => array(
 					'label'          => esc_html__( 'Validation Error', 'dsm-supreme-modules-for-divi' ),
 					'css'            => array(
-						'main' => '%%order_class%% .wpcf7-validation-errors, %%order_class%% .wpcf7-response-output[role=alert]',
+						'main' => '%%order_class%% .wpcf7 form.invalid .wpcf7-response-output, %%order_class%% .wpcf7 form.unaccepted .wpcf7-response-output',
 					),
 					'font_size'      => array(
 						'default' => '14px',
@@ -159,7 +159,7 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 				'success_validation'    => array(
 					'label'          => esc_html__( 'Validation Success', 'dsm-supreme-modules-for-divi' ),
 					'css'            => array(
-						'main' => '%%order_class%% .wpcf7-mail-sent-ok',
+						'main' => '%%order_class%% .wpcf7 form.sent .wpcf7-response-output',
 					),
 					'font_size'      => array(
 						'default' => '14px',
@@ -218,8 +218,15 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 				'error_validation'   => array(
 					'css'             => array(
 						'main' => array(
-							'border_radii'  => '%%order_class%% .wpcf7-validation-errors, %%order_class%% .wpcf7-response-output[role=alert]',
-							'border_styles' => '%%order_class%% .wpcf7-validation-errors, %%order_class%% .wpcf7-response-output[role=alert]',
+							'border_radii'  => '%%order_class%% .wpcf7 form.invalid .wpcf7-response-output, %%order_class%% .wpcf7 form.unaccepted .wpcf7-response-output, %%order_class%% .wpcf7 form .wpcf7-response-output.wpcf7-validation-errors',
+							'border_styles' => '%%order_class%% .wpcf7 form.invalid .wpcf7-response-output, %%order_class%% .wpcf7 form.unaccepted .wpcf7-response-output, %%order_class%% .wpcf7 form .wpcf7-response-output.wpcf7-validation-errors',
+						),
+					),
+					'defaults'        => array(
+						'border_styles' => array(
+							'width' => '2px',
+							'color' => '#ffb900',
+							'style' => 'solid',
 						),
 					),
 					'label_prefix'    => esc_html__( 'Validation Errors', 'dsm-supreme-modules-for-divi' ),
@@ -230,8 +237,15 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 				'validation_success' => array(
 					'css'             => array(
 						'main' => array(
-							'border_radii'  => '%%order_class%% .wpcf7-mail-sent-ok',
-							'border_styles' => '%%order_class%% .wpcf7-mail-sent-ok',
+							'border_radii'  => '%%order_class%% .wpcf7 form.sent .wpcf7-response-output, %%order_class%% .wpcf7 form .wpcf7-response-output.wpcf7-mail-sent-ok',
+							'border_styles' => '%%order_class%% .wpcf7 form.sent .wpcf7-response-output, %%order_class%% .wpcf7 form .wpcf7-response-output.wpcf7-mail-sent-ok',
+						),
+					),
+					'defaults'        => array(
+						'border_styles' => array(
+							'width' => '2px',
+							'color' => '#46b450',
+							'style' => 'solid',
 						),
 					),
 					'label_prefix'    => esc_html__( 'Validation Success', 'dsm-supreme-modules-for-divi' ),
@@ -282,6 +296,14 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 
 	public function get_fields() {
 		return array(
+			/*
+			'cf7_notice' => array(
+				'type'              => 'warning',
+				'value' => true,
+				'display_if' => true,
+				'message'           => esc_html__( 'Note: Contact Form 7 will not function in the Divi Visual Builder at all, just like the Divi Contact Form module. It will only work on the frontend as usual. The purpose is to style and design your Contact Form 7 with the Divi Visual Builder without having to code. So go ahead and load your Contact Form 7 Library from the select list below to get started.', 'dsm-supreme-modules-for-divi' ),
+			),
+			*/
 			'cf7_library'                         => array(
 				'label'           => esc_html__( 'Contact Form 7', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'select',
@@ -314,7 +336,7 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 				'options'         => et_builder_get_text_orientation_options( array( 'justified' ) ),
 				'tab_slug'        => 'advanced',
 				'toggle_slug'     => 'button_one',
-				'description'     => esc_html__( 'Here you can define the alignment of Button', 'dsm-supreme-modules-for-divi' ),
+				'description'     => esc_html__( 'Here you can define the alignment of Button. Wrap (<p>) element to the button in your contact form button.', 'dsm-supreme-modules-for-divi' ),
 			),
 			'input_background_color'              => array(
 				'label'           => esc_html__( 'Background Color', 'dsm-supreme-modules-for-divi' ),
@@ -438,7 +460,7 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 			ET_Builder_Element::set_style(
 				$render_slug,
 				array(
-					'selector'    => '%%order_class%% .wpcf7-validation-errors, %%order_class%% .wpcf7-response-output[role=alert]',
+					'selector'    => '%%order_class%% .wpcf7 form.invalid .wpcf7-response-output, %%order_class%% .wpcf7 form.unaccepted .wpcf7-response-output',
 					'declaration' => sprintf(
 						'background-color: %1$s;',
 						esc_html( $validation_error_background_color )
@@ -451,7 +473,7 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 			ET_Builder_Element::set_style(
 				$render_slug,
 				array(
-					'selector'    => '%%order_class%% .wpcf7-mail-sent-ok',
+					'selector'    => '%%order_class%% .wpcf7 form.sent .wpcf7-response-output',
 					'declaration' => sprintf(
 						'background-color: %1$s;',
 						esc_html( $validation_success_background_color )
@@ -486,70 +508,14 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 			);
 		}
 
-		if ( '' !== $file_padding_tablet || '' !== $file_padding_phone || '' !== $file_padding ) {
-			$dwd_file_padding = array( '', '', '', '' );
-			foreach ( explode( '|', $file_padding ) as $key => $val ) {
-				if ( $key === 0 && '' !== $val ) {
-					$dwd_file_padding['padding-top'] = $val;
-				}
-				if ( $key === 1 && '' !== $val ) {
-					$dwd_file_padding['padding-right'] = $val;
-				}
-				if ( $key === 2 && '' !== $val ) {
-					$dwd_file_padding['padding-bottom'] = $val;
-				}
-				if ( $key === 3 && '' !== $val ) {
-					$dwd_file_padding['padding-left'] = $val;
-				}
-			}
+		$this->apply_custom_margin_padding(
+			$render_slug,
+			'file_padding',
+			'padding',
+			'%%order_class%% .wpcf7-form-control.wpcf7-file'
+		);
 
-			$file_padding = $dwd_file_padding;
-
-			$dwd_file_padding_tablet = array( '', '', '', '' );
-			foreach ( explode( '|', $file_padding_tablet ) as $key => $val ) {
-				if ( $key === 0 && '' !== $val ) {
-					$dwd_file_padding_tablet['padding-top'] = $val;
-				}
-				if ( $key === 1 && '' !== $val ) {
-					$dwd_file_padding_tablet['padding-right'] = $val;
-				}
-				if ( $key === 2 && '' !== $val ) {
-					$dwd_file_padding_tablet['padding-bottom'] = $val;
-				}
-				if ( $key === 3 && '' !== $val ) {
-					$dwd_file_padding_tablet['padding-left'] = $val;
-				}
-			}
-
-			$file_padding_tablet = $dwd_file_padding_tablet;
-
-			$dwd_file_padding_phone = array( '', '', '', '' );
-			foreach ( explode( '|', $file_padding_phone ) as $key => $val ) {
-				if ( $key === 0 && '' !== $val ) {
-					$dwd_file_padding_phone['padding-top'] = $val;
-				}
-				if ( $key === 1 && '' !== $val ) {
-					$dwd_file_padding_phone['padding-right'] = $val;
-				}
-				if ( $key === 2 && '' !== $val ) {
-					$dwd_file_padding_phone['padding-bottom'] = $val;
-				}
-				if ( $key === 3 && '' !== $val ) {
-					$dwd_file_padding_phone['padding-left'] = $val;
-				}
-			}
-
-			$file_padding_phone = $dwd_file_padding_phone;
-
-			$file_responsive_active = et_pb_get_responsive_status( $file_padding_last_edited );
-			$file_padding_values    = array(
-				'desktop' => $file_padding,
-				'tablet'  => $file_responsive_active ? $file_padding_tablet : '',
-				'phone'   => $file_responsive_active ? $file_padding_phone : '',
-			);
-
-			et_pb_generate_responsive_css( $file_padding_values, '%%order_class%% .wpcf7-form-control.wpcf7-file', 'padding', $render_slug );
-		}
+		wp_enqueue_script( 'dsm-contact-form-7' );
 
 		$output = sprintf(
 			'<div class="%2$s"%3$s>
@@ -565,9 +531,61 @@ class DSM_ContactForm7 extends ET_Builder_Module {
 
 		return $output;
 	}
+
+	public function apply_custom_margin_padding( $function_name, $slug, $type, $class, $important = false ) {
+		$slug_value                   = $this->props[ $slug ];
+		$slug_value_tablet            = $this->props[ $slug . '_tablet' ];
+		$slug_value_phone             = $this->props[ $slug . '_phone' ];
+		$slug_value_last_edited       = $this->props[ $slug . '_last_edited' ];
+		$slug_value_responsive_active = et_pb_get_responsive_status( $slug_value_last_edited );
+
+		if ( isset( $slug_value ) && ! empty( $slug_value ) ) {
+			ET_Builder_Element::set_style(
+				$function_name,
+				array(
+					'selector'    => $class,
+					'declaration' => et_builder_get_element_style_css( $slug_value, $type, $important ),
+				)
+			);
+		}
+
+		if ( isset( $slug_value_tablet ) && ! empty( $slug_value_tablet ) && $slug_value_responsive_active ) {
+			ET_Builder_Element::set_style(
+				$function_name,
+				array(
+					'selector'    => $class,
+					'declaration' => et_builder_get_element_style_css( $slug_value_tablet, $type, $important ),
+					'media_query' => ET_Builder_Element::get_media_query( 'max_width_980' ),
+				)
+			);
+		}
+
+		if ( isset( $slug_value_phone ) && ! empty( $slug_value_phone ) && $slug_value_responsive_active ) {
+			ET_Builder_Element::set_style(
+				$function_name,
+				array(
+					'selector'    => $class,
+					'declaration' => et_builder_get_element_style_css( $slug_value_phone, $type, $important ),
+					'media_query' => ET_Builder_Element::get_media_query( 'max_width_767' ),
+				)
+			);
+		}
+		if ( et_builder_is_hover_enabled( $slug, $this->props ) ) {
+			if ( isset( $this->props[ $slug . '__hover' ] ) ) {
+				$hover = $this->props[ $slug . '__hover' ];
+				ET_Builder_Element::set_style(
+					$function_name,
+					array(
+						'selector'    => $this->add_hover_to_order_class( $class ),
+						'declaration' => et_builder_get_element_style_css( $hover, $type, $important ),
+					)
+				);
+			}
+		}
+	}
 }
 
-new DSM_ContactForm7;
+new DSM_ContactForm7();
 
 function dsm_get_contact_form_7() {
 	$args = array(

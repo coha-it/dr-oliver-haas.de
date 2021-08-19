@@ -17,7 +17,7 @@ class WCL_QuickStartPage extends WCL_Page {
 	 * The id of the page in the admin menu.
 	 *
 	 * Mainly used to navigate between pages.
-	 * @see FactoryPages432_AdminPage
+	 * @see FactoryPages436_AdminPage
 	 *
 	 * @since 1.0.0
 	 * @var string
@@ -81,7 +81,7 @@ class WCL_QuickStartPage extends WCL_Page {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see FactoryPages432_AdminPage
+	 * @see FactoryPages436_AdminPage
 	 *
 	 */
 	public function assets($scripts, $styles)
@@ -107,7 +107,6 @@ class WCL_QuickStartPage extends WCL_Page {
 			)
 		);
 		$this->scripts->localize('wbcr_clearfy_ajax', $params);
-
 	}
 
 	/**
@@ -220,12 +219,23 @@ class WCL_QuickStartPage extends WCL_Page {
 										<?php endif; ?>
 									</button>
 								</div>
-							</div>
+
 						</li>
 					<?php endforeach; ?>
+					<li>
+						<div class="wbcr-clearfy-switch">
+							<i class="dashicons dashicons-admin-settings"></i>
+							<span><?php _e('Configuration wizard', 'clearfy'); ?></span>
+							<div class="wbcr-clearfy-switch-confirmation">
+								<a href="<?php echo WCL_Plugin::app()->getPluginPageUrl('setup'); ?>" class="btn wbcr-clearfy-button-activate-wizard"><?php _e('Start', 'clearfy'); ?></a>
+							</div>
+						</div>
+					</li>
 				</ul>
 			</div>
+
 		</div>
+
 		<?php
 	}
 }

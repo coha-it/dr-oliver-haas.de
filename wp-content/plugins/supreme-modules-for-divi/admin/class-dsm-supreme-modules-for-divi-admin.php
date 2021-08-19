@@ -58,22 +58,27 @@ class Dsm_Supreme_Modules_For_Divi_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Dsm_Supreme_Modules_For_Divi_Loader as all of the hooks are defined
+		 * defined in Dsm_Supreme_Modules_Pro_For_Divi_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Dsm_Supreme_Modules_For_Divi_Loader will then create the relationship
+		 * The Dsm_Supreme_Modules_Pro_For_Divi_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( 'dsm-plugin', plugin_dir_url( __FILE__ ) . 'css/dsm-plugin.css', array(), $this->version, 'all' );
-
+		if ( function_exists( 'et_builder_bfb_enabled' ) ) {
+			if ( et_builder_bfb_enabled() ) {
+				wp_enqueue_style( 'dsm-et-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'public/css/dsm-et-admin.css', array(), $this->version, 'all' );
+			}
+		}
+		if ( 'toplevel_page_divi_supreme_settings' === $hook ) {
+			wp_enqueue_style( 'dsm-plugin', plugin_dir_url( __FILE__ ) . 'css/dsm-plugin.css', array(), $this->version, 'all' );
+		}
 	}
 
 	/**

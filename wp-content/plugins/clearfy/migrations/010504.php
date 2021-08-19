@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCLUpdate010504 extends Wbcr_Factory432_Update {
+class WCLUpdate010504 extends Wbcr_Factory437_Update {
 
 	public function install() {
 		$deactivate_components = $this->plugin->getPopulateOption( 'deactive_preinstall_components', [] );

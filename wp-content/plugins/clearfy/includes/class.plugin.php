@@ -12,11 +12,11 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-class WCL_Plugin extends Wbcr_Factory432_Plugin {
+class WCL_Plugin extends Wbcr_Factory437_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory432_Plugin
+	 * @var Wbcr_Factory437_Plugin
 	 */
 	private static $app;
 
@@ -47,8 +47,8 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 
 			if( defined('DOING_AJAX') && DOING_AJAX ) {
 				require(WCL_PLUGIN_DIR . '/admin/ajax/configurate.php');
+				require(WCL_PLUGIN_DIR . '/admin/ajax/google-page-speed.php');
 				require(WCL_PLUGIN_DIR . '/admin/ajax/import-settings.php');
-				require(WCL_PLUGIN_DIR . '/admin/ajax/install-addons.php');
 			}
 
 			require_once(WCL_PLUGIN_DIR . '/admin/includes/compatibility.php');
@@ -71,13 +71,26 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return \Wbcr_Factory432_Plugin|\WCL_Plugin
+	 * @return \Wbcr_Factory437_Plugin|\WCL_Plugin
 	 */
 	public static function app()
 	{
 		return self::$app;
 	}
 
+	/**
+	 * Метод проверяет активацию премиум плагина и наличие действующего лицензионнного ключа
+	 *
+	 * @return bool
+	 */
+	public function is_premium()
+	{
+		if( $this->premium->is_active() && $this->premium->is_activate() && $this->premium->is_install_package() ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Выполняет php сценарии, когда все Wordpress плагины будут загружены
@@ -152,9 +165,11 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 		require_once(WCL_PLUGIN_DIR . '/admin/pages/class-page.php');
 
 		try {
+			$this->registerPage('WCL_Setup', WCL_PLUGIN_DIR . '/admin/pages/setup/class-pages-setup.php');
 			$this->registerPage('WCL_QuickStartPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-quick-start.php');
 			$this->registerPage('WCL_AdvancedPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-advanced.php');
 			$this->registerPage('WCL_PerformancePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance.php');
+
 			$this->registerPage('WCL_PerformanceGooglePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance-google.php');
 			$this->registerPage('WCL_ComponentsPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-components.php');
 			$this->registerPage('WCL_SeoPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-seo.php');
@@ -165,7 +180,7 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 				$this->registerPage('WCL_TitanSecurityPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-defence-titan.php');
 			}
 
-			if( defined('WIO_PLUGIN_ACTIVE') && !wrio_is_clearfy_license_activate() ) {
+			if( defined('WRIO_PLUGIN_ACTIVE') && !wrio_is_clearfy_license_activate() ) {
 				$this->registerPage('WCL_ComponentsLicensePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-components-license.php');
 			}
 
@@ -230,21 +245,7 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 	 */
 	public function isActivateComponent($component_name)
 	{
-		if( !is_string($component_name) ) {
-			return false;
-		}
-
-		$deactivate_components = $this->getPopulateOption('deactive_preinstall_components', []);
-
-		if( !is_array($deactivate_components) ) {
-			$deactivate_components = [];
-		}
-
-		if( $deactivate_components && in_array($component_name, $deactivate_components) ) {
-			return false;
-		}
-
-		return true;
+		return $this->is_activate_component($component_name);
 	}
 
 	/**
@@ -254,22 +255,13 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 	 */
 	public function deactivateComponent($component_name)
 	{
-		if( !$this->isActivateComponent($component_name) ) {
+		if( !$this->is_activate_component($component_name) ) {
 			return true;
 		}
 
 		do_action('wbcr_clearfy_pre_deactivate_component', $component_name);
 
-		$deactivate_components = $this->getPopulateOption('deactive_preinstall_components', []);
-
-		if( !empty($deactivate_components) && is_array($deactivate_components) ) {
-			$deactivate_components[] = $component_name;
-		} else {
-			$deactivate_components = [];
-			$deactivate_components[] = $component_name;
-		}
-
-		$this->updatePopulateOption('deactive_preinstall_components', $deactivate_components);
+		$this->deactivate_component($component_name);
 
 		do_action('wbcr_clearfy_deactivated_component', $component_name);
 
@@ -283,26 +275,13 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 	 */
 	public function activateComponent($component_name)
 	{
-		if( $this->isActivateComponent($component_name) ) {
+		if( $this->is_activate_component($component_name) ) {
 			return true;
 		}
 
 		do_action('wbcr_clearfy_pre_activate_component', $component_name);
 
-		$deactivate_components = $this->getPopulateOption('deactive_preinstall_components', []);
-
-		if( !empty($deactivate_components) && is_array($deactivate_components) ) {
-			$index = array_search($component_name, $deactivate_components);
-			unset($deactivate_components[$index]);
-		}
-
-		if( empty($deactivate_components) ) {
-			$this->deletePopulateOption('deactive_preinstall_components');
-		} else {
-			$this->updatePopulateOption('deactive_preinstall_components', $deactivate_components);
-		}
-
-		return true;
+		return $this->activate_component($component_name);
 	}
 
 	/**
@@ -312,13 +291,11 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 	 * @param $slug
 	 * param $premium
 	 *
-	 * @return WCL_InstallPluginsButton
+	 * @return \WBCR\Factory_437\Components\Install_Button
 	 */
 	public function getInstallComponentsButton($component_type, $slug)
 	{
-		require_once WCL_PLUGIN_DIR . '/admin/includes/classes/class.install-plugins-button.php';
-
-		return new WCL_InstallPluginsButton($component_type, $slug);
+		return $this->get_install_component_button($component_type, $slug);
 	}
 
 	/**
@@ -327,13 +304,10 @@ class WCL_Plugin extends Wbcr_Factory432_Plugin {
 	 * @param $component_type
 	 * @param $slug
 	 *
-	 * @return WCL_InstallPluginsButton
+	 * @return \WBCR\Factory_437\Components\Delete_Button
 	 */
 	public function getDeleteComponentsButton($component_type, $slug)
 	{
-		require_once WCL_PLUGIN_DIR . '/admin/includes/classes/class.install-plugins-button.php';
-		require_once WCL_PLUGIN_DIR . '/admin/includes/classes/class.delete-plugins-button.php';
-
-		return new WCL_DeletePluginsButton($component_type, $slug);
+		return $this->get_delete_component_button($component_type, $slug);
 	}
 }

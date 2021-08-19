@@ -20,22 +20,39 @@ function wbcr_dan_ajax_hide_notices() {
 	if ( current_user_can( 'manage_options' ) || current_user_can( 'manage_network' ) ) {
 		$notice_id   = WDN_Plugin::app()->request->post( 'notice_id', null, true );
 		$notice_html = WDN_Plugin::app()->request->post( 'notice_html', null );
-		$notice_html = wp_kses( $notice_html, [] );
+		$hide_target = WDN_Plugin::app()->request->post( 'target', 'user' );
+		//$notice_text = wp_kses( $notice_html, [] );
 
 		if ( empty( $notice_id ) ) {
 			wp_send_json_error( [ 'error_message' => __( 'Undefinded notice id.', 'disable-admin-notices' ) ] );
 		}
 
-		$current_user_id    = get_current_user_id();
-		$get_hidden_notices = get_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), true );
+		switch ( $hide_target ) {
+			case 'all':
+				$get_hidden_notices = WDN_Plugin::app()->getPopulateOption( 'hidden_notices', [] );
 
-		if ( ! is_array( $get_hidden_notices ) ) {
-			$get_hidden_notices = [];
+				if ( ! is_array( $get_hidden_notices ) ) {
+					$get_hidden_notices = [];
+				}
+
+				$get_hidden_notices[ $notice_id ] = rtrim( trim( $notice_html ) );
+
+				WDN_Plugin::app()->updatePopulateOption('hidden_notices', $get_hidden_notices );
+				break;
+			case 'user':
+			default:
+				$current_user_id    = get_current_user_id();
+				$get_hidden_notices = get_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), true );
+
+				if ( ! is_array( $get_hidden_notices ) ) {
+					$get_hidden_notices = [];
+				}
+
+				$get_hidden_notices[ $notice_id ] = rtrim( trim( $notice_html ) );
+
+				update_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), $get_hidden_notices );
+				break;
 		}
-
-		$get_hidden_notices[ $notice_id ] = rtrim( trim( $notice_html ) );
-
-		update_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), $get_hidden_notices );
 
 		wp_send_json_success();
 	} else {

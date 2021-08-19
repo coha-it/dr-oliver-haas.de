@@ -88,7 +88,11 @@ class Connect {
 		if ( ! \is_wp_error( $active ) ) {
 
 			// Deactivate Lite.
-			\deactivate_plugins( \plugin_basename( WPFORMS_PLUGIN_FILE ) );
+			$plugin = \plugin_basename( WPFORMS_PLUGIN_FILE );
+
+			\deactivate_plugins( $plugin );
+
+			do_action( 'wpforms_plugin_deactivated', $plugin );
 
 			\wp_send_json_success(
 				[
@@ -182,7 +186,12 @@ class Connect {
 		$active = \activate_plugin( 'wpforms/wpforms.php', $url, false, true );
 
 		if ( ! \is_wp_error( $active ) ) {
-			\deactivate_plugins( plugin_basename( WPFORMS_PLUGIN_FILE ) );
+			$plugin = plugin_basename( WPFORMS_PLUGIN_FILE );
+
+			\deactivate_plugins( $plugin );
+
+			do_action( 'wpforms_plugin_deactivated', $plugin );
+
 			\wp_send_json_success( esc_html__( 'Plugin installed & activated.', 'wpforms-lite' ) );
 		}
 
@@ -232,7 +241,11 @@ class Connect {
 		if ( $plugin_basename ) {
 
 			// Deactivate the lite version first.
-			\deactivate_plugins( \plugin_basename( WPFORMS_PLUGIN_FILE ) );
+			$plugin = \plugin_basename( WPFORMS_PLUGIN_FILE );
+
+			\deactivate_plugins( $plugin );
+
+			do_action( 'wpforms_plugin_deactivated', $plugin );
 
 			// Activate the plugin silently.
 			$activated = \activate_plugin( $plugin_basename, '', false, true );

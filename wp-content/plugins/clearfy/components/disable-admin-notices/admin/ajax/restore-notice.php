@@ -24,14 +24,21 @@ function wbcr_dan_ajax_restore_notice() {
 			wp_send_json_error( [ 'error_message' => __( 'Undefinded notice id.', 'disable-admin-notices' ) ] );
 		}
 
+		//Users notices
 		$current_user_id    = get_current_user_id();
 		$get_hidden_notices = get_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), true );
-
 		if ( ! empty( $get_hidden_notices ) && isset( $get_hidden_notices[ $notice_id ] ) ) {
 			unset( $get_hidden_notices[ $notice_id ] );
+			update_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), $get_hidden_notices );
 		}
 
-		update_user_meta( $current_user_id, WDN_Plugin::app()->getOptionName( 'hidden_notices' ), $get_hidden_notices );
+		//All notices
+		$get_hidden_notices_all = WDN_Plugin::app()->getPopulateOption( 'hidden_notices', [] );
+		if ( ! empty( $get_hidden_notices_all ) && isset( $get_hidden_notices_all[ $notice_id ] ) ) {
+			unset( $get_hidden_notices_all[ $notice_id ] );
+			WDN_Plugin::app()->updatePopulateOption( 'hidden_notices', $get_hidden_notices_all );
+		}
+
 
 		wp_send_json_success();
 	} else {

@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_Settings_Page extends Wbcr_FactoryClearfy224_PageBase {
+class WDN_Settings_Page extends WDN_Page {
 
 	/**
 	 * {@inheritDoc}
@@ -66,9 +66,9 @@ class WDN_Settings_Page extends Wbcr_FactoryClearfy224_PageBase {
 
 
 	/**
-	 * @param Wbcr_Factory432_Plugin $plugin
+	 * @param Wbcr_Factory437_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory437_Plugin $plugin ) {
 		$this->menu_title                  = __( 'Hide admin notices', 'disable-admin-notices' );
 		$this->page_menu_short_description = __( 'General settings', 'disable-admin-notices' );
 
@@ -88,17 +88,18 @@ class WDN_Settings_Page extends Wbcr_FactoryClearfy224_PageBase {
 	/**
 	 * Requests assets (js and css) for the page.
 	 *
-	 * @param Wbcr_Factory432_ScriptList $scripts
-	 * @param Wbcr_Factory432_StyleList $styles
+	 * @param Wbcr_Factory437_ScriptList $scripts
+	 * @param Wbcr_Factory437_StyleList $styles
 	 *
 	 * @return void
-	 * @see Wbcr_FactoryPages432_AdminPage
+	 * @see Wbcr_FactoryPages436_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {
 		parent::assets( $scripts, $styles );
 
 		$this->styles->add( WDN_PLUGIN_URL . '/admin/assets/css/settings.css' );
+		$this->scripts->add( WDN_PLUGIN_URL . '/admin/assets/js/settings.js' );
 	}
 
 	/**
@@ -121,7 +122,7 @@ class WDN_Settings_Page extends Wbcr_FactoryClearfy224_PageBase {
 				'wbcr_dan_code' => 'interal_error'
 			),
 			'type' => 'danger',
-			'message' => __('An error occurred while trying to delete comments. Internal error occured. Please try again later.', 'factory_pages_432')
+			'message' => __('An error occurred while trying to delete comments. Internal error occured. Please try again later.', 'factory_pages_436')
 		);*/
 
 		return $notices;

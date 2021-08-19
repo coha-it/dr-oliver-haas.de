@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCLUpdate010604 extends Wbcr_Factory432_Update {
+class WCLUpdate010604 extends Wbcr_Factory437_Update {
 
 	public function install() {
 		$this->assets_manager_migration();

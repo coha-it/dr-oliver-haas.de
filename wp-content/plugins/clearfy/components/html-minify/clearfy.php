@@ -10,42 +10,42 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if( !defined('ABSPATH') ) {
 	exit;
 }
 
-if ( ! defined( 'WHTM_PLUGIN_ACTIVE' ) ) {
-	define( 'WHTM_PLUGIN_VERSION', '1.1.0' );
-	define( 'WHTM_TEXT_DOMAIN', 'html-minify' );
-	define( 'WHTM_PLUGIN_ACTIVE', true );
+if( !defined('WHTM_PLUGIN_ACTIVE') ) {
+	define('WHTM_PLUGIN_VERSION', '1.1.1');
+	define('WHTM_TEXT_DOMAIN', 'html-minify');
+	define('WHTM_PLUGIN_ACTIVE', true);
 
 	// Этот плагин загружен, как аддон для плагина Clearfy
-	define( 'LOADING_HTML_MINIFY_AS_ADDON', true );
+	define('LOADING_HTML_MINIFY_AS_ADDON', true);
 
-	if ( ! defined( 'WHTM_PLUGIN_DIR' ) ) {
-		define( 'WHTM_PLUGIN_DIR', dirname( __FILE__ ) );
+	if( !defined('WHTM_PLUGIN_DIR') ) {
+		define('WHTM_PLUGIN_DIR', dirname(__FILE__));
 	}
 
-	if ( ! defined( 'WHTM_PLUGIN_BASE' ) ) {
-		define( 'WHTM_PLUGIN_BASE', plugin_basename( __FILE__ ) );
+	if( !defined('WHTM_PLUGIN_BASE') ) {
+		define('WHTM_PLUGIN_BASE', plugin_basename(__FILE__));
 	}
 
-	if ( ! defined( 'WHTM_PLUGIN_URL' ) ) {
-		define( 'WHTM_PLUGIN_URL', plugins_url( null, __FILE__ ) );
+	if( !defined('WHTM_PLUGIN_URL') ) {
+		define('WHTM_PLUGIN_URL', plugins_url(null, __FILE__));
 	}
 
 	try {
 		// Global scripts
-		require_once( WHTM_PLUGIN_DIR . '/includes/3rd-party/class-clearfy-plugin.php' );
+		require_once(WHTM_PLUGIN_DIR . '/includes/3rd-party/class-clearfy-plugin.php');
 		new WHTM_Plugin();
 	} catch( Exception $e ) {
-		$whtml_plugin_error_func = function () use ( $e ) {
-			$error = sprintf( "The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Webcraftic Html minify', $e->getMessage(), $e->getCode() );
+		$whtml_plugin_error_func = function () use ($e) {
+			$error = sprintf("The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Webcraftic Html minify', $e->getMessage(), $e->getCode());
 			echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
 		};
 
-		add_action( 'admin_notices', $whtml_plugin_error_func );
-		add_action( 'network_admin_notices', $whtml_plugin_error_func );
+		add_action('admin_notices', $whtml_plugin_error_func);
+		add_action('network_admin_notices', $whtml_plugin_error_func);
 	}
 }
 

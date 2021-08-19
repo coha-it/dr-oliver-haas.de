@@ -434,7 +434,7 @@ class WPForms_Settings {
 						'<h4>' . esc_html__( 'Validation Messages', 'wpforms-lite' )
 						. '</h4><p>',
 						'<a href="https://wpforms.com/docs/how-to-use-smart-tags-in-wpforms/#smart-tags" target="_blank" rel="noopener noreferrer">',
-						'</>'
+						'</a>'
 					),
 					'type'     => 'content',
 					'no_label' => true,
@@ -463,6 +463,12 @@ class WPForms_Settings {
 					'name'    => esc_html__( 'Email Suggestion', 'wpforms-lite' ),
 					'type'    => 'text',
 					'default' => esc_html__( 'Did you mean {suggestion}?', 'wpforms-lite' ),
+				],
+				'validation-email-restricted'      => [
+					'id'      => 'validation-email-restricted',
+					'name'    => esc_html__( 'Email Restricted', 'wpforms-lite' ),
+					'type'    => 'text',
+					'default' => esc_html__( 'This email address is not allowed.', 'wpforms-lite' ),
 				],
 				'validation-number'                => [
 					'id'      => 'validation-number',
@@ -537,7 +543,7 @@ class WPForms_Settings {
 
 		// TODO: move this to Pro.
 		if ( wpforms()->pro ) {
-			$defaults['misc']['uninstall-data']['desc'] = esc_html__( 'Check this if you would like to remove ALL WPForms data upon plugin deletion. All forms, entries, and uploaded files will be unrecoverable.', 'wpforms' );
+			$defaults['misc']['uninstall-data']['desc'] = esc_html__( 'Check this if you would like to remove ALL WPForms data upon plugin deletion. All forms, entries, and uploaded files will be unrecoverable.', 'wpforms-lite' );
 		}
 
 		$defaults = apply_filters( 'wpforms_settings_defaults', $defaults );

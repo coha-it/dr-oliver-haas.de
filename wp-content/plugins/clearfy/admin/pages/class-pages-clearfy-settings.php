@@ -19,7 +19,7 @@ class WCL_ClearfySettingsPage extends WCL_Page {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages432_AdminPage
+	 * @see   FactoryPages436_AdminPage
 	 *
 	 * @var string
 	 */
@@ -59,7 +59,7 @@ class WCL_ClearfySettingsPage extends WCL_Page {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages432_AdminPage
+	 * @see   FactoryPages436_AdminPage
 	 *
 	 */
 	public function assets($scripts, $styles)

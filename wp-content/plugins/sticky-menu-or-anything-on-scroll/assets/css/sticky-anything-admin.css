@@ -70,6 +70,7 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   padding: 10px;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 .main-sidebar h3 {
@@ -268,4 +269,155 @@
 [tooltip][flow^='right']:hover::before,
 [tooltip][flow^='right']:hover::after {
   animation: tooltips-horz 300ms ease-out forwards;
+}
+
+.sticky-pro-dialog {
+  background-color: white !important;
+}
+
+.sticky-pro-dialog .ui-dialog-titlebar {
+  background-color: #FFDE66;
+  border-bottom: none;
+  text-align: center;
+  display: none;
+}
+.ui-dialog-content {
+  padding: 0 !important;
+}
+.sticky-pro-inside {
+  padding: 20px;
+}
+
+.nav-tab-pro {
+  background-color: #FFDE66;
+}
+
+.settings_page_stickyanythingmenu a.button-buy {
+  background-color: #B93C24;
+  color: #fff;
+  font-weight: 700;
+  padding: 5px 10px;
+}
+
+.settings_page_stickyanythingmenu a.button-buy del {
+  font-weight: normal;
+}
+
+.pro-feature {
+  background-color: #FFDE66;
+  padding: 5px;
+  color: #333;
+  text-decoration: none;
+}
+
+.pro-feature:hover {
+  background-color: #FFDE66;
+  padding: 5px;
+  color: #333;
+  text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+}
+
+.sticky-pro-dialog .logo {
+  background-color: #FFDE66;
+  padding: 10px;
+}
+
+.sticky-pro-dialog .logo b {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+  display: inline-block;
+  margin: 10px 0 0 0;
+  line-height: 1.3;
+}
+
+.sticky-pro-dialog .logo i {
+  color: #B93C24;
+  font-style: normal;
+}
+
+.sticky-pro-dialog .footer {
+  padding: 15px 10px;
+  background-color: #FFDE66;
+}
+
+.sticky-pro-dialog {
+  font-size: 14px;
+}
+
+#sticky-table {
+  width: 100%;
+  margin: 10px 0 0 0;
+  border-collapse: collapse;
+}
+
+#sticky-table td {
+  padding: 7px 10px;
+  border: none;
+}
+
+#sticky-table tr:last-child td {
+  text-align: center;
+}
+
+#sticky-table .dashicons-yes {
+  color: #30b724;
+}
+
+#sticky-table tr:first-child td {
+  color: #B93C24;
+  font-size: 18px;
+  font-weight: 800 !important;
+  padding: 15px 0;
+}
+
+s#sticky-table tr td:nth-child(2) {
+  background-color: #FFDE66;
+}
+
+#ssticky-table tr td:last-child {
+  background-color: #FFDE66;
+}
+
+#sticky-table tr:last-child td {
+  border-top: thin solid #33333355;
+  padding: 20px 0 25px 0;
+}
+
+#sticky-table tr:last-child td span {
+  display: block;
+  padding: 0 0 5px 0;
+  font-weight: 700;
+}
+
+#sticky-features {
+  width: 100%;
+  padding: 20px 0 0 0;
+}
+
+#sticky-features td {
+  padding: 10px 20px;
+}
+
+.pro-ad-sidebar {
+  float: right;
+  width: 25%;
+  background: #FFDE66;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  padding: 25px;
+  margin: 20px 0 0 0;
+  box-sizing: border-box;
+}
+
+.pro-ad-sidebar h3 {
+  margin: 10px 0 0 0;
+  line-height: 1.3;
+}
+
+.pro-ad-sidebar a {
+  text-decoration: none;
 }

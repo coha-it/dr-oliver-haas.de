@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @author        Alex Kovalev <alex.kovalevv@gmail.com>, Github: https://github.com/alexkovalevv
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WUPM_ThemesPage extends Wbcr_FactoryClearfy224_PageBase {
+class WUPM_ThemesPage extends Wbcr_FactoryClearfy228_PageBase {
 
 	/**
 	 * {@inheritDoc}
@@ -85,9 +85,9 @@ class WUPM_ThemesPage extends Wbcr_FactoryClearfy224_PageBase {
 	private $themes_update_filters = [];
 
 	/**
-	 * @param Wbcr_Factory432_Plugin $plugin
+	 * @param Wbcr_Factory437_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory432_Plugin $plugin ) {
+	public function __construct( Wbcr_Factory437_Plugin $plugin ) {
 		$this->menu_title = __( 'Themes', 'webcraftic-updates-manager' );
 
 		parent::__construct( $plugin );
@@ -123,7 +123,7 @@ class WUPM_ThemesPage extends Wbcr_FactoryClearfy224_PageBase {
 	 *
 	 * @since 1.0.0
 	 * @return void
-	 * @see   FactoryPages432_AdminPage
+	 * @see   FactoryPages436_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {

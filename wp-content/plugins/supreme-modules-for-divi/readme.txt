@@ -3,9 +3,9 @@ Contributors: divisupreme, kenng87
 Tags: Divi, Divi Module, Divi Page Builder, divi theme, divi builder, Divi Extensions
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.4.2
+Tested up to: 5.5.1
 Requires PHP: 5.6
-Stable tag: 2.2.8
+Stable tag: 2.3.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,23 @@ This is a common question that we get asked here every now and then which is why
 
 
 == Changelog ==
+= 2.3.2 – 06.10.2020 =
+* Enhanced: Before After Image Slider Module by executing only in view port. (LazyLoad Enhanced).
+* Enhanced Typing Module and Before After Image Slider by checking if waypoints is loaded. 
+
+= 2.3.1 – 05.10.2020 =
+* Fixed: Divi Facebook Page Feed Module flicking issue on Visual Builder.
+* Added: Lazy load to all Facebook modules (Using browser’s lazy-loading mechanism by setting the loading=”lazy” iframe attribute).
+* Fixed: Divi Supreme Modules insert module in visual builder CSS not loaded.
+
+= 2.3.0 – 20.09.2020 =
+* Fixed: Contact Form 7 Module visual Show Error & Validation Messages in Visual Builder.
+* Fixed: Contact Form 7 Module success and error validation styling in Visual Buidler and Frontend.
+* Enhanced: Contact Form 7 Module.
+
+= 2.2.9 – 11.09.2020 =
+* Fixed: Button padding issue in Divi Flipbox Module.
+
 = 2.2.8 – 07.07.2020 =
 * Enhanced: Format and follow WordPress Coding Standards for all PHP files in /includes/.
 * Enhanced: PHP error shows up when Divi Theme, Extra Theme or Divi builder plugin is not activated.

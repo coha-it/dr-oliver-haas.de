@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2019 Webraftic Ltd
  * @version       1.0
  */
-class WDAN_Block_Ad_Redirects extends Wbcr_FactoryClearfy224_PageBase {
+class WDAN_Block_Ad_Redirects extends WDN_Page {
 
 	/**
 	 * {@inheritDoc}
@@ -61,11 +61,11 @@ class WDAN_Block_Ad_Redirects extends Wbcr_FactoryClearfy224_PageBase {
 	/**
 	 * Requests assets (js and css) for the page.
 	 *
-	 * @param Wbcr_Factory432_ScriptList $scripts
-	 * @param Wbcr_Factory432_StyleList $styles
+	 * @param Wbcr_Factory437_ScriptList $scripts
+	 * @param Wbcr_Factory437_StyleList $styles
 	 *
 	 * @return void
-	 * @see Wbcr_FactoryPages432_AdminPage
+	 * @see Wbcr_FactoryPages436_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {

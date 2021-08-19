@@ -51,7 +51,7 @@ function wbcr_dan_get_plugin_options() {
 		]
 	];
 
-	if ( ! defined( 'WCL_PLUGIN_ACTIVE' ) ) {
+	if ( ! wbcr_dan_is_active_clearfy_component() ) {
 		$hide_admin_notices_data[] = [
 			'compact_panel',
 			__( 'Compact panel', 'disable-admin-notices' ),
@@ -84,7 +84,7 @@ function wbcr_dan_get_plugin_options() {
 		]
 	];
 
-	if ( ! defined( 'WCL_PLUGIN_ACTIVE' ) ) {
+	if ( ! wbcr_dan_is_active_clearfy_component() ) {
 		$options[] = [
 			'type'     => 'checkbox',
 			'way'      => 'buttons',
@@ -159,6 +159,16 @@ function wbcr_dan_get_plugin_options() {
 	return $options;
 }
 
+function wbcr_dan_is_active_clearfy_component() {
+	if ( defined( 'WCL_PLUGIN_ACTIVE' ) && class_exists( 'WCL_Plugin' ) ) {
+		$deactivate_components = WCL_Plugin::app()->getPopulateOption( 'deactive_preinstall_components', [] );
+		if ( ! in_array( 'disable_notices', $deactivate_components ) ) {
+            return true;
+		}
+	}
+	return false;
+}
+
 /**
  * Расширяем опции html формы страницы "Дополнительно" в плагине Clearfy
  *
@@ -166,7 +176,7 @@ function wbcr_dan_get_plugin_options() {
  * с настройками этого плагина, потому что это ухудшает юзабилити.
  *
  * @param array $form Массив с группой настроек, страницы "Дополнительно" в плагине Clearfy
- * @param Wbcr_FactoryPages432_ImpressiveThemplate $page Экземпляр страницы
+ * @param Wbcr_FactoryPages436_ImpressiveThemplate $page Экземпляр страницы
  *
  * @return mixed Отсортированный массив с группой опций
  */
@@ -193,7 +203,7 @@ add_filter( 'wbcr_clr_additionally_form_options', 'wbcr_dan_additionally_form_op
  * Эта модикация является не стандартной, поэтому мы не можете реалировать ее
  * через фреймворк.
  *
- * @param  @param $html_builder Wbcr_FactoryForms430_Html
+ * @param  @param $html_builder Wbcr_FactoryForms434_Html
  *
  * @since  1.0
  *
@@ -220,33 +230,40 @@ function wbcr_dan_reset_notices_button( $html_builder ) {
 	}
 
 	?>
-	<div class="form-group form-group-checkbox factory-control-reset_notices_button">
-		<label for="wbcr_clearfy_reset_notices_button" class="col-sm-4 control-label">
+    <div class="form-group form-group-checkbox factory-control-reset_notices_button">
+        <label for="wbcr_clearfy_reset_notices_button" class="col-sm-4 control-label">
 			<?= __( 'Reset hidden notices for', 'disable-admin-notices' ); ?>
-			<span class="factory-hint-icon factory-hint-icon-grey" data-toggle="factory-tooltip" data-placement="right" title="" data-original-title="<?php _e( 'Push reset hidden notices if you need to show hidden notices again.', 'disable-admin-notices' ) ?>">
-					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAQAAABKmM6bAAAAUUlEQVQIHU3BsQ1AQABA0X/komIrnQHYwyhqQ1hBo9KZRKL9CBfeAwy2ri42JA4mPQ9rJ6OVt0BisFM3Po7qbEliru7m/FkY+TN64ZVxEzh4ndrMN7+Z+jXCAAAAAElFTkSuQmCC" alt="">
+            <span class="factory-hint-icon factory-hint-icon-grey" data-toggle="factory-tooltip" data-placement="right"
+                  title=""
+                  data-original-title="<?php _e( 'Push reset hidden notices if you need to show hidden notices again.', 'disable-admin-notices' ) ?>">
+					<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAQAAABKmM6bAAAAUUlEQVQIHU3BsQ1AQABA0X/komIrnQHYwyhqQ1hBo9KZRKL9CBfeAwy2ri42JA4mPQ9rJ6OVt0BisFM3Po7qbEliru7m/FkY+TN64ZVxEzh4ndrMN7+Z+jXCAAAAAElFTkSuQmCC"
+                         alt="">
 				</span>
-		</label>
-		<div class="control-group col-sm-8">
-			<div class="factory-checkbox factory-from-control-checkbox factory-buttons-way btn-group">
-				<form method="post">
+        </label>
+        <div class="control-group col-sm-8">
+            <div class="factory-checkbox factory-from-control-checkbox factory-buttons-way btn-group">
+                <form method="post">
 					<?php wp_nonce_field( $form_name, 'wbcr_dan_reset_nonce' ); ?>
-					<p>
-						<input type="radio" name="wbcr_dan_reset_for_users" value="current_user" checked/> <?= __( 'current user', 'disable-admin-notices' ); ?>
-					</p>
-					<p>
-						<input type="radio" name="wbcr_dan_reset_for_users" value="all"/> <?= __( 'all users', 'disable-admin-notices' ); ?>
-					</p>
-					<p>
-						<input type="submit" name="wbcr_dan_reset_action" value="<?= __( 'Reset notices', 'disable-admin-notices' ); ?>" class="button button-default"/>
-					</p>
+                    <p>
+                        <input type="radio" name="wbcr_dan_reset_for_users" value="current_user"
+                               checked/> <?= __( 'current user', 'disable-admin-notices' ); ?>
+                    </p>
+                    <p>
+                        <input type="radio" name="wbcr_dan_reset_for_users"
+                               value="all"/> <?= __( 'all users', 'disable-admin-notices' ); ?>
+                    </p>
+                    <p>
+                        <input type="submit" name="wbcr_dan_reset_action"
+                               value="<?= __( 'Reset notices', 'disable-admin-notices' ); ?>"
+                               class="button button-default"/>
+                    </p>
 					<?php if ( $reseted ): ?>
-						<div style="color:green;margin-top:5px;"><?php _e( 'Hidden notices are successfully reset, now you can see them again!', 'disable-admin-notices' ) ?></div>
+                        <div style="color:green;margin-top:5px;"><?php _e( 'Hidden notices are successfully reset, now you can see them again!', 'disable-admin-notices' ) ?></div>
 					<?php endif; ?>
-				</form>
-			</div>
-		</div>
-	</div>
+                </form>
+            </div>
+        </div>
+    </div>
 	<?php
 }
 
