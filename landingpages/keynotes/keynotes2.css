@@ -1,7 +1,7 @@
 body header#main-header {
-  backdrop-filter: none;
+  backdrop-filter: none !important;
   -webkit-backdrop-filter: none;
-  background: transparent;
+  background: transparent !important;
 }
 
 #main-content {
@@ -66,6 +66,9 @@ margin: 0;
   border-color: #9c9c9c !important;
   color: #9c9c9c !important;
   transition: 500ms;
+
+  width: 8rem;
+  text-align: center;
 }
 
 .keynote-btn:after {
@@ -99,11 +102,11 @@ d
   opacity: 0;
 }
 
-
-
-
-
-.follower {position: absolute;left: -10px;top: 0;height: calc(100% - 100px);border-left: 2px dashed #5A5A5A;border-color: #8c8c8c;margin-top: 100px;}
+  
+.follower {
+  position: absolute;left: -10px;top: 0;height: calc(100% - 100px);border-left: 2px dashed #5A5A5A;border-color: #8c8c8c;margin-top: 100px;
+  max-height: -webkit-fill-available;
+}
 
 .triangle {
 border-color: white transparent transparent;
@@ -114,7 +117,7 @@ top: 47vh;
 left: 0;
 right: 0;
 margin: -10px 0 0 -1px;
-transform: translateX(-50%);
+transform: translate(-50%, -20%) rotate(180deg);
 }
 
 .follower:before, .follower:after {content: "";border-radius: 50%;position: absolute;background: white;padding: 6px;left: -1px;width: 0px;height: 0px;transform: translate(-50%, -50%);}

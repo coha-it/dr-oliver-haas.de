@@ -19,7 +19,8 @@
 var app = new Vue({
   el: '#app',
   data: {
-    url: 'https://api.corporate-happiness.de/dist/dr_oliver_haas_events.json',
+    // url: 'https://api.corporate-happiness.de/dist/dr_oliver_haas_events.json',
+    url: '/dr_oliver_haas_events.json',
     events: [],
     aMonthNames: [
       'Januar','Februar','März','April','Mai','Juni','Juli',
@@ -28,17 +29,17 @@ var app = new Vue({
     wrapperClass: 'pre',
     wrappers: [
       {
-        follower: false,
-        class: 'expired',
-        filter: function (event) {
-          return event.expired == true;
-        }
-      },
-      {
         follower: true,
         class: 'available',
         filter: function (event) {
           return event.expired == false;
+        }
+      },
+      {
+        follower: false,
+        class: 'expired',
+        filter: function (event) {
+          return event.expired == true;
         }
       }
     ]
@@ -53,9 +54,9 @@ var app = new Vue({
 
       // Scroll to First Available
       var $ = jQuery;
-      $('html, body').stop().animate( {
-        'scrollTop': $('.keynote.available').offset().top - $('.main_title').outerHeight()
-      });
+      $('html, body').stop().animate({
+        'scrollTop': $('.keynote.available').last().offset().top + $('.main_title').outerHeight()*2 - $(window).height()/2
+      }, 1000);
     })
   },
   methods: {
@@ -68,7 +69,14 @@ var app = new Vue({
     getListElementStyling: function (event, i) {
       var delay = (i+1)*100;
       return 'transition-delay: '+delay+';';
+    },
+    reverse: function(value) {
+      // slice to make a copy of array, then reverse the copy
+      return value.slice().reverse();
     }
+  },
+
+  filters: {
+
   }
 })
-
