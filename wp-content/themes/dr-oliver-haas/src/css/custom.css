@@ -121,8 +121,13 @@ body span.mobile_menu_bar:before {color: rgba(242, 242, 242, 0.46) !important;te
 
 /* Only Desktop */
 @media only screen and (min-width: 981px) {
-  body header#main-header {-webkit-backdrop-filter: blur(5px);backdrop-filter: blur(5px);}
+  body header#main-header.et-fixed-header {-webkit-backdrop-filter: blur(5px);backdrop-filter: blur(5px);}
+  .custom_logo_wrapper {
+    z-index: 99999;
+  }
 }
+
+
 
 body .et_header_style_left .mobile_menu_bar,
 body .et_header_style_split .mobile_menu_bar {padding-bottom: 0px;}
