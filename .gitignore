@@ -24,3 +24,5 @@ wp-content/plugins/hello.php
 wp-content/wflogs/
 wp-content/wflogs/config-livewaf.php
 .vscode/
+/wordfence-waf.php
+
