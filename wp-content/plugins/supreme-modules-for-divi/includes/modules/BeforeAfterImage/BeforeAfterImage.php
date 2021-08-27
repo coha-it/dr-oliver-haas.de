@@ -880,6 +880,7 @@ class DSM_Before_After_Image extends ET_Builder_Module {
 			array(
 				'tag'      => 'img',
 				'attrs'    => array(
+					'class' => 'skip-lazy',
 					'src'   => '{{before_src}}',
 					'alt'   => '{{before_alt}}',
 					'title' => '{{before_title_text}}',
@@ -892,6 +893,7 @@ class DSM_Before_After_Image extends ET_Builder_Module {
 			array(
 				'tag'      => 'img',
 				'attrs'    => array(
+					'class' => 'skip-lazy',
 					'src'   => '{{after_src}}',
 					'alt'   => '{{after_alt}}',
 					'title' => '{{after_title_text}}',
@@ -909,10 +911,10 @@ class DSM_Before_After_Image extends ET_Builder_Module {
 		$data_attrs[] = array(
 			'offset'      => $default_offset_pct,
 			'orientation' => $orientation,
-			'overlay'     => $no_overlay !== 'off' ? true : false,
-			'hover'       => $move_slider_on_hover !== 'off' ? true : false,
-			'handle'      => $move_with_handle_only !== 'off' ? true : false,
-			'click'       => $click_to_move !== 'off' ? true : false,
+			'overlay'     => 'off' !== $no_overlay ? true : false,
+			'hover'       => 'off' !== $move_slider_on_hover ? true : false,
+			'handle'      => 'off' !== $move_with_handle_only ? true : false,
+			'click'       => 'off' !== $click_to_move ? true : false,
 		);
 
 		wp_enqueue_script( 'dsm-before-after-image' );

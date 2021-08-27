@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - MC4WP: Mailchimp for WordPress - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2020-04-28 06:43:15+0000\n"
+"PO-Revision-Date: 2021-05-14 18:27:52+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,21 +11,21 @@ msgstr ""
 "Language: de\n"
 "Project-Id-Version: Plugins - MC4WP: Mailchimp for WordPress - Stable (latest release)\n"
 
-#: includes/forms/class-admin.php:163 includes/forms/class-admin.php:284
+#: includes/forms/class-admin.php:161 includes/forms/class-admin.php:280
 msgid "Form saved."
 msgstr "Formular gespeichert."
 
-#: includes/forms/class-form-manager.php:150
+#: includes/forms/class-form-manager.php:151
 msgid "Resource does not exist."
 msgstr "Ressource existiert nicht."
-
-#: includes/forms/class-form-amp.php:33
-msgid "Submitting..."
-msgstr "Abensenden..."
 
 #: includes/forms/views/tabs/form-settings.php:57
 msgid "We strongly suggest keeping double opt-in enabled. Disabling double opt-in may affect your GDPR compliance."
 msgstr "Wir empfehlen dringen, dass Sie den Double Opt-In aktiviert lassen. Das Fehlen eines Double Opt-In könnte gegen die DSGVO verstoßen."
+
+#: includes/forms/class-form-amp.php:33
+msgid "Submitting..."
+msgstr "Absenden..."
 
 #: includes/views/parts/admin-sidebar.php:34
 msgid "Privacy-friendly analytics plugin that does not use any external services."
@@ -35,7 +35,7 @@ msgstr "Datenschutzfreundliches Analyse-Plugin, das keine externen Dienste verwe
 msgid "After email field"
 msgstr "Nach E-Mail-Eingabe"
 
-#: includes/views/parts/lists-overview.php:51
+#: includes/views/parts/lists-overview.php:50
 msgid "Loading... Please wait."
 msgstr "Laden... Bitte warten."
 
@@ -63,19 +63,11 @@ msgstr "Wählen Sie „ja“ aus, um den Google-reCAPTCHA-Spamschutz für dieses
 msgid "Enable Google reCaptcha"
 msgstr "Google reCaptcha aktivieren"
 
-#: assets/js/forms-block.js:53 assets/js/forms-block.min.js:53
-msgid "Mailchimp for WordPress Sign-up Form"
-msgstr "Registrierungsformular von Mailchimp for WordPress"
-
-#: assets/js/forms-block.js:11 assets/js/forms-block.min.js:11
-msgid "Block showing a Mailchimp for WordPress sign-up form"
-msgstr "Block zeigt ein Anmeldeformular für 'Mailchimp for WordPress'"
-
-#: includes/admin/class-admin.php:300
+#: includes/admin/class-admin.php:313
 msgid "This is a premium feature. Please upgrade to Mailchimp for WordPress Premium to be able to use it."
 msgstr "Dies ist eine Premium-Funktion, die erst nach dem Upgrade auf die Premium-Version von Mailchimp for WordPress verwendbar ist."
 
-#: includes/admin/class-admin.php:299
+#: includes/admin/class-admin.php:312
 msgid "The given value does not look like a valid Mailchimp API key."
 msgstr "Der eingegeben Wert scheint kein gültiger Mailchimp-API-Key zu sein."
 
@@ -191,16 +183,16 @@ msgstr "Wählen Sie die MailChimp-Liste aus, die Sie abonnieren möchten."
 msgid "Sign-up to our newsletter?"
 msgstr "Möchten Sie sich zu unserem Newsletter anmelden?"
 
-#: integrations/wpforms/class-field.php:90
 #: integrations/gravity-forms/class-gravity-forms.php:93
+#: integrations/wpforms/class-field.php:90
 msgid "Mailchimp list"
 msgstr "Mailchimp-Liste"
 
-#: includes/admin/class-admin.php:421
+#: includes/admin/class-admin.php:434
 msgid "Looks like your server is blocked by Mailchimp's firewall. Please contact Mailchimp support and include the following reference number: %s"
 msgstr "Es sieht aus, als würde die Mailchimp Firewall Ihren Server blockieren. Nehmen Sie bitte Kontakt zum Mailchimp-Support auf und geben Sie die folgenden Referenznummer weiter: %s "
 
-#: includes/admin/class-admin.php:304
+#: includes/admin/class-admin.php:317
 msgid "Failed to renew your lists. An error occured."
 msgstr "Ihre Listen konnten nicht aktualisiert werden. Es trat ein Fehler auf."
 
@@ -252,11 +244,11 @@ msgstr "Sind Sie sicher, dass Sie \"Double Opt-in\" abschalten möchten?"
 msgid "If you do, please <a href=\"%s\">leave us a 5★ rating on WordPress.org</a>. It would be of great help to us."
 msgstr "Wenn ja dann <a href=\"%s\">geben Sie uns doch eine 5★ Bewertung auf WordPress.org</a>. Das wäre eine große Hilfe für uns."
 
-#: includes/admin/class-ads.php:163
+#: includes/admin/class-ads.php:134
 msgid "Do you want to track all WooCommerce orders in Mailchimp so you can send emails based on the purchase activity of your subscribers?"
 msgstr "Möchten Sie alle WooCommerce-Bestellungen in Mailchimp verfolgen, damit Sie E-Mails auf Grundlage der Kaufaktivität Ihrer Abonnenten versenden können?"
 
-#: includes/admin/class-ads.php:166
+#: includes/admin/class-ads.php:137
 msgid "<a href=\"%1$s\">Upgrade to Mailchimp for WordPress Premium</a> or <a href=\"%2$s\">read more about Mailchimp's E-Commerce features</a>."
 msgstr "<a href=\"%1$s\">Upgraden Sie auf Mailchimp for WordPress Premium</a> oder <a href=\"%2$s\">lesen Sie mehr über die E-Commerce-Funktionen von Mailchimp</a>."
 
@@ -264,23 +256,23 @@ msgstr "<a href=\"%1$s\">Upgraden Sie auf Mailchimp for WordPress Premium</a> od
 msgid "You've been using Mailchimp for WordPress for some time now; we hope you love it!"
 msgstr "Sie benutzen MailChimp for WordPress schon seit einiger Zeit; wir hoffen, dass es Ihnen gefällt!"
 
-#: includes/admin/class-admin.php:302
+#: includes/admin/class-admin.php:315
 msgid "Fetching Mailchimp lists"
 msgstr "Abrufen von Mailchimp-Listen"
 
-#: includes/admin/class-admin.php:303
+#: includes/admin/class-admin.php:316
 msgid "Done! Mailchimp lists renewed."
 msgstr "Fertig! Die Mailchimp-Listen wurden erneuert."
 
-#: includes/admin/class-admin.php:424
+#: includes/admin/class-admin.php:437
 msgid "Here's some info on solving common connectivity issues."
 msgstr "Hier finden Sie einige Informationen zur Lösung von Problemen mit der Konnektivität."
 
-#: includes/admin/class-admin.php:418
+#: includes/admin/class-admin.php:431
 msgid "Error connecting to Mailchimp:"
 msgstr "Es ist ein Fehler bei der Verbindung zu Mailchimp aufgetreten:"
 
-#: includes/admin/class-admin.php:429
+#: includes/admin/class-admin.php:442
 msgid "Mailchimp returned the following error:"
 msgstr "Mailchimp hat den folgenden Fehler gemeldet:"
 
@@ -362,7 +354,7 @@ msgstr "Vorauswahl"
 msgid "Optional"
 msgstr "Optional"
 
-#: includes/admin/class-admin.php:497
+#: includes/admin/class-admin.php:511
 msgid "To get started with Mailchimp for WordPress, please <a href=\"%s\">enter your Mailchimp API key on the settings page of the plugin</a>."
 msgstr "Um mit Mailchimp für WordPress starten zu können, geben Sie bitte <a href=\"%s\">Ihren Mailchimp-API-Schlüssel in den Einstellungen des Plugins ein.</a>."
 
@@ -394,11 +386,11 @@ msgstr "Wenn eine Listenauswahl angeboten wird, ist dies der Text der angezeigt 
 msgid "No list selected"
 msgstr "Keine Liste ausgewählt"
 
-#: includes/forms/class-admin.php:462
+#: includes/forms/class-admin.php:458
 msgid "Select the form to show"
 msgstr "Wählen Sie ein Formular aus"
 
-#: includes/views/other-settings.php:143
+#: includes/views/other-settings.php:144
 msgid "Right now, the plugin is configured to only log errors and warnings."
 msgstr "Momentan ist das Plugin konfiguriert, nur Fehler und Warnungen zu protokollieren."
 
@@ -414,7 +406,7 @@ msgstr "Text um das Feld vorab zu füllen"
 msgid "Debug Log"
 msgstr "Debug Log (Fehlerprotokoll)"
 
-#: includes/views/other-settings.php:135
+#: includes/views/other-settings.php:136
 msgid "Empty Log"
 msgstr "Logfile leeren"
 
@@ -430,16 +422,16 @@ msgstr "Filter.."
 msgid "This field is marked as required in Mailchimp."
 msgstr "Dieses Feld ist in MailChimp als Pflichtfeld gekennzeichnet."
 
-#: includes/admin/class-admin.php:467
+#: includes/admin/class-admin.php:481
 msgid "Log successfully emptied."
 msgstr "Log erfolgreich geleert"
 
-#: includes/admin/class-admin.php:340
+#: includes/admin/class-admin.php:353
 msgid "Other"
 msgstr "Andere"
 
-#: includes/views/other-settings.php:60 includes/views/other-settings.php:70
-#: includes/admin/class-admin.php:339
+#: includes/admin/class-admin.php:352 includes/views/other-settings.php:60
+#: includes/views/other-settings.php:70
 msgid "Other Settings"
 msgstr "Andere Einstellungen"
 
@@ -571,7 +563,7 @@ msgstr "Ort"
 msgid "Order #%d"
 msgstr "Bestellung #%d"
 
-#: includes/views/parts/lists-overview.php:50
+#: includes/views/parts/lists-overview.php:49
 msgid "Edit this list in Mailchimp"
 msgstr "Diese Liste bei MailChimp bearbeiten"
 
@@ -636,12 +628,12 @@ msgstr "Aktiviert?"
 msgid "%s integration"
 msgstr "%s Integration"
 
+#: includes/integrations/class-admin.php:72
 #: includes/integrations/class-admin.php:73
-#: includes/integrations/class-admin.php:74
+#: includes/integrations/views/integration-settings.php:10
 #: includes/integrations/views/integrations.php:101
 #: includes/integrations/views/integrations.php:109
 #: includes/integrations/views/integrations.php:123
-#: includes/integrations/views/integration-settings.php:10
 msgid "Integrations"
 msgstr "Integrationen"
 
@@ -649,18 +641,18 @@ msgstr "Integrationen"
 msgid "Form behaviour"
 msgstr "Formular-Verhalten"
 
-#: includes/integrations/views/integration-settings.php:274
 #: includes/forms/views/tabs/form-settings.php:95
+#: includes/integrations/views/integration-settings.php:274
 msgid "What does this do?"
 msgstr "Welche Funktion hat das?"
 
-#: includes/integrations/views/integration-settings.php:273
 #: includes/forms/views/tabs/form-settings.php:94
+#: includes/integrations/views/integration-settings.php:273
 msgid "Select \"no\" if you want to add the selected interests to any previously selected interests when updating a subscriber."
 msgstr "Wählen Sie \"Nein\", wenn die ausgewählten Interessen zu allen bestehenden Interessen hinzugefügt werden sollen, wenn ein Abonnenten aktualisiert wird."
 
-#: includes/integrations/views/integration-settings.php:247
 #: includes/forms/views/tabs/form-settings.php:72
+#: includes/integrations/views/integration-settings.php:247
 msgid "Select \"yes\" if you want to update existing subscribers with the data that is sent."
 msgstr "Wählen Sie \"Ja\" wenn Sie die bisherigen Abonnenten mit den gesendeten Daten aktualisieren wollen."
 
@@ -754,10 +746,10 @@ msgstr "Formular-Titel eingeben."
 msgid "Edit Form"
 msgstr "Formular bearbeiten"
 
-#: includes/views/other-settings.php:58 includes/views/general-settings.php:7
-#: includes/integrations/views/integrations.php:99
-#: includes/integrations/views/integration-settings.php:8
 #: includes/forms/views/edit-form.php:22
+#: includes/integrations/views/integration-settings.php:8
+#: includes/integrations/views/integrations.php:99
+#: includes/views/general-settings.php:7 includes/views/other-settings.php:58
 msgid "You are here: "
 msgstr "Sie sind hier:"
 
@@ -773,23 +765,23 @@ msgstr "Nachrichten"
 msgid "Fields"
 msgstr "Felder"
 
-#: includes/forms/views/add-form.php:10 includes/forms/views/add-form.php:70
+#: includes/forms/views/add-form.php:10 includes/forms/views/add-form.php:69
 msgid "Add new form"
 msgstr "Ein neues Formular hinzufügen"
 
-#: includes/forms/views/add-form.php:62
+#: includes/forms/views/add-form.php:61
 msgid "No lists found. Did you <a href=\"%s\">connect with Mailchimp</a>?"
 msgstr "Keine Listen gefunden. Sind Sie <a href=\"%s\">mit MailChimp verbunden</a>?"
 
-#: includes/forms/views/add-form.php:37
+#: includes/forms/views/add-form.php:36
 msgid "To which Mailchimp lists should this form subscribe?"
 msgstr "Für welche MailChimp-Listen soll dieses Formular abonnieren?"
 
-#: includes/forms/views/add-form.php:30
+#: includes/forms/views/add-form.php:29
 msgid "Enter your form title.."
 msgstr "Formular-Titel eingeben..."
 
-#: includes/forms/views/add-form.php:27
+#: includes/forms/views/add-form.php:26
 msgid "What is the name of this form?"
 msgstr "Was ist der Name dieses Formulars?"
 
@@ -837,11 +829,11 @@ msgstr "URL- oder Formulardaten."
 msgid "Form preview"
 msgstr "Formular-Vorschau"
 
-#: includes/forms/class-admin.php:395
+#: includes/forms/class-admin.php:391
 msgid "Go back"
 msgstr "Zurück"
 
-#: includes/forms/class-admin.php:393
+#: includes/forms/class-admin.php:389
 msgid "Form not found."
 msgstr "Formular nicht gefunden."
 
@@ -851,13 +843,9 @@ msgstr "Standard-Anmeldeformular"
 
 #: includes/admin/class-usage-tracking.php:52
 msgid "Once a month"
-msgstr "Einmal pro Monat"
+msgstr "Monatlich"
 
-#: includes/admin/class-ads.php:133
-msgid "First Name"
-msgstr "Vorname"
-
-#: includes/admin/class-admin.php:208
+#: includes/admin/class-admin.php:223
 msgid "Success! The cached configuration for your Mailchimp lists has been renewed."
 msgstr "Geschafft! Die zwischengespeicherte Konfiguration für Ihre MailChimp-Listen wurde erneuert."
 
@@ -869,8 +857,8 @@ msgstr "Dokumentation"
 msgid "Please select at least one list."
 msgstr "Mindestens eine Liste auswählen."
 
-#: includes/views/general-settings.php:34
 #: includes/integrations/views/integrations.php:62
+#: includes/views/general-settings.php:34
 msgid "Status"
 msgstr "Status"
 
@@ -898,21 +886,9 @@ msgstr "ibericode"
 msgid "https://www.mc4wp.com/#utm_source=wp-plugin&utm_medium=mailchimp-for-wp&utm_campaign=plugins-page"
 msgstr "https://www.mc4wp.com/#utm_source=wp-plugin&utm_medium=mailchimp-for-wp&utm_campaign=plugins-page"
 
-#: assets/js/forms-block.js:10 assets/js/forms-block.min.js:10
-msgid "Mailchimp for WordPress Form"
-msgstr "Mailchimp for WordPress Form"
-
-#: includes/admin/class-ads.php:126
-msgid "Learn how to best grow your lists & write better emails by subscribing to our monthly tips."
-msgstr "Abonnieren Sie unsere monatlichen Tipps und lernen Sie, wie Ihre Listen am schnellsten wachsen und wie Sie bessere E-Mails schreiben."
-
 #: includes/views/parts/admin-sidebar.php:11
 msgid "Looking for help?"
 msgstr "Brauchen Sie Hilfe?"
-
-#: includes/admin/class-ads.php:125
-msgid "More subscribers, better newsletters."
-msgstr "Mehr Abonnenten, bessere Newsletter."
 
 #: includes/views/parts/admin-footer.php:31
 msgid "This plugin is not developed by or affiliated with Mailchimp in any way."
@@ -927,7 +903,7 @@ msgstr "MailChimp für WordPress braucht mehr Übersetzungen. Ist das Ihrer in d
 msgid "Add to form"
 msgstr "Zur Form hinzufügen"
 
-#: includes/forms/views/edit-form.php:6 includes/admin/class-admin-texts.php:66
+#: includes/admin/class-admin-texts.php:66 includes/forms/views/edit-form.php:6
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -935,8 +911,8 @@ msgstr "Einstellungen"
 msgid "Title:"
 msgstr "Titel:"
 
-#: config/default-form-content.php:3 includes/forms/class-admin.php:82
-#: includes/class-mailchimp.php:248
+#: config/default-form-content.php:3 includes/class-mailchimp.php:251
+#: includes/forms/class-admin.php:82
 msgid "Email address"
 msgstr "E-Mail-Adresse"
 
@@ -944,7 +920,11 @@ msgstr "E-Mail-Adresse"
 msgid "API Key"
 msgstr "API-Schlüssel"
 
-#: includes/views/other-settings.php:25
+#: includes/forms/class-google-recaptcha.php:171
+#: includes/forms/views/tabs/form-settings.php:55
+#: includes/forms/views/tabs/form-settings.php:70
+#: includes/forms/views/tabs/form-settings.php:91
+#: includes/forms/views/tabs/form-settings.php:139
 #: includes/integrations/views/integration-settings.php:67
 #: includes/integrations/views/integration-settings.php:91
 #: includes/integrations/views/integration-settings.php:178
@@ -952,19 +932,19 @@ msgstr "API-Schlüssel"
 #: includes/integrations/views/integration-settings.php:222
 #: includes/integrations/views/integration-settings.php:245
 #: includes/integrations/views/integration-settings.php:270
-#: includes/forms/class-google-recaptcha.php:171
-#: includes/forms/views/tabs/form-settings.php:55
-#: includes/forms/views/tabs/form-settings.php:70
-#: includes/forms/views/tabs/form-settings.php:91
-#: includes/forms/views/tabs/form-settings.php:139
-#: integrations/wpforms/class-field.php:253
+#: includes/views/other-settings.php:25
 #: integrations/contact-form-7/class-contact-form-7.php:74
 #: integrations/gravity-forms/class-gravity-forms.php:113
 #: integrations/gravity-forms/class-gravity-forms.php:125
+#: integrations/wpforms/class-field.php:253
 msgid "No"
 msgstr "Nein"
 
-#: includes/views/other-settings.php:21
+#: includes/forms/class-google-recaptcha.php:169
+#: includes/forms/views/tabs/form-settings.php:51
+#: includes/forms/views/tabs/form-settings.php:66
+#: includes/forms/views/tabs/form-settings.php:87
+#: includes/forms/views/tabs/form-settings.php:135
 #: includes/integrations/views/integration-settings.php:66
 #: includes/integrations/views/integration-settings.php:90
 #: includes/integrations/views/integration-settings.php:177
@@ -972,28 +952,20 @@ msgstr "Nein"
 #: includes/integrations/views/integration-settings.php:218
 #: includes/integrations/views/integration-settings.php:241
 #: includes/integrations/views/integration-settings.php:266
-#: includes/forms/class-google-recaptcha.php:169
-#: includes/forms/views/tabs/form-settings.php:51
-#: includes/forms/views/tabs/form-settings.php:66
-#: includes/forms/views/tabs/form-settings.php:87
-#: includes/forms/views/tabs/form-settings.php:135
-#: integrations/wpforms/class-field.php:253
+#: includes/views/other-settings.php:21
 #: integrations/contact-form-7/class-contact-form-7.php:74
 #: integrations/gravity-forms/class-gravity-forms.php:112
 #: integrations/gravity-forms/class-gravity-forms.php:124
+#: integrations/wpforms/class-field.php:253
 msgid "Yes"
 msgstr "Ja"
-
-#: includes/admin/class-ads.php:129
-msgid "Email Address"
-msgstr "E-Mail-Adresse"
 
 #: integrations/ninja-forms-2/class-ninja-forms.php:33
 #: integrations/ninja-forms/class-action.php:21
 msgid "Mailchimp"
 msgstr "Mailchimp"
 
-#: includes/admin/class-admin.php:332
+#: includes/admin/class-admin.php:345
 msgid "Mailchimp API Settings"
 msgstr "Mailchimp-API-Einstellungen"
 
@@ -1053,11 +1025,11 @@ msgstr "Newsletter"
 msgid "Displays your Mailchimp for WordPress sign-up form"
 msgstr "Zeigt Ihr Anmeldeformular für 'Mailchimp for WordPress'"
 
-#: includes/forms/class-admin.php:458 includes/forms/class-widget.php:31
+#: includes/forms/class-admin.php:454 includes/forms/class-widget.php:31
 msgid "Mailchimp Sign-Up Form"
 msgstr "Mailchimp-Anmeldeformular"
 
-#: includes/forms/class-admin.php:106 includes/admin/class-ads.php:140
+#: includes/forms/class-admin.php:106
 msgid "Subscribe"
 msgstr "Abonnieren"
 
@@ -1093,8 +1065,8 @@ msgstr "Absende-Button"
 msgid "List choice"
 msgstr "Listenauswahl"
 
-#: includes/integrations/class-integration-tags.php:30
 #: includes/forms/class-form-tags.php:45
+#: includes/integrations/class-integration-tags.php:30
 msgid "Replaced with the number of subscribers on the selected list(s)"
 msgstr "Mit der Nummer von Abonnenten der gewählten Listen ersetzen"
 
@@ -1190,19 +1162,19 @@ msgstr "Wählen Sie \"ja\" wenn Sie die Formular Felder nach einer erfolgreichen
 msgid "Hide form after a successful sign-up?"
 msgstr "Das Formular nach erfolgreicher Registrierung verbergen?"
 
-#: includes/integrations/views/integration-settings.php:262
 #: includes/forms/views/tabs/form-settings.php:83
+#: includes/integrations/views/integration-settings.php:262
 msgid "Replace interest groups?"
 msgstr "Interessengruppen ersetzen?"
 
-#: includes/integrations/views/integration-settings.php:237
 #: includes/forms/views/tabs/form-settings.php:62
+#: includes/integrations/views/integration-settings.php:237
 #: integrations/ninja-forms/class-action.php:48
 msgid "Update existing subscribers?"
 msgstr "Aktualisiere vorhandene Abonnenten?"
 
 #: includes/forms/views/edit-form.php:69
-#: includes/forms/views/tabs/form-fields.php:40
+#: includes/forms/views/tabs/form-fields.php:39
 msgid "Use the shortcode %s to display this form inside a post, page or text widget."
 msgstr "Benutzen Sie diesen Shortcode %s, um dieses Formular innerhalb eines Posts, Seite oder Text-Widgets zu nutzen."
 
@@ -1278,8 +1250,8 @@ msgstr "Double opt-in?"
 msgid "Select the list(s) to which people who check the checkbox should be subscribed."
 msgstr "Wählen Sie die Listen, zu welchen die Abonnenten, die die Checkbox ausgewählt haben, eingetragen werden sollen."
 
-#: includes/integrations/views/integration-settings.php:140
 #: includes/forms/views/tabs/form-settings.php:20
+#: includes/integrations/views/integration-settings.php:140
 msgid "No lists found, <a href=\"%s\">are you connected to Mailchimp</a>?"
 msgstr "Keine Listen gefunden, <a href=\"%s\">haben Sie MailChimp schon angebunden</a>?"
 
@@ -1295,9 +1267,9 @@ msgstr "Insgesamt wurden %d Listen in Ihrem MailChimp-Konto gefunden."
 msgid "No lists were found in your Mailchimp account"
 msgstr "In Ihrem MailChimp-Konto wurden keine Mailinglisten gefunden"
 
+#: includes/admin/class-admin.php:314
+#: includes/forms/views/parts/add-fields-help.php:58
 #: includes/views/parts/lists-overview.php:10
-#: includes/forms/views/parts/add-fields-help.php:47
-#: includes/admin/class-admin.php:301
 msgid "Renew Mailchimp lists"
 msgstr "MailChimp-Listen neu laden"
 

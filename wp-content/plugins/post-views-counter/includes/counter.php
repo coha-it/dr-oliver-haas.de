@@ -74,6 +74,27 @@ class Post_Views_Counter_Counter {
 				}
 			}
 		}
+		
+		// strict counts?
+		if ( Post_Views_Counter()->options['general']['strict_counts'] ) {
+			// get IP cached visits
+			$ip_cache = get_transient( 'post_views_counter_ip_cache' );
+
+			if ( ! $ip_cache )
+				$ip_cache = array();
+
+			// get user IP address
+			$user_ip = $this->encrypt_ip( $this->get_user_ip() );
+
+			// get current time
+			$current_time = current_time( 'timestamp', true );
+			
+			// visit exists in transient?
+			if ( isset( $ip_cache[$id][$user_ip] ) ) {
+				if ( $current_time < $ip_cache[$id][$user_ip] + $this->get_timestamp( Post_Views_Counter()->options['general']['time_between_counts']['type'], Post_Views_Counter()->options['general']['time_between_counts']['number'], false ) )
+					return;
+			}
+		}
 
 		// get groups to check them faster
 		$groups = Post_Views_Counter()->options['general']['exclude']['groups'];
@@ -365,7 +386,7 @@ class Post_Views_Counter_Counter {
 	 */
 	private function save_ip( $id ) {
 		$set_cookie = apply_filters( 'pvc_maybe_set_cookie', true );
-
+		
 		// Cookie Notice compatibility
 		if ( function_exists( 'cn_cookies_accepted' ) && ! cn_cookies_accepted() )
 			$set_cookie = false;
@@ -380,7 +401,7 @@ class Post_Views_Counter_Counter {
 			$ip_cache = array();
 
 		// get user IP address
-		$user_ip = (string) $this->get_user_ip();
+		$user_ip = $this->encrypt_ip( $this->get_user_ip() );
 
 		// get current time
 		$current_time = current_time( 'timestamp', true );
@@ -653,15 +674,15 @@ class Post_Views_Counter_Counter {
 
 		global $wpdb;
 
-		// $result = $wpdb->query( "
-			// INSERT INTO " . $wpdb->prefix . "post_views (id, type, period, count)
-			// VALUES " . $this->db_insert_values . "
-			// ON DUPLICATE KEY UPDATE count = count + VALUES(count)"
-		// );
+		$result = $wpdb->query( "
+			INSERT INTO " . $wpdb->prefix . "post_views (id, type, period, count)
+			VALUES " . $this->db_insert_values . "
+			ON DUPLICATE KEY UPDATE count = count + VALUES(count)"
+		);
 
 		$this->db_insert_values = '';
 
-		// return $result;
+		return $result;
 	}
 
 	/**
@@ -709,6 +730,8 @@ class Post_Views_Counter_Counter {
 	 * @return string
 	 */
 	public function get_user_ip() {
+		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
+		
 		foreach ( array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR' ) as $key ) {
 			if ( array_key_exists( $key, $_SERVER ) === true ) {
 				foreach ( explode( ',', $_SERVER[$key] ) as $ip ) {
@@ -717,12 +740,12 @@ class Post_Views_Counter_Counter {
 
 					// attempt to validate IP
 					if ( $this->validate_user_ip( $ip ) )
-						return $ip;
+						continue;
 				}
 			}
 		}
 
-		return isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
+		return $ip;
 	}
 
 	/**
@@ -736,6 +759,66 @@ class Post_Views_Counter_Counter {
 			return false;
 
 		return true;
+	}
+
+	/**
+	 * Encrypt user IP.
+	 * 
+	 * @param int $ip
+	 * @return string $encrypted_ip
+	 */
+	public function encrypt_ip( $ip ) {
+		$auth_key = defined( 'AUTH_KEY' ) ? AUTH_KEY : '';
+		$auth_iv = defined( 'NONCE_KEY' ) ? NONCE_KEY : '';
+
+		// mcrypt strong encryption
+		if ( function_exists( 'mcrypt_encrypt' ) && function_exists( 'mcrypt_get_key_size' ) && function_exists( 'mcrypt_get_iv_size' ) && defined( 'MCRYPT_BLOWFISH' ) ) {
+			// get max key size of the mcrypt mode
+			$max_key_size = mcrypt_get_key_size( MCRYPT_BLOWFISH, MCRYPT_MODE_CBC );
+			$max_iv_size = mcrypt_get_iv_size( MCRYPT_BLOWFISH, MCRYPT_MODE_CBC );
+
+			$encrypt_key = mb_strimwidth( $auth_key, 0, $max_key_size );
+			$encrypt_iv = mb_strimwidth( $auth_iv, 0, $max_iv_size );
+
+			$encrypted_ip = strtr( base64_encode( mcrypt_encrypt( MCRYPT_BLOWFISH, $encrypt_key, $ip, MCRYPT_MODE_CBC, $encrypt_iv ) ), '+/=', '-_,' );
+		// simple encryption
+		} elseif ( function_exists( 'gzdeflate' ) )
+			$encrypted_ip = base64_encode( convert_uuencode( gzdeflate( $ip ) ) );
+		// no encryption
+		else
+			$encrypted_ip = strtr( base64_encode( convert_uuencode( $ip ) ), '+/=', '-_,' );
+
+		return $encrypted_ip;
+	}
+
+	/**
+	 * Decrypt user IP.
+	 * 
+	 * @param int $encrypted_ip
+	 * @return string $ip
+	 */
+	public function decrypt_ip( $encrypted_ip ) {
+		$auth_key = defined( 'AUTH_KEY' ) ? AUTH_KEY : '';
+		$auth_iv = defined( 'NONCE_KEY' ) ? NONCE_KEY : '';
+
+		// mcrypt strong encryption
+		if ( function_exists( 'mcrypt_decrypt' ) && function_exists( 'mcrypt_get_key_size' ) && function_exists( 'mcrypt_get_iv_size' ) && defined( 'MCRYPT_BLOWFISH' ) ) {
+			// get max key size of the mcrypt mode
+			$max_key_size = mcrypt_get_key_size( MCRYPT_BLOWFISH, MCRYPT_MODE_CBC );
+			$max_iv_size = mcrypt_get_iv_size( MCRYPT_BLOWFISH, MCRYPT_MODE_CBC );
+
+			$encrypt_key = mb_strimwidth( $auth_key, 0, $max_key_size );
+			$encrypt_iv = mb_strimwidth( $auth_iv, 0, $max_iv_size );
+
+			$ip = mcrypt_decrypt( MCRYPT_BLOWFISH, $encrypt_key, base64_decode( strtr( $encrypted_ip, '-_,', '+/=' ) ), MCRYPT_MODE_CBC, $encrypt_iv );
+		// simple encryption
+		} elseif ( function_exists( 'gzinflate' ) )
+			$ip = gzinflate( convert_uudecode( base64_decode( $encrypted_ip ) ) );
+		// no encryption
+		else
+			$ip = convert_uudecode( base64_decode( strtr( $encrypted_ip, '-_,', '+/=' ) ) );
+
+		return $ip;
 	}
 
 	/**

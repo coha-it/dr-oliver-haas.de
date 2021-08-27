@@ -77,7 +77,7 @@ class Dsm_Supreme_Modules_For_Divi_Public {
 			}
 		}
 		$easy_theme_builder = isset( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_fixed'] ) && 'off' !== get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_fixed'] ? true : false;
-		if ( $easy_theme_builder === true ) {
+		if ( true === $easy_theme_builder ) {
 			wp_enqueue_style( 'dsm-easy-theme-builder-style', plugin_dir_url( __FILE__ ) . 'css/dsm-easy-tb.css', array(), DSM_VERSION, 'all' );
 			$easy_theme_builder_image   = isset( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_shrink_image'] ) && '' !== get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_shrink_image'] ? esc_attr( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_shrink_image'] ) : '';
 			$easy_theme_builder_section = isset( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_section_padding'] ) && '' !== get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_section_padding'] ? esc_attr( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_section_padding'] ) : '';
@@ -85,13 +85,13 @@ class Dsm_Supreme_Modules_For_Divi_Public {
 			$dsm_tb_header_css          = '';
 
 			if ( '' !== $easy_theme_builder_image ) {
-				$dsm_tb_header_css = '.dsm_fixed_header_shrink.dsm_fixed_header_shrink_active header.et-l--header img { max-width: ' . floatval( $easy_theme_builder_image ) . '%; }';
+				$dsm_tb_header_css = '.et-db.dsm_fixed_header_shrink.dsm_fixed_header_shrink_active header.et-l--header img { max-width: ' . floatval( $easy_theme_builder_image ) . '%; }';
 			}
 			if ( '' !== $easy_theme_builder_section ) {
-				$dsm_tb_header_css .= '.dsm_fixed_header_shrink.dsm_fixed_header_shrink_active header.et-l--header .et_pb_section { padding-top: ' . floatval( $easy_theme_builder_section ) . 'px; padding-bottom: ' . floatval( $easy_theme_builder_section ) . 'px; } ';
+				$dsm_tb_header_css .= '.et-db.dsm_fixed_header_shrink.dsm_fixed_header_shrink_active header.et-l--header .et_pb_section { padding-top: ' . floatval( $easy_theme_builder_section ) . 'px; padding-bottom: ' . floatval( $easy_theme_builder_section ) . 'px; } ';
 			}
 			if ( '' !== $easy_theme_builder_row ) {
-				$dsm_tb_header_css .= '.dsm_fixed_header_shrink.dsm_fixed_header_shrink_active header.et-l--header .et_pb_section .et_pb_row { padding-top: ' . floatval( $easy_theme_builder_row ) . 'px !important; padding-bottom: ' . floatval( $easy_theme_builder_row ) . 'px !important; } ';
+				$dsm_tb_header_css .= '.et-db.dsm_fixed_header_shrink.dsm_fixed_header_shrink_active header.et-l--header .et_pb_section .et_pb_row { padding-top: ' . floatval( $easy_theme_builder_row ) . 'px !important; padding-bottom: ' . floatval( $easy_theme_builder_row ) . 'px !important; } ';
 			}
 
 			wp_add_inline_style( 'dsm-easy-theme-builder-style', $dsm_tb_header_css );
@@ -128,7 +128,7 @@ class Dsm_Supreme_Modules_For_Divi_Public {
 		}
 
 		$easy_theme_builder = isset( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_fixed'] ) && 'off' !== get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_fixed'] ? true : false;
-		if ( $easy_theme_builder === true ) {
+		if ( true === $easy_theme_builder ) {
 			$dsm_tb_header_start_threshold = isset( get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_start_threshold'] ) && '' !== get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_start_threshold'] ? get_option( 'dsm_theme_builder' )['dsm_theme_builder_header_start_threshold'] : '150';
 
 			$dsm_tb_header = array(
@@ -152,6 +152,9 @@ class Dsm_Supreme_Modules_For_Divi_Public {
 		wp_register_script( 'dsm-lottie', plugin_dir_url( __FILE__ ) . 'js/lottie.min.js', array(), DSM_VERSION, true );
 		wp_register_script( 'dsm-facebook', 'https://connect.facebook.net/' . $facebook_lang . '/sdk.js#xfbml=1&version=v8.0' . $facebook_app_id, array(), null, true );
 		wp_register_script( 'dsm-twitter-embed', 'https://platform.twitter.com/widgets.js', array(), DSM_VERSION, true );
+		wp_register_script( 'dsm-image-accordion', plugin_dir_url( __DIR__ ) . 'includes/modules/ImageAccordion/frontend.min.js', array( 'jquery' ), DSM_VERSION, true );
+		// Divi Assets.
+		wp_register_script( 'magnific-popup', get_template_directory_uri() . '/includes/builder/feature/dynamic-assets/assets/js/magnific-popup.js', array( 'jquery' ), DSM_VERSION, true );
 	}
 
 }

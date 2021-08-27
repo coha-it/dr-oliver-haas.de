@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: Webcraftic Clearfy – WordPress optimization plugin
- * Plugin URI: https://wordpress.org/plugins/clearfy/
+ * Plugin URI: https://clearfy.pro
  * Description: Disables unused Wordpress features, improves performance and increases SEO rankings, using Clearfy, which makes WordPress very easy.
- * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.8.0
+ * Author: Creative Motion <info@cm-wp.com>
+ * Version: 1.9.4
  * Text Domain: clearfy
  * Domain Path: /languages/
- * Author URI: http://clearfy.pro
- * Framework Version: FACTORY_437_VERSION
+ * Author URI: https://cm-wp.com
+ * Framework Version: FACTORY_449_VERSION
  */
 
 // Exit if accessed directly
@@ -16,7 +16,6 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-// @formatter:off
 /**
  * -----------------------------------------------------------------------------
  * CHECK REQUIREMENTS
@@ -27,11 +26,11 @@ if( !defined('ABSPATH') ) {
 
 require_once(dirname(__FILE__) . '/libs/factory/core/includes/class-factory-requirements.php');
 
-// @formatter:off
 $plugin_info = array(
 	'prefix' => 'wbcr_clearfy_',
 	'plugin_name' => 'wbcr_clearfy',
 	'plugin_title' => __('Clearfy', 'clearfy'),
+
 	// PLUGIN SUPPORT
 	'support_details' => array(
 		'url' => 'http://clearfy.pro',
@@ -45,6 +44,20 @@ $plugin_info = array(
 	//todo: for compatibility with Robin image optimizer
 	'freemius_plugin_id' => '2315',
 	'freemius_public_key' => 'pk_70e226af07d37d2b9a69720e0952c',
+
+	'has_updates' => true,
+	'updates_settings' => [
+		'repository' => 'github',
+		'alternate_updates_mode' => true,
+		'github_username' => 'Creative-Motion-Development', // обязательно, имя пользователя репозитория в Github
+		'github_authorize_token' => '', // необязательно, только если репозиторий приватный
+		'github_repository' => 'wp-plugin-clearfy', // необязательно, если не заполнено берется из slug
+		'slug' => 'clearfy', // обязательно, slug плагина
+		'maybe_rollback' => false,
+		'rollback_settings' => [
+			'prev_stable_version' => '0.0.0'
+		]
+	],
 
 	// PLUGIN PREMIUM SETTINGS
 	'has_premium' => true,
@@ -62,6 +75,11 @@ $plugin_info = array(
 			)
 		)
 	),
+
+	// PLUGIN SUBSCRIBE FORM
+	'subscribe_widget' => true,
+	'subscribe_settings' => ['group_id' => '105407119'],
+
 	// PLUGIN ADVERTS
 	'render_adverts' => true,
 	'adverts_settings' => array(
@@ -71,12 +89,14 @@ $plugin_info = array(
 	),
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array('libs/factory/bootstrap', 'factory_bootstrap_437', 'admin'),
-		array('libs/factory/forms', 'factory_forms_434', 'admin'),
-		array('libs/factory/pages', 'factory_pages_436', 'admin'),
-		array('libs/factory/clearfy', 'factory_clearfy_228', 'all'),
-		array('libs/factory/freemius', 'factory_freemius_124', 'all'),
-		array('libs/factory/adverts', 'factory_adverts_115', 'admin')
+		array('libs/factory/bootstrap', 'factory_bootstrap_449', 'admin'),
+		array('libs/factory/forms', 'factory_forms_446', 'admin'),
+		array('libs/factory/pages', 'factory_pages_448', 'admin'),
+		array('libs/factory/templates', 'factory_templates_100', 'all'),
+		array('libs/factory/freemius', 'factory_freemius_137', 'all'),
+		array('libs/factory/adverts', 'factory_adverts_127', 'admin'),
+		array('libs/factory/logger', 'factory_logger_114', 'all'),
+
 	),
 	'load_plugin_components' => array(
 		'disable_notices' => array(
@@ -116,10 +136,10 @@ $plugin_info = array(
 
 
 
-$clearfy_compatibility = new Wbcr_Factory437_Requirements(__FILE__, array_merge($plugin_info, array(
+$clearfy_compatibility = new Wbcr_Factory449_Requirements(__FILE__, array_merge($plugin_info, array(
 	'plugin_already_activate' => defined('WCL_PLUGIN_ACTIVE'),
-	'required_php_version' => '5.6',
-	'required_wp_version' => '4.9.0',
+	'required_php_version' => '7.0',
+	'required_wp_version' => '5.2.0',
 	'required_clearfy_check_component' => false
 )));
 
@@ -147,7 +167,7 @@ define('WBCR_CLEARFY_PLUGIN_ACTIVE', true);
 
 // Plugin version
 define('WCL_PLUGIN_VERSION', $clearfy_compatibility->get_plugin_version());
-define('WCL_FRAMEWORK_VER', 'FACTORY_437_VERSION');
+define('WCL_FRAMEWORK_VER', 'FACTORY_449_VERSION');
 
 define('WCL_PLUGIN_DIR', dirname(__FILE__));
 define('WCL_PLUGIN_BASE', plugin_basename(__FILE__));
@@ -161,8 +181,6 @@ define('WCL_PLUGIN_URL', plugins_url(null, __FILE__));
  * -----------------------------------------------------------------------------
  */
 try {
-	require_once(WCL_PLUGIN_DIR . '/includes/helpers.php');
-
 	// creating a plugin via the factory
 	require_once(WCL_PLUGIN_DIR . '/libs/factory/core/boot.php');
 	require_once(WCL_PLUGIN_DIR . '/includes/class.plugin.php');
@@ -183,4 +201,4 @@ try {
 	add_action('admin_notices', $clearfy_plugin_error_func);
 	add_action('network_admin_notices', $clearfy_plugin_error_func);
 }
-// @formatter:on
+

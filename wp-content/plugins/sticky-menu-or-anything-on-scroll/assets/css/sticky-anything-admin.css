@@ -7,6 +7,12 @@
   width: 70%;
 }
 
+.header-logo {
+  max-height: 42px;
+  padding-right: 15px;
+  margin-bottom: -13px;
+}
+
 .main-content .new-feature {
   border: solid 1px #c0c0c0;
   background: #e7e7e7;
@@ -276,7 +282,7 @@
 }
 
 .sticky-pro-dialog .ui-dialog-titlebar {
-  background-color: #FFDE66;
+  background-color: #ffde66;
   border-bottom: none;
   text-align: center;
   display: none;
@@ -289,11 +295,11 @@
 }
 
 .nav-tab-pro {
-  background-color: #FFDE66;
+  background-color: #ffde66;
 }
 
 .settings_page_stickyanythingmenu a.button-buy {
-  background-color: #B93C24;
+  background-color: #b93c24;
   color: #fff;
   font-weight: 700;
   padding: 5px 10px;
@@ -303,16 +309,21 @@
   font-weight: normal;
 }
 
+.settings_page_stickyanythingmenu a.button-buy small {
+  font-weight: normal;
+}
+
 .pro-feature {
-  background-color: #FFDE66;
-  padding: 5px;
+  background-color: #ffde66aa;
+  padding: 2px;
+  line-height: 2.2;
   color: #333;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .pro-feature:hover {
-  background-color: #FFDE66;
-  padding: 5px;
+  background-color: #ffde66;
+  padding: 2px;
   color: #333;
   text-decoration: underline;
 }
@@ -322,27 +333,30 @@
 }
 
 .sticky-pro-dialog .logo {
-  background-color: #FFDE66;
+  background-color: #ffde66;
   padding: 10px;
 }
 
 .sticky-pro-dialog .logo b {
   font-size: 18px;
   font-weight: 600;
-  margin-top: 20px;
   display: inline-block;
-  margin: 10px 0 0 0;
+  margin: 15px;
   line-height: 1.3;
 }
 
+.sticky-pro-dialog .logo b a {
+  color: black;
+}
+
 .sticky-pro-dialog .logo i {
-  color: #B93C24;
+  color: #b93c24;
   font-style: normal;
 }
 
 .sticky-pro-dialog .footer {
-  padding: 15px 10px;
-  background-color: #FFDE66;
+  padding: 15px 70px;
+  background-color: #ffde66;
 }
 
 .sticky-pro-dialog {
@@ -350,8 +364,8 @@
 }
 
 #sticky-table {
-  width: 100%;
-  margin: 10px 0 0 0;
+  width: 95%;
+  margin: 10px auto 0 auto;
   border-collapse: collapse;
 }
 
@@ -369,18 +383,18 @@
 }
 
 #sticky-table tr:first-child td {
-  color: #B93C24;
+  color: #b93c24;
   font-size: 18px;
   font-weight: 800 !important;
   padding: 15px 0;
 }
 
 s#sticky-table tr td:nth-child(2) {
-  background-color: #FFDE66;
+  background-color: #ffde66;
 }
 
 #ssticky-table tr td:last-child {
-  background-color: #FFDE66;
+  background-color: #ffde66;
 }
 
 #sticky-table tr:last-child td {
@@ -406,7 +420,7 @@ s#sticky-table tr td:nth-child(2) {
 .pro-ad-sidebar {
   float: right;
   width: 25%;
-  background: #FFDE66;
+  background: #ffde66;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   padding: 25px;
   margin: 20px 0 0 0;
@@ -420,4 +434,17 @@ s#sticky-table tr td:nth-child(2) {
 
 .pro-ad-sidebar a {
   text-decoration: none;
+}
+
+.wp-picker-holder {
+  z-index: 9999;
+  position: absolute;
+}
+
+.wp-picker-container .iris-picker {
+  border: 1px solid;
+}
+
+.form-table tr {
+  border-bottom: thin solid #00000038;
 }

@@ -4,11 +4,13 @@ Plugin Name: Divi Booster
 Plugin URI: 
 Description: Bug fixes and enhancements for Elegant Themes' Divi Theme.
 Author: Dan Mossop
-Version: 3.3.5
+Version: 3.5.6
 Author URI: https://divibooster.com
 */	
 
-define('BOOSTER_VERSION', '3.3.5'); 
+if (!defined('BOOSTER_VERSION')) {
+    define('BOOSTER_VERSION', '3.5.6');
+}
 
 if (!function_exists('dbdb_file')) {
 	function dbdb_file() {
@@ -34,12 +36,6 @@ if (!function_exists('dbdb_slug')) {
 	}
 }
 
-if (!function_exists('dbdb_update_url')) {
-	function dbdb_update_url() {
-		return apply_filters('dbdb_update_url', 'https://d3mraia2v9t5x8.cloudfront.net/updates.json');
-	}
-}
-
 // Run unit tests if applicable
 if (defined('DB_UNIT_TESTS') && DB_UNIT_TESTS && file_exists(dbdb_path('tests/tests.php'))) {
 	include_once(dbdb_path('tests/tests.php'));
@@ -48,31 +44,52 @@ if (defined('DB_UNIT_TESTS') && DB_UNIT_TESTS && file_exists(dbdb_path('tests/te
 
 // === Configuration === //
 $slug = 'wtfdivi';
-define('BOOSTER_DIR', dirname(dbdb_file()));
-define('BOOSTER_CORE', BOOSTER_DIR.'/core');
-define('BOOSTER_SLUG', 'divi-booster');
-define('BOOSTER_SLUG_OLD', $slug);
-define('BOOSTER_VERSION_OPTION', 'divibooster_version');
-define('BOOSTER_SETTINGS_PAGE_SLUG', BOOSTER_SLUG_OLD.'_settings');
-define('BOOSTER_NAME', __('Divi Booster', BOOSTER_SLUG));
+if (!defined('BOOSTER_DIR')) { 
+    define('BOOSTER_DIR', dirname(dbdb_file()));
+}
+if (!defined('BOOSTER_CORE')) {
+    define('BOOSTER_CORE', BOOSTER_DIR.'/core');
+}
+if (!defined('BOOSTER_SLUG')) {
+    define('BOOSTER_SLUG', 'divi-booster');
+}
+if (!defined('BOOSTER_SLUG_OLD')) {
+    define('BOOSTER_SLUG_OLD', $slug);
+}
+if (!defined('BOOSTER_VERSION_OPTION')) {
+    define('BOOSTER_VERSION_OPTION', 'divibooster_version');
+}
+if (!defined('BOOSTER_SETTINGS_PAGE_SLUG')) {
+    define('BOOSTER_SETTINGS_PAGE_SLUG', BOOSTER_SLUG_OLD.'_settings');
+}
+if (!defined('BOOSTER_NAME')) {
+    define('BOOSTER_NAME', __('Divi Booster', BOOSTER_SLUG));
+}
 
 // Error Handling
-define('BOOSTER_OPTION_LAST_ERROR', 'wtfdivi_last_error');
-define('BOOSTER_OPTION_LAST_ERROR_DESC', 'wtfdivi_last_error_details');
+if (!defined('BOOSTER_OPTION_LAST_ERROR')) {
+    define('BOOSTER_OPTION_LAST_ERROR', 'wtfdivi_last_error');
+}
+if (!defined('BOOSTER_OPTION_LAST_ERROR_DESC')) {
+    define('BOOSTER_OPTION_LAST_ERROR_DESC', 'wtfdivi_last_error_details');
+}
 
 // Directories
-define('BOOSTER_DIR_FIXES', BOOSTER_CORE.'/fixes/');
+if (!defined('BOOSTER_DIR_FIXES')) {
+    define('BOOSTER_DIR_FIXES', BOOSTER_CORE.'/fixes/');
+}
 
 // === Setup ===		
-include(BOOSTER_CORE.'/index.php'); // Load the plugin framework
+include_once(BOOSTER_CORE.'/index.php'); // Load the plugin framework
 booster_enable_updates(dbdb_file()); // Enable auto-updates for this plugin
 
-include(BOOSTER_CORE.'/update_patches.php'); // Apply update patches
+include_once(BOOSTER_CORE.'/update_patches.php'); // Apply update patches
 
 // === Build the plugin ===
 
 $sections = array(
 	'general'=>'Site-wide Settings',
+	'general-accessibility'=>'Accessibility',
 	'general-icons'=>'Icons',
 	'general-layout'=>'Layout',
 	'general-links'=>'Links',
@@ -84,6 +101,9 @@ $sections = array(
 	'posts'=>'Posts',
 	'sidebar'=>'Sidebar',
 	'footer'=>'Footer',
+	'footer-layout'=>'Layout',
+	'footer-menu'=>'Footer Menu',
+	'footer-bottombar'=>'Bottom Bar',
 	'pagebuilder'=>'Divi Builder',
 	'pagebuilder-divi'=>'General',
 	'pagebuilder-classic'=>'Classic Builder',
@@ -125,21 +145,23 @@ $sections = array(
 
 add_filter('divibooster_fixes', 'db126_enable_feature_by_default');
 
-function db126_enable_feature_by_default($fixes) {
-	
-	if (!is_array($fixes)) { return $fixes; }
-	
-	$enabled_by_default = array(
-		'126-customizer-social-icons'
-	);
-	
-	foreach($enabled_by_default as $fix) {
-		if (!isset($fixes[$fix]['enabled'])) { 
-			$fixes[$fix]['enabled'] = true;
-		}
-	}
-	
-	return $fixes;
+if (!function_exists('db126_enable_feature_by_default')) {
+    function db126_enable_feature_by_default($fixes) {
+        
+        if (!is_array($fixes)) { return $fixes; }
+        
+        $enabled_by_default = array(
+            '126-customizer-social-icons'
+        );
+        
+        foreach($enabled_by_default as $fix) {
+            if (!isset($fixes[$fix]['enabled'])) { 
+                $fixes[$fix]['enabled'] = true;
+            }
+        }
+        
+        return $fixes;
+    }
 }
 
 // === Main plugin ===
@@ -186,12 +208,14 @@ if (class_exists('wtfplugin_1_0')) {
 }
 
 // Store and return an instance of the plugin
-function dbdb_plugin($instance=null) {
-	static $plugin;
-	if (!is_null($instance)) { 
-		$plugin = $instance;
-	}
-	return $plugin;
+if (!function_exists('dbdb_plugin')) {
+    function dbdb_plugin($instance=null) {
+        static $plugin;
+        if (!is_null($instance)) { 
+            $plugin = $instance;
+        }
+        return $plugin;
+    }
 }
 dbdb_plugin($wtfdivi);
 
@@ -203,28 +227,34 @@ if (!function_exists('db_admin_notice_main_class_missing')) {
 
 
 // === Load the settings ===
-function divibooster_load_settings($wtfdivi) {
-	$settings_files = glob(BOOSTER_DIR_FIXES.'*/settings.php');
-	if ($settings_files) { 
-		foreach($settings_files as $file) { include_once($file); }
-	}
+if (!function_exists('divibooster_load_settings')) {
+    function divibooster_load_settings($wtfdivi) {
+        $settings_files = glob(BOOSTER_DIR_FIXES.'*/settings.php');
+        if ($settings_files) { 
+            foreach($settings_files as $file) { include_once($file); }
+        }
+    }
+    add_action("$slug-before-settings-page", 'divibooster_load_settings');
 }
-add_action("$slug-before-settings-page", 'divibooster_load_settings');
-
 
 // === Add settings page hook ===
-function divibooster_settings_page_init() {
-	global $pagenow, $plugin_page;
-	if ($pagenow == 'admin.php' and $plugin_page == BOOSTER_SETTINGS_PAGE_SLUG) {
-		do_action('divibooster_settings_page_init');
-	}
+if (!function_exists('divibooster_settings_page_init')) {
+    function divibooster_settings_page_init() {
+        global $pagenow, $plugin_page;
+        if ($pagenow == 'admin.php' and $plugin_page == BOOSTER_SETTINGS_PAGE_SLUG) {
+            do_action('divibooster_settings_page_init');
+        }
+    }
+    add_action('admin_init', 'divibooster_settings_page_init');
 }
-add_action('admin_init', 'divibooster_settings_page_init');
-
 
 
 // Load media library
-function db_enqueue_media_loader() { wp_enqueue_media(); }
+if (!function_exists('db_enqueue_media_loader')) {
+    function db_enqueue_media_loader() { 
+        wp_enqueue_media(); 
+    }
+}
 add_action('admin_enqueue_scripts', 'db_enqueue_media_loader', 11); // Priority > 10 to avoid visualizer plugin conflict
 
 // =========================================================== //
@@ -232,10 +262,12 @@ add_action('admin_enqueue_scripts', 'db_enqueue_media_loader', 11); // Priority 
 // =========================================================== //
 
 // === Footer ===
-function divibooster_footer() { ?>
-<p>Spot a problem with this plugin? Want to make another change to the Divi Theme? <a href="https://divibooster.com/contact-form/">Let me know</a>.</p>
-<p><i>This plugin is an independent product which is not associated with, endorsed by, or supported by Elegant Themes.</i></p>
-<?php
-}	
+if (!function_exists('divibooster_footer')) {
+    function divibooster_footer() { ?>
+    <p>Spot a problem with this plugin? Want to make another change to the Divi Theme? <a href="https://divibooster.com/contact-form/">Let me know</a>.</p>
+    <p><i>This plugin is an independent product which is not associated with, endorsed by, or supported by Elegant Themes.</i></p>
+    <?php
+    }	
+}
 add_action($slug.'-plugin-footer', 'divibooster_footer');
 

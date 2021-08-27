@@ -3,7 +3,7 @@ Tags: notices, notification, notifications, upgrade, nag
 Contributors: webcraftic, alexkovalevv, creativemotion
 Donate link: https://clearfy.pro/disable-admin-notices/
 Requires at least: 4.8
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2
@@ -62,6 +62,10 @@ If you want to help with the translation, please contact me through this site or
 3. Notifications panel (optional)
 
 == Changelog ==
+= 1.2.4 (16.12.2020)=
+* Added: Subscribe widget
+* Fixed: Minor bugs
+
 = 1.2.3 =
 * Fixed: Compatibility with other plugins
 * Fixed: Appearance of the list of hidden notifications in the adminbar

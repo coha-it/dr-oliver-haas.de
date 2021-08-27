@@ -1,4 +1,5 @@
 <?php
+
 if (!class_exists('wtfplugin_1_0')) { 
 
 class wtfplugin_1_0 {
@@ -56,7 +57,7 @@ class wtfplugin_1_0 {
 			if (isset($data['enabled']) && $data['enabled']) { 
 				$fix_fn_file = $fix_dir."functions.php";
 				if (file_exists($fix_fn_file)) { 
-					include($fix_fn_file); 
+					include_once($fix_fn_file); 
 				}	
 			}
 		}
@@ -186,6 +187,8 @@ class wtfplugin_1_0 {
 		}
 		
 		do_action('dbdb_compile_patch_files_after', $this, $files);
+
+        //dbdb_save_mod_rewrite_rules();
 		
 		// Append our htaccess rules to the wordpress htaccess file
 		if (!function_exists('get_home_path')) { require_once(ABSPATH.'/wp-admin/includes/file.php'); }
@@ -407,14 +410,19 @@ class wtfplugin_1_0 {
 		
 		$field_name = "{$name}[{$field}]";
 		?>
-		<input type="checkbox" name="<?php esc_attr_e($field_name); ?>" value="1" <?php checked($is_checked,1); ?>/>
+		<input id="dbdb-<?php esc_attr_e($feature_slug); ?>-<?php esc_attr_e($field);?>" type="checkbox" name="<?php esc_attr_e($field_name); ?>" value="1" <?php checked($is_checked,1); ?>/>
 		<?php
 	}
 	
 	function selectpicker($file, $field, $options, $selected) { 
-		list($name, $option) = $this->get_setting_bases($file); ?>
+		$feature_slug = $this->feature_slug($file);
+		list($name, $option) = $this->get_setting_bases($file); 
+        $nameAttribRoot =  DBDBHtmlNameAttribute::fromString($name);
+        $nameAttrib = $nameAttribRoot->withFields($field);
+        $nameAttribStr = $nameAttrib->toString();
+        ?>
 		<div class="wtf-select">
-		<select name="<?php echo $name; ?><?php echo $field; ?>">
+		<select id="dbdb-<?php esc_attr_e($feature_slug); ?>-<?php esc_attr_e($field);?>" name="<?php esc_attr_e($nameAttribStr); ?>">
 		<?php foreach($options as $val=>$text) { ?>
 			<option value="<?php esc_attr_e($val); ?>" <?php echo ($selected==$val)?'selected':''; ?>><?php esc_html_e($text); ?></option>
 		<?php } ?>

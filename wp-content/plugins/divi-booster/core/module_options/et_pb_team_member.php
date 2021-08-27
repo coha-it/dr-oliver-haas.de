@@ -88,7 +88,6 @@ function db_pb_team_member_filter_content($content, $args) {
 		
 		// Add the email icon
 		if (!empty($args['db_email_addr'])) { 
-	
 			// Add the website icon to the social links list
 			$content = preg_replace('#(<ul[^>]*class="et_pb_member_social_links"[^>]*>)#', '\\1<li><a href="mailto:'.esc_attr($args['db_email_addr']).'" class="et_pb_font_icon db_pb_team_member_email_icon"><span>Email</span></a></li>', $content);
 		}

@@ -3,9 +3,9 @@ Contributors: divisupreme, kenng87
 Tags: Divi, Divi Module, Divi Page Builder, divi theme, divi builder, Divi Extensions
 Donate link: https://suprememodules.com/
 Requires at least: 4.5
-Tested up to: 5.5.1
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.3.2
+Stable tag: 2.4.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,7 @@ Divi Supreme lite contains 20 Free Divi Custom Modules and more to come soon.
 18. Supreme Divi Shapes - Shapes is one of the most important element in Design. So we’ve created this module to make your life easier. Shapes module add life and creativity to your website. Boost your Divi designs, without having to use image files or custom code. Shapes Module comes with 17 types of Shapes and more in the upcoming updates.
 19. Supreme Divi Before After Image Slider - The before after image slider module allows you to display the before and after versions of an image by simply sliding over them. Users will be able to move a slider to easily compare the two images.
 20. Supreme Divi Lottie - The Supreme Divi Lottie is excellent for adding light and eye-catching animations to your Divi website and increase the conversion and engagement of your customers. This module uses the library of JSON animations from lottefiles.com. The animation library includes thousands of exciting animations made by professional designers from around the world. You can easily pick up an animation that suits your site and your customers and use it in just two clicks.
+21. Supreme Divi Image Accordion - Let’s you display all of your images on your Divi website with a stunning hover/click animation and effects. Add as many items as you need providing them with icons, images, titles, descriptions, buttons, and links easily and quickly. It ensures the perfect image quality and combines them beautifully with amazing accordion effects.
 
 
 Divi Supreme Extentions
@@ -111,6 +112,34 @@ This is a common question that we get asked here every now and then which is why
 
 
 == Changelog ==
+= 2.4.0 – 27.08.2021 =
+* Fixed: Contact form 7 button conflict with Theme Customizer Button styles.
+* Fixed: Text alignment CSS classes not found in newer Divi version.
+* Enhanced: Enqueued magnific-popup.js from /includes/builder/feature/dynamic-assets/assets/js/magnific-popup.js only when using Lightbox and Popup features.
+
+= 2.3.9 – 17.06.2021 =
+* Enhanced: Divi Embed Google Map Module (No API required) – Added Fallback method if Google Map API is saved.
+* Enhanced: Zoom option unitless for Divi Embed Google Map Module.
+
+= 2.3.8 – 26.05.2021 =
+* Enhanced: Divi Embed Google Map.
+* Note: The Embed Google Maps JavaScript API v2 is deprecated and has turned off on May 26, 2021 by Google. As a result, all site’s v2 embed maps will stop working, and will return JavaScript errors. Million of websites has been affected by this. Google Embed Map now required a API key even for embed map.
+
+= 2.3.7 – 13.05.2021 =
+* Fixed: Admin Notice compatibility with Gravity Forms in some cases.
+
+= 2.3.6 – 04.02.2021 =
+* Fixed: Divi Image Accordion module in Custom Post Type and Theme Builder.
+
+= 2.3.5 – 19.01.2021 =
+* Enhanched: Add CSS class ‘skip-lazy’ to the before/after images to make sure it is skipped.
+
+= 2.3.4 – 12.01.2021 =
+* Enhanced: Supreme Button Module conflict with Divi’s button module margin and padding values.
+
+= 2.3.3 – 07.01.2021 =
+* Added: Divi Image Accordion Module.
+
 = 2.3.2 – 06.10.2020 =
 * Enhanced: Before After Image Slider Module by executing only in view port. (LazyLoad Enhanced).
 * Enhanced Typing Module and Before After Image Slider by checking if waypoints is loaded. 

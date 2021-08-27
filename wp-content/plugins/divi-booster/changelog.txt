@@ -1,3 +1,71 @@
+= 3.5.6 =
+* Fixed person module icons not displaying in Divi 4.10
+
+= 3.5.5 =
+* Added option to show post tags in blog module
+
+= 3.5.4 =
+* Fixed undefined function et_builder_i18n() error in Divi pre 4.4.9
+
+= 3.5.3 =
+* Added "Image Icon" custom icon option to social media network list
+
+= 3.5.2 =
+* Fixed menu module vertical separators applied to submenu items
+* Added "Run Once" option to fullwidth slider automation animation
+
+= 3.5.1 =
+* Added option to change filterable portfolio tab order
+
+= 3.5.0 =
+* Added span tag to separator added by post title module tags feature
+
+= 3.4.9 =
+* Reverted map pin feature to earlier loading method due to errors
+
+= 3.4.8 =
+* Added website and podcast icons to social media follow module
+
+= 3.4.7 =
+* Added site title / site tagline options to menu module
+* Improved custom map pin loading
+
+= 3.4.6 =
+* Added phone icon to social media follow module
+
+= 3.4.5 =
+* Fixed portfolio sorting by Id duplicating items in subsequent portfolios
+* Improved positioning of title text option in Extra
+
+= 3.4.4 =
+* Fixed errors when plugin loaded twice
+
+= 3.4.3 =
+* Fixed errors in CSS manager feature
+
+= 3.4.2 =
+* Fixed person module email and website not showing in theme builder layouts
+
+= 3.4.1 =
+* Fixed module options not applied in theme builder on some pages
+
+= 3.4.0 =
+* Added option to enable menu separator bars on menu module
+
+= 3.3.9 =
+* Fixed unsupported operand error in countdown timer module option
+
+= 3.3.8 =
+* Added option to set footer menu alignment
+* Improved footer option organization and wording
+
+= 3.3.7 =
+* Added Site-wide Settings > Accessibility > Enable Zooming option
+
+= 3.3.6 =
+* Updated title / tagline feature to omit tagline element when not visible
+* Fixed custom overlay icon positioning in fullwidth portfolio
+
 = 3.3.5 =
 * Fixed assign-op error in custom icon feature
 

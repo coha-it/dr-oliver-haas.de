@@ -68,24 +68,37 @@ class DSM_Button extends ET_Builder_Module {
 			),
 			'button'         => array(
 				'button_one' => array(
-					'label'      => esc_html__( 'Button One', 'dsm-supreme-modules-for-divi' ),
-					'css'        => array(
-						'main' => '%%order_class%% .et_pb_button_one.et_pb_button',
+					'label'          => esc_html__( 'Button One', 'dsm-supreme-modules-for-divi' ),
+					'css'            => array(
+						'main' => "{$this->main_css_element} .et_pb_button_one.et_pb_button",
 					),
-					'box_shadow' => array(
+					'box_shadow'     => array(
 						'css' => array(
 							'main' => '%%order_class%% .et_pb_button_one',
 						),
 					),
+					'margin_padding' => array(
+						'css' => array(
+							'important' => 'all',
+						),
+					),
 				),
 				'button_two' => array(
-					'label'      => esc_html__( 'Button Two', 'dsm-supreme-modules-for-divi' ),
-					'css'        => array(
-						'main' => '%%order_class%% .et_pb_button_two.et_pb_button',
+					'label'          => esc_html__( 'Button Two', 'dsm-supreme-modules-for-divi' ),
+					'css'            => array(
+						'main' => "{$this->main_css_element} .et_pb_button_two.et_pb_button",
 					),
-					'box_shadow' => array(
+					'box_shadow'     => array(
 						'css' => array(
 							'main' => '%%order_class%% .et_pb_button_two',
+						),
+					),
+					'margin_padding' => array(
+						'css'           => array(
+							'important' => 'all',
+						),
+						'custom_margin' => array(
+							'default' => '|||20px|false|false',
 						),
 					),
 				),
@@ -108,7 +121,6 @@ class DSM_Button extends ET_Builder_Module {
 				),
 			),
 			'text_shadow'    => array(
-				// Text Shadow settings are already included on button's advanced style
 				'default' => false,
 			),
 			'background'     => false,
@@ -120,14 +132,14 @@ class DSM_Button extends ET_Builder_Module {
 	public function get_fields() {
 		return array(
 			'button_one_text'                    => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s Text', 'dsm-supreme-modules-for-divi' ), '#1' ),
+				'label'           => esc_html__( 'Button #1 Text', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the text for the Button.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'     => 'main_content',
 			),
 			'button_one_url'                     => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s URL', 'dsm-supreme-modules-for-divi' ), '#1' ),
+				'label'           => esc_html__( 'Button #1 URL', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the URL for the Button.', 'dsm-supreme-modules-for-divi' ),
@@ -193,14 +205,14 @@ class DSM_Button extends ET_Builder_Module {
 				),
 			),
 			'button_two_text'                    => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s Text', 'dsm-supreme-modules-for-divi' ), '#2' ),
+				'label'           => esc_html__( 'Button #1 Text', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the text for the Button.', 'dsm-supreme-modules-for-divi' ),
 				'toggle_slug'     => 'main_content',
 			),
 			'button_two_url'                     => array(
-				'label'           => sprintf( esc_html__( 'Button %1$s URL', 'dsm-supreme-modules-for-divi' ), '#2' ),
+				'label'           => esc_html__( 'Button #1 URL', 'dsm-supreme-modules-for-divi' ),
 				'type'            => 'text',
 				'option_category' => 'basic_option',
 				'description'     => esc_html__( 'Enter the URL for the Button.', 'dsm-supreme-modules-for-divi' ),
@@ -321,7 +333,7 @@ class DSM_Button extends ET_Builder_Module {
 				'responsive'      => true,
 			),
 			'button_one_hover_animation'         => array(
-				'label'            => sprintf( esc_html__( 'Button Hover %1$s Animation', 'dsm-supreme-modules-for-divi' ), '#1' ),
+				'label'            => esc_html__( 'Button Hover #1 Animation', 'dsm-supreme-modules-for-divi' ),
 				'type'             => 'select',
 				'option_category'  => 'configuration',
 				'options'          => array(
@@ -342,7 +354,7 @@ class DSM_Button extends ET_Builder_Module {
 				'default_on_front' => 'dsm-none',
 			),
 			'button_two_hover_animation'         => array(
-				'label'            => sprintf( esc_html__( 'Button Hover %1$s Animation', 'dsm-supreme-modules-for-divi' ), '#2' ),
+				'label'            => esc_html__( 'Button Hover #2 Animation', 'dsm-supreme-modules-for-divi' ),
 				'type'             => 'select',
 				'option_category'  => 'configuration',
 				'options'          => array(
@@ -363,8 +375,6 @@ class DSM_Button extends ET_Builder_Module {
 				'default_on_front' => 'dsm-none',
 			),
 		);
-
-		return $fields;
 	}
 
 	/**
@@ -448,13 +458,13 @@ class DSM_Button extends ET_Builder_Module {
 		et_pb_generate_responsive_css( $separator_gap_values, '%%order_class%% .dsm-button-separator-text', 'margin-left', $render_slug );
 		et_pb_generate_responsive_css( $separator_gap_values, '%%order_class%% .dsm-button-separator-text', 'margin-right', $render_slug );
 
-		$addClass  = '';
-		$addClass .= " et_pb_bg_layout_{$background_layout}";
+		$add_class  = '';
+		$add_class .= " et_pb_bg_layout_{$background_layout}";
 		if ( ! empty( $background_layout_tablet ) ) {
-			$addClass .= " et_pb_bg_layout_{$background_layout_tablet}_tablet";
+			$add_class .= " et_pb_bg_layout_{$background_layout_tablet}_tablet";
 		}
 		if ( ! empty( $background_layout_phone ) ) {
-			$addClass .= " et_pb_bg_layout_{$background_layout_phone}_phone";
+			$add_class .= " et_pb_bg_layout_{$background_layout_phone}_phone";
 		}
 
 		$button_output = '';
@@ -474,7 +484,7 @@ class DSM_Button extends ET_Builder_Module {
 				esc_attr( $button_one_hover_animation ),
 				'off' !== $button_one_video_popup ? ' dsm-video-lightbox' : '',
 				'off' !== $button_one_image_popup ? ' dsm-image-lightbox' : '',
-				$addClass
+				$add_class
 			);
 		}
 
@@ -497,7 +507,7 @@ class DSM_Button extends ET_Builder_Module {
 				esc_attr( $button_two_hover_animation ),
 				'off' !== $button_two_video_popup ? ' dsm-video-lightbox' : '',
 				'off' !== $button_two_image_popup ? ' dsm-image-lightbox' : '',
-				$addClass
+				$add_class
 			);
 		}
 
@@ -514,7 +524,6 @@ class DSM_Button extends ET_Builder_Module {
 			);
 		}
 
-		// Module classnames
 		$this->add_classname( "et_pb_bg_layout_{$background_layout}" );
 		if ( ! empty( $background_layout_tablet ) ) {
 			$this->add_classname( "et_pb_bg_layout_{$background_layout_tablet}_tablet" );
@@ -523,7 +532,18 @@ class DSM_Button extends ET_Builder_Module {
 			$this->add_classname( "et_pb_bg_layout_{$background_layout_phone}_phone" );
 		}
 
-		// Render module output
+		if ( 'on' === $button_one_image_popup || 'on' === $button_two_image_popup ) {
+			if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
+				wp_enqueue_script( 'magnific-popup' );
+			}
+		}
+
+		if ( 'on' === $button_one_video_popup || 'on' === $button_two_video_popup ) {
+			if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
+				wp_enqueue_script( 'magnific-popup' );
+			}
+		}
+
 		$output = sprintf(
 			'<div class="et_pb_button_module_wrapper dsm_button_%3$s_wrapper %2$s%4$s%5$s%8$s"%6$s%7$s>
 				%1$s
@@ -542,4 +562,4 @@ class DSM_Button extends ET_Builder_Module {
 	}
 }
 
-new DSM_Button;
+new DSM_Button();

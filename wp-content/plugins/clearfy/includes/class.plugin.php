@@ -12,11 +12,11 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-class WCL_Plugin extends Wbcr_Factory437_Plugin {
+class WCL_Plugin extends Wbcr_Factory449_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory437_Plugin
+	 * @var Wbcr_Factory449_Plugin
 	 */
 	private static $app;
 
@@ -37,9 +37,13 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 		self::$app = $this;
 		parent::__construct($plugin_path, $data);
 
+		require_once(WCL_PLUGIN_DIR . '/includes/helpers.php');
 		require_once(WCL_PLUGIN_DIR . '/includes/classes/class.licensing.php');
 
 		if( is_admin() ) {
+			if( is_plugin_active('wp-rocket/wp-rocket.php') ) {
+				require_once(WCL_PLUGIN_DIR . '/includes/classes/3rd-party/boot.php');
+			}
 			require_once(WCL_PLUGIN_DIR . '/admin/includes/classes/class.option.php');
 			require_once(WCL_PLUGIN_DIR . '/admin/includes/classes/class.group.php');
 
@@ -71,7 +75,7 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return \Wbcr_Factory437_Plugin|\WCL_Plugin
+	 * @return \Wbcr_Factory449_Plugin|\WCL_Plugin
 	 */
 	public static function app()
 	{
@@ -134,6 +138,20 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 			unset($load_components['assets_manager']);
 		}
 
+		// Выполнить код до загрузки и инициализации компонентов
+		// ----------------------------------------------------------
+		if( is_plugin_active('wp-rocket/wp-rocket.php') ) {
+			$this->deactivateComponent('cache');
+
+			require_once(WCL_PLUGIN_DIR . '/includes/classes/3rd-party/class-base.php');
+			require_once(WCL_PLUGIN_DIR . '/includes/classes/3rd-party/plugins/class-wp-rocket.php');
+
+			$wp_rocket_no_conflict = new \Clearfy\ThirdParty\Wp_Rocket();
+			$wp_rocket_no_conflict->disable_clearfy_options();
+		}
+
+		//-----------------------------------------------------------
+
 		return $load_components;
 	}
 
@@ -163,6 +181,7 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 	private function register_pages()
 	{
 		require_once(WCL_PLUGIN_DIR . '/admin/pages/class-page.php');
+		require_once(WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance-cache.php');
 
 		try {
 			$this->registerPage('WCL_Setup', WCL_PLUGIN_DIR . '/admin/pages/setup/class-pages-setup.php');
@@ -170,7 +189,11 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 			$this->registerPage('WCL_AdvancedPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-advanced.php');
 			$this->registerPage('WCL_PerformancePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance.php');
 
-			$this->registerPage('WCL_PerformanceGooglePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance-google.php');
+			if( !($this->premium->is_activate() && $this->premium->is_install_package() && WCL_Plugin::app()->isActivateComponent('cache')) ) {
+				$this->registerPage('WCL_CachePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance-cache.php');
+			}
+
+			//$this->registerPage('WCL_PerformanceGooglePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-performance-google.php');
 			$this->registerPage('WCL_ComponentsPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-components.php');
 			$this->registerPage('WCL_SeoPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-seo.php');
 			$this->registerPage('WCL_DoublePagesPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-seo-double-pages.php');
@@ -184,7 +207,9 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 				$this->registerPage('WCL_ComponentsLicensePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-components-license.php');
 			}
 
-			$this->registerPage('WCL_LicensePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-license.php');
+			if( !WCL_Plugin::app()->getPopulateOption('whitelabel_hide_license_page') ) {
+				$this->registerPage('WCL_LicensePage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-license.php');
+			}
 
 			if( $this->isActivateComponent('widget_tools') ) {
 				$this->registerPage('WCL_WidgetsPage', WCL_PLUGIN_DIR . '/admin/pages/class-pages-widgets.php');
@@ -212,7 +237,6 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 	 */
 	private function global_scripts()
 	{
-
 		require_once(WCL_PLUGIN_DIR . '/includes/boot.php');
 
 		require_once(WCL_PLUGIN_DIR . '/includes/classes/class.configurate-performance.php');
@@ -291,7 +315,7 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 	 * @param $slug
 	 * param $premium
 	 *
-	 * @return \WBCR\Factory_437\Components\Install_Button
+	 * @return \WBCR\Factory_449\Components\Install_Button
 	 */
 	public function getInstallComponentsButton($component_type, $slug)
 	{
@@ -304,7 +328,7 @@ class WCL_Plugin extends Wbcr_Factory437_Plugin {
 	 * @param $component_type
 	 * @param $slug
 	 *
-	 * @return \WBCR\Factory_437\Components\Delete_Button
+	 * @return \WBCR\Factory_449\Components\Delete_Button
 	 */
 	public function getDeleteComponentsButton($component_type, $slug)
 	{

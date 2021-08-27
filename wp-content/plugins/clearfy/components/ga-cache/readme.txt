@@ -3,7 +3,7 @@ Tags: analytics,google analytics,google analytics dashboard,google analytics plu
 Contributors: webcraftic, alexkovalevv, JeromeMeyer62, creativemotion
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VDX7JNTQPNPFW
 Requires at least: 4.2
-Tested up to: 5.2
+Tested up to: 5.6
 Requires PHP: 5.4
 Stable tag: trunk
 License: GPLv2
@@ -75,6 +75,10 @@ We invite you to check out a few other related free plugins that our team has al
 1. Control panel
 
 == Changelog ==
+= 3.1.3 =
+* Added: Subscribe form
+* Fixed: Minor bugs
+
 = 3.1.2 =
 * Fixed: A bug with creating a local copy of the Google analytics library.
 

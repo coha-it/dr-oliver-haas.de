@@ -147,7 +147,7 @@
 								onChange: function(elem, value) {
 										var status = value.toString();
 										if ( status == 'true') {
-											$('input[name="' + input_name + '"]').not(current_item).removeAttr('checked').removeAttr('checkbox-disabled').iphoneStyle("refresh");
+											$('input[name="' + input_name + '"]').not(current_item).prop('checked',false).removeAttr('checkbox-disabled').iphoneStyle("refresh");
 										}
 										$('input[name="' + input_name + '"]').trigger("a3rev-ui-onoff_radio-switch", [elem.val(), status]);
 									},
@@ -165,7 +165,7 @@
 		/* Apply for normal checkbox */
 		$('.a3rev_panel_container .hide_options_if_checked').each(function(){
 
-			$(this).find('input:eq(0)').change(function() {
+			$(this).find('input').eq(0).on( 'change', function() {
 
 				if ($(this).is(':checked')) {
 					$(this).closest('fieldset, tr').nextUntil( '.hide_options_if_checked, .show_options_if_checked', '.hidden_option').hide();
@@ -173,12 +173,12 @@
 					$(this).closest('fieldset, tr').nextUntil( '.hide_options_if_checked, .show_options_if_checked', '.hidden_option').show();
 				}
 
-			}).change();
+			}).trigger('change');
 
 		});
 		$('.a3rev_panel_container .show_options_if_checked').each(function(){
 
-			$(this).find('input:eq(0)').change(function() {
+			$(this).find('input').eq(0).on( 'change', function() {
 
 				if ($(this).is(':checked')) {
 					$(this).closest('fieldset, tr').nextUntil( '.hide_options_if_checked, .show_options_if_checked', '.hidden_option').show();
@@ -186,7 +186,7 @@
 					$(this).closest('fieldset, tr').nextUntil( '.hide_options_if_checked, .show_options_if_checked', '.hidden_option').hide();
 				}
 
-			}).change();
+			}).trigger('change');
 
 		});
 
@@ -234,9 +234,9 @@
 		});
 
 		/* Apply Sub tab selected script */
-		$('div.a3_subsubsub_section ul.subsubsub li a:eq(0)').addClass('current');
-		$('div.a3_subsubsub_section .section:gt(0)').hide();
-		$('div.a3_subsubsub_section ul.subsubsub li a:gt(0)').each(function(){
+		$('div.a3_subsubsub_section ul.subsubsub li a').eq(0).addClass('current');
+		$('div.a3_subsubsub_section .section').slice(1).hide();
+		$('div.a3_subsubsub_section ul.subsubsub li a').slice(1).each(function(){
 			if( $(this).attr('class') == 'current') {
 				$('div.a3_subsubsub_section ul.subsubsub li a').removeClass('current');
 				$(this).addClass('current');
@@ -244,14 +244,14 @@
 				$('div.a3_subsubsub_section ' + $(this).attr('href') ).show();
 			}
 		});
-		$('div.a3_subsubsub_section ul.subsubsub li a').click(function(){
+		$('div.a3_subsubsub_section ul.subsubsub li a').on( 'click', function(){
 			var clicked = $(this);
 			var section = clicked.closest('.a3_subsubsub_section');
 			var target  = clicked.attr('href');
 
 			section.find('a').removeClass('current');
 
-			if ( section.find('.section:visible').size() > 0 ) {
+			if ( section.find('.section:visible').length > 0 ) {
 				section.find('.section:visible').fadeOut( 100, function() {
 					section.find( target ).fadeIn('fast');
 				});
@@ -336,7 +336,7 @@
 					version_checking_status.css('display', 'none');
 
 					// Get response
-					data = $.parseJSON( response );
+					data = JSON.parse( response );
 					if ( 0 == data.has_new_version ) {
 						version_message_container.removeClass('a3rev-ui-new-version-message');
 						version_message_container.addClass('a3rev-ui-latest-version-message');
@@ -417,7 +417,7 @@
 				url: submit_data.ajax_url,
 				data: submit_data.data,
 				success: function ( response ) {
-					data = $.parseJSON( response );
+					data = JSON.parse( response );
 					$('#' + bt_ajax_submit.attr('id') ).trigger("a3rev-ui-ajax_submit-completed", [ bt_ajax_submit, data ]);
 
 					setTimeout( function() {
@@ -522,7 +522,7 @@
 				url: submit_data.ajax_url,
 				data: submit_data.data,
 				success: function ( response ) {
-					result = $.parseJSON( response );
+					result = JSON.parse( response );
 
 					new_items = result.current_items;
 

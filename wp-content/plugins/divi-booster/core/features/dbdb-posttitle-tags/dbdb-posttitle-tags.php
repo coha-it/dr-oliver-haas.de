@@ -1,18 +1,10 @@
 <?php
-/*
-Plugin Name: Divi Booster Feature - Show Tags in Post Title Module
-Plugin URI: 
-Description: Candidate Divi Booster feature
-Author: Divi Booster
-Version: 0.1
-Author URI: http://www.divibooster.com
-*/
 
-
-// === Settings === 
-
-add_filter('et_pb_all_fields_unprocessed_et_pb_post_title', 'dbdb_posttitle_add_tags_option');
-add_filter('dbdbptst_show_tags', 'dbdb_posttitle_show_tags_based_on_module_setting', 10, 2);
+if (function_exists('add_filter')) {
+    add_filter('et_pb_all_fields_unprocessed_et_pb_post_title', 'dbdb_posttitle_add_tags_option');
+    add_filter('dbdbptst_show_tags', 'dbdb_posttitle_show_tags_based_on_module_setting', 10, 2);
+    add_filter('et_module_shortcode_output', 'dbdb_posttitle_add_tags_to_output', 10, 3);
+}
 
 if (!function_exists('dbdb_posttitle_add_tags_option')) {
 	function dbdb_posttitle_add_tags_option($fields) {
@@ -46,10 +38,6 @@ if (!function_exists('dbdb_posttitle_show_tags_based_on_module_setting')) {
 				$module->props['dbdb_show_tags'] === 'on');
 	}
 }
-
-// === Apply Feature === 
-
-add_filter('et_module_shortcode_output', 'dbdb_posttitle_add_tags_to_output', 10, 3);
 
 if (!function_exists('dbdb_posttitle_add_tags_to_output')) {
 	function dbdb_posttitle_add_tags_to_output($html, $render_slug, $module) {
@@ -94,9 +82,7 @@ if (!function_exists('dbdb_posttitle_add_tags_to_meta')) {
 			$taxonomy = (get_post_type() === 'project')?'project_tag':'post_tag';
 			$tags = get_the_term_list(get_the_id(), $taxonomy, '', ' ', '');
 			if ($tags) {
-				$meta_elements = array_filter(explode(' | ', $match[2]));
-				$meta_elements[] = '<span class="dbdb_posttitle_tags">'.$tags.'</span>';
-				return $match[1].implode(' | ', $meta_elements).$match[3];
+				return $match[1].$match[2].'<span class="dbdb_posttitle_tags_separator"> | </span><span class="dbdb_posttitle_tags">'.$tags.'</span>'.$match[3];
 			}
 		}
 		return isset($match[0])?$match[0]:'';

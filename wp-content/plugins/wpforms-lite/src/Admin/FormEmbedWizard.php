@@ -51,11 +51,11 @@ class FormEmbedWizard {
 
 		$min = wpforms_get_min_suffix();
 
-		if ( $this->is_form_embed_page() ) {
+		if ( $this->is_form_embed_page() && ! $this->is_challenge_active() ) {
 
 			wp_enqueue_style(
-				'wpforms-challenge',
-				WPFORMS_PLUGIN_URL . "assets/css/challenge{$min}.css",
+				'wpforms-admin-form-embed-wizard',
+				WPFORMS_PLUGIN_URL . "assets/css/form-embed-wizard{$min}.css",
 				[],
 				WPFORMS_VERSION
 			);
@@ -89,6 +89,12 @@ class FormEmbedWizard {
 			[
 				'nonce'        => wp_create_nonce( 'wpforms_admin_form_embed_wizard_nonce' ),
 				'is_edit_page' => (int) $this->is_form_embed_page( 'edit' ),
+				'video_url'    => esc_url(
+					sprintf(
+						'https://youtube.com/embed/%s?rel=0&showinfo=0',
+						wpforms_is_gutenberg_active() ? '_29nTiDvmLw' : 'IxGVz3AjEe0'
+					)
+				),
 			]
 		);
 	}
@@ -100,15 +106,48 @@ class FormEmbedWizard {
 	 */
 	public function output() {
 
-		$template = $this->is_form_embed_page() ? 'admin/form-embed-wizard/tooltip' : 'admin/form-embed-wizard/popup';
+		// We do not need to output tooltip if Challenge is active.
+		if ( $this->is_form_embed_page() && $this->is_challenge_active() ) {
+			$this->delete_meta();
 
-		echo wpforms_render( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			return;
+		}
+
+		$template = $this->is_form_embed_page() ? 'admin/form-embed-wizard/tooltip' : 'admin/form-embed-wizard/popup';
+		$args     = [];
+
+		if ( ! $this->is_form_embed_page() ) {
+			$args['user_can_edit_pages'] = current_user_can( 'edit_pages' );
+			$args['dropdown_pages']      = $this->get_dropdown_pages();
+		}
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wpforms_render( $template, $args );
 
 		$this->delete_meta();
 	}
 
 	/**
-	 * Check if the current page is a form embed page edit related to Challenge.
+	 * Check if Challenge is active.
+	 *
+	 * @since 1.6.4
+	 *
+	 * @return boolean
+	 */
+	public function is_challenge_active() {
+
+		static $challenge_active = null;
+
+		if ( is_null( $challenge_active ) ) {
+			$challenge        = wpforms()->get( 'challenge' );
+			$challenge_active = method_exists( $challenge, 'challenge_active' ) ? $challenge->challenge_active() : false;
+		}
+
+		return $challenge_active;
+	}
+
+	/**
+	 * Check if the current page is a form embed page.
 	 *
 	 * @since 1.6.2
 	 *
@@ -225,9 +264,11 @@ class FormEmbedWizard {
 		$this->set_meta( $meta );
 
 		// Update challenge option to properly continue challenge on the embed page.
-		$challenge = wpforms()->get( 'challenge' );
-		if ( $challenge->challenge_active() ) {
-			$challenge->set_challenge_option( [ 'embed_page' => $meta['embed_page'] ] );
+		if ( $this->is_challenge_active() ) {
+			$challenge = wpforms()->get( 'challenge' );
+			if ( method_exists( $challenge, 'set_challenge_option' ) ) {
+				$challenge->set_challenge_option( [ 'embed_page' => $meta['embed_page'] ] );
+			}
 		}
 
 		wp_send_json_success( $url );
@@ -280,5 +321,55 @@ class FormEmbedWizard {
 		}
 
 		return sprintf( $pattern, absint( $form_id ) );
+	}
+
+	/**
+	 * Generate select with pages which are available to edit for current user.
+	 *
+	 * @since 1.6.6
+	 *
+	 * @return string HTML dropdown list of pages.
+	 */
+	private function get_dropdown_pages() {
+
+		add_filter( 'get_pages', [ $this, 'remove_inaccessible_pages' ], 20 );
+
+		$dropdown = wp_dropdown_pages(
+			[
+				'show_option_none' => esc_html__( 'Select a Page', 'wpforms-lite' ),
+				'id'               => 'wpforms-admin-form-embed-wizard-select-page',
+				'name'             => '',
+				'post_status'      => [ 'publish', 'pending' ],
+				'echo'             => false,
+			]
+		);
+
+		remove_filter( 'get_pages', [ $this, 'remove_inaccessible_pages' ], 20 );
+
+		return $dropdown;
+	}
+
+	/**
+	 * Excludes pages from dropdown which user can't edit.
+	 *
+	 * @since 1.6.6
+	 *
+	 * @param \WP_Post[] $pages Array of page objects.
+	 *
+	 * @return \WP_Post[]|false Array of filtered pages or false.
+	 */
+	public function remove_inaccessible_pages( $pages ) {
+
+		if ( ! $pages ) {
+			return $pages;
+		}
+
+		foreach ( $pages as $key => $page ) {
+			if ( ! current_user_can( 'edit_page', $page->ID ) ) {
+				unset( $pages[ $key ] );
+			}
+		}
+
+		return $pages;
 	}
 }

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit40b60bb1fb3c9f8d7fbe38b982cb2ac5
+class ComposerStaticInit7d7fbc3e69cedef6a7cf1727ea8778eb
 {
     public static $files = array (
         'fca581ae5268210490253d58378748c5' => __DIR__ . '/../..' . '/includes/functions.php',
@@ -15,6 +15,7 @@ class ComposerStaticInit40b60bb1fb3c9f8d7fbe38b982cb2ac5
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'MC4WP_API' => __DIR__ . '/../..' . '/includes/api/class-api.php',
         'MC4WP_API_Connection_Exception' => __DIR__ . '/../..' . '/includes/api/class-connection-exception.php',
         'MC4WP_API_Exception' => __DIR__ . '/../..' . '/includes/api/class-exception.php',
@@ -75,7 +76,6 @@ class ComposerStaticInit40b60bb1fb3c9f8d7fbe38b982cb2ac5
         'MC4WP_Queue_Job' => __DIR__ . '/../..' . '/includes/class-queue-job.php',
         'MC4WP_Registration_Form_Integration' => __DIR__ . '/../..' . '/integrations/wp-registration-form/class-registration-form.php',
         'MC4WP_Tools' => __DIR__ . '/../..' . '/includes/class-tools.php',
-        'MC4WP_Update_Optin' => __DIR__ . '/../..' . '/includes/admin/class-update-optin.php',
         'MC4WP_Upgrade_Routines' => __DIR__ . '/../..' . '/includes/admin/class-upgrade-routines.php',
         'MC4WP_Usage_Tracking' => __DIR__ . '/../..' . '/includes/admin/class-usage-tracking.php',
         'MC4WP_User_Integration' => __DIR__ . '/../..' . '/includes/integrations/class-user-integration.php',
@@ -87,7 +87,7 @@ class ComposerStaticInit40b60bb1fb3c9f8d7fbe38b982cb2ac5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit40b60bb1fb3c9f8d7fbe38b982cb2ac5::$classMap;
+            $loader->classMap = ComposerStaticInit7d7fbc3e69cedef6a7cf1727ea8778eb::$classMap;
 
         }, null, ClassLoader::class);
     }

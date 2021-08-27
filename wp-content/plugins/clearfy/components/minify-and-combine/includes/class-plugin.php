@@ -8,16 +8,16 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if( !defined('ABSPATH') ) {
 	exit;
 }
 
 
-class WMAC_Plugin extends Wbcr_Factory437_Plugin {
+class WMAC_Plugin extends Wbcr_Factory449_Plugin {
 
 	/**
 	 * @see self::app()
-	 * @var Wbcr_Factory437_Plugin
+	 * @var Wbcr_Factory449_Plugin
 	 */
 	private static $app;
 
@@ -28,22 +28,23 @@ class WMAC_Plugin extends Wbcr_Factory437_Plugin {
 	 * Подробнее о свойстве $app см. self::app()
 	 *
 	 * @param string $plugin_path
-	 * @param array  $data
+	 * @param array $data
 	 *
 	 * @throws Exception
 	 */
-	public function __construct( $plugin_path, $data ) {
-		parent::__construct( $plugin_path, $data );
+	public function __construct($plugin_path, $data)
+	{
+		parent::__construct($plugin_path, $data);
 
 		self::$app = $this;
 
 		$this->global_scripts();
 
-		if ( is_admin() ) {
+		if( is_admin() ) {
 			$this->admin_scripts();
 		}
 
-		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ] );
+		add_action('plugins_loaded', [$this, 'plugins_loaded']);
 	}
 
 	/**
@@ -55,9 +56,10 @@ class WMAC_Plugin extends Wbcr_Factory437_Plugin {
 	 * Используется для получения настроек плагина, информации о плагине, для доступа к вспомогательным
 	 * классам.
 	 *
-	 * @return \Wbcr_Factory437_Plugin|\WCM_Plugin
+	 * @return \Wbcr_Factory449_Plugin|\WCM_Plugin
 	 */
-	public static function app() {
+	public static function app()
+	{
 		return self::$app;
 	}
 
@@ -66,21 +68,22 @@ class WMAC_Plugin extends Wbcr_Factory437_Plugin {
 	 * Выполнение действий после загрузки плагина
 	 * Подключаем все классы оптимизации и запускаем процесс
 	 */
-	public function plugins_loaded() {
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-base.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-cache.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-cache-checker.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-scripts.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-css-min.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-styles.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-criticalcss.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-main.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/class-helper.php' );
-
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/ext/php/jsmin.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/ext/php/yui-php-cssmin-bundled/Colors.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/ext/php/yui-php-cssmin-bundled/Minifier.php' );
-		require_once( WMAC_PLUGIN_DIR . '/includes/classes/ext/php/yui-php-cssmin-bundled/Utils.php' );
+	public function plugins_loaded()
+	{
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-base.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-cache.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-cache-checker.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-scripts.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-css-min.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-styles.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-criticalcss.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-main.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/class-helper.php');
+		
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/ext/php/jsmin.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/ext/php/yui-php-cssmin-bundled/Colors.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/ext/php/yui-php-cssmin-bundled/Minifier.php');
+		require_once(WMAC_PLUGIN_DIR . '/includes/classes/ext/php/yui-php-cssmin-bundled/Utils.php');
 
 		$plugin = new WMAC_PluginMain();
 		$plugin->start();
@@ -96,11 +99,12 @@ class WMAC_Plugin extends Wbcr_Factory437_Plugin {
 	 *
 	 * @throws \Exception
 	 */
-	private function register_pages() {
+	private function register_pages()
+	{
 
 		$admin_path = WMAC_PLUGIN_DIR . '/admin/pages';
 
-		self::app()->registerPage( 'WMAC_MinifyAndCombineSettingsPage', $admin_path . '/class-pages-settings.php' );
+		self::app()->registerPage('WMAC_MinifyAndCombineSettingsPage', $admin_path . '/class-pages-settings.php');
 	}
 
 	/**
@@ -108,15 +112,17 @@ class WMAC_Plugin extends Wbcr_Factory437_Plugin {
 	 *
 	 * @throws \Exception
 	 */
-	private function admin_scripts() {
-		require_once( WMAC_PLUGIN_DIR . '/admin/boot.php' );
+	private function admin_scripts()
+	{
+		require_once(WMAC_PLUGIN_DIR . '/admin/boot.php');
 		$this->register_pages();
 	}
 
 	/**
 	 * Подключаем глобальные функции
 	 */
-	private function global_scripts() {
-		require_once( WMAC_PLUGIN_DIR . '/includes/boot.php' );
+	private function global_scripts()
+	{
+		require_once(WMAC_PLUGIN_DIR . '/includes/boot.php');
 	}
 }

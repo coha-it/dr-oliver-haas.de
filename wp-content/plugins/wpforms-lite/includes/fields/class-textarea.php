@@ -23,6 +23,35 @@ class WPForms_Field_Textarea extends WPForms_Field {
 	}
 
 	/**
+	 * Get the value, that is used to prefill via dynamic or fallback population.
+	 * Based on field data and current properties.
+	 *
+	 * @since 1.6.4
+	 *
+	 * @param string $raw_value  Value from a GET param, always a string.
+	 * @param string $input      Represent a subfield inside the field. May be empty.
+	 * @param array  $properties Field properties.
+	 * @param array  $field      Current field specific data.
+	 *
+	 * @return array Modified field properties.
+	 */
+	protected function get_field_populated_single_property_value( $raw_value, $input, $properties, $field ) {
+
+		if ( ! is_string( $raw_value ) ) {
+			return $properties;
+		}
+
+		if (
+			! empty( $input ) &&
+			isset( $properties['inputs'][ $input ] )
+		) {
+			$properties['inputs'][ $input ]['attr']['value'] = wpforms_sanitize_textarea_field( $raw_value );
+		}
+
+		return $properties;
+	}
+
+	/**
 	 * Field options panel inside the builder.
 	 *
 	 * @since 1.0.0
@@ -77,14 +106,11 @@ class WPForms_Field_Textarea extends WPForms_Field {
 		// Placeholder.
 		$this->field_option( 'placeholder', $field );
 
-		// Hide label.
-		$this->field_option( 'label_hide', $field );
-
 		// Limit length.
 		$args = array(
 			'slug'    => 'limit_enabled',
 			'content' => $this->field_element(
-				'checkbox',
+				'toggle',
 				$field,
 				array(
 					'slug'    => 'limit_enabled',
@@ -139,13 +165,16 @@ class WPForms_Field_Textarea extends WPForms_Field {
 		// Custom CSS classes.
 		$this->field_option( 'css', $field );
 
+		// Hide label.
+		$this->field_option( 'label_hide', $field );
+
 		// Options close markup.
 		$this->field_option(
 			'advanced-options',
 			$field,
-			array(
+			[
 				'markup' => 'close',
-			)
+			]
 		);
 	}
 
@@ -164,7 +193,7 @@ class WPForms_Field_Textarea extends WPForms_Field {
 		// Primary input.
 		$placeholder = ! empty( $field['placeholder'] ) ? $field['placeholder'] : '';
 
-		echo '<textarea placeholder="' . esc_attr( $placeholder ) . '" class="primary-input" disabled></textarea>';
+		echo '<textarea placeholder="' . esc_attr( $placeholder ) . '" class="primary-input" readonly></textarea>';
 
 		// Description.
 		$this->field_preview_option( 'description', $field );

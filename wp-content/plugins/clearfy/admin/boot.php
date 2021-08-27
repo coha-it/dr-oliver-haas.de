@@ -18,11 +18,28 @@ if( !defined('ABSPATH') ) {
 }
 
 /**
+ * Уведомление будет показано на всех страницах Clearfy и его компонентах.
+ *
+ * @param WCL_Plugin $plugin
+ * @param Wbcr_FactoryPages448_ImpressiveThemplate $obj
+ */
+
+add_action('wbcr/factory/pages/impressive/print_all_notices', function ($plugin, $obj) {
+	# Выводит уведомление, что в отключены некоторые опции, чтобы не было конфликтов с wp rocket.
+	if( is_plugin_active('wp-rocket/wp-rocket.php') ) {
+		$obj->printWarningNotice(sprintf(__('You are using Clearfy and wp rocket together, to avoid conflicts, we have disabled similar features in Clearfy. For example, you cannot use caching in Clearfy and wp rocket at the same time. You can read more about this in <a href="%s" target="_blank" rel="noopener">this article</a>.', 'clearfy'), 'https://clearfy.pro/docs/wp-rocket-clearfy/'));
+	}
+	# Выводит уведомление, что нужно сбросить постоянные ссылки.
+	if( WCL_Plugin::app()->getPopulateOption('need_rewrite_rules') ) {
+		$obj->printWarningNotice(sprintf('<span class="wbcr-clr-need-rewrite-rules-message">' . __('When you deactivate some components, permanent links may work incorrectly. If this happens, please, <a href="%s">update the permalinks</a>, so you could complete the deactivation.', 'clearfy'), admin_url('options-permalink.php')) . '</span>');
+	}
+}, 10, 2);
+
+/**
  * Этот хук реализует условную логику перенаправления на страницу мастера настроек,
  * сразу после активации плагина.
  */
 add_action('admin_init', function () {
-
 	$plugin = WCL_Plugin::app();
 
 	// If the user has updated the plugin or activated it for the first time,
@@ -33,7 +50,7 @@ add_action('admin_init', function () {
 			if( WCL_Helper::is_need_show_setup_page() ) {
 				try {
 					$redirect_url = '';
-					if( class_exists('Wbcr_FactoryPages436') ) {
+					if( class_exists('Wbcr_FactoryPages448') ) {
 						$redirect_url = WCL_Plugin::app()->getPluginPageUrl('setup', ['wclearfy_setup_page_viewed' => 1]);
 					}
 					if( $redirect_url ) {
@@ -67,8 +84,8 @@ add_action('wbcr/factory/pages/impressive/header', function ($plugin_name) {
 
 /**
  * @param                                          $form
- * @param Wbcr_Factory437_Plugin $plugin
- * @param Wbcr_FactoryPages436_ImpressiveThemplate $obj
+ * @param Wbcr_Factory449_Plugin $plugin
+ * @param Wbcr_FactoryPages448_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_multisite_before_save($form, $plugin, $obj)
 {
@@ -110,41 +127,27 @@ add_action('wbcr/factory/pages/impressive/plugin_title', 'wbcr_clearfy_branding'
 	wp_enqueue_style('wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/css/install-addons.css', [], WCL_Plugin::app()->getPluginVersion());
 	wp_enqueue_script('wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/js/install-addons.js', [
 		'jquery',
-		'wbcr-factory-clearfy-228-global'
+		'wbcr-factory-templates-100-global'
 	], WCL_Plugin::app()->getPluginVersion());
 });*/
 
 /**
- * Выводит уведомление, что нужно сбросить постоянные ссылки.
- * Уведомление будет показано на всех страницах Clearfy и его компонентах.
- *
- * @param WCL_Plugin $plugin
- * @param Wbcr_FactoryPages436_ImpressiveThemplate $obj
+ * Удаляем уведомление Clearfy о том, что нужно перезаписать постоянные ссылоки.
  */
-function wbcr_clearfy_print_notice_rewrite_rules($plugin, $obj)
-{
-	if( WCL_Plugin::app()->getPopulateOption('need_rewrite_rules') ) {
-		$obj->printWarningNotice(sprintf('<span class="wbcr-clr-need-rewrite-rules-message">' . __('When you deactivate some components, permanent links may work incorrectly. If this happens, please, <a href="%s">update the permalinks</a>, so you could complete the deactivation.', 'clearfy'), admin_url('options-permalink.php')) . '</span>');
-	}
-}
-
-add_action('wbcr/factory/pages/impressive/print_all_notices', 'wbcr_clearfy_print_notice_rewrite_rules', 10, 2);
-
-/**
- * Удалем уведомление Clearfy о том, что нужно перезаписать постоянные ссылоки.s
- */
-function wbcr_clearfy_flush_rewrite_rules()
+function wbcr_clearfy_flush_rewrite_rules($hard)
 {
 	WCL_Plugin::app()->deletePopulateOption('need_rewrite_rules', 1);
+
+	return $hard;
 }
 
-add_action('flush_rewrite_rules_hard', 'wbcr_clearfy_flush_rewrite_rules');
+add_filter('flush_rewrite_rules_hard', 'wbcr_clearfy_flush_rewrite_rules');
 
 /**
  * Обновить постоынные ссылки, после выполнения быстрых настроек
  *
  * @param WHM_Plugin $plugin
- * @param Wbcr_FactoryPages436_ImpressiveThemplate $obj
+ * @param Wbcr_FactoryPages448_ImpressiveThemplate $obj
  */
 function wbcr_clearfy_after_form_save($plugin, $obj)
 {
@@ -167,7 +170,7 @@ add_action('wbcr/factory/pages/impressive/after_form_save', 'wbcr_clearfy_after_
  *
  * @param array $widgets
  * @param string $position
- * @param Wbcr_Factory437_Plugin $plugin
+ * @param Wbcr_Factory449_Plugin $plugin
  */
 
 add_filter('wbcr/factory/pages/impressive/widgets', function ($widgets, $position, $plugin) {
@@ -242,8 +245,7 @@ add_action('wp_dashboard_setup', function () {
 	}
 }, 9999);
 
-
-
-
-
-
+// add widget scripts on all clearfy pages
+add_action('wbcr/clearfy/page_assets', function ($id, $scripts, $styles) {
+	$scripts->add(WCL_PLUGIN_URL . '/admin/assets/js/widgets.js', array('jquery'));
+}, 10, 3);

@@ -4,6 +4,7 @@
 
 $divibooster_module_shortcodes = array(
 	'et_pb_accordion'=>'db_pb_accordion',
+	'et_pb_menu'=>'db_pb_menu',
 	'et_pb_team_member'=>'db_pb_team_member',
 	'et_pb_gallery'=>'db_pb_gallery',
 	'et_pb_portfolio'=>'db_pb_portfolio',
@@ -54,11 +55,10 @@ include_once($MODULE_OPTIONS_DIR.'dynamic_content.php');
 
 // Module-specific functionality
 include_once($MODULE_OPTIONS_DIR.'et_pb_accordion/et_pb_accordion.php');
+include_once($MODULE_OPTIONS_DIR.'et_pb_menu/et_pb_menu.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_team_member.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_gallery.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_portfolio/et_pb_portfolio.php');
-// include_once($MODULE_OPTIONS_DIR.'et_pb_filterable_portfolio.php');
-// include_once($MODULE_OPTIONS_DIR.'et_pb_fullwidth_portfolio.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_signup.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_slide/et_pb_slide.php');
 include_once($MODULE_OPTIONS_DIR.'et_pb_slider.php');
@@ -80,7 +80,7 @@ function db_add_module_field_filter() {
 				if ($obj instanceof ET_Builder_Element) {
 					
 					// Apply field whitelist for Divi pre-3.1
-					if (dbdb_is_divi('3.1', '<')) {
+					if (dbdb_is_divi('3.1', '<') && isset($obj->whitelisted_fields) && is_array($obj->whitelisted_fields)) {
 						$obj->whitelisted_fields = apply_filters("dbmo_{$slug}_whitelisted_fields", $obj->whitelisted_fields); 
 					}
 	
@@ -174,22 +174,18 @@ function divibooster_register_module_shortcodes(){
 
 function divibooster_module_shortcode_callback($atts, $content, $tag) {
 	$content = do_shortcode($content);
-	$content = apply_filters("{$tag}_content", $content, $atts);
+	if (is_singular()) { // Don't apply to excerpts
+		$content = apply_filters("{$tag}_content", $content, $atts);
+	}
 	return $content;
 }
 
 // === Enable {$tag}_content filter in theme builder layouts
 
-add_filter('et_module_shortcode_output', 'dbdb_addFilterToThemeBuilderLayouts', 10, 3);
+DBDBModuleOutputFilterHook::create('et_pb_gallery', 'db_pb_gallery_content')->enableInTb();
+DBDBModuleOutputFilterHook::create('et_pb_menu', 'db_pb_menu_content')->enableInTb();
+DBDBModuleOutputFilterHook::create('et_pb_team_member', 'db_pb_team_member_content')->enableInTb();
 
-function dbdb_addFilterToThemeBuilderLayouts($output, $render_slug, $module) {
-	if ($render_slug === 'et_pb_gallery' && isset($module->props)) {
-		if (is_callable('ET_Builder_Element::is_theme_builder_layout') && ET_Builder_Element::is_theme_builder_layout()) {
-			$output = apply_filters("db_pb_gallery_content", $output, $module->props);
-		}
-	}
-	return $output;
-}
 
 // === Avoid local caching === 
 
@@ -240,12 +236,15 @@ function divibooster_get_order_class_from_content($module_slug, $content) {
 	$classes = divibooster_get_classes_from_content($content);
 	foreach($classes as $class) {
 		if (preg_match("#^{$module_slug}_\d+$#", $class)) { return $class; }
+		if (preg_match("#^{$module_slug}_\d_tb_header$#", $class)) { return $class; }
+		if (preg_match("#^{$module_slug}_\d_tb_footer$#", $class)) { return $class; }
 	}
 	return false;
 }
 
 function divibooster_module_options_credit() {
-	return apply_filters('divibooster_module_options_credit', 'Added by Divi Booster');
+    return trim((string) DBDBModuleFieldDescription::create(DBDBWp::create(), ''));
+	//return apply_filters('divibooster_module_options_credit', 'Added by Divi Booster');
 }
 
 // === Option styling === //

@@ -12,10 +12,11 @@ class Post_Views_Counter_Dashboard {
 
 	public function __construct() {
 		// actions
-		add_action( 'wp_dashboard_setup', array( $this, 'wp_dashboard_setup' ) );
+		add_action( 'wp_dashboard_setup', array( $this, 'wp_dashboard_setup' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts_styles' ) );
-		add_action( 'wp_ajax_pvc_dashboard_chart', array( $this, 'dashboard_widget_chart' ) );
-		add_action( 'wp_ajax_pvc_dashboard_chart_user_post_types', array( $this, 'dashboard_widget_chart_user_post_types' ) );
+		add_action( 'wp_ajax_pvc_dashboard_most_viewed', array( $this, 'dashboard_get_most_viewed' ) );
+		add_action( 'wp_ajax_pvc_dashboard_chart', array( $this, 'dashboard_get_chart' ) );
+		add_action( 'wp_ajax_pvc_dashboard_user_options', array( $this, 'update_dashboard_user_options' ) );
 	}
 
 	/**
@@ -27,8 +28,42 @@ class Post_Views_Counter_Dashboard {
 			return;
 		}
 
-		// add dashboard widget
-		wp_add_dashboard_widget( 'pvc_dashboard', __( 'Post Views', 'post-views-counter' ), array( $this, 'dashboard_widget' ) );
+		// add dashboard post views chart widget
+		wp_add_dashboard_widget( 'pvc_dashboard', __( 'Post Views Counter', 'post-views-counter' ), array( $this, 'dashboard_widget' ) );
+	}
+	
+	/**
+	 * Enqueue admin scripts and styles.
+	 * 
+	 * @param string $pagenow
+	 */
+	public function admin_scripts_styles( $pagenow ) {
+		if ( $pagenow != 'index.php' )
+			return;
+
+		// filter user_can_see_stats
+		if ( ! apply_filters( 'pvc_user_can_see_stats', current_user_can( 'publish_posts' ) ) )
+			return;
+
+		wp_register_style( 'pvc-admin-dashboard', POST_VIEWS_COUNTER_URL . '/css/admin-dashboard.css', array(), Post_Views_Counter()->defaults['version'] );
+		wp_enqueue_style( 'pvc-admin-dashboard' );
+		wp_enqueue_style( 'pvc-chartjs', POST_VIEWS_COUNTER_URL . '/assets/chartjs/chart.min.css', array(), Post_Views_Counter()->defaults['version'] );
+		wp_enqueue_style( 'pvc-microtip', POST_VIEWS_COUNTER_URL . '/assets/microtip/microtip.min.css', array(), Post_Views_Counter()->defaults['version'] );
+
+		wp_register_script( 'pvc-chartjs', POST_VIEWS_COUNTER_URL . '/assets/chartjs/chart.min.js', array( 'jquery' ), Post_Views_Counter()->defaults['version'], true );
+		wp_register_script( 'pvc-admin-dashboard', POST_VIEWS_COUNTER_URL . '/js/admin-dashboard.js', array( 'jquery', 'pvc-chartjs' ), Post_Views_Counter()->defaults['version'], true );
+
+		wp_enqueue_script( 'pvc-admin-dashboard' );
+
+		wp_localize_script(
+			'pvc-admin-dashboard',
+			'pvcArgs',
+			array(
+				'ajaxURL'	 => admin_url( 'admin-ajax.php' ),
+				'nonce'		 => wp_create_nonce( 'pvc-dashboard-chart' ),
+				'nonceUser'	 => wp_create_nonce( 'pvc-dashboard-user-options' )
+			)
+		);
 	}
 
 	/**
@@ -37,92 +72,68 @@ class Post_Views_Counter_Dashboard {
 	 * @return mixed
 	 */
 	public function dashboard_widget() {
+		// get user ID
+		$user_id = get_current_user_id();
+
+		// get user options
+		$user_options = get_user_meta( $user_id, 'pvc_dashboard', true );
+
+		// empty options?
+		if ( ! is_array( $user_options ) || empty( $user_options ) )
+			$user_options = array();
+		
+		// sanitize options
+		$user_options = map_deep( $user_options, 'sanitize_text_field' );
+		$menu_items = ! empty( $user_options['menu_items'] ) ? $user_options['menu_items'] : array();
+		
+		$months_html = $this->generate_months( current_time( 'timestamp', false ) );
 		?>
-		<div id="pvc_dashboard_container">
-			<canvas id="pvc_chart" height="175"></canvas>
-			<div class="pvc_months">
+		<div id="pvc-dashboard-accordion" class="pvc-accordion">
+			<div id="pvc-post-views" class="pvc-accordion-item<?php echo in_array( 'post-views', $menu_items ) ? ' pvc-collapsed' : ''; ?>">
+				<div class="pvc-accordion-header">
+					<div class="pvc-accordion-toggle"><span class="pvc-accordion-title"><?php _e( 'Post Views', 'post-views-counter' ); ?></span><span class="pvc-tooltip" aria-label="<?php _e( 'Displays the chart of most viewed post types for a selected time period.', 'post-views-counter' ); ?>" data-microtip-position="top" data-microtip-size="large" role="tooltip"><span class="pvc-tooltip-icon"></span></span></div>
+					<?php /*
+					<div class="pvc-accordion-actions">
+						<a href="javascript:void(0);" class="pvc-accordion-action dashicons dashicons-admin-generic"></a>
+					</div>
+					*/ ?>
+				</div>
+				<div class="pvc-accordion-content">
+					<div class="pvc-dashboard-container loading">
 
-			<?php echo $this->generate_months( current_time( 'timestamp', false ) ); ?>
+						<div id="pvc-chart-container" class="pvc-data-container">
+							<canvas id="pvc-chart" height="175"></canvas>
+							<span class="spinner"></span>
+						</div>
 
+						<div class="pvc-months">
+							<?php echo $months_html; ?>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div id="pvc-most-viewed" class="pvc-accordion-item<?php echo in_array( 'most-viewed', $menu_items ) ? ' pvc-collapsed' : ''; ?>">
+				<div class="pvc-accordion-header">
+					<div class="pvc-accordion-toggle"><span class="pvc-accordion-title"><?php _e( 'Top Posts', 'post-views-counter' ); ?></span><span class="pvc-tooltip" aria-label="<?php _e( 'Displays the list of most viewed posts and pages on your website.', 'post-views-counter' ); ?>" data-microtip-position="top" data-microtip-size="large" role="tooltip"><span class="pvc-tooltip-icon"></span></span></div>
+				</div>
+				<div class="pvc-accordion-content">
+					<div class="pvc-dashboard-container loading">
+
+						<div class="pvc-data-container">
+							<div id="pvc-viewed" class="pvc-table-responsive"></div>
+							<span class="spinner"></span>
+						</div>
+
+						<div class="pvc-months">
+							<?php echo $months_html; ?>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Generate months.
-	 *
-	 * @param string $timestamp
-	 * @return string
-	 */
-	public function generate_months( $timestamp ) {
-		$dates = array(
-			explode( ' ', date( "m F Y", strtotime( "-1 months", $timestamp ) ) ),
-			explode( ' ', date( "m F Y", $timestamp ) ),
-			explode( ' ', date( "m F Y", strtotime( "+1 months", $timestamp ) ) )
-		);
-
-		$current = date( "Ym", current_time( 'timestamp', false ) );
-
-		if ( (int) $current <= (int) ( $dates[1][2] . $dates[1][0] ) )
-			$next = '<span class="next">' . $dates[2][1] . ' ' . $dates[2][2] . ' ›</span>';
-		else
-			$next = '<a class="next" href="#" data-date="' . ( $dates[2][0] . '|' . $dates[2][2] ) . '">' . $dates[2][1] . ' ' . $dates[2][2] . ' ›</a>';
-
-		$dates = array(
-			'prev'		=> '<a class="prev" href="#" data-date="' . ( $dates[0][0] . '|' . $dates[0][2] ) . '">‹ ' . $dates[0][1] . ' ' . $dates[0][2] . '</a>',
-			'current'	=> '<span class="current">' . $dates[1][1] . ' ' . $dates[1][2] . '</span>',
-			'next'		=> $next
-		);
-
-		return $dates['prev'] . $dates['current'] . $dates['next'];
-	}
-
-	/**
-	 * Dashboard widget chart user post types.
-	 * 
-	 * @return void
-	 */
-	public function dashboard_widget_chart_user_post_types() {
-		if ( ! check_ajax_referer( 'dashboard-chart-user-post-types', 'nonce' ) )
-			wp_die( __( 'You do not have permission to access this page.', 'post-views-counter' ) );
-
-		// get post types
-		$post_types = Post_Views_Counter()->options['general']['post_types_count'];
-
-		// simulate total views as post type
-		$post_types[] = '_pvc_total_views';
-
-		// valid data?
-		if ( isset( $_POST['nonce'], $_POST['hidden'], $_POST['post_type'] ) && ( in_array( $_POST['post_type'], $post_types, true ) ) ) {
-			// get user ID
-			$user_id = get_current_user_id();
-
-			// get user dashboard data
-			$userdata = get_user_meta( $user_id, 'pvc_dashboard', true );
-
-			// empty userdata?
-			if ( ! is_array( $userdata ) || empty( $userdata ) )
-				$userdata = array();
-
-			// empty post types?
-			if ( ! array_key_exists( 'post_types', $userdata ) || ! is_array( $userdata['post_types'] ) )
-				$userdata['post_types'] = array();
-
-			// hide post type?
-			if ( $_POST['hidden'] === 'true' ) {
-				if ( ! in_array( $_POST['post_type'], $userdata['post_types'], true ) )
-					$userdata['post_types'][] = $_POST['post_type'];
-			} else {
-				if ( ( $key = array_search( $_POST['post_type'], $userdata['post_types'] ) ) !== false )
-					unset( $userdata['post_types'][$key] );
-			}
-
-			// update userdata
-			update_user_meta( $user_id, 'pvc_dashboard', $userdata );
-		}
-
-		exit;
 	}
 
 	/**
@@ -131,11 +142,11 @@ class Post_Views_Counter_Dashboard {
 	 * @global $_wp_admin_css_colors
 	 * @return void
 	 */
-	public function dashboard_widget_chart() {
+	public function dashboard_get_chart() {
 		if ( ! apply_filters( 'pvc_user_can_see_stats', current_user_can( 'publish_posts' ) ) )
 			wp_die( _( 'You do not have permission to access this page.', 'post-views-counter' ) );
 
-		if ( ! check_ajax_referer( 'dashboard-chart', 'nonce' ) )
+		if ( ! check_ajax_referer( 'pvc-dashboard-chart', 'nonce' ) )
 			wp_die( __( 'You do not have permission to access this page.', 'post-views-counter' ) );
 
 		// get period
@@ -273,7 +284,7 @@ class Post_Views_Counter_Dashboard {
 
 			case 'this_month':
 			default:
-				$userdata = $this->get_dashboard_user_data( get_current_user_id(), 'post_types' );
+				$user_options = $this->get_dashboard_user_options( get_current_user_id(), 'post_types' );
 
 				if ( $period !== 'this_month' ) {
 					$date = explode( '|', $period, 2 );
@@ -304,7 +315,7 @@ class Post_Views_Counter_Dashboard {
 
 				$data['data']['datasets'][0]['label'] = __( 'Total Views', 'post-views-counter' );
 				$data['data']['datasets'][0]['post_type'] = '_pvc_total_views';
-				$data['data']['datasets'][0]['hidden'] = in_array( '_pvc_total_views', $userdata, true );
+				$data['data']['datasets'][0]['hidden'] = in_array( '_pvc_total_views', $user_options, true );
 
 				// reindex post types
 				$post_types = array_combine( range( 1, count( $post_types ) ), array_values( $post_types ) );
@@ -316,7 +327,7 @@ class Post_Views_Counter_Dashboard {
 
 					$data['data']['datasets'][$id]['label'] = $post_type_obj->labels->name;
 					$data['data']['datasets'][$id]['post_type'] = $post_type_obj->name;
-					$data['data']['datasets'][$id]['hidden'] = in_array( $post_type_obj->name, $userdata, true );
+					$data['data']['datasets'][$id]['hidden'] = in_array( $post_type_obj->name, $user_options, true );
 					$data['data']['datasets'][$id]['data'] = array();
 
 					// get month views
@@ -364,6 +375,191 @@ class Post_Views_Counter_Dashboard {
 
 		exit;
 	}
+	
+	/**
+	 * Dashboard widget chart data function.
+	 * 
+	 * @global $_wp_admin_css_colors
+	 * @return void
+	 */
+	public function dashboard_get_most_viewed() {
+		if ( ! apply_filters( 'pvc_user_can_see_stats', current_user_can( 'publish_posts' ) ) )
+			wp_die( _( 'You do not have permission to access this page.', 'post-views-counter' ) );
+
+		if ( ! check_ajax_referer( 'pvc-dashboard-chart', 'nonce' ) )
+			wp_die( __( 'You do not have permission to access this page.', 'post-views-counter' ) );
+
+		// get period
+		$period = isset( $_POST['period'] ) ? esc_attr( $_POST['period'] ) : 'this_month';
+
+		// get post types
+		$post_types = Post_Views_Counter()->options['general']['post_types_count'];
+		
+		if ( $period !== 'this_month' ) {
+			$date = explode( '|', $period, 2 );
+			$months = strtotime( (string) $date[1] . '-' . (string) $date[0] . '-13' );
+		} else
+			$months = current_time( 'timestamp', false );
+
+		// get date chunks
+		$date = explode( ' ', date( "m Y t F", $months ) );
+
+		// get stats
+		$query_args = array(
+			'post_type'			 => $post_types,
+			'posts_per_page'	 => 10,
+			'paged'				 => false,
+			'suppress_filters'	 => false,
+			'no_found_rows'		 => true,
+			'views_query'	 => array(
+				'year'	 => $date[1],
+				'month'	 => $date[0],
+			)
+		);
+		
+		$posts = pvc_get_most_viewed_posts( $query_args );
+		
+		$data = array(
+			'months'	=> $this->generate_months( $months ),
+			'html'		=> '',
+		);
+		
+		$html = '<table id="pvc-most-viewed-table" class="pvc-table pvc-table-hover">';
+		$html .=	'<thead>';
+		$html .=	'<tr>';
+		$html .=		'<th scope="col">#</th>';
+		$html .=		'<th scope="col">' . __( 'Post', 'post-views-counter' ) . '</th>';
+		$html .=		'<th scope="col">' . __( 'Post Views', 'post-views-counter' ) . '</th>';
+		$html .=	'</tr>';
+		$html .=	'</thead>';
+		$html .=	'<tbody>';
+		
+		if ( $posts ) {
+			foreach ( $posts as $index => $post ) {
+				setup_postdata( $post );
+				
+				$html .= '<tr>';
+				$html .= '<th scope="col">' . ( $index + 1 ) . '</th>';
+				
+				if ( current_user_can( 'edit_post', $post->ID ) ) {
+					$html .= '<td><a href="' . get_edit_post_link( $post->ID ) . '">' . get_the_title( $post ) . '</a></td>';
+				} else {
+					$html .= '<td>' . get_the_title( $post ). '</td>';
+				}
+				
+				$html .= '<td>' . number_format_i18n( $post->post_views ) . '</td>';
+				$html .= '</tr>';
+			}
+		} else {
+			$html .= '<tr class="no-posts">';
+			$html .= '<td colspan="3">' . __( 'No most viewed posts found', 'post-views-counter' ) . '</td>';
+			$html .= '</tr>';
+		}
+		
+		$html .=	'</tbody>';
+		$html .='</table>';
+		
+		$data['html'] = $html;
+		
+		echo json_encode( $data );
+		exit;
+	}
+	
+	/**
+	 * Generate months.
+	 *
+	 * @param string $timestamp
+	 * @return string
+	 */
+	public function generate_months( $timestamp ) {
+		$dates = array(
+			explode( ' ', date( "m F Y", strtotime( "-1 months", $timestamp ) ) ),
+			explode( ' ', date( "m F Y", $timestamp ) ),
+			explode( ' ', date( "m F Y", strtotime( "+1 months", $timestamp ) ) )
+		);
+
+		$current = date( "Ym", current_time( 'timestamp', false ) );
+
+		if ( (int) $current <= (int) ( $dates[1][2] . $dates[1][0] ) )
+			$next = '<span class="next">' . $dates[2][1] . ' ' . $dates[2][2] . ' ›</span>';
+		else
+			$next = '<a class="next" href="#" data-date="' . ( $dates[2][0] . '|' . $dates[2][2] ) . '">' . $dates[2][1] . ' ' . $dates[2][2] . ' ›</a>';
+
+		$dates = array(
+			'prev'		=> '<a class="prev" href="#" data-date="' . ( $dates[0][0] . '|' . $dates[0][2] ) . '">‹ ' . $dates[0][1] . ' ' . $dates[0][2] . '</a>',
+			'current'	=> '<span class="current">' . $dates[1][1] . ' ' . $dates[1][2] . '</span>',
+			'next'		=> $next
+		);
+
+		return $dates['prev'] . $dates['current'] . $dates['next'];
+	}
+
+	/**
+	 * Dashboard widget chart user post types.
+	 * 
+	 * @return void
+	 */
+	public function update_dashboard_user_options() {
+		if ( ! check_ajax_referer( 'pvc-dashboard-user-options', 'nonce' ) )
+			wp_die( __( 'You do not have permission to access this page.', 'post-views-counter' ) );
+
+		// get allowed post types
+		$allowed_post_types = Post_Views_Counter()->options['general']['post_types_count'];
+
+		// simulate total views as post type
+		$allowed_post_types[] = '_pvc_total_views';
+		
+		// get allowed menu items
+		$allowed_menu_items = array( 'post-views', 'most-viewed' );
+
+		// valid data?
+		if ( isset( $_POST['nonce'], $_POST['options'] ) && ! empty( $_POST['options'] ) ) {
+			// get options
+			$update = map_deep( $_POST['options'], 'sanitize_text_field' );
+
+			// get user ID
+			$user_id = get_current_user_id();
+
+			// get user dashboard data
+			$user_options = get_user_meta( $user_id, 'pvc_dashboard', true );
+
+			// empty userdata?
+			if ( ! is_array( $user_options ) || empty( $user_options ) )
+				$user_options = array();
+			
+			// empty post types?
+			if ( ! array_key_exists( 'post_types', $user_options ) || ! is_array( $user_options['post_types'] ) )
+				$user_options['post_types'] = array();
+
+			// hide post type?
+			if ( ! empty( $update['post_type'] ) && in_array( $update['post_type'], $allowed_post_types, true ) ) {
+				if ( isset( $update['hidden'] ) && $update['hidden'] === 'true' ) {
+					if ( ! in_array( $update['post_type'], $user_options['post_types'], true ) )
+						$user_options['post_types'][] = $update['post_type'];
+				} else {
+					if ( ( $key = array_search( $update['post_type'], $user_options['post_types'] ) ) !== false )
+						unset( $user_options['post_types'][$key] );
+				}
+			}
+
+			// hide menu item?
+			$user_options['menu_items'] = array();
+			
+			if ( ! empty( $update['menu_items'] ) && is_array( $update['menu_items'] ) ) {
+				$update['menu_items'] = map_deep( $update['menu_items'], 'sanitize_text_field' );
+
+				foreach ( $update['menu_items'] as $menu_item => $hidden ) {
+					if ( in_array( $menu_item, $allowed_menu_items ) && $hidden === 'true' )
+						$user_options['menu_items'][] = $menu_item;					
+				}
+			}
+
+			// update userdata
+			update_user_meta( $user_id, 'pvc_dashboard', $user_options );
+		}
+
+		exit;
+	}
 
 	/**
 	 * Get user dashboard data.
@@ -371,49 +567,16 @@ class Post_Views_Counter_Dashboard {
 	 * @param string $data_type
 	 * @return array
 	 */
-	public function get_dashboard_user_data( $user_id, $data_type ) {
-		$userdata = get_user_meta( $user_id, 'pvc_dashboard', true );
+	public function get_dashboard_user_options( $user_id, $data_type ) {
+		$user_options = get_user_meta( $user_id, 'pvc_dashboard', true );
 
-		if ( ! is_array( $userdata ) || empty( $userdata ) )
-			$userdata = array();
+		if ( ! is_array( $user_options ) || empty( $user_options ) )
+			$user_options = array();
 
-		if ( ! array_key_exists( $data_type, $userdata ) || ! is_array( $userdata[$data_type] ) )
-			$userdata[$data_type] = array();
+		if ( ! array_key_exists( $data_type, $user_options ) || ! is_array( $user_options[$data_type] ) )
+			$user_options[$data_type] = array();
 
-		return $userdata[$data_type];
-	}
-
-	/**
-	 * Enqueue admin scripts and styles.
-	 * 
-	 * @param string $pagenow
-	 */
-	public function admin_scripts_styles( $pagenow ) {
-		if ( $pagenow != 'index.php' )
-			return;
-
-		// filter user_can_see_stats
-		if ( ! apply_filters( 'pvc_user_can_see_stats', current_user_can( 'publish_posts' ) ) )
-			return;
-
-		wp_register_style( 'pvc-admin-dashboard', POST_VIEWS_COUNTER_URL . '/css/admin-dashboard.css' );
-		wp_enqueue_style( 'pvc-admin-dashboard' );
-		wp_enqueue_style( 'pvc-chart-css', POST_VIEWS_COUNTER_URL . '/assets/chartjs/chart.min.css' );
-
-		wp_register_script( 'pvc-chart', POST_VIEWS_COUNTER_URL . '/assets/chartjs/chart.min.js', array( 'jquery' ), Post_Views_Counter()->defaults['version'], true );
-		wp_register_script( 'pvc-admin-dashboard', POST_VIEWS_COUNTER_URL . '/js/admin-dashboard.js', array( 'jquery', 'pvc-chart' ), Post_Views_Counter()->defaults['version'], true );
-
-		wp_enqueue_script( 'pvc-admin-dashboard' );
-
-		wp_localize_script(
-			'pvc-admin-dashboard',
-			'pvcArgs',
-			array(
-				'ajaxURL'	 => admin_url( 'admin-ajax.php' ),
-				'nonce'		 => wp_create_nonce( 'dashboard-chart' ),
-				'nonceUser'	 => wp_create_nonce( 'dashboard-chart-user-post-types' )
-			)
-		);
+		return $user_options[$data_type];
 	}
 
 	/**

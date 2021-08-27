@@ -12,6 +12,30 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
+/*add_action('wclearfy/google_page_speed_audit', function () {
+	$results = WCL_Helper::fetch_google_page_speed_audit();
+
+	if( !empty($results) ) {
+		if( WCL_Plugin::app()->getPopulateOption('start_first_google_page_speed_audit') && !WCL_Plugin::app()->getPopulateOption('google_page_speed_audit_before') ) {
+			WCL_Plugin::app()->updatePopulateOption('google_page_speed_audit_before', $results);
+			WCL_Plugin::app()->deletePopulateOption('start_first_google_page_speed_audit');
+		} else if( WCL_Plugin::app()->getPopulateOption('start_second_google_page_speed_audit') ) {
+			WCL_Plugin::app()->updatePopulateOption('google_page_speed_audit_after', $results);
+		}
+	}
+});*/
+
+/*function wclearfy_refresh_google_page_widgets()
+{
+	WCL_Plugin::app()->updatePopulateOption('start_second_google_page_speed_audit', 1);
+	WCL_Plugin::app()->deletePopulateOption('google_page_speed_audit_after');
+	wp_schedule_event(time(), 'daily', 'wclearfy/google_page_speed_audit');
+}*/
+
+//add_action('wbcr/factory/clearfy/setup_wizard/saved_options', 'wclearfy_refresh_google_page_widgets');
+//add_action('wbcr_clearfy_configurated_quick_mode', 'wclearfy_refresh_google_page_widgets');
+//add_action('wbcr/factory/pages/impressive/after_form_save', 'wclearfy_refresh_google_page_widgets');
+
 /**
  * Подключает скрипты для дополнительного меню Clearfy, на всех страницах сайта.
  * Скрипты могут быть добавлены только, если пользователь администратор и в настройках Clearfy
@@ -52,18 +76,6 @@ function wbcr_clr_admin_bar_menu($wp_admin_bar)
 
 	$menu_items = [];
 
-	/**
-	 * @since 1.1.3 - добавлен
-	 * @since 1.1.4 - является устаревшим
-	 */
-	$menu_items = wbcr_factory_437_apply_filters_deprecated('wbcr_clearfy_admin_bar_menu_items', [$menu_items], '1.4.0', 'wbcr/clearfy/adminbar_menu_items');
-
-	/**
-	 * @since 1.1.3 - добавлен
-	 * @since 1.1.4 - изменено имя
-	 */
-	$menu_items = apply_filters('wbcr/clearfy/adminbar_menu_items', $menu_items);
-
 	$menu_items['clearfy-docs'] = [
 		'id' => 'clearfy-docs',
 		'title' => '<span class="dashicons dashicons-book"></span> ' . __('Documentation', 'clearfy'),
@@ -88,6 +100,18 @@ function wbcr_clr_admin_bar_menu($wp_admin_bar)
 			'href' => WCL_Plugin::app()->get_support()->get_pricing_url(true, 'adminbar_menu')
 		];
 	}
+
+	/**
+	 * @since 1.1.3 - добавлен
+	 * @since 1.1.4 - является устаревшим
+	 */
+	$menu_items = wbcr_factory_449_apply_filters_deprecated('wbcr_clearfy_admin_bar_menu_items', [$menu_items], '1.4.0', 'wbcr/clearfy/adminbar_menu_items');
+
+	/**
+	 * @since 1.1.3 - добавлен
+	 * @since 1.1.4 - изменено имя
+	 */
+	$menu_items = array_reverse(apply_filters('wbcr/clearfy/adminbar_menu_items', $menu_items));
 
 	if( empty($menu_items) ) {
 		return;

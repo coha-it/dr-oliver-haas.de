@@ -55,12 +55,12 @@ class WCL_ComponentsLicensePage extends WCL_Page {
 	/**
 	 * WCL_LicensePage constructor.
 	 *
-	 * @param \Wbcr_Factory437_Plugin $plugin
+	 * @param \Wbcr_Factory449_Plugin $plugin
 	 *
 	 * @author Alexander Kovalev <alex.kovalevv@gmail.com>
 	 *
 	 */
-	public function __construct(Wbcr_Factory437_Plugin $plugin)
+	public function __construct(Wbcr_Factory449_Plugin $plugin)
 	{
 		$this->menu_title = __('License', 'robin-image-optimizer');
 		$this->page_menu_short_description = __('Product activation', 'robin-image-optimizer');
@@ -74,24 +74,24 @@ class WCL_ComponentsLicensePage extends WCL_Page {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 * @see   FactoryPages436_AdminPage
+	 * @see   FactoryPages448_AdminPage
 	 *
 	 */
-	public function assets($scripts, $styles)
+	/*public function assets($scripts, $styles)
 	{
 		parent::assets($scripts, $styles);
 
 		$this->styles->add(WCL_PLUGIN_URL . '/admin/assets/css/components.css');
 
 		/**
-		 * @param Wbcr_Factory437_StyleList $styles
-		 * @param Wbcr_Factory437_ScriptList $scripts
+		 * @param Wbcr_Factory449_StyleList $styles
+		 * @param Wbcr_Factory449_ScriptList $scripts
 		 *
 		 * @since 1.4.0
 		 *
 		 */
-		do_action('wbcr/clearfy/components/page_assets', $scripts, $styles);
-	}
+		/*do_action('wbcr/clearfy/components/page_assets', $scripts, $styles);
+	}*/
 
 	/**
 	 * This method simply show contents of the component page.

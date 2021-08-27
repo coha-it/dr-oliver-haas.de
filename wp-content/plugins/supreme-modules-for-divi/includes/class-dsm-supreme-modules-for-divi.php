@@ -1,6 +1,6 @@
 <?php
 if ( ! function_exists( 'is_plugin_active' ) ) {
-	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+	require_once ABSPATH . '/wp-admin/includes/plugin.php';
 }
 /**
  * The file that defines the core plugin class
@@ -171,11 +171,11 @@ class Dsm_Supreme_Modules_For_Divi {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		//Load page settings.
-		$this->settings_api = new DSM_Settings_API;
+		// Load page settings.
+		$this->settings_api = new DSM_Settings_API();
 
 		add_action( 'divi_extensions_init', array( $this, 'dsm_initialize_extension' ) );
-		//Plugin Admin.
+		// Plugin Admin.
 		add_filter( 'admin_footer_text', array( $this, 'dsm_admin_footer_text' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'dsm_admin_load_enqueue' ) );
 		new Dsm_Supreme_Modules_For_Divi_Review(
@@ -190,12 +190,12 @@ class Dsm_Supreme_Modules_For_Divi {
 		if ( $this->settings_api->get_option( 'dsm_allow_mime_json_upload', 'dsm_settings_misc' ) === 'on' || $this->settings_api->get_option( 'dsm_allow_mime_json_upload', 'dsm_settings_misc' ) === '' ) {
 			new DSM_JSON_Handler();
 		}
-		//Plugin links
+		// Plugin links
 		add_filter( 'plugin_action_links_supreme-modules-for-divi/supreme-modules-for-divi.php', array( $this, 'dsm_plugin_action_links' ), 10, 5 );
 		add_filter( 'plugin_action_links', array( $this, 'dsm_add_action_plugin' ), 10, 5 );
 		add_filter( 'plugin_row_meta', array( $this, 'dsm_plugin_row_meta' ), 10, 2 );
 
-		//Divi Template
+		// Divi Template
 		add_action( 'init', array( $this, 'dsm_flush_rewrite_rules' ), 20 );
 		if ( $this->settings_api->get_option( 'dsm_use_header_footer', 'dsm_general' ) === 'on' ) {
 			add_action( 'init', array( $this, 'dsm_header_footer_posttypes' ), 0 );
@@ -209,7 +209,7 @@ class Dsm_Supreme_Modules_For_Divi {
 			add_action( 'admin_notices', array( $this, 'dsm_header_footer_admin_notice' ) );
 		}
 
-		//Scheduled content.
+		// Scheduled content.
 		if ( $this->settings_api->get_option( 'dsm_use_scheduled_content', 'dsm_general' ) === 'on' ) {
 			add_filter( 'et_pb_all_fields_unprocessed_et_pb_section', array( $this, 'dsm_add_section_setting' ) );
 			add_filter( 'et_module_shortcode_output', array( $this, 'output_section' ), 10, 3 );
@@ -217,14 +217,14 @@ class Dsm_Supreme_Modules_For_Divi {
 			add_filter( 'et_module_shortcode_output', array( $this, 'output_row' ), 10, 3 );
 		}
 
-		//Divi shortcode.
+		// Divi shortcode.
 		if ( $this->settings_api->get_option( 'dsm_use_shortcode', 'dsm_general' ) === 'on' ) {
 			add_shortcode( DSM_SHORTCODE, array( $this, 'dsm_divi_shortcode' ) );
 			add_filter( 'manage_edit-et_pb_layout_columns', array( $this, 'dsm_divi_shortcode_post_columns_header' ) );
 			add_action( 'manage_et_pb_layout_posts_custom_column', array( $this, 'dsm_divi_shortcode_post_columns_content' ) );
 		}
 
-		//Divi Theme Builder.
+		// Divi Theme Builder.
 		if ( $this->settings_api->get_option( 'dsm_theme_builder_header_fixed', 'dsm_theme_builder' ) === 'on' ) {
 			add_filter( 'body_class', array( $this, 'dsm_theme_builder_header_css_classes' ) );
 		}
@@ -244,6 +244,19 @@ class Dsm_Supreme_Modules_For_Divi {
 		add_filter( 'et_builder_load_actions', array( $this, 'dsm_et_builder_load_caldera_forms' ) );
 		add_action( 'wp_ajax_nopriv_dsm_load_caldera_forms', array( $this, 'dsm_load_caldera_forms' ) );
 		add_action( 'wp_ajax_dsm_load_caldera_forms', array( $this, 'dsm_load_caldera_forms' ) );
+
+		// // Sync or Defer script.
+		add_filter( 'et_required_module_assets', array( $this, 'dsm_load_required_divi_assets' ), 10 );
+	}
+
+	/**
+	 * Force load required module styles.
+	 *
+	 * @return array
+	 */
+	public function dsm_load_required_divi_assets( $modules ) {
+		array_push( $modules, 'et_pb_image', 'et_pb_blurb' );
+		return $modules;
 	}
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -307,7 +320,7 @@ class Dsm_Supreme_Modules_For_Divi {
 	 * @since 1.0.0
 	 */
 	public function dsm_initialize_extension() {
-		//require_once plugin_dir_path( __FILE__ ) . 'includes/SupremeModulesForDivi.php';
+		// require_once plugin_dir_path( __FILE__ ) . 'includes/SupremeModulesForDivi.php';
 		require_once plugin_dir_path( __FILE__ ) . 'SupremeModulesForDivi.php';
 	}
 
@@ -376,7 +389,7 @@ class Dsm_Supreme_Modules_For_Divi {
 		return (array) $links;
 	}
 
-	//Template load admin script
+	// Template load admin script
 	public function dsm_admin_footer_text( $footer_text ) {
 		$current_screen                = get_current_screen();
 		$is_divi_supreme_screen_footer = ( $current_screen->id == 'edit-dsm_header_footer' );
@@ -701,7 +714,7 @@ class Dsm_Supreme_Modules_For_Divi {
 			}
 		}
 	}
-	public function dsm_header_footer_admin_notice( $post ) {
+	public function dsm_header_footer_admin_notice() {
 		$current_screen = get_current_screen();
 
 		if ( $current_screen->post_type === 'dsm_header_footer' ) {
@@ -940,7 +953,7 @@ class Dsm_Supreme_Modules_For_Divi {
 		wpcf7_add_form_tag( 'submit', array( $this, 'dsm_wpcf7_submit_form_tag_handler' ) );
 	}
 	public function dsm_wpcf7_submit_form_tag_handler( $tag ) {
-		$class = wpcf7_form_controls_class( $tag->type . ' et_pb_button' );
+		$class = wpcf7_form_controls_class( $tag->type . ' et_pb_button et_pb_bg_layout_light' );
 
 		$atts = array();
 

@@ -1,6 +1,6 @@
 <?php
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if( !defined('ABSPATH') ) {
 	exit;
 }
 
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WGZ_AssetsManagerPage extends Wbcr_FactoryClearfy228_PageBase {
+class WGZ_AssetsManagerPage extends WBCR\Factory_Templates_100\Pages\PageBase {
 
 	/**
 	 * The id of the page in the admin menu.
@@ -24,7 +24,7 @@ class WGZ_AssetsManagerPage extends Wbcr_FactoryClearfy228_PageBase {
 	 * Mainly used to navigate between pages.
 	 *
 	 * @since 1.0.0
-	 * @see   FactoryPages436_AdminPage
+	 * @see   FactoryPages448_AdminPage
 	 *
 	 * @var string
 	 */
@@ -48,20 +48,22 @@ class WGZ_AssetsManagerPage extends Wbcr_FactoryClearfy228_PageBase {
 	public $available_for_multisite = true;
 
 	/**
-	 * @param Wbcr_Factory437_Plugin $plugin
+	 * @param Wbcr_Factory449_Plugin $plugin
 	 */
-	public function __construct( Wbcr_Factory437_Plugin $plugin ) {
-		$this->menu_title = __( 'Assets manager', 'gonzales' );
+	public function __construct(Wbcr_Factory449_Plugin $plugin)
+	{
+		$this->menu_title = __('Assets manager', 'gonzales');
 
-		if ( ! defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ) {
-			$this->internal                   = false;
-			$this->menu_target                = 'options-general.php';
+		if( !defined('LOADING_ASSETS_MANAGER_AS_ADDON') ) {
+			$this->internal = false;
+			$this->menu_target = 'options-general.php';
 			$this->add_link_to_plugin_actions = true;
+			$this->show_search_options_form = false;
 		} else {
 			$this->page_parent_page = 'performance';
 		}
 
-		parent::__construct( $plugin );
+		parent::__construct($plugin);
 	}
 
 	/**
@@ -69,97 +71,100 @@ class WGZ_AssetsManagerPage extends Wbcr_FactoryClearfy228_PageBase {
 	 *
 	 * @return string|void
 	 */
-	public function getMenuTitle() {
-		return defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ? __( 'General', 'hide-login-page' ) : __( 'Assets manager', 'gonzales' );
+	public function getMenuTitle()
+	{
+		return defined('LOADING_ASSETS_MANAGER_AS_ADDON') ? __('General', 'hide-login-page') : __('Assets manager', 'gonzales');
 	}
 
 	/**
 	 * @return string|void         *
 	 */
-	public function getPageTitle() {
-		return defined( 'LOADING_ASSETS_MANAGER_AS_ADDON' ) ? __( 'Assets manager', 'gonzales' ) : __( 'General', 'hide-login-page' );
+	public function getPageTitle()
+	{
+		return defined('LOADING_ASSETS_MANAGER_AS_ADDON') ? __('Assets manager', 'gonzales') : __('General', 'hide-login-page');
 	}
 
 	/**
 	 * Permalinks options.
 	 *
-	 * @since 1.0.0
 	 * @return mixed[]
+	 * @since 1.0.0
 	 */
-	public function getPageOptions() {
-		$options   = [];
+	public function getPageOptions()
+	{
+		$options = [];
 		$options[] = [
 			'type' => 'html',
-			'html' => '<div class="wbcr-factory-page-group-header"><strong>' . __( 'Disable unused scripts, styles, and fonts', 'gonzales' ) . '</strong><p>' . __( 'There is a button in the adminbar called "Script Manager". If you click on it you will see a list of loaded scripts, styles and fonts on the current page of your site. If you think that one of the assets is superfluous on this page, you can disable it individually, so that it does not create unnecessary queries when page loading. Use the script manager very carefull to non-corrupt your website. We recommend to test this function at a local server.', 'gonzales' ) . '</p></div>'
+			'html' => '<div class="wbcr-factory-page-group-header"><strong>' . __('Disable unused scripts, styles, and fonts', 'gonzales') . '</strong><p>' . __('There is a button in the adminbar called "Script Manager". If you click on it you will see a list of loaded scripts, styles and fonts on the current page of your site. If you think that one of the assets is superfluous on this page, you can disable it individually, so that it does not create unnecessary queries when page loading. Use the script manager very carefull to non-corrupt your website. We recommend to test this function at a local server.', 'gonzales') . '</p></div>'
 		];
 
 		$options[] = [
-			'type'      => 'checkbox',
-			'way'       => 'buttons',
-			'name'      => 'disable_assets_manager',
-			'title'     => __( 'Disable assets manager', 'gonzales' ),
-			'layout'    => [ 'hint-type' => 'icon', 'hint-icon-color' => 'grey' ],
-			'hint'      => __( 'Full disable of the module.', 'gonzales' ),
-			'eventsOn'  => [
+			'type' => 'checkbox',
+			'way' => 'buttons',
+			'name' => 'disable_assets_manager',
+			'title' => __('Disable assets manager', 'gonzales'),
+			'layout' => ['hint-type' => 'icon', 'hint-icon-color' => 'grey'],
+			'hint' => __('Full disable of the module.', 'gonzales'),
+			'eventsOn' => [
 				'hide' => '#wbcr-gnz-asset-manager-extend-options'
 			],
 			'eventsOff' => [
 				'show' => '#wbcr-gnz-asset-manager-extend-options'
 			],
-			'default'   => false
+			'default' => false
 		];
 
 		$options[] = [
-			'type'  => 'div',
-			'id'    => 'wbcr-gnz-asset-manager-extend-options',
+			'type' => 'div',
+			'id' => 'wbcr-gnz-asset-manager-extend-options',
 			'items' => [
 				[
-					'type'     => 'separator',
+					'type' => 'separator',
 					'cssClass' => 'factory-separator-dashed'
 				],
 				[
-					'type'    => 'checkbox',
-					'way'     => 'buttons',
-					'name'    => 'disable_assets_manager_panel',
-					'title'   => __( 'Disable assets manager panel', 'gonzales' ),
-					'layout'  => [ 'hint-type' => 'icon', 'hint-icon-color' => 'green' ],
-					'hint'    => __( 'By default in your admin bar there is a button for control the assets scripts and styles. With this option, you can turn off the script manager on front and back-end.', 'gonzales' ),
+					'type' => 'checkbox',
+					'way' => 'buttons',
+					'name' => 'disable_assets_manager_panel',
+					'title' => __('Disable assets manager panel', 'gonzales'),
+					'layout' => ['hint-type' => 'icon', 'hint-icon-color' => 'green'],
+					'hint' => __('By default in your admin bar there is a button for control the assets scripts and styles. With this option, you can turn off the script manager on front and back-end.', 'gonzales'),
 					'default' => false
 				],
 				[
-					'type'    => 'checkbox',
-					'way'     => 'buttons',
-					'name'    => 'disable_assets_manager_on_front',
-					'title'   => __( 'Disable assets manager on front', 'gonzales' ),
-					'layout'  => [ 'hint-type' => 'icon', 'hint-icon-color' => 'grey' ],
-					'hint'    => __( 'Disables assets manager initialization for frontend.', 'gonzales' ),
+					'type' => 'checkbox',
+					'way' => 'buttons',
+					'name' => 'disable_assets_manager_on_front',
+					'title' => __('Disable assets manager on front', 'gonzales'),
+					'layout' => ['hint-type' => 'icon', 'hint-icon-color' => 'grey'],
+					'hint' => __('Disables assets manager initialization for frontend.', 'gonzales'),
 					'default' => false
 				],
 				[
-					'type'    => 'checkbox',
-					'way'     => 'buttons',
-					'name'    => 'disable_assets_manager_on_backend',
-					'title'   => __( 'Disable assets manager on back-end', 'gonzales' ),
-					'layout'  => [ 'hint-type' => 'icon', 'hint-icon-color' => 'grey' ],
-					'hint'    => __( 'Disables assets manager initialization for backend.', 'gonzales' ),
+					'type' => 'checkbox',
+					'way' => 'buttons',
+					'name' => 'disable_assets_manager_on_backend',
+					'title' => __('Disable assets manager on back-end', 'gonzales'),
+					'layout' => ['hint-type' => 'icon', 'hint-icon-color' => 'grey'],
+					'hint' => __('Disables assets manager initialization for backend.', 'gonzales'),
 					'default' => true
 				]
 			]
 		];
 
 		$options[] = [
-			'type'     => 'separator',
+			'type' => 'separator',
 			'cssClass' => 'factory-separator-dashed'
 		];
 
 		$formOptions = [];
 
 		$formOptions[] = [
-			'type'  => 'form-group',
+			'type' => 'form-group',
 			'items' => $options,
 			//'cssClass' => 'postbox'
 		];
 
-		return apply_filters( 'wbcr_gnz_assets_manager_options', $formOptions );
+		return apply_filters('wbcr_gnz_assets_manager_options', $formOptions);
 	}
 }

@@ -59,11 +59,11 @@ class WDAN_Notices extends WDN_Page {
 	/**
 	 * Requests assets (js and css) for the page.
 	 *
-	 * @param Wbcr_Factory437_ScriptList $scripts
-	 * @param Wbcr_Factory437_StyleList $styles
+	 * @param Wbcr_Factory449_ScriptList $scripts
+	 * @param Wbcr_Factory449_StyleList $styles
 	 *
 	 * @return void
-	 * @see Wbcr_FactoryPages436_AdminPage
+	 * @see Wbcr_FactoryPages448_AdminPage
 	 *
 	 */
 	public function assets( $scripts, $styles ) {

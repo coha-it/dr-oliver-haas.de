@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCL_ConfigSeo extends Wbcr_FactoryClearfy228_Configurate {
+class WCL_ConfigSeo extends WBCR\Factory_Templates_100\Configurate {
 
 	/**
 	 * @param WCL_Plugin $plugin

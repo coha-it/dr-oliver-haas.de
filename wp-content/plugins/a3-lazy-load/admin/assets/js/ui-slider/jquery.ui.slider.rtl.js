@@ -107,7 +107,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		this.handle = this.handles.eq( 0 );
 
 		this.handles.add( this.range ).filter( "a" )
-			.click(function( event ) {
+			.on( 'click', function( event ) {
 				event.preventDefault();
 			})
 			.hover(function() {
@@ -117,15 +117,15 @@ $.widget( "ui.slider", $.ui.mouse, {
 			}, function() {
 				$( this ).removeClass( "ui-state-hover" );
 			})
-			.focus(function() {
+			.on( 'focus', function() {
 				if ( !o.disabled ) {
 					$( ".ui-slider .ui-state-focus" ).removeClass( "ui-state-focus" );
 					$( this ).addClass( "ui-state-focus" );
 				} else {
-					$( this ).blur();
+					$( this ).trigger('blur');
 				}
 			})
-			.blur(function() {
+			.on( 'blur', function() {
 				$( this ).removeClass( "ui-state-focus" );
 			});
 
@@ -134,7 +134,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		});
 
 		this.handles
-			.keydown(function( event ) {
+			.on( 'keydown', function( event ) {
 				var ret = true,
 					index = $( this ).data( "index.ui-slider-handle" ),
 					allowed,
@@ -212,7 +212,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 				return ret;
 	
 			})
-			.keyup(function( event ) {
+			.on( 'keyup', function( event ) {
 				var index = $( this ).data( "index.ui-slider-handle" );
 	
 				if ( self._keySliding ) {
@@ -242,7 +242,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 				" ui-widget-content" +
 				" ui-corner-all" )
 			.removeData( "slider" )
-			.unbind( ".slider" );
+			.off( ".slider" );
 
 		this._mouseDestroy();
 
@@ -302,10 +302,10 @@ $.widget( "ui.slider", $.ui.mouse, {
 
 		closestHandle
 			.addClass( "ui-state-active" )
-			.focus();
+			.trigger('focus');
 		
 		offset = closestHandle.offset();
-		mouseOverHandle = !$( event.target ).parents().andSelf().is( ".ui-slider-handle" );
+		mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-slider-handle" );
 		this._clickOffset = mouseOverHandle ? { left: 0, top: 0 } : {
 			left: event.pageX - offset.left - ( closestHandle.width() / 2 ),
 			top: event.pageY - offset.top -
@@ -492,7 +492,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		}
 
 		if ( arguments.length ) {
-			if ( $.isArray( arguments[ 0 ] ) ) {
+			if ( Array.isArray( arguments[ 0 ] ) ) {
 				vals = this.options.values;
 				newValues = arguments[ 0 ];
 				for ( i = 0; i < vals.length; i += 1 ) {
@@ -516,7 +516,7 @@ $.widget( "ui.slider", $.ui.mouse, {
 		var i,
 			valsLength = 0;
 
-		if ( $.isArray( this.options.values ) ) {
+		if ( Array.isArray( this.options.values ) ) {
 			valsLength = this.options.values.length;
 		}
 
@@ -525,12 +525,12 @@ $.widget( "ui.slider", $.ui.mouse, {
 		switch ( key ) {
 			case "disabled":
 				if ( value ) {
-					this.handles.filter( ".ui-state-focus" ).blur();
+					this.handles.filter( ".ui-state-focus" ).trigger('blur');
 					this.handles.removeClass( "ui-state-hover" );
-					this.handles.attr( "disabled", "disabled" );
+					this.handles.prop( "disabled", true );
 					this.element.addClass( "ui-disabled" );
 				} else {
-					this.handles.removeAttr( "disabled" );
+					this.handles.prop( "disabled", false );
 					this.element.removeClass( "ui-disabled" );
 				}
 				break;

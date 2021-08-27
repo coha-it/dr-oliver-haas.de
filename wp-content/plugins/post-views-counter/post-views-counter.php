@@ -2,7 +2,7 @@
 /*
 Plugin Name: Post Views Counter
 Description: Post Views Counter allows you to display how many times a post, page or custom post type had been viewed in a simple, fast and reliable way.
-Version: 1.3.3
+Version: 1.3.5
 Author: Digital Factory
 Author URI: http://www.dfactory.eu/
 Plugin URI: http://www.dfactory.eu/plugins/post-views-counter/
@@ -12,7 +12,7 @@ Text Domain: post-views-counter
 Domain Path: /languages
 
 Post Views Counter
-Copyright (C) 2014-2020, Digital Factory - info@digitalfactory.pl
+Copyright (C) 2014-2021, Digital Factory - info@digitalfactory.pl
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -31,71 +31,72 @@ if ( ! class_exists( 'Post_Views_Counter' ) ) :
 	 * Post Views Counter final class.
 	 *
 	 * @class Post_Views_Counter
-	 * @version	1.3.3
+	 * @version	1.3.5
 	 */
 	final class Post_Views_Counter {
 
 		private static $instance;
 		public $options;
 		public $defaults = array(
-			'general'	 => array(
-				'post_types_count'		 => array( 'post' ),
-				'counter_mode'			 => 'php',
-				'post_views_column'		 => true,
-				'time_between_counts'	 => array(
+			'general'	=> array(
+				'post_types_count'		=> array( 'post' ),
+				'counter_mode'			=> 'php',
+				'post_views_column'		=> true,
+				'time_between_counts'	=> array(
 					'number' => 24,
 					'type'	 => 'hours'
 				),
-				'reset_counts'			 => array(
+				'reset_counts'			=> array(
 					'number' => 30,
 					'type'	 => 'days'
 				),
-				'flush_interval'		 => array(
+				'flush_interval'		=> array(
 					'number' => 0,
 					'type'	 => 'minutes'
 				),
-				'exclude'				 => array(
+				'exclude'				=> array(
 					'groups' => array(),
 					'roles'	 => array()
 				),
-				'exclude_ips'			 => array(),
-				'strict_counts'			 => false,
-				'restrict_edit_views'	 => false,
-				'deactivation_delete'	 => false,
-				'cron_run'				 => true,
-				'cron_update'			 => true,
+				'exclude_ips'			=> array(),
+				'strict_counts'			=> false,
+				'restrict_edit_views'	=> false,
+				'deactivation_delete'	=> false,
+				'cron_run'				=> true,
+				'cron_update'			=> true,
 				'update_version'		=> 1,
 				'update_notice'			=> true,
 				'update_delay_date'		=> 0
 			),
-			'display'	 => array(
-				'label'				 => 'Post Views:',
-				'post_types_display' => array( 'post' ),
-				'page_types_display' => array( 'singular' ),
-				'restrict_display'	 => array(
+			'display'	=> array(
+				'label'					=> 'Post Views:',
+				'post_types_display'	=> array( 'post' ),
+				'page_types_display'	=> array( 'singular' ),
+				'restrict_display'		=> array(
 					'groups' => array(),
 					'roles'	 => array()
 				),
-				'position'			 => 'after',
-				'display_style'		 => array(
+				'position'				=> 'after',
+				'display_style'			=> array(
 					'icon'	 => true,
 					'text'	 => true
 				),
-				'link_to_post'		 => true,
-				'icon_class'		 => 'dashicons-chart-bar'
+				'link_to_post'			=> true,
+				'icon_class'			=> 'dashicons-chart-bar',
+				'toolbar_statistics'	=> true
 			),
-			'version'	 => '1.3.3'
+			'version'	=> '1.3.5'
 		);
 
 		/**
-		 * Disable object clone.
+		 * Disable object cloning.
 		 */
-		private function __clone() {}
+		public function __clone() {}
 
 		/**
 		 * Disable unserializing of the class.
 		 */
-		private function __wakeup() {}
+		public function __wakeup() {}
 
 		/**
 		 * Main plugin instance,

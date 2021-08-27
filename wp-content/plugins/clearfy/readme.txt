@@ -2,9 +2,9 @@
 Contributors: Creativemotion, webcraftic, alexkovalevv
 Donate link: https://clearfy.pro/pricing/?utm_source=wordpress.org&utm_campaign=wbcr_clearfy&utm_content=repo
 Tags: optimize, performance, pagespeed, cache, minify css, minify js, minify, remove querystrings, disable rest api, bicycles by falbar, remove rss feeds, remove meta generator, yoast seo remove comments, yoast seo, yoast seo breadcrumbs, disable embeds,remove embeds, remove rsd link, dns-prefetch, remove dns-prefetch, meta generator, rsd link, wlw manifest link, remove wlw manifest link, canonical link, remove canonical link, shortlink link, remove shortlink link, emoji, attachment pages, remove attachment pages, rss feeds, disable rss feeds, rest api, disable rest api, remove rest api, clearfy, archives date, post pagination, archives author, hide login errors, recent comments, tag, rpc, xml, xml rpc, xmlrpc, admin bar, remove querystrings, reduce HTTP requests, disable heartbeat, disable revision, heartbeat, revision, clean, optimize, remove rest-api, remove rest-api, remove jquery migrate, html minify, robots.txt editor, plugin updates, disable plugin updates, disable core updates, core updates, enable automatic updates, disable widgets, disable default widgets, remove html comments
-Requires at least: 4.7
-Tested up to: 5.5
-Requires PHP: 5.6
+Requires at least: 5.2
+Tested up to: 5.7
+Requires PHP: 7.0
 Stable tag: trunk
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,12 +44,12 @@ Do you want the same or better? **Download Clearfy for free** and see for yourse
 
 ### More than 50 Clearfy plugin features for WordPress optimization ###
 #### Premium features ####
-* **Page Cache**
-* **Browser Caching**
-* **Mobile Cache**
-* **Widget Cache**
-* **Minify Javascript** – Minifying JavaScript files can reduce payload sizes and script parse time
-* **Defer Javascript** – Eliminate render-blocking JavaScript resources. Consider delivering critical JS inline and deferring all non-critical JS
+* ** Page Cache
+* ** Browser Caching
+* ** Mobile Cache
+* ** Widget Cache
+* ** Minify Javascript – Minifying JavaScript files can reduce payload sizes and script parse time
+* ** Defer Javascript – Eliminate render-blocking JavaScript resources. Consider delivering critical JS inline and deferring all non-critical JS
 
 #### Code cleanup ####
 * **Disable RSS Feeds** — disables RSS if you using WordPress for website only, not for blog.
@@ -245,8 +245,61 @@ Of course! To do this, email us your wishes with address, which you will find in
 4. Update manager
 5. Assets manager
 
-
 == Changelog ==
+= 1.9.4 (01.07.2021) =
+* Fixed: Bug https://wordpress.org/support/topic/php-fatal-error-261/
+* Fixed: Bug https://forum.webcraftic.com/threads/php-notice-undefined-index-path-in.792/
+* Added compatibility with premium plugin 1.3.6
+
+= 1.9.3 (31.05.2021) =
+* Fixed: Bug https://wordpress.org/support/topic/pagespeed-api-quote-exceeded/
+* Fixed: Bug https://wordpress.org/support/topic/random-fatal-error/
+* Fixed: Bug https://wordpress.org/support/topic/php-fatal-error-254/
+* Fixed: Minor bugs.
+
+= 1.9.1 (12.05.2021) =
+* Fixed: Bug with connecting old google analytics. Removed unnecessary Facebook pixel and Google analytics connections.
+* [Minify and combine] Now script and style optimization is disabled by default for administrators and authorized users. If you want to enable optimization, you can do so by checking the "Also optimize JS/CSS for logged in editors/administrators?"
+
+= 1.9.0 (08.05.2021) =
+In this update, the plugin interface has been simplified, some options have received more automation. In this update, the plugin interface has been simplified, some options have received more automation. Fixed some bugs in the plugin.
+
+= 1.8.9 (06.04.2021) =
+* Fixed: Clearfy was blocking htaccess file overwriting in some cases, now the problem is fixed.
+
+= 1.8.8 (05.04.2021) =
+* Added: Compatibility with the new version of the premium plugin
+* [Minify and Combine] When you aggregate css files into one, the site design can be destroyed, now this bug has been fixed.
+* Improved: Compatibility the option "Remove html comments" with Gutenberg
+* [Assets Manager] Added new "Query string" conditional logic. Now you can disable scripts if the query string contains certain variables.
+
+= 1.8.7 (17.03.2021) =
+* The plugin now requires php 7 and wordpress 5.2 to work properly.
+
+= 1.8.6 (03.03.2021) =
+* Improved: Compatibility with Wordpress 5.7
+
+= 1.8.5 (08.02.2021) =
+* Fixed: Minor bugs.
+
+= 1.8.4 (08.02.2021) =
+* Fixed: Minor bugs in the plugin interface.
+* Improved: compatibility with php 8.
+* Improved: compatibility with premium plugin.
+* Improved: [Disable admin notices] compatibility with Google SiteKit plugin.
+
+= 1.8.3 (25.01.2021) =
+* Added: wp rocket compatibility
+* Fixed: minor bugs
+
+= 1.8.2 (22.12.2020) =
+* Updated: subscription form will disappear from this moment if you have already subscribed.
+* Fixed: [Assets manager component] duplicate templates and scripts error when rendering html views of Assets manager.
+
+= 1.8.1 (15.12.2020) =
+* Added: Subscribe form
+* Fixed: Minor bugs.
+
 = 1.8.0 (20.10.2020) =
 * Сompatible with premium plugin 1.1.6. Added page caching feature to premium plugin.
 * Fixed: Minor bugs.

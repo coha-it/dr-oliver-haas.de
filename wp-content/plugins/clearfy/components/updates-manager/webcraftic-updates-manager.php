@@ -4,15 +4,15 @@
  * Plugin URI: https://wordpress.org/plugins/webcraftic-updates-manager/
  * Description: Manage all your WordPress updates, automatic updates, logs, and loads more.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 1.1.1
+ * Version: 1.1.2
  * Text Domain: webcraftic-updates-manager
  * Domain Path: /languages/
  * Author URI: https://webcraftic.com
- * Framework Version: FACTORY_437_VERSION
+ * Framework Version: FACTORY_449_VERSION
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
+if( !defined('ABSPATH') ) {
 	exit;
 }
 
@@ -37,54 +37,57 @@ if ( ! defined( 'ABSPATH' ) ) {
  * -----------------------------------------------------------------------------
  */
 
-require_once( dirname( __FILE__ ) . '/libs/factory/core/includes/class-factory-requirements.php' );
+require_once(dirname(__FILE__) . '/libs/factory/core/includes/class-factory-requirements.php');
 
 // @formatter:off
 $wupm_plugin_info = array(
-	'prefix'         => 'wbcr_updates_manager_',//wbcr_upm_
-	'plugin_name'    => 'wbcr_updates_manager',
-	'plugin_title'   => __( 'Webcraftic Updates Manager', 'webcraftic-updates-manager' ),
+	'prefix' => 'wbcr_updates_manager_',//wbcr_upm_
+	'plugin_name' => 'wbcr_updates_manager',
+	'plugin_title' => __('Webcraftic Updates Manager', 'webcraftic-updates-manager'),
 
 	// PLUGIN SUPPORT
-	'support_details'      => array(
-		'url'       => 'https://webcraftic.com',
+	'support_details' => array(
+		'url' => 'https://webcraftic.com',
 		'pages_map' => array(
-			'support'  => 'support',           // {site}/support
-			'docs'     => 'docs'               // {site}/docs
+			'support' => 'support',           // {site}/support
+			'docs' => 'docs'               // {site}/docs
 		)
 	),
 
+	// PLUGIN SUBSCRIBE FORM
+	'subscribe_widget' => true,
+	'subscribe_settings' => ['group_id' => '105408901'],
+
 	// PLUGIN ADVERTS
 	'render_adverts' => true,
-	'adverts_settings'    => array(
+	'adverts_settings' => array(
 		'dashboard_widget' => true, // show dashboard widget (default: false)
-		'right_sidebar'    => true, // show adverts sidebar (default: false)
-		'notice'           => true, // show notice message (default: false)
+		'right_sidebar' => true, // show adverts sidebar (default: false)
+		'notice' => true, // show notice message (default: false)
 	),
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_437', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_434', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_436', 'admin' ),
-		array( 'libs/factory/clearfy', 'factory_clearfy_228', 'all' ),
-		array( 'libs/factory/adverts', 'factory_adverts_115', 'admin')
+		array('libs/factory/bootstrap', 'factory_bootstrap_449', 'admin'),
+		array('libs/factory/forms', 'factory_forms_446', 'admin'),
+		array('libs/factory/pages', 'factory_pages_448', 'admin'),
+		array('libs/factory/clearfy', 'factory_templates_100', 'all'),
+		array('libs/factory/adverts', 'factory_adverts_127', 'admin')
 	)
 );
 
-$wupm_compatibility = new Wbcr_Factory437_Requirements( __FILE__, array_merge( $wupm_plugin_info, array(
-	'plugin_already_activate'          => defined( 'WUPM_PLUGIN_ACTIVE' ),
-	'required_php_version'             => '5.4',
-	'required_wp_version'              => '4.2.0',
+$wupm_compatibility = new Wbcr_Factory449_Requirements(__FILE__, array_merge($wupm_plugin_info, array(
+	'plugin_already_activate' => defined('WUPM_PLUGIN_ACTIVE'),
+	'required_php_version' => '5.4',
+	'required_wp_version' => '4.2.0',
 	'required_clearfy_check_component' => false
-) ) );
-
+)));
 
 /**
  * If the plugin is compatible, then it will continue its work, otherwise it will be stopped,
  * and the user will throw a warning.
  */
-if ( ! $wupm_compatibility->check() ) {
+if( !$wupm_compatibility->check() ) {
 	return;
 }
 
@@ -97,12 +100,11 @@ if ( ! $wupm_compatibility->check() ) {
  */
 
 // This plugin is activated
-define( 'WUPM_PLUGIN_ACTIVE', true );
-define( 'WUPM_PLUGIN_VERSION', $wupm_compatibility->get_plugin_version() );
-define( 'WUPM_PLUGIN_DIR', dirname( __FILE__ ) );
-define( 'WUPM_PLUGIN_BASE', plugin_basename( __FILE__ ) );
-define( 'WUPM_PLUGIN_URL', plugins_url( null, __FILE__ ) );
-
+define('WUPM_PLUGIN_ACTIVE', true);
+define('WUPM_PLUGIN_VERSION', $wupm_compatibility->get_plugin_version());
+define('WUPM_PLUGIN_DIR', dirname(__FILE__));
+define('WUPM_PLUGIN_BASE', plugin_basename(__FILE__));
+define('WUPM_PLUGIN_URL', plugins_url(null, __FILE__));
 
 
 
@@ -112,24 +114,24 @@ define( 'WUPM_PLUGIN_URL', plugins_url( null, __FILE__ ) );
  * -----------------------------------------------------------------------------
  */
 
-require_once( WUPM_PLUGIN_DIR . '/libs/factory/core/boot.php' );
-require_once( WUPM_PLUGIN_DIR . '/includes/class-plugin.php' );
+require_once(WUPM_PLUGIN_DIR . '/libs/factory/core/boot.php');
+require_once(WUPM_PLUGIN_DIR . '/includes/class-plugin.php');
 
 try {
-	new WUPM_Plugin( __FILE__, array_merge( $wupm_plugin_info, array(
-		'plugin_version'     => WUPM_PLUGIN_VERSION,
+	new WUPM_Plugin(__FILE__, array_merge($wupm_plugin_info, array(
+		'plugin_version' => WUPM_PLUGIN_VERSION,
 		'plugin_text_domain' => $wupm_compatibility->get_text_domain(),
-	) ) );
+	)));
 } catch( Exception $e ) {
 	// Plugin wasn't initialized due to an error
-	define( 'WUPM_PLUGIN_THROW_ERROR', true );
+	define('WUPM_PLUGIN_THROW_ERROR', true);
 
-	$wupm_plugin_error_func = function () use ( $e ) {
-		$error = sprintf( "The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Webcraftic Updates manager', $e->getMessage(), $e->getCode() );
+	$wupm_plugin_error_func = function () use ($e) {
+		$error = sprintf("The %s plugin has stopped. <b>Error:</b> %s Code: %s", 'Webcraftic Updates manager', $e->getMessage(), $e->getCode());
 		echo '<div class="notice notice-error"><p>' . $error . '</p></div>';
 	};
 
-	add_action( 'admin_notices', $wupm_plugin_error_func );
-	add_action( 'network_admin_notices', $wupm_plugin_error_func );
+	add_action('admin_notices', $wupm_plugin_error_func);
+	add_action('network_admin_notices', $wupm_plugin_error_func);
 }
 // @formatter:on

@@ -1,13 +1,13 @@
 === a3 Lazy Load ===
 Contributors: a3rev, a3rev Software, nguyencongtuan
 Tags: a3 lazy load, Lazy Loading, image lazy load, lazyload
-Requires at least: 4.9
-Tested up to: 5.5.0
-Stable tag: 2.4.1
+Requires at least: 5.0
+Tested up to: 5.8
+Stable tag: 2.4.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Use a3 Lazy Load for images, videos, iframes. Instantly improve your sites load time and dramatically improve site users experience.
+Use a3 Lazy Load for images, videos, iframes that are not lazy loaded by WordPress core. Instantly improve your sites load time and dramatically improve site users experience.
 
 == DESCRIPTION ==
 
@@ -15,15 +15,14 @@ a3 Lazy Load is a Mobile Oriented, very simple to use plugin that will speed up 
 
 a3 Lazy Load is inspired by and powered by the ressio [Lazy-Load-xt JavaScript](https://github.com/ressio/lazy-load-xt).
 
-a3 Lazy Load is the most fully featured, incredibly easy to set up lazy load plugin for WordPress. Use the plugins admin settings to easily define what elements are lazy loaded and when they become visible in the users browser. As the user scrolls down the page the next lot of elements you have applied lazy Load to are only loaded as they become visible in the view port.
 
-= 100% COMPATABLE WITH WORDPRESS 5.5 =
+= 100% COMPATABLE WITH WORDPRESS 5.7 =
 
-WordPress 5.5 introduced lazy loading for all images uploaded to a site’s media library. a3 Lazy Load Image options work side-by-side with this, but then enhances it by lazy loading all the images loaded from outside of the media library or on older browsers that do not support the new WP attribute. 
+WordPress 5.5 introduced lazy loading for all images uploaded to a sites media library and 5.7 introduces Core lazy load for iframes. a3 Lazy Load Image options work side-by-side with these, but then enhances it by lazy loading all the images loaded from outside of the media library, or on older browsers that do not support the new WP attribute and any iframes or videos that are not lazy loaded by WordPress. 
 
 = IMAGE LAZY LOAD =
 
-Images are the number one element that slows page load and increases bandwidth use. From the a3 Lazy Load admin panel turn load images by a3 Lazy Load ON | OFF. For more flexibility when ON you can choose to ON | OFF lazy load for images in
+For more flexibility when ON you can choose to ON | OFF lazy load all images that are not loaded from the WordPress media Library in:
 
 * Post, Pages and Custom Post Types (All Content areas)
 * Widgets (Sidebar, header and footer)
@@ -34,25 +33,17 @@ Images are the number one element that slows page load and increases bandwidth u
 
 Supports lazy loading of images in containers that use horizontal scroll. The admin Images options has a section where you enter the classname or ID of the container that uses horizontal scroll.
 
-= MORE THAN JUST IMAGES =
 
 = VIDEO LAZY LOAD =
-
-a3 Lazy Load supports all WordPress video Embeds including Youtube, Vimeo and HTML5 video - for a full list see the [WordPress Codex Embeds](http://codex.wordpress.org/Embeds) list. The WordPress embed method of copying and pasting the video url into posts and pages content area is fully supported. 
-
-<strong>Note</strong> - Works with Videos added by Text and HTML Widgets but not the new WordPress Video widget. That widget does not pull iframe at first load, it uses JavaScript to replace html to iframe and hence a3 lazy Load can't see it to apply.  
 
 From the a3 lazy Load admin panel turn Video Support ON | OFF. When ON you can choose to ON | OFF lazy load for videos in
 
 * Video embeded by URL in Post and Pages (All Content areas)
 * Video in Widget types, Text Widget and HTML Widgets.
-* Youtube [see demo](http://ressio.github.io/lazy-load-xt/demo/youtube-iframe.htm)
-* Video [see demo](http://ressio.github.io/lazy-load-xt/demo/video-html5.htm)
-* Fully Compatible with the popular [Youtube Embed Plugin](https://wordpress.org/plugins/youtube-embed/)
 
 = iFRAME LAZY LOAD =
 
-a3 Lazy Load has built in support for content that is added by iframe from any source in content and widgets. Examples
+a3 Lazy Load has built in support for content that is added by iframe from any source in content and widgets and will lazy load any iframe that WordPress core does not load. Examples
 
 * WordPress embedded media
 * Facebook Like boxes with profiles, Like buttons, Recommend
@@ -145,7 +136,7 @@ Want to add a new language to a3 Lazy Load? Great! You can contribute via [trans
  
 = Minimum Requirements =
 
-* WordPress 4.9 or greater
+* WordPress 5.0 or greater
 * PHP version 7.0.0 or greater
 * MySQL version 5.6 or greater OR MariaDB version 10.0 or greater
 
@@ -207,6 +198,82 @@ Filter tags to add to class name of theme to exclude lazy load on images or vide
 
 
 == Changelog ==
+
+= 2.4.7 - 2021/07/19 =
+* This maintenance release has code tweaks for WordPress 5.8 compatibility plus Security hardening.
+* Tweak - Test for lazy load work correctly with  new WebP extension that WordPress 5.8 support
+* Tweak - Test for compatibility with WordPress 5.8
+* Security - Add more variable, options and html escaping
+* Security - Get variable via name instead of use extract
+
+= 2.4.6 - 2021/06/08 =
+* This maintenance release has code tweaks to resolve conflicts with third party plugs that use data-src and data-poster attributes, plus compatibility with WordPress 5.7.2 
+* Tweak - Check if data-src attribute exists on image tags, if so, then lazy load placeholder image for src attribute
+* Tweak - Check if data-poster attribute exists on video tags, if so, then lazy load placeholder image for poster attribute
+* Tweak - Test for compatibility with WordPress 5.7.2
+
+= 2.4.5 - 2021/03/17 =
+* This maintenance release updates 23 deprecated jQuery functions for compatibility with the latest version of jQuery in WordPress 5.7
+* Tweak - Update JavaScript on plugin framework for compatibility with latest version of jQuery and resolve PHP warning event shorthand is deprecated.
+* Tweak - Replace deprecated .change( handler ) with .on( 'change', handler ) 
+* Tweak - Replace deprecated .change() with .trigger('change') 
+* Tweak - Replace deprecated .focus( handler ) with .on( 'focus', handler )
+* Tweak - Replace deprecated .focus() with .trigger('focus')
+* Tweak - Replace deprecated .click( handler ) with .on( 'click', handler )
+* Tweak - Replace deprecated .click() with .trigger('click')
+* Tweak - Replace deprecated .select( handler ) with .on( 'select', handler )
+* Tweak - Replace deprecated .select() with .trigger('select') 
+* Tweak - Replace deprecated .blur( handler ) with .on( 'blur', handler ) 
+* Tweak - Replace deprecated .blur() with .trigger('blur') 
+* Tweak - Replace deprecated .resize( handler ) with .on( 'resize', handler ) 
+* Tweak - Replace deprecated .submit( handler ) with .on( 'submit', handler ) 
+* Tweak - Replace deprecated .scroll( handler ) with .on( 'scroll', handler ) 
+* Tweak - Replace deprecated .mousedown( handler ) with .on( 'mousedown', handler ) 
+* Tweak - Replace deprecated .mouseover( handler ) with .on( 'mouseover', handler ) 
+* Tweak - Replace deprecated .mouseout( handler ) with .on( 'mouseout', handler )
+* Tweak - Replace deprecated .keydown( handler ) with .on( 'keydown', handler ) 
+* Tweak - Replace deprecated .attr('disabled', 'disabled') with .prop('disabled', true) 
+* Tweak - Replace deprecated .removeAttr('disabled') with .prop('disabled', false) 
+* Tweak - Replace deprecated .attr('selected', 'selected') with .prop('selected', true) 
+* Tweak - Replace deprecated .removeAttr('selected') with .prop('selected', false) 
+* Tweak - Replace deprecated .attr('checked', 'checked') with .prop('checked', true) 
+* Tweak - Replace deprecated .removeAttr('checked') with .prop('checked', false)
+
+= 2.4.4 - 2021/03/09 = 
+* This maintenance release is for compatibility with WordPress 5.7
+* Tweak - Test for compatibility with WordPress 5.7
+* Tweak - Tweak for compatibility with WordPress 5.7 iframes lazy load feature
+* Tweak - Update the plugins description
+
+= 2.4.3 - 2020/12/30 =
+* This is an important maintenance release that updates our scripts for compatibility with the latest version of jQuery released in WordPress 5.6
+* Tweak - Update JavaScript on plugin framework for work compatibility with latest version of jQuery
+* Fix - Replace .bind( event, handler ) by .on( event, handler ) for compatibility with latest version of jQuery
+* Fix - Replace :eq() Selector by .eq() for compatibility with latest version of jQuery
+* Fix - Replace .error() by .on( “error” ) for compatibility with latest version of jQuery
+* Fix - Replace :first Selector by .first() for compatibility with latest version of jQuery
+* Fix - Replace :gt(0) Selector by .slice(1) for compatibility with latest version of jQuery
+* Fix - Remove jQuery.browser for compatibility with latest version of jQuery
+* Fix - Replace jQuery.isArray() by Array.isArray() for compatibility with latest version of jQuery
+* Fix - Replace jQuery.isFunction(x) by typeof x === “function” for compatibility with latest version of jQuery
+* Fix - Replace jQuery.isNumeric(x) by typeof x === “number” for compatibility with latest version of jQuery
+* Fix - Replace jQuery.now() by Date.now() for compatibility with latest version of jQuery
+* Fix - Replace jQuery.parseJSON() by JSON.parse() for compatibility with latest version of jQuery
+* Fix - Remove jQuery.support for compatibility with latest version of jQuery
+* Fix - Replace jQuery.trim(x) by x.trim() for compatibility with latest version of jQuery
+* Fix - Replace jQuery.type(x) by typeof x for compatibility with latest version of jQuery
+* Fix - Replace .load( handler ) by .on( “load”, handler ) for compatibility with latest version of jQuery
+* Fix - Replace .size() by .length for compatibility with latest version of jQuery
+* Fix - Replace .unbind( event ) by .off( event ) for compatibility with latest version of jQuery
+* Fix - Replace .unload( handler ) by .on( “unload”, handler ) for compatibility with latest version of jQuery
+
+= 2.4.2 - 2020/12/08 =
+* This maintenance release has tweaks and bug fixes for compatibility with WordPress major version 5.6, PHP 7.4.8 and WooCommerce 4.7.1
+* Tweak - Test and Tweak for compatibility with PHP 7.4.8
+* Tweak - Test for compatibility with WordPress 5.6
+* Tweak - Test for compatibility with WooCommerce 4.7.1
+* Fix - Attached ajaxComplete to document instead of window
+* Fix - Replace old isFunction by typeof check function
 
 = 2.4.1 - 2020/08/17 =
 * This maintenance release resolves a conflict with jQuery helper plugin and WordPress 5.5
@@ -515,6 +582,24 @@ Filter tags to add to class name of theme to exclude lazy load on images or vide
 
 
 == Upgrade Notice ==
+
+= 2.4.7 =
+This maintenance release has code tweaks for WordPress 5.8 compatibility plus Security hardening.
+
+= 2.4.6 =
+This maintenance release has code tweaks to resolve conflicts with third party plugs that use data-src and data-poster attributes, plus compatibility with WordPress 5.7.2
+
+= 2.4.5 =
+This maintenance release updates 23 deprecated jQuery functions for compatibility with the latest version of jQuery in WordPress 5.7
+
+= 2.4.4 =
+This maintenance release is for compatibility with WordPress 5.7
+
+= 2.4.3 =
+This is an important maintenance release that updates our scripts for compatibility with the latest version of jQuery released in WordPress 5.6
+
+= 2.4.2 =
+This maintenance release has tweaks and bug fixes for compatibility with WordPress major version 5.6, PHP 7.4.8 and WooCommerce 4.7.1
 
 = 2.4.1 =
 This maintenance release resolves a conflict with jQuery helper plugin and WordPress 5.5

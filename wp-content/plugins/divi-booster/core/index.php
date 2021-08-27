@@ -3,8 +3,12 @@
 // === Load the functions and hooks ===
 include(dirname(__FILE__).'/divi/divi.php'); 
 include(dirname(__FILE__).'/functions.php'); 
-include(dirname(__FILE__).'/classes/classes.php'); 
+include(dirname(__FILE__).'/classes/classes.php');
 include(dirname(__FILE__).'/hooks/index.php');
+
+// Initialise classes
+DBDBMagnificPopup::create()->init();
+DBDBETModulesFont::create()->load_full_font();
 
 // === Load plugin compatibity files ===
 include(dirname(__FILE__).'/compat/compat.php');
@@ -35,11 +39,10 @@ function booster_enable_updates($file) {
 	try {
 		if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
 			$myUpdateChecker = \DiviBooster\Puc_v4_Factory::buildUpdateChecker(
-				dbdb_update_url(),
+				DBDBUpdateServer::create()->updatesUrl(),
 				$file, //Full path to the main plugin file or functions.php.
 				dbdb_slug()
 			);
-			//$MyUpdateChecker = new Divi_Booster_PluginUpdateChecker(dbdb_update_url(), $file, dbdb_slug());
 		}
 	} catch (Exception $e) { }
 }

@@ -1,6 +1,6 @@
 /**
  * Sticky Menu or Anything
- * (c) WebFactory 2020, https://wpsticky.com/
+ * (c) WebFactory 2021, https://wpsticky.com/
  */
 
 jQuery(function ($) {
@@ -55,6 +55,8 @@ jQuery(function ($) {
     }
   });
 
+  $('.sticky-color-field').wpColorPicker();
+
   $('.form-table').on('click', '.disabled-feature', function (e) {
     e.preventDefault();
   });
@@ -82,7 +84,7 @@ jQuery(function ($) {
     dialogClass: 'wp-dialog sticky-pro-dialog',
     modal: true,
     resizable: false,
-    width: 750,
+    width: 800,
     height: 'auto',
     show: 'fade',
     hide: 'fade',

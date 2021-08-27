@@ -90,6 +90,7 @@
 				}
 
 				if( requires.length ) {
+
 					// show warning
 					var notice = WamPnotify.notice({
 						title: self.pluginVars.i18n.asset_canbe_required_title,
@@ -434,6 +435,22 @@ notice.on('pnotify.cancel', function() {
 					settings['plugins'][pluginName]['visability'] = pluginGroupVisabilityConditionsVal;
 				}
 
+				$('.wam-table__asset-settings', $(this)).each(function() {
+					let resourceType = $(this).data('resource-type'),
+						resourceHandle = $(this).data('resource-handle');
+
+					if( settings['plugins'][pluginName] ) {
+						if( !settings['plugins'][pluginName][resourceType] ) {
+							settings['plugins'][pluginName][resourceType] = {};
+						}
+						if( !settings['plugins'][pluginName][resourceType][resourceHandle] ) {
+							settings['plugins'][pluginName][resourceType][resourceHandle] = {};
+						}
+
+						settings['plugins'][pluginName][resourceType][resourceHandle]['move_to_footer'] = $(this).find('.wam-checkbox__move-to-footer').prop('checked');
+					}
+				});
+
 				$('.wam-table__asset-settings-conditions', $(this)).each(function() {
 					let resourceVisabilityConditionsElement = $(this).find('.wam-conditions-builder__settings'),
 						resourceVisabilityConditionsVal = resourceVisabilityConditionsElement.val(),
@@ -444,16 +461,37 @@ notice.on('pnotify.cancel', function() {
 						if( !settings['plugins'][pluginName][resourceType] ) {
 							settings['plugins'][pluginName][resourceType] = {};
 						}
+						if( !settings['plugins'][pluginName][resourceType][resourceHandle] ) {
+							settings['plugins'][pluginName][resourceType][resourceHandle] = {};
+						}
 
 						if( 'enable' !== pluginGroupLoadMode ) {
 							resourceVisabilityConditionsVal = "";
 						}
 
-						settings['plugins'][pluginName][resourceType][resourceHandle] = {
-							visability: resourceVisabilityConditionsVal
-						};
+						settings['plugins'][pluginName][resourceType][resourceHandle]['visability'] = resourceVisabilityConditionsVal;
 					}
 				});
+			});
+
+			$('.wam-table__asset-settings', '#wam-assets-type-tab-content__theme,#wam-assets-type-tab-content__misc').each(function() {
+				let groupType = $(this).data('group-type'),
+					recourceType = $(this).data("resource-type"),
+					resourceHandle = $(this).data("resource-handle");
+
+				if( !settings[groupType] ) {
+					settings[groupType] = {};
+				}
+
+				if( !settings[groupType][recourceType] ) {
+					settings[groupType][recourceType] = {};
+				}
+
+				if( !settings[groupType][recourceType][resourceHandle] ) {
+					settings[groupType][recourceType][resourceHandle] = {};
+				}
+
+				settings[groupType][recourceType][resourceHandle]['move_to_footer'] = $(this).find('.wam-checkbox__move-to-footer').prop('checked');
 			});
 
 			$('.wam-conditions-builder__settings', '#wam-assets-type-tab-content__theme,#wam-assets-type-tab-content__misc').each(function() {
@@ -461,13 +499,19 @@ notice.on('pnotify.cancel', function() {
 					recourceType = $(this).data("resource-type"),
 					resourceHandle = $(this).data("resource-handle");
 
+				if( !settings[groupType] ) {
+					settings[groupType] = {};
+				}
+
 				if( !settings[groupType][recourceType] ) {
 					settings[groupType][recourceType] = {};
 				}
 
-				settings[groupType][recourceType][resourceHandle] = {
-					visability: $(this).val()
+				if( !settings[groupType][recourceType][resourceHandle] ) {
+					settings[groupType][recourceType][resourceHandle] = {};
 				}
+
+				settings[groupType][recourceType][resourceHandle]['visability'] = $(this).val();
 			});
 
 			let stackBottomRight = {
@@ -499,7 +543,6 @@ notice.on('pnotify.cancel', function() {
 
 					if( !response || !response.success ) {
 						if( response.data ) {
-							console.log(response.data.error_message_content);
 							WamPnotify.alert({
 								title: response.data.error_message_title,
 								text: response.data.error_message_content,
