@@ -19,8 +19,8 @@
 var app = new Vue({
   el: '#app',
   data: {
-    // url: 'https://api.corporate-happiness.de/dist/dr_oliver_haas_events.json',
-    url: '/dr_oliver_haas_events.json',
+    url: 'https://api.corporate-happiness.de/dist/dr_oliver_haas_events.json',
+    // url: '/dr_oliver_haas_events.json',
     events: [],
     aMonthNames: [
       'Januar','Februar','März','April','Mai','Juni','Juli',
