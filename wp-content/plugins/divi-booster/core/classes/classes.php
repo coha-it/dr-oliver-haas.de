@@ -7,6 +7,7 @@ include_once(dirname(__FILE__).'/DBDBCssManagerOption.php');
 include_once(dirname(__FILE__).'/DBDBCustomIcon.php');
 include_once(dirname(__FILE__).'/DBDBCustomCssBoxes.php');
 include_once(dirname(__FILE__).'/DBDBDivi.php');
+include_once(dirname(__FILE__).'/DBDBDynamicAsset.php');
 include_once(dirname(__FILE__).'/DBDBETModulesFont.php');
 include_once(dirname(__FILE__).'/DBDBGallery.php');
 include_once(dirname(__FILE__).'/DBDBHtmlNameAttribute.php');

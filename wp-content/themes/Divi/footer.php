@@ -1,4 +1,11 @@
 <?php
+if ( et_theme_builder_overrides_layout( ET_THEME_BUILDER_HEADER_LAYOUT_POST_TYPE ) || et_theme_builder_overrides_layout( ET_THEME_BUILDER_FOOTER_LAYOUT_POST_TYPE ) ) {
+    // Skip rendering anything as this partial is being buffered anyway.
+    // In addition, avoids get_sidebar() issues since that uses
+    // locate_template() with require_once.
+    return;
+}
+
 /**
  * Fires after the main content, before the footer is output.
  *
@@ -33,7 +40,7 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 							) );
 						?>
 					</div>
-				</div> <!-- #et-footer-nav -->
+				</div>
 
 			<?php endif; ?>
 
@@ -48,14 +55,14 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 					echo et_core_fix_unclosed_html_tags( et_core_esc_previously( et_get_footer_credits() ) );
 					// phpcs:enable
 				?>
-					</div>	<!-- .container -->
+					</div>
 				</div>
-			</footer> <!-- #main-footer -->
-		</div> <!-- #et-main-area -->
+			</footer>
+		</div>
 
 <?php endif; // ! is_page_template( 'page-template-blank.php' ) ?>
 
-	</div> <!-- #page-container -->
+	</div>
 
 	<?php wp_footer(); ?>
 </body>

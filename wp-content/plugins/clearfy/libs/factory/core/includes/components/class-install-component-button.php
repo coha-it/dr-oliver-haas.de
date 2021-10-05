@@ -67,7 +67,7 @@ class Install_Button {
 
 		// Set default data
 		$this->add_data('storage', $this->type);
-		$this->add_data('i18n', \WBCR\Factory_Templates_100\Helpers::getEscapeJson($this->get_i18n()));
+		$this->add_data('i18n', \WBCR\Factory_Templates_101\Helpers::getEscapeJson($this->get_i18n()));
 		$this->add_data('wpnonce', wp_create_nonce('updates'));
 	}
 

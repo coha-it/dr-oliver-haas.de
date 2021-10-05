@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WDN_LicensePage extends WBCR\Factory_Templates_100\Pages\License {
+class WDN_LicensePage extends WBCR\Factory_Templates_101\Pages\License {
 
 	/**
 	 * {@inheritdoc}

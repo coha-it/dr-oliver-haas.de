@@ -11,7 +11,7 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-class WCL_Setup extends WBCR\Factory_Templates_100\Pages\Setup {
+class WCL_Setup extends WBCR\Factory_Templates_101\Pages\Setup {
 
 	/**
 	 * @param \Wbcr_Factory449_Plugin $plugin

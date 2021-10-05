@@ -13,7 +13,7 @@
 	 *
 	 * @copyright (c) 2018 Webraftic Ltd
 	 */
-	class WCL_LicensePage extends WBCR\Factory_Templates_100\Pages\License {
+	class WCL_LicensePage extends WBCR\Factory_Templates_101\Pages\License {
 		
 		/**
 		 * {@inheritdoc}

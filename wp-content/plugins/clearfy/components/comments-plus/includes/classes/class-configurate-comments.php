@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2017 Webraftic Ltd
  */
-class WbcrCmp_ConfigComments extends WBCR\Factory_Templates_100\Configurate {
+class WbcrCmp_ConfigComments extends WBCR\Factory_Templates_101\Configurate {
 
 	private $modified_types = [];
 

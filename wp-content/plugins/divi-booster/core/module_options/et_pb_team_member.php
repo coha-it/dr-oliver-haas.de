@@ -83,7 +83,8 @@ function db_pb_team_member_filter_content($content, $args) {
 		
 		// Ensure the social links list exists
 		if (strpos($content, 'class="et_pb_member_social_links"')===false) { 
-			$content = preg_replace('#(</div>\s*<!-- .et_pb_team_member_description -->)#', '<ul class="et_pb_member_social_links"></ul>\\1', $content);
+			$content = preg_replace('#(</div>\s*<!-- .et_pb_team_member_description -->)#', '<ul class="et_pb_member_social_links"></ul>\\1', $content); // old markup
+			$content = preg_replace('#(</div>\s*</div>)$#', '<ul class="et_pb_member_social_links"></ul>\\1', $content); // current markup
 		}
 		
 		// Add the email icon

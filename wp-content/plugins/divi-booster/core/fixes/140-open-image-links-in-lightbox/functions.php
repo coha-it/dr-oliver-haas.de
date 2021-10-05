@@ -44,12 +44,9 @@ function db140_configure_image_links_to_open_in_lightbox($plugin) {
 	<?php 
 }
 
-// Load magnific popup as needed
-add_filter('et_pb_map_pin_shortcode_output', 'db140_pb_map_pin_filter_content', 10);
+// Load magnific popup
+add_action('wp_head', 'db140_enqueue_magnific_popup');
 
-function db140_pb_map_pin_filter_content($content) {
+function db140_enqueue_magnific_popup() {
 	DBDBMagnificPopup::create()->enqueue();
-	return $content;
 }
-
-

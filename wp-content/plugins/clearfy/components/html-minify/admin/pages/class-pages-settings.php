@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class WHTM_SettingsPage extends WBCR\Factory_Templates_100\Pages\PageBase {
+class WHTM_SettingsPage extends WBCR\Factory_Templates_101\Pages\PageBase {
 
 	/**
 	 * {@inheritDoc}

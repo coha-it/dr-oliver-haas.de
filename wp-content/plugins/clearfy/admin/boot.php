@@ -127,7 +127,7 @@ add_action('wbcr/factory/pages/impressive/plugin_title', 'wbcr_clearfy_branding'
 	wp_enqueue_style('wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/css/install-addons.css', [], WCL_Plugin::app()->getPluginVersion());
 	wp_enqueue_script('wbcr-clearfy-install-components', WCL_PLUGIN_URL . '/admin/assets/js/install-addons.js', [
 		'jquery',
-		'wbcr-factory-templates-100-global'
+		'wbcr-factory-templates-101-global'
 	], WCL_Plugin::app()->getPluginVersion());
 });*/
 

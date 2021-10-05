@@ -93,6 +93,10 @@ body #et-boc .et_pb_column b {font-family: Geomanist;font-weight: 900;}
 .et_pb_video_overlay {
     height: calc(100% + 1px);
     width: calc(100% + 1px);
+    height: auto;
+    height: 0;
+    padding-bottom: 75%;
+    object-fit: contain; background-size: contain; background-color: transparent;
 }
 iframe.lazy-loaded[src*="player.vimeo"]:not([src*='autoplay']) {
     opacity: 0;
@@ -171,7 +175,6 @@ body .et_header_style_split .mobile_menu_bar {padding-bottom: 0px;}
 
 
 /* LAZYLOADING */
-.et_pb_video_overlay {object-fit: contain; background-size: contain; background-color: transparent;}
 
 .et_pb_module.et_pb_video,
 iframe,

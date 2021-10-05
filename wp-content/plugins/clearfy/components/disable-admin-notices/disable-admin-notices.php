@@ -88,7 +88,7 @@ $wdan_plugin_info = array(
 		array('libs/factory/bootstrap', 'factory_bootstrap_449', 'admin'),
 		array('libs/factory/forms', 'factory_forms_446', 'admin'),
 		array('libs/factory/pages', 'factory_pages_448', 'admin'),
-		array('libs/factory/clearfy', 'factory_templates_100', 'all'),
+		array('libs/factory/clearfy', 'factory_templates_101', 'all'),
 		array('libs/factory/freemius', 'factory_freemius_137', 'all'),
 		array('libs/factory/adverts', 'factory_adverts_127', 'admin'),
 		//array('libs/factory/logger', 'factory_logger_114', 'all')

@@ -242,7 +242,7 @@ if ( ! class_exists( 'Wbcr_Factory449_Requirements' ) ) {
 			$notice_text         = $notice_default_text = '';
 			$notice_default_text .= '<b>' . $this->plugin_title . ' ' . __( 'warning', '' ) . ':</b>' . '<br>';
 
-			$notice_default_text .= sprintf( __( 'The %s plugin has stopped.', 'wbcr_factory_templates_100' ), $this->plugin_title ) . ' ';
+			$notice_default_text .= sprintf( __( 'The %s plugin has stopped.', 'wbcr_factory_templates_101' ), $this->plugin_title ) . ' ';
 			$notice_default_text .= __( 'Possible reasons:', '' ) . ' <br>';
 
 			$has_one = false;

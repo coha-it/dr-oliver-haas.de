@@ -30,20 +30,24 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 		if ( $template->is_enabled() && ! $template->has( 'box_shadow' ) ) {
 			$template->add(
 				'box_shadow',
-				$this->get_fields( $template->placeholders( array(
-					'suffix'              => null,
-					'label'               => null,
-					'option_category'     => null,
-					'tab_slug'            => null,
-					'toggle_slug'         => null,
-					'sub_toggle_slug'     => null,
-					'depends_show_if_not' => null,
-					'depends_show_if'     => null,
-					'depends_on'          => null,
-					'default_on_fronts'   => null,
-					'show_if'             => null,
-					'show_if_not'         => null,
-				) ) )
+				$this->get_fields(
+					$template->placeholders(
+						array(
+							'suffix'              => null,
+							'label'               => null,
+							'option_category'     => null,
+							'tab_slug'            => null,
+							'toggle_slug'         => null,
+							'sub_toggle'          => null,
+							'depends_show_if_not' => null,
+							'depends_show_if'     => null,
+							'depends_on'          => null,
+							'default_on_fronts'   => null,
+							'show_if'             => null,
+							'show_if_not'         => null,
+						)
+					)
+				)
 			);
 		}
 	}
@@ -57,20 +61,37 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 	 * @return array       Box shadow fields.
 	 */
 	public function get_fields( array $args = array() ) {
-		$arguments = shortcode_atts( array(
-			'suffix'              => '',
-			'label'               => esc_html__( 'Box Shadow', 'et_builder' ),
-			'option_category'     => '',
-			'tab_slug'            => '',
-			'toggle_slug'         => '',
-			'sub_toggle_slug'     => null,
-			'depends_show_if_not' => null,
-			'depends_show_if'     => null,
-			'depends_on'          => null,
-			'default_on_fronts'   => array(),
-			'show_if'             => null,
-			'show_if_not'         => null,
-		), $args );
+		static $i18n;
+
+		// Cache translations.
+		if ( ! isset( $i18n ) ) {
+			$i18n['label'] = esc_html__( 'Box Shadow', 'et_builder' );
+		}
+
+		$arguments = shortcode_atts(
+			array(
+				'suffix'              => '',
+				'label'               => $i18n['label'],
+				'option_category'     => '',
+				'tab_slug'            => '',
+				'toggle_slug'         => '',
+				'sub_toggle_slug'     => null, // @deprecated Use {@see `sub_toggle`} instead. Keep it here as backward compatibility.
+				'sub_toggle'          => null,
+				'depends_show_if_not' => null,
+				'depends_show_if'     => null,
+				'depends_on'          => null,
+				'default_on_fronts'   => array(),
+				'show_if'             => null,
+				'show_if_not'         => null,
+			),
+			$args
+		);
+
+		// The `sub_toggle_slug` is deprecated in favor of `sub_toggle` which are used by
+		// other option groups. Keep it here for backward compatibiluty.
+		if ( ! empty( $arguments['sub_toggle_slug'] ) && empty( $arguments['sub_toggle'] ) ) {
+			$arguments['sub_toggle'] = $arguments['sub_toggle_slug'];
+		}
 
 		if ( $this->template->is_enabled() && $this->template->has( 'box_shadow' ) ) {
 			return $this->template->create( 'box_shadow', $arguments );
@@ -87,13 +108,14 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 
 		$options = array();
 		$option  = array(
-			'option_category'     => $arguments['option_category'],
-			'tab_slug'            => $arguments['tab_slug'],
-			'toggle_slug'         => $arguments['toggle_slug'],
-			'show_if_not'         => array(
+			'option_category'  => $arguments['option_category'],
+			'tab_slug'         => $arguments['tab_slug'],
+			'toggle_slug'      => $arguments['toggle_slug'],
+			'sub_toggle'       => $arguments['sub_toggle'],
+			'show_if_not'      => array(
 				"{$style}" => 'none',
 			),
-			'default_on_child'    => true,
+			'default_on_child' => true,
 		);
 		$range   = array_merge(
 			$option,
@@ -104,19 +126,16 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 					'max'  => 80,
 					'step' => 1,
 				),
-				'default'         => 0,
-				'validate_unit'   => true,
-				'allowed_units'   => array( 'em', 'rem', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ex', 'vh', 'vw' ),
-				'default_unit'    => 'px',
-				'fixed_range'     => true,
-				'hover'           => 'tabs',
-				'mobile_options'  => true,
+				'default'        => 0,
+				'validate_unit'  => true,
+				'allowed_units'  => array( 'em', 'rem', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ex', 'vh', 'vw' ),
+				'default_unit'   => 'px',
+				'fixed_range'    => true,
+				'hover'          => 'tabs',
+				'mobile_options' => true,
+				'sticky'         => true,
 			)
 		);
-
-		if ( $arguments['sub_toggle_slug'] ) {
-			$option['sub_toggle'] = $arguments['sub_toggle_slug'];
-		}
 
 		$presets = array();
 
@@ -144,8 +163,8 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 				'default'             => 'none',
 				'className'           => 'box_shadow',
 				'presets'             => $presets,
-				'affects'             => array( $horizontal, $vertical, $blur, $spread, $color, $position, ),
-				'copy_with'           => array( $horizontal, $vertical, $blur, $spread, $color, $position, ),
+				'affects'             => array( $horizontal, $vertical, $blur, $spread, $color, $position ),
+				'copy_with'           => array( $horizontal, $vertical, $blur, $spread, $color, $position ),
 				'depends_show_if'     => $arguments['depends_show_if'],
 				'depends_show_if_not' => $arguments['depends_show_if_not'],
 				'depends_on'          => $arguments['depends_on'],
@@ -156,22 +175,22 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 		);
 
 		// Configure dependency for fields via show_if/show_if_not attribute
-		if ( $options[ $style ]['show_if'] === null ) {
+		if ( null === $options[ $style ]['show_if'] ) {
 			unset( $options[ $style ]['show_if'] );
 		}
-		if ( $options[ $style ]['show_if_not'] === null ) {
+		if ( null === $options[ $style ]['show_if_not'] ) {
 			unset( $options[ $style ]['show_if_not'] );
 		}
 
 		// Field dependency via depends_on, depends_show_if, and depends_show_if_not have been deprecated
 		// These remain here as backward compatibility for third party modules
-		if ( $options[ $style ]['depends_on'] === null ) {
+		if ( null === $options[ $style ]['depends_on'] ) {
 			unset( $options[ $style ]['depends_on'] );
 		}
-		if ( $options[ $style ]['depends_show_if'] === null ) {
+		if ( null === $options[ $style ]['depends_show_if'] ) {
 			unset( $options[ $style ]['depends_show_if'] );
 		}
-		if ( $options[ $style ]['depends_show_if_not'] === null ) {
+		if ( null === $options[ $style ]['depends_show_if_not'] ) {
 			unset( $options[ $style ]['depends_show_if_not'] );
 		}
 		if ( isset( $arguments['default_on_fronts']['style'] ) && false !== $arguments['default_on_fronts']['style'] ) {
@@ -220,6 +239,7 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 				'default'        => 'rgba(0,0,0,0.3)',
 				'field_template' => 'color',
 				'mobile_options' => true,
+				'sticky'         => true,
 				'description'    => esc_html__( 'The color of the shadow.', 'et_builder' ),
 			)
 		);
@@ -228,14 +248,14 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 			$options[ $color ]['default_on_front'] = $arguments['default_on_fronts']['color'];
 		}
 
-		$options[ $position ]   = array_merge(
+		$options[ $position ] = array_merge(
 			$option,
 			array(
-				'label'   => esc_html__( 'Box Shadow Position', 'et_builder' ),
-				'description' => esc_html__( 'Choose whether you would like the shadow to appear outside your module, lifting the module up from the page, or inside the module, setting the module downwards within the page.', 'et_builder' ),
-				'type'    => 'select',
-				'default' => 'outer',
-				'options' => array(
+				'label'          => esc_html__( 'Box Shadow Position', 'et_builder' ),
+				'description'    => esc_html__( 'Choose whether you would like the shadow to appear outside your module, lifting the module up from the page, or inside the module, setting the module downwards within the page.', 'et_builder' ),
+				'type'           => 'select',
+				'default'        => 'outer',
+				'options'        => array(
 					'outer' => esc_html__( 'Outer Shadow', 'et_builder' ),
 					'inner' => esc_html__( 'Inner Shadow', 'et_builder' ),
 				),
@@ -270,24 +290,29 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 	 *
 	 * @since 3.23 Add support for responsive settings.
 	 *
-	 * @param  array  $atts Module attributes.
-	 * @param  array  $args Box-shadow arguments.
+	 * @param  array $atts Module attributes.
+	 * @param  array $args Box-shadow arguments.
 	 * @return string       Box shadow CSS declaration.
 	 */
 	public function get_value( $atts, array $args = array() ) {
-		$args      = shortcode_atts( array(
-			'suffix'    => '',
-			'important' => false,
-			'hover'     => false,
-			'device'    => 'desktop',
-		), $args );
+		$args      = shortcode_atts(
+			array(
+				'suffix'    => '',
+				'important' => false,
+				'hover'     => false,
+				'sticky'    => false,
+				'device'    => 'desktop',
+			),
+			$args
+		);
 		$suffix    = $args['suffix'];
 		$important = $args['important'] ? '!important' : '';
 		$hover     = $args['hover'];
+		$sticky    = $args['sticky'];
 		$device    = $args['device'];
 		$style     = $this->get_key_value( "style$suffix", $atts );
 
-		if ( empty($style) || 'none' === $style ) {
+		if ( empty( $style ) || 'none' === $style ) {
 			return '';
 		}
 
@@ -295,22 +320,25 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 		$preset = $this->get_preset( $style );
 
 		// 2. Get current device properties value.
-		$atts   = array_merge( array(
-			"box_shadow_position{$suffix}"   => $preset['position'],
-			"box_shadow_horizontal{$suffix}" => $preset['horizontal'],
-			"box_shadow_vertical{$suffix}"   => $preset['vertical'],
-			"box_shadow_blur{$suffix}"       => $preset['blur'],
-			"box_shadow_spread{$suffix}"     => $preset['spread'],
-			"box_shadow_color{$suffix}"      => 'rgba(0,0,0,0.3)',
-		), array_filter( $atts, 'strlen' ) );
+		$atts = array_merge(
+			array(
+				"box_shadow_position{$suffix}"   => $preset['position'],
+				"box_shadow_horizontal{$suffix}" => $preset['horizontal'],
+				"box_shadow_vertical{$suffix}"   => $preset['vertical'],
+				"box_shadow_blur{$suffix}"       => $preset['blur'],
+				"box_shadow_spread{$suffix}"     => $preset['spread'],
+				"box_shadow_color{$suffix}"      => 'rgba(0,0,0,0.3)',
+			),
+			array_filter( $atts, 'strlen' )
+		);
 
 		// All the values below sometime return null.
-		$position   = $this->get_key_value( "position{$suffix}", $atts, false, $device ) == 'inner' ? 'inset' : '';
-		$horizontal = $this->get_key_value( "horizontal{$suffix}", $atts, $hover, $device );
-		$vertical   = $this->get_key_value( "vertical{$suffix}", $atts, $hover, $device );
-		$blur       = $this->get_key_value( "blur{$suffix}", $atts, $hover, $device );
-		$strength   = $this->get_key_value( "spread{$suffix}", $atts, $hover, $device );
-		$color      = $this->get_key_value( "color{$suffix}", $atts, $hover, $device );
+		$position   = $this->get_key_value( "position{$suffix}", $atts, false, $device, $sticky ) === 'inner' ? 'inset' : '';
+		$horizontal = $this->get_key_value( "horizontal{$suffix}", $atts, $hover, $device, $sticky );
+		$vertical   = $this->get_key_value( "vertical{$suffix}", $atts, $hover, $device, $sticky );
+		$blur       = $this->get_key_value( "blur{$suffix}", $atts, $hover, $device, $sticky );
+		$strength   = $this->get_key_value( "spread{$suffix}", $atts, $hover, $device, $sticky );
+		$color      = $this->get_key_value( "color{$suffix}", $atts, $hover, $device, $sticky );
 
 		// CSS declaration.
 		$value = sprintf(
@@ -326,9 +354,9 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 
 		// Do not provider hover style if it is the same as normal style
 		if ( $hover ) {
-			$new_args = $args;
+			$new_args          = $args;
 			$new_args['hover'] = false;
-			$normal = $this->get_value( $atts, $new_args );
+			$normal            = $this->get_value( $atts, $new_args );
 
 			if ( $normal === $value ) {
 				return '';
@@ -341,60 +369,60 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 	public function get_presets() {
 		return array(
 			'none'    => array(
-				"horizontal" => '',
-				"vertical"   => '',
-				"blur"       => '',
-				"spread"     => '',
-				"position"   => 'outer',
+				'horizontal' => '',
+				'vertical'   => '',
+				'blur'       => '',
+				'spread'     => '',
+				'position'   => 'outer',
 			),
 			'preset1' => array(
-				"horizontal" => '0px',
-				"vertical"   => '2px',
-				"blur"       => '18px',
-				"spread"     => '0px',
-				"position"   => 'outer',
+				'horizontal' => '0px',
+				'vertical'   => '2px',
+				'blur'       => '18px',
+				'spread'     => '0px',
+				'position'   => 'outer',
 			),
 			'preset2' => array(
-				"horizontal" => '6px',
-				"vertical"   => '6px',
-				"blur"       => '18px',
-				"spread"     => '0px',
-				"position"   => 'outer',
+				'horizontal' => '6px',
+				'vertical'   => '6px',
+				'blur'       => '18px',
+				'spread'     => '0px',
+				'position'   => 'outer',
 			),
 			'preset3' => array(
-				"horizontal" => '0px',
-				"vertical"   => '12px',
-				"blur"       => '18px',
-				"spread"     => '-6px',
-				"position"   => 'outer',
+				'horizontal' => '0px',
+				'vertical'   => '12px',
+				'blur'       => '18px',
+				'spread'     => '-6px',
+				'position'   => 'outer',
 			),
 			'preset4' => array(
-				"horizontal" => '10px',
-				"vertical"   => '10px',
-				"blur"       => '0px',
-				"spread"     => '0px',
-				"position"   => 'outer',
+				'horizontal' => '10px',
+				'vertical'   => '10px',
+				'blur'       => '0px',
+				'spread'     => '0px',
+				'position'   => 'outer',
 			),
 			'preset5' => array(
-				"horizontal" => '0px',
-				"vertical"   => '6px',
-				"blur"       => '0px',
-				"spread"     => '10px',
-				"position"   => 'outer',
+				'horizontal' => '0px',
+				'vertical'   => '6px',
+				'blur'       => '0px',
+				'spread'     => '10px',
+				'position'   => 'outer',
 			),
 			'preset6' => array(
-				"horizontal" => '0px',
-				"vertical"   => '0px',
-				"blur"       => '18px',
-				"spread"     => '0px',
-				"position"   => 'inner',
+				'horizontal' => '0px',
+				'vertical'   => '0px',
+				'blur'       => '18px',
+				'spread'     => '0px',
+				'position'   => 'inner',
 			),
 			'preset7' => array(
-				"horizontal" => '10px',
-				"vertical"   => '10px',
-				"blur"       => '0px',
-				"spread"     => '0px',
-				"position"   => 'inner',
+				'horizontal' => '10px',
+				'vertical'   => '10px',
+				'blur'       => '0px',
+				'spread'     => '0px',
+				'position'   => 'inner',
 			),
 		);
 	}
@@ -405,11 +433,11 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 		return isset( $presets[ $name ] )
 			? $presets[ $name ]
 			: array(
-				"horizontal" => 0,
-				"vertical"   => 0,
-				"blur"       => 0,
-				"spread"     => 0,
-				"position"   => 'outer',
+				'horizontal' => 0,
+				'vertical'   => 0,
+				'blur'       => 0,
+				'spread'     => 0,
+				'position'   => 'outer',
 			);
 	}
 
@@ -440,17 +468,17 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 		return implode( ',', $new_selector );
 	}
 
-	public function get_overlay_style( $function_name,  $selector, $atts, array $args = array() ) {
+	public function get_overlay_style( $function_name, $selector, $atts, array $args = array() ) {
 		$order_class_name = ET_Builder_Element::get_module_order_class( $function_name );
 
-		$reg_selector    = str_replace( '%%order_class%%', ".{$order_class_name}", $selector );
-		$reg_selector    = str_replace( '%order_class%', ".{$order_class_name}", $reg_selector );
+		$reg_selector = str_replace( '%%order_class%%', ".{$order_class_name}", $selector );
+		$reg_selector = str_replace( '%order_class%', ".{$order_class_name}", $reg_selector );
 
 		// %%parent_class%% only works if child module's slug is `parent_slug` + _item suffix. If child module slug
 		// use different slug structure, %%parent_class%% should not be used
 		if ( false !== strpos( $reg_selector, '%%parent_class%%' ) ) {
 			$parent_class = str_replace( '_item', '', $function_name );
-			$reg_selector     = str_replace( '%%parent_class%%', ".{$parent_class}", $reg_selector );
+			$reg_selector = str_replace( '%%parent_class%%', ".{$parent_class}", $reg_selector );
 		}
 
 		$selector = $this->get_overlay_selector( $selector );
@@ -511,26 +539,29 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 	 * @param  array   $atts   All module attributes.
 	 * @param  boolean $hover  Hover mode status.
 	 * @param  string  $device Current device.
+	 * @param  boolean $sticky Sticky mode status.
+	 *
 	 * @return string          Box shadow property value.
 	 */
-	protected function get_key_value( $key, $atts = array(), $hover = false, $device = 'desktop' ) {
-		$utils = ET_Core_Data_Utils::instance();
-		$Hover = et_pb_hover_options();
+	protected function get_key_value( $key, $atts = array(), $hover = false, $device = 'desktop', $sticky = false ) {
+		$hover_options = et_pb_hover_options();
 
 		// Add device name as suffix.
 		$is_desktop    = 'desktop' === $device;
 		$device_suffix = '';
-		if ( ! $hover && ! $is_desktop ) {
+		if ( ! $hover && ! $is_desktop && ! $sticky ) {
 			$device_suffix = "_{$device}";
 		}
 
 		// Get current active device value.
 		$attr_value = et_pb_responsive_options()->get_any_value( $atts, "box_shadow_{$key}{$device_suffix}", '', true );
 
-		// Bail early if current mode is hover or desktop mode.
-		if ( $hover ) {
-			return $Hover->get_value( "box_shadow_{$key}", $atts, $attr_value );
-		} else if ( $is_desktop ) {
+		// Bail early if current mode is sticky, hover or desktop mode.
+		if ( $sticky ) {
+			return et_pb_sticky_options()->get_value( "box_shadow_{$key}", $atts, $attr_value );
+		} elseif ( $hover ) {
+			return $hover_options->get_value( "box_shadow_{$key}", $atts, $attr_value );
+		} elseif ( $is_desktop ) {
 			return $attr_value;
 		}
 
@@ -545,11 +576,87 @@ class ET_Builder_Module_Field_BoxShadow extends ET_Builder_Module_Field_Base {
 
 		return $attr_value;
 	}
+
+	/**
+	 * Check if box shadow is used.
+	 *
+	 * @since 4.10.0
+	 * @param array  $attrs All module attributes.
+	 * @param string $key   Box shadow property.
+	 */
+	public function is_used( $attrs, $key = '' ) {
+		foreach ( $attrs as $attr => $value ) {
+			if ( ! $value ) {
+				continue;
+			}
+
+			$has_attr = false !== strpos( $attr, 'box_shadow_style' );
+
+			if ( ! $has_attr ) {
+				continue;
+			}
+
+			return ! empty( $attr );
+		}
+
+	}
+
+	/**
+	 * Check if module has inset.
+	 *
+	 * @since 4.10.0
+	 * @param array $attrs            All module attributes.
+	 * @param array $advanced_options Advanced module options.
+	 */
+	public function has_inset( $attrs, $advanced_options, $_ ) {
+		$has_box_inset = false;
+		foreach ( $advanced_options as $option_name => $option_settings ) {
+			if ( true === $has_box_inset ) {
+				break;
+			}
+			// Enable module to explicitly disable box shadow fields (box shadow is automatically)
+			// added to all module by default.
+			if ( false === $option_settings ) {
+				continue;
+			}
+
+			// Prepare attribute for getting box shadow's css declaration.
+			$declaration_args = array(
+				'suffix'    => 'default' === $option_name ? '' : "_{$option_name}",
+				'important' => $_->array_get( $option_settings, 'css.important', false ),
+			);
+
+			$overlay = $_->array_get( $option_settings, 'css.overlay', false );
+			$inset   = $this->is_inset( $this->get_value( $attrs, $declaration_args ) );
+
+			$inset_hover = $this->is_inset(
+				$this->get_value(
+					$attrs,
+					array_merge( $declaration_args, array( 'hover' => true ) )
+				)
+			);
+
+			$has_video_bg = ! empty( $atts['background_video_mp4'] ) || ! empty( $atts['background_video_webm'] );
+
+			foreach ( et_pb_responsive_options()->get_modes() as $device ) {
+				// Add device argument.
+				$device_declaration_args = array_merge( $declaration_args, array( 'device' => $device ) );
+				if ( ( $inset && 'inset' === $overlay ) || 'always' === $overlay || $has_video_bg ) {
+					$has_box_inset = true;
+					break;
+				}
+			}
+			// Get box-shadow styles.
+
+		}
+		return $has_box_inset;
+
+	}
 }
 
 function _action_et_pb_box_shadow_overlay() {
 	wp_localize_script(
-		apply_filters( 'et_builder_modules_script_handle', 'et-builder-modules-script' ),
+		et_get_combined_script_handle(),
 		'et_pb_box_shadow_elements',
 		ET_Builder_Module_Field_BoxShadow::get_elements()
 	);

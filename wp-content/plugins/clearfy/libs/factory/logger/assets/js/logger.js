@@ -18,10 +18,10 @@ function wbcr_factory_logger_114_LogCleanup(element) {
 
             jQuery('#wbcr-log-viewer').html('');
             jQuery('#wbcr-log-size').text('0B');
-            jQuery.wbcr_factory_templates_100.app.showNotice(data.message, data.type);
+            jQuery.wbcr_factory_templates_101.app.showNotice(data.message, data.type);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            jQuery.wbcr_factory_templates_100.app.showNotice('Error: ' + errorThrown + ', status: ' + textStatus, 'danger');
+            jQuery.wbcr_factory_templates_101.app.showNotice('Error: ' + errorThrown + ', status: ' + textStatus, 'danger');
             btn.html(currentBtnText);
         }
     });

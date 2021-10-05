@@ -7,8 +7,12 @@
  *
  * @package Divi\Builder
  *
- * @since   ??
+ * @since   3.29
  */
+
+if ( ! class_exists( 'ET_Builder_Module_Gallery' ) ) {
+	require_once ET_BUILDER_DIR_RESOLVED_PATH . '/module/Gallery.php';
+}
 
 /**
  * Class representing WooCommerce Gallery component.
@@ -31,7 +35,7 @@ class ET_Builder_Module_Woocommerce_Gallery extends ET_Builder_Module_Gallery {
 		unset( $this->settings_modal_toggles['general']['toggles']['main_content'] );
 
 		// Rename Elements Option group to Content.
-		$this->settings_modal_toggles['general']['toggles']['elements'] = esc_html__( 'Content', 'et_builder' );
+		$this->settings_modal_toggles['general']['toggles']['elements'] = et_builder_i18n( 'Content' );
 
 		// Intentionally removing inherited advanced options group.
 		$this->advanced_fields['link_options'] = false;
@@ -54,25 +58,28 @@ class ET_Builder_Module_Woocommerce_Gallery extends ET_Builder_Module_Gallery {
 		$this->advanced_fields['fonts']['caption']['line_height']    = array(
 			'default' => '1em',
 		);
+		$this->advanced_fields['position_fields']                    = array(
+			'default' => 'relative',
+		);
 
 		$this->custom_css_fields = array(
-			'gallery_item' => array(
-				'label'       => esc_html__( 'Gallery Item', 'et_builder' ),
-				'selector'    => '.et_pb_gallery_item',
+			'gallery_item'              => array(
+				'label'    => esc_html__( 'Gallery Item', 'et_builder' ),
+				'selector' => '.et_pb_gallery_item',
 			),
-			'gallery_pagination' => array(
-				'label'       => esc_html__( 'Gallery Pagination', 'et_builder' ),
-				'selector'    => '.et-pb-controllers a',
+			'gallery_pagination'        => array(
+				'label'    => esc_html__( 'Gallery Pagination', 'et_builder' ),
+				'selector' => '.et-pb-controllers a',
 			),
 			'gallery_pagination_active' => array(
-				'label'       => esc_html__( 'Pagination Active Page', 'et_builder' ),
-				'selector'    => '.et-pb-controllers a.et-pb-active-control',
+				'label'    => esc_html__( 'Pagination Active Page', 'et_builder' ),
+				'selector' => '.et-pb-controllers a.et-pb-active-control',
 			),
 		);
 
 		$this->help_videos = array(
 			array(
-				'id'   => esc_html( '7X03vBPYJ1o' ),
+				'id'   => '7X03vBPYJ1o',
 				'name' => esc_html__( 'Divi WooCommerce Modules', 'et_builder' ),
 			),
 		);
@@ -99,7 +106,7 @@ class ET_Builder_Module_Woocommerce_Gallery extends ET_Builder_Module_Gallery {
 		 * Woo Galleries fields that need to be prepended before fields inherited from gallery
 		 * module.
 		 */
-		$product_default   = 'product' === $this->get_post_type() ? 'current' : 'latest';
+		$product_default   = ET_Builder_Module_Helper_Woocommerce_Modules::get_product_default();
 		$wc_gallery_fields = array(
 			'product'        => ET_Builder_Module_Helper_Woocommerce_Modules::get_field(
 				'product',
@@ -170,9 +177,42 @@ class ET_Builder_Module_Woocommerce_Gallery extends ET_Builder_Module_Gallery {
 	}
 
 	/**
+	 * Gets Placeholder ID as Gallery IDs when in TB mode.
+	 *
+	 * @see   https://github.com/elegantthemes/Divi/issues/18768
+	 *
+	 * @since ??
+	 *
+	 * @param array $conditional_tags Conditional Tags.
+	 *
+	 * @return array Array containing placeholder Id when in TB mode. Empty array otherwise.
+	 */
+	public static function get_gallery_ids( $conditional_tags ) {
+		if ( ! is_array( $conditional_tags ) ) {
+			return array();
+		}
+
+		$is_tb = et_()->array_get( $conditional_tags, 'is_tb', false );
+
+		if ( ! $is_tb || ! function_exists( 'wc_placeholder_img_src' ) ) {
+			return array();
+		}
+
+		$placeholder_src = wc_placeholder_img_src( 'full' );
+		$placeholder_id  = attachment_url_to_postid( $placeholder_src );
+
+		if ( 0 === absint( $placeholder_id ) ) {
+			return array();
+		}
+
+		return array( $placeholder_id );
+	}
+
+	/**
 	 * Computed callback's callback method which adjusted arguments passed to original computed
 	 * callback's callback so the result is suitable for Woo Gallery module
 	 *
+	 * @since ?? Load Placeholder Image when in TB mode.
 	 * @since 3.29
 	 *
 	 * @param array $args             Arguments from Computed Prop AJAX call.
@@ -182,19 +222,34 @@ class ET_Builder_Module_Woocommerce_Gallery extends ET_Builder_Module_Gallery {
 	 * @return array
 	 */
 	public static function get_wc_gallery( $args = array(), $conditional_tags = array(), $current_page = array() ) {
-		// Generate valid `gallery_ids` value based `product` attribute.
-		$product_id        = ET_Builder_Module_Helper_Woocommerce_Modules::get_product_id( $args['product'] );
-		$product           = ET_Builder_Module_Helper_Woocommerce_Modules::get_product( $product_id );
-		$featured_image_id = intval( $product->get_image_id() );
-		$attachment_ids    = $product->get_gallery_image_ids();
+		if ( 'current' === $args['product'] && 'true' === et_()->array_get( $conditional_tags, 'is_tb', false ) ) {
+			et_theme_builder_wc_set_global_objects( $conditional_tags );
+
+			global $product;
+		} else {
+			// Generate valid `gallery_ids` value based `product` attribute.
+			$product = ET_Builder_Module_Helper_Woocommerce_Modules::get_product( $args['product'] );
+		}
+
+		$attachment_ids = array();
+
+		if ( $product ) {
+			$featured_image_id = intval( $product->get_image_id() );
+			$attachment_ids    = $product->get_gallery_image_ids();
+		}
+
+		// Load placeholder Image when in TB.
+		if ( is_array( $attachment_ids ) && empty( $attachment_ids ) ) {
+			$attachment_ids = self::get_gallery_ids( $conditional_tags );
+		}
 
 		// Modify `gallery_ids` value.
 		$args['gallery_ids'] = $attachment_ids;
 
-		// Display only Placeholder image when no Gallery images are available.
-		$placeholder_img_src = wc_placeholder_img_src();
-		if ( empty( $args['gallery_ids'] ) && $placeholder_img_src ) {
-			$args['gallery_ids'] = array( attachment_url_to_postid( $placeholder_img_src ) );
+		// Don't display Placeholder when no Gallery image is available.
+		// @see https://github.com/elegantthemes/submodule-builder/pull/6706#issuecomment-542275647
+		if ( 0 === count( $attachment_ids ) ) {
+			$args['attachment_id'] = -1;
 		}
 
 		return ET_Builder_Module_Gallery::get_gallery( $args, $conditional_tags, $current_page );

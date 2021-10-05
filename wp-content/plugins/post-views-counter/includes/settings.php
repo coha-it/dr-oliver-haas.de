@@ -402,7 +402,7 @@ class Post_Views_Counter_Settings {
 		}
 
 		echo '
-				<p class="description">' . __( 'Use it to hide the post views counter from selected type of visitors.', 'post-views-counter' ) . '</p>
+				<p class="description">' . __( 'Use it exclude specific user groups from post views count.', 'post-views-counter' ) . '</p>
 				<div class="pvc_user_roles"' . (in_array( 'roles', Post_Views_Counter()->options['general']['exclude']['groups'], true ) ? '' : ' style="display: none;"') . '>';
 
 		foreach ( $this->user_roles as $role => $role_name ) {
@@ -411,7 +411,7 @@ class Post_Views_Counter_Settings {
 		}
 
 		echo '
-					<p class="description">' . __( 'Use it to hide the post views counter from selected user roles.', 'post-views-counter' ) . '</p>
+					<p class="description">' . __( 'Use it exclude specific user roles from post views count.', 'post-views-counter' ) . '</p>
 				</div>
 			</fieldset>
 		</div>';
@@ -747,7 +747,6 @@ class Post_Views_Counter_Settings {
 			$input['update_notice'] = $pvc->options['general']['update_notice'];
 		// save display settings
 		} elseif ( isset( $_POST['save_pvc_display'] ) ) {
-
 			// post views label
 			$input['label'] = isset( $input['label'] ) ? $input['label'] : $pvc->defaults['display']['label'];
 
@@ -767,7 +766,8 @@ class Post_Views_Counter_Settings {
 			// icon class
 			$input['icon_class'] = isset( $input['icon_class'] ) ? trim( $input['icon_class'] ) : $pvc->defaults['display']['icon_class'];
 
-			$input['toolbar_statistics'] = isset( $input['toolbar_statistics'] ) ? trim( $input['toolbar_statistics'] ) : $pvc->defaults['display']['toolbar_statistics'];
+			// toolbar statistics
+			$input['toolbar_statistics'] = isset( $input['toolbar_statistics'] );
 
 			// post types display
 			if ( isset( $input['post_types_display'] ) ) {

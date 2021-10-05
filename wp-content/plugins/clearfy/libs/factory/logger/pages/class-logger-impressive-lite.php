@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @copyright (c) 2020, Webcraftic
  * @version       1.0
  */
-class Wbcr_FactoryLogger114_Lite extends \WBCR\Factory_Templates_100\ImpressiveLite {
+class Wbcr_FactoryLogger114_Lite extends \WBCR\Factory_Templates_101\ImpressiveLite {
 
 	/**
 	 * {@inheritdoc}

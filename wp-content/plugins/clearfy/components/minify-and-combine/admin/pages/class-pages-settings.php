@@ -9,7 +9,7 @@ if( !defined('ABSPATH') ) {
  *
  * @since 1.0.0
  */
-class WMAC_MinifyAndCombineSettingsPage extends WBCR\Factory_Templates_100\Pages\PageBase {
+class WMAC_MinifyAndCombineSettingsPage extends WBCR\Factory_Templates_101\Pages\PageBase {
 
 	/**
 	 * {@inheritDoc}

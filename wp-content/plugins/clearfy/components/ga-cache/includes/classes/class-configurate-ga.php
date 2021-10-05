@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WGA_ConfigGACache extends WBCR\Factory_Templates_100\Configurate {
+class WGA_ConfigGACache extends WBCR\Factory_Templates_101\Configurate {
 
 
 	public function registerActionsAndFilters() {

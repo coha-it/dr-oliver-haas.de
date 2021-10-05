@@ -91,7 +91,7 @@ class WCL_HideLoginPage extends WCL_Page {
 				});
 			});
 		</script>
-		<div class="wbcr-factory-templates-100-multisite-suggetion">
+		<div class="wbcr-factory-templates-101-multisite-suggetion">
 			<div class="wbcr-factory-inner-contanier">
 				<h3><?php _e('Install Hide login page component', 'clearfy') ?></h3>
 

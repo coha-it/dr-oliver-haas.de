@@ -13,7 +13,7 @@ if( !defined('ABSPATH') ) {
 	exit;
 }
 
-class WCL_ConfigPrivacy extends WBCR\Factory_Templates_100\Configurate {
+class WCL_ConfigPrivacy extends WBCR\Factory_Templates_101\Configurate {
 
 	/**
 	 * @param WCL_Plugin $plugin

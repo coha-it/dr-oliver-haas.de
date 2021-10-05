@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @copyright (c) 2018 Webraftic Ltd
  */
-class WbcrCmp_CommentsPage extends WBCR\Factory_Templates_100\Pages\PageBase {
+class WbcrCmp_CommentsPage extends WBCR\Factory_Templates_101\Pages\PageBase {
 
 	/**
 	 * {@inheritDoc}

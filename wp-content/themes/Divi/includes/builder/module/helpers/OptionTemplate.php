@@ -8,11 +8,11 @@
  */
 class ET_Builder_Module_Helper_OptionTemplate {
 
-	private $map               = array();
-	private $templates         = array();
-	private $data              = array();
-	private $cache             = array();
-	private $tab_slug_map      = array();
+	private $map          = array();
+	private $templates    = array();
+	private $data         = array();
+	private $cache        = array();
+	private $tab_slug_map = array();
 
 	public $template_prefix = '%t';
 
@@ -50,11 +50,11 @@ class ET_Builder_Module_Helper_OptionTemplate {
 
 		// Option template is disabled on:
 		// 1. AJAX request for fetching classic builder (BB)'s module data. BB data is shipped as
-		//    optimized template markup which is rendered on server then sent as string. Hence
-		//    Option Template's sent-config-rebuild-on-js won't be usable for BB
+		// optimized template markup which is rendered on server then sent as string. Hence
+		// Option Template's sent-config-rebuild-on-js won't be usable for BB
 		// 2. BB's editing page. BB edit page scans for field dependency and generates visibility
-		//    setting on `window.et_pb_module_field_dependencies` variable for field depency thus
-		//    actual field should be rendered here instead of templateId
+		// setting on `window.et_pb_module_field_dependencies` variable for field depency thus
+		// actual field should be rendered here instead of templateId
 		if ( et_builder_is_loading_bb_data() || et_builder_is_bb_page() ) {
 			$status = false;
 		}
@@ -88,7 +88,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 		$fields_template = array_merge( $template, et_pb_responsive_options()->create( $template ) );
 
 		// Populate tab_slug of given template because advance fields can be rendered on any tab
-		foreach( $fields_template as $field_name => $field ) {
+		foreach ( $fields_template as $field_name => $field ) {
 			if ( isset( $field['tab_slug'] ) ) {
 				$tab_slug = '' === $field['tab_slug'] ? 'advanced' : $field['tab_slug'];
 
@@ -222,7 +222,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 	 * @return array
 	 */
 	public function get_data( $template_id = '' ) {
-		return self::$_->array_get( $this->data, $template_id, array() );
+		return isset( $this->data[ $template_id ] ) ? $this->data[ $template_id ] : array();
 	}
 
 	/**
@@ -235,7 +235,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 	 * @return array
 	 */
 	public function get_template( $type = '' ) {
-		return self::$_->array_get( $this->templates, $type, array() );
+		return isset( $this->templates[ $type ] ) ? $this->templates[ $type ] : array();
 	}
 
 	/**
@@ -265,7 +265,15 @@ class ET_Builder_Module_Helper_OptionTemplate {
 	 * @return mixed
 	 */
 	public function get_cache( $name, $key ) {
-		return self::$_->array_get( $this->cache, "{$name}.{$key}", null );
+		if (
+			! empty( $this->cache )
+			&& ! empty( $this->cache[ $name ] )
+			&& ! empty( $this->cache[ $name ][ $key ] )
+		) {
+			return $this->cache[ $name ][ $key ];
+		}
+
+		return null;
 	}
 
 	/**
@@ -358,7 +366,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 		// If found, replace placeholder with correct value from data
 		if ( is_array( $placeholder ) && isset( $placeholder[0] ) ) {
 			// Get placeholder replacement
-			$replacement = self::$_->array_get( $data, "1.{$placeholder[0]}" );
+			$replacement = ! empty( $data[1] ) && ! empty( $data[1][ $placeholder[0] ] ) ? $data[1][ $placeholder[0] ] : '';
 
 			// Pass null as empty string; null as attribute affect builder differently.
 			// Attribute with empty string will be omitted later.
@@ -415,7 +423,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 			if ( is_array( $preset_attr_value ) ) {
 				$rebuilt_preset_attr_object = array();
 
-				foreach( $preset_attr_value as $name => $value ) {
+				foreach ( $preset_attr_value as $name => $value ) {
 					$object_item_name = $this->rebuild_string_placeholder( $name, $data, $settings );
 
 					$rebuilt_preset_attr_object[ $object_item_name ] = $value;
@@ -459,15 +467,15 @@ class ET_Builder_Module_Helper_OptionTemplate {
 
 				// Loop field on composite structure controls
 				foreach ( $rebuilt_field as $attr_name => $attr_value ) {
-					$rebuilt_field[ $attr_name ] = $this->rebuild_string_placeholder( $attr_value, $data, array(
+					$settings                    = array(
 						'suffix'                 => 'label' === $attr_name ? ' ' : '',
 						'remove_suffix_if_empty' => 'label' === $attr_name,
-					) );
+					);
+					$rebuilt_field[ $attr_name ] = $this->rebuild_string_placeholder( $attr_value, $data, $settings );
 				}
 
 				$rebuilt_composite_structure_field['controls'][ $rebuilt_field_name ] = $rebuilt_field;
 			}
-
 		}
 
 		// Cache result
@@ -486,20 +494,21 @@ class ET_Builder_Module_Helper_OptionTemplate {
 			return $cache;
 		}
 
-		$template_type = self::$_->array_get( $template_data, '0', '' );
-		$prefix        = self::$_->array_get( $template_data, '1.prefix', '' );
+		$template_type = ! empty( $template_data[0] ) ? $template_data[0] : '';
+		$prefix        = ! empty( $template_data[1]['prefix'] ) && ! empty( $template_data[1]['prefix'] ) ? $template_data[1]['prefix'] : '';
 
 		// Certain advanced field (ie. Text Shadow) automatically adds underscore
-		$auto_add_prefix_underscore = isset( $template_data[0] ) &&'text_shadow' === $template_data[0] && '' === $prefix;
+		$auto_add_prefix_underscore = isset( $template_data[0] ) && 'text_shadow' === $template_data[0] && '' === $prefix;
 
 		// 1. Field attribute value's type is string
 		if ( is_string( $attr_value ) ) {
 			$placeholder_has_space_suffix = 'label' === $attr_name && in_array( $template_type, array( 'border', 'text_shadow' ) );
 
-			$rebuilt_placeholder = $this->rebuild_string_placeholder( $attr_value, $template_data, array(
+			$settings            = array(
 				'suffix'                 => $placeholder_has_space_suffix ? ' ' : '',
 				'remove_suffix_if_empty' => $placeholder_has_space_suffix ? true : false,
-			) );
+			);
+			$rebuilt_placeholder = $this->rebuild_string_placeholder( $attr_value, $template_data, $settings );
 
 			// Cache result
 			$this->set_cache( $cache_name, $cache_key, $rebuilt_placeholder );
@@ -517,16 +526,18 @@ class ET_Builder_Module_Helper_OptionTemplate {
 				// placeholder replacement also consider that text_shadow advanced field
 				// automatically adds underscore after prefix so it needs to be adjusted as well
 				if ( is_string( $array_value ) ) {
-					$rebuild_attr_value[] = $this->rebuild_string_placeholder( $array_value, $template_data, array(
+					$settings             = array(
 						'suffix'                 => '_',
 						'remove_suffix_if_empty' => $auto_add_prefix_underscore,
-					) );
+					);
+					$rebuild_attr_value[] = $this->rebuild_string_placeholder( $array_value, $template_data, $settings );
 				} elseif ( 'presets' === $attr_name ) {
 					// Handle preset attribute specifically due to how it is structured
-					$rebuild_attr_value[] = $this->rebuild_preset_placeholder( $array_value, $template_data, array(
+					$settings             = array(
 						'suffix'                 => '_',
 						'remove_suffix_if_empty' => $auto_add_prefix_underscore,
-					) );
+					);
+					$rebuild_attr_value[] = $this->rebuild_preset_placeholder( $array_value, $template_data, $settings );
 				} else {
 					// Non string and `presets` attribute less likely contains placeholder
 					$rebuild_attr_value[] = $array_value;
@@ -586,9 +597,9 @@ class ET_Builder_Module_Helper_OptionTemplate {
 			return $fields;
 		}
 
-		$template_type     = self::$_->array_get( $template_data, '0' );
-		$template_settings = self::$_->array_get( $template_data, '1', array() );
-		$prefix            = self::$_->array_get( $template_settings, 'prefix', '' );
+		$template_type     = ! empty( $template_data[0] ) ? $template_data[0] : '';
+		$template_settings = ! empty( $template_data[1] ) ? $template_data[1] : array();
+		$prefix            = ! empty( $template_settings['prefix'] ) ? $template_settings['prefix'] : '';
 
 		$parent_template_data = false;
 
@@ -598,7 +609,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 		// Thus get parent template's settings and use it
 		if ( $parent_template_id ) {
 			$parent_template_data     = $this->get_data( $parent_template_id );
-			$parent_template_settings = self::$_->array_get( $parent_template_data, "1", true );
+			$parent_template_settings = ! empty( $parent_template_data[1] ) ? $parent_template_data[1] : true;
 
 			$template_settings_inherits_from_parant = array();
 
@@ -616,7 +627,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 
 			$parent_template_data = array(
 				$template_type,
-				$template_settings_inherits_from_parant
+				$template_settings_inherits_from_parant,
 			);
 		}
 
@@ -631,7 +642,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 
 			// Replace field attribute name's placeholder
 			$field_template_data = $parent_template_id ? $parent_template_data : $template_data;
-			$field_name = $this->rebuild_string_placeholder(
+			$field_name          = $this->rebuild_string_placeholder(
 				$field_name_template,
 				$field_template_data,
 				array(
@@ -644,7 +655,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 			// Replace field attribute value's placeholder
 			$field = array();
 			if ( is_array( $field_template ) ) {
-				foreach( $field_template as $attr_name => $attr_value ) {
+				foreach ( $field_template as $attr_name => $attr_value ) {
 					$rebuilt_attr_value = $this->rebuild_field_attr_value(
 						$attr_name,
 						$attr_value,
@@ -692,7 +703,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 		$default_props  = array();
 		$rebuilt_fields = $this->rebuild_field_template( $template_id );
 
-		foreach( $rebuilt_fields as $field_name => $field ) {
+		foreach ( $rebuilt_fields as $field_name => $field ) {
 			$value = '';
 
 			if ( isset( $field['composite_type'], $field['composite_structure'] ) ) {
@@ -702,7 +713,7 @@ class ET_Builder_Module_Helper_OptionTemplate {
 			} else {
 				if ( isset( $field['default_on_front'] ) ) {
 					$value = $field['default_on_front'];
-				} else if ( isset( $field['default'] ) ) {
+				} elseif ( isset( $field['default'] ) ) {
 					$value = $field['default'];
 				}
 
@@ -717,10 +728,4 @@ class ET_Builder_Module_Helper_OptionTemplate {
 	}
 }
 
-/**
- * @return ET_Builder_Module_Helper_OptionTemplate
- */
-function et_pb_option_template() {
-	return ET_Builder_Module_Helper_OptionTemplate::instance();
-}
 

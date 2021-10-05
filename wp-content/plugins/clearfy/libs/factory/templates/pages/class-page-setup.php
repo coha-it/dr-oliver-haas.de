@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Templates_100\Pages;
+namespace WBCR\Factory_Templates_101\Pages;
 
 // Exit if accessed directly
 if( !defined('ABSPATH') ) {
@@ -14,11 +14,11 @@ if( !defined('ABSPATH') ) {
  * поэтому все его инструменты могут быть применены и в этом классе. Но вы должны учитывать, что
  * поведение экшенов страницы было изменено. В данной реализации экшены используется для пагинации шагов.
  *
- * @package WBCR\Factory_Templates_100\Pages
+ * @package WBCR\Factory_Templates_101\Pages
  * @author        Alex Kovalev <alex.kovalevv@gmail.com>, Github: https://github.com/alexkovalevv
  * @since         2.2.2
  */
-class Setup extends \WBCR\Factory_Templates_100\Impressive {
+class Setup extends \WBCR\Factory_Templates_101\Impressive {
 
 	const DEFAULT_STEP = 'step0';
 
@@ -74,14 +74,14 @@ class Setup extends \WBCR\Factory_Templates_100\Impressive {
 	{
 		$this->id = 'setup';
 
-		$this->menu_title = __('Setup master', 'wbcr_factory_templates_100');
-		$this->page_menu_short_description = __('Setup master', 'wbcr_factory_templates_100');
+		$this->menu_title = __('Setup master', 'wbcr_factory_templates_101');
+		$this->page_menu_short_description = __('Setup master', 'wbcr_factory_templates_101');
 		parent::__construct($plugin);
 	}
 
 	public function getPageTitle()
 	{
-		return __('Setup', 'wbcr_factory_templates_100');
+		return __('Setup', 'wbcr_factory_templates_101');
 	}
 
 	public function get_close_wizard_url()
@@ -146,7 +146,7 @@ class Setup extends \WBCR\Factory_Templates_100\Impressive {
 	{
 		parent::assets($scripts, $styles);
 
-		$this->styles->add(FACTORY_TEMPLATES_100_URL . '/assets/css/page-setup.css');
+		$this->styles->add(FACTORY_TEMPLATES_101_URL . '/assets/css/page-setup.css');
 
 		// Require step assets
 		if( isset($_GET['action']) && false !== strpos($_GET['action'], 'step') && isset($this->steps[$_GET['action']]) ) {
@@ -163,8 +163,8 @@ class Setup extends \WBCR\Factory_Templates_100\Impressive {
 	protected function showPage($content = null)
 	{
 		?>
-		<div class="w-factory-templates-100-setup">
-			<ol class="w-factory-templates-100-setup-steps">
+		<div class="w-factory-templates-101-setup">
+			<ol class="w-factory-templates-101-setup-steps">
 				<?php foreach($this->steps as $step): ?>
 					<?php if( self::DEFAULT_STEP === $step->get_id() ) {
 						continue;
@@ -172,11 +172,11 @@ class Setup extends \WBCR\Factory_Templates_100\Impressive {
 					<li <?php if($this->current_step === $step->get_id()): ?>class="active"<?php endif; ?>><?php echo $step->get_title(); ?></li>
 				<?php endforeach; ?>
 			</ol>
-			<div class="w-factory-templates-100-setup-content">
+			<div class="w-factory-templates-101-setup-content">
 				<?php echo $content; ?>
 			</div>
-			<a class="w-factory-templates-100-setup-footer-links" href="<?php echo esc_url($this->get_close_wizard_url()); ?>">
-				<?php _e('Not now', 'wbcr_factory_templates_100') ?>
+			<a class="w-factory-templates-101-setup-footer-links" href="<?php echo esc_url($this->get_close_wizard_url()); ?>">
+				<?php _e('Not now', 'wbcr_factory_templates_101') ?>
 			</a>
 		</div>
 		<?php

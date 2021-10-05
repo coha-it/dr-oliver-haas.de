@@ -4,7 +4,7 @@
  * Plugin URI: https://webcraftic.com
  * Description: Old plugin name: Simple Google Analytics. To improve Google Page Speed indicators Analytics caching is needed. However, it can also slightly increase your website loading speed, because Analytics js files will load locally. The second case that you might need these settings is the usual Google Analytics connection to your website. You do not need to do this with other plugins or insert the tracking code into your theme.
  * Author: Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 3.2.0
+ * Version: 3.2.1
  * Text Domain: simple-google-analytics
  * Domain Path: /languages/
  * Author URI: http://webcraftic.com
@@ -70,7 +70,7 @@ $plugin_info = array(
 		array('libs/factory/bootstrap', 'factory_bootstrap_449', 'admin'),
 		array('libs/factory/forms', 'factory_forms_446', 'admin'),
 		array('libs/factory/pages', 'factory_pages_448', 'admin'),
-		array('libs/factory/clearfy', 'factory_templates_100', 'all'),
+		array('libs/factory/clearfy', 'factory_templates_101', 'all'),
 		array('libs/factory/adverts', 'factory_adverts_127', 'admin')
 	)
 );

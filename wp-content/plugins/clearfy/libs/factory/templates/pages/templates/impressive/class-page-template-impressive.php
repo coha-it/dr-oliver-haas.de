@@ -1,6 +1,6 @@
 <?php
 
-namespace WBCR\Factory_Templates_100;
+namespace WBCR\Factory_Templates_101;
 
 /**
  * Impressive page themplate class
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
+if ( ! class_exists( 'WBCR\Factory_Templates_101\Impressive' ) ) {
 	/**
 	 * Class Wbcr_FactoryPages448_ImpressiveThemplate
 	 */
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
 		 * @param \Wbcr_Factory449_Plugin $plugin
 		 */
 		public function __construct( \Wbcr_Factory449_Plugin $plugin ) {
-			$this->menuIcon = FACTORY_TEMPLATES_100_URL . '/pages/templates/impressive/assets/img/webcraftic-plugin-icon.png';
+			$this->menuIcon = FACTORY_TEMPLATES_101_URL . '/pages/templates/impressive/assets/img/webcraftic-plugin-icon.png';
 			//$allow_multisite = apply_filters('wbcr_factory_449_core_admin_allow_multisite', false);
 
 			if ( is_multisite() && $this->available_for_multisite && $plugin->isNetworkActive() ) {
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
 				'holder.more-link'
 			], 'bootstrap' );
 
-			$this->styles->add( FACTORY_TEMPLATES_100_URL . '/pages/templates/impressive/assets/css/impressive.page.template.css' );
+			$this->styles->add( FACTORY_TEMPLATES_101_URL . '/pages/templates/impressive/assets/css/impressive.page.template.css' );
 		}
 
 		/**
@@ -233,8 +233,8 @@ if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
 		public function flushCacheAndRulesAction() {
 			check_admin_referer( 'wbcr_factory_' . $this->getResultId() . '_flush_action' );
 
-			if ( class_exists( 'WBCR\Factory_Templates_100\Helpers' ) ) {
-				\WBCR\Factory_Templates_100\Helpers::flushPageCache();
+			if ( class_exists( 'WBCR\Factory_Templates_101\Helpers' ) ) {
+				\WBCR\Factory_Templates_101\Helpers::flushPageCache();
 			}
 
 			/**
@@ -750,7 +750,7 @@ if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
 
 			?>
             <div id="WBCR" class="wrap">
-                <div class="wbcr-factory-templates-100-impressive-page-template factory-bootstrap-449 factory-fontawesome-000">
+                <div class="wbcr-factory-templates-101-impressive-page-template factory-bootstrap-449 factory-fontawesome-000">
                     <div class="wbcr-factory-options wbcr-factory-options-<?= esc_attr( $this->id ) ?>">
                         <div class="wbcr-factory-left-navigation-bar">
 							<?php $this->showPageMenu() ?>
@@ -796,7 +796,7 @@ if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
 
 		protected function showPage( $content = null ) { ?>
             <div id="WBCR" class="wrap">
-                <div class="wbcr-factory-templates-100-impressive-page-template factory-bootstrap-449 factory-fontawesome-000">
+                <div class="wbcr-factory-templates-101-impressive-page-template factory-bootstrap-449 factory-fontawesome-000">
                     <div class="wbcr-factory-page wbcr-factory-page-<?= $this->id ?>">
 						<?php $this->showHeader(); ?>
                         <div class="wbcr-factory-left-navigation-bar">
@@ -860,7 +860,7 @@ if ( ! class_exists( 'WBCR\Factory_Templates_100\Impressive' ) ) {
 		public function confirmPageTemplate( $data ) {
 			?>
             <div id="WBCR" class="wrap">
-                <div class="wbcr-factory-templates-100-impressive-page-template factory-bootstrap-449 factory-fontawesome-000">
+                <div class="wbcr-factory-templates-101-impressive-page-template factory-bootstrap-449 factory-fontawesome-000">
                     <div id="wbcr-factory-confirm-dialog">
                         <h2><?php echo $data['title'] ?></h2>
                         <p class="wbcr-factory-confirm-description"><?php echo $data['description'] ?></p>

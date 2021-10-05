@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WDN_Page extends WBCR\Factory_Templates_100\Pages\PageBase {
+class WDN_Page extends WBCR\Factory_Templates_101\Pages\PageBase {
 
 	/**
 	 * Requests assets (js and css) for the page.

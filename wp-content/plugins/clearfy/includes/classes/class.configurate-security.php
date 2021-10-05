@@ -11,7 +11,7 @@
 		exit;
 	}
 
-	class WCL_ConfigSecurity extends WBCR\Factory_Templates_100\Configurate {
+	class WCL_ConfigSecurity extends WBCR\Factory_Templates_101\Configurate {
 
 		/**
 		 * @param WCL_Plugin $plugin

@@ -34,7 +34,8 @@ $container_tag        = 'product' === get_post_type( $post_id ) ? 'div' : 'artic
 					$height = (int) apply_filters( 'et_pb_index_blog_image_height', 675 );
 					$classtext = 'et_featured_image';
 					$titletext = get_the_title();
-					$thumbnail = get_thumbnail( $width, $height, $classtext, $titletext, $titletext, false, 'Blogimage' );
+					$alttext = get_post_meta( get_post_thumbnail_id(), '_wp_attachment_image_alt', true );
+					$thumbnail = get_thumbnail( $width, $height, $classtext, $alttext, $titletext, false, 'Blogimage' );
 					$thumb = $thumbnail["thumb"];
 
 					if ( 'on' === et_get_option( 'divi_page_thumbnails', 'false' ) && '' !== $thumb )
@@ -50,27 +51,27 @@ $container_tag        = 'product' === get_post_type( $post_id ) ? 'div' : 'artic
 						if ( ! $is_page_builder_used )
 							wp_link_pages( array( 'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'Divi' ), 'after' => '</div>' ) );
 					?>
-					</div> <!-- .entry-content -->
+					</div>
 
 				<?php
 					if ( ! $is_page_builder_used && comments_open() && 'on' === et_get_option( 'divi_show_pagescomments', 'false' ) ) comments_template( '', true );
 				?>
 
-				</<?php echo $container_tag; ?>> <!-- .et_pb_post -->
+				</<?php echo et_core_intentionally_unescaped( $container_tag, 'fixed_string' ); ?>>
 
 			<?php endwhile; ?>
 
 <?php if ( ! $is_page_builder_used ) : ?>
 
-			</div> <!-- #left-area -->
+			</div>
 
 			<?php get_sidebar(); ?>
-		</div> <!-- #content-area -->
-	</div> <!-- .container -->
+		</div>
+	</div>
 
 <?php endif; ?>
 
-</div> <!-- #main-content -->
+</div>
 
 <?php
 
